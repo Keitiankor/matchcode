@@ -1,0 +1,27 @@
+{
+  "useTabs": false,
+  "tabWidth": 4,
+  "printWidth": 120,
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "htmlWhitespaceSensitivity": "css",
+        "embeddedLanguageFormatting": "auto"
+      }
+    },
+    {
+      "files": ".json",
+      "options": {
+        "tabWidth": 2,
+        "printWidth": 200
+      }
+    },
+    {
+      "files": ".prettierrc",
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
+}
