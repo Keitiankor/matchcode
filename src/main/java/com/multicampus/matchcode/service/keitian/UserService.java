@@ -1,4 +1,4 @@
-package com.multicampus.matchcode.service;
+package com.multicampus.matchcode.service.keitian;
 
 import org.springframework.stereotype.Service;
 

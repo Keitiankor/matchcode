@@ -1,4 +1,4 @@
-package com.multicampus.matchcode.repository;
+package com.multicampus.matchcode.repository.keitian;
 
 import org.springframework.stereotype.Repository;
 
