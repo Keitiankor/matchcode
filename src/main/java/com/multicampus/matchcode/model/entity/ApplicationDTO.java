@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class TeamMember {
+public class ApplicationDTO {
 
-    private long teamId;
     private long userId;
-    private int privilege;
+    private long teamId;
+    private String rejectReason;
+    private String introduction;
+    private int status;
 }

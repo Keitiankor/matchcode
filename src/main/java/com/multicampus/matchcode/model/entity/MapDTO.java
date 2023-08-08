@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Map {
+public class MapDTO {
 
     private long id;
     private long areaId;

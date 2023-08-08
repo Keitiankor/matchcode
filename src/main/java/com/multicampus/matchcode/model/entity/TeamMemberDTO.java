@@ -5,11 +5,9 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Rating {
+public class TeamMemberDTO {
 
-    private long id;
+    private long teamId;
     private long userId;
-    private long sportsId;
-    private long emblemId;
-    private int mmr;
+    private int privilege;
 }

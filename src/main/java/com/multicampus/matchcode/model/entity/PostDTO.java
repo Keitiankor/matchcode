@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Post {
+public class PostDTO {
 
     private long id;
     private long userId;

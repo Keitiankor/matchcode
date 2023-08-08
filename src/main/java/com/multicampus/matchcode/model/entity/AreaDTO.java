@@ -5,11 +5,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Review {
+public class AreaDTO {
 
     private long id;
-    private long userId;
-    private long mapId;
-    private String comment;
-    private int rate;
+    private String city;
 }

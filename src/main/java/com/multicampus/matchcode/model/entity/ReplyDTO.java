@@ -5,8 +5,10 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Sports {
+public class ReplyDTO {
 
     private long id;
-    private String name;
+    private long postId;
+    private long userId;
+    private String comment;
 }

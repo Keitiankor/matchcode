@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Emblem {
+public class MatchMemberDTO {
 
-    private long id;
-    private String uri;
+    private long matchId;
+    private long userId;
 }

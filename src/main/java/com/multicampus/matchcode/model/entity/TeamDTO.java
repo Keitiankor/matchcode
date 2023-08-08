@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Team {
+public class TeamDTO {
 
     private long id;
     private long mapId;

@@ -5,8 +5,11 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class MatchMember {
+public class ResultDTO {
 
     private long matchId;
     private long userId;
+    private int status;
+    private int myScore;
+    private int rivalScore;
 }
