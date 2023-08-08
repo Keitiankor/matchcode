@@ -5,4 +5,8 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class UserDTO {}
+public class Emblem {
+
+    private long id;
+    private String uri;
+}
