@@ -1,14 +1,16 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
+import java.sql.Timestamp;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class FavoriteSports {
+public class PointDTO {
 
     private long id;
     private long userId;
-    private long sportsId;
-    private String Text;
+    private Timestamp date;
+    private Timestamp expireDate;
+    private int point;
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Member {
+public class MemberDTO {
 
     private long id;
     private long areaId;

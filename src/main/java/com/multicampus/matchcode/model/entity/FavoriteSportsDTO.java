@@ -5,11 +5,10 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class Result {
+public class FavoriteSportsDTO {
 
-    private long matchId;
+    private long id;
     private long userId;
-    private int status;
-    private int myScore;
-    private int rivalScore;
+    private long sportsId;
+    private String Text;
 }
