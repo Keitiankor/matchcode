@@ -1,11 +1,15 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "Application")
 @Getter
 public class ApplicationDTO {
+
+    @Id
+    private long id;
 
     private long userId;
     private long teamId;

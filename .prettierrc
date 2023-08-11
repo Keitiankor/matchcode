@@ -18,7 +18,7 @@
       }
     },
     {
-      "files": ".prettierrc",
+      "files": [".prettierrc", "*.yml"],
       "options": {
         "tabWidth": 2
       }

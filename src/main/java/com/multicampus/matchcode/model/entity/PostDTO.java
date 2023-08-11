@@ -1,14 +1,17 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.sql.Timestamp;
 import lombok.Getter;
 
-@Entity
+@Entity(name = "Post")
 @Getter
 public class PostDTO {
 
+    @Id
     private long id;
+
     private long userId;
     private String title;
     private String content;
