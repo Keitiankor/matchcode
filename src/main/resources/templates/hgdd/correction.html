@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .layout textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+
+
+    .layout button[id="button"] {
+        margin-top: 10px;
+        margin-left: 330px;
+    }
+
+    .layout input[id="title"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+</style>
+<body>
+<div class="layout">
+    <h2>게시글 수정 및 삭제</h2>
+    <form th:action="@{/post/update/{id}(id = ${post.id})}" method="post">
+
+        <td>제목</td>
+        <input name="title" type="text" th:value="${post.title}" id="title">
+
+        <td>내용</td>
+        <textarea name="content" th:text ="${post.content}"></textarea>
+
+        <!--비공개 체크박스(아직 db구현 안함-->
+        <input type="checkbox">비공개<br>
+
+        <!--수정버튼과 삭제 버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
+        <th>
+            <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+            <button type="submit" id="button">수정</button>
+            <button th:onclick="|location.href='@{/post/delete?(id=${post.id})}'|">삭제</button>
+        </th>
+    </form>
+
+
+</div>
+</body>
+</html>

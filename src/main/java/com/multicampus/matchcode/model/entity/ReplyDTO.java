@@ -1,14 +1,18 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 
 @Entity(name = "Reply")
-@Getter
+@Data
 public class ReplyDTO {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long postId;

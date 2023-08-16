@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- 위에 xmlns 하면 타임리프 문법을 쓸수 있다.-->
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 리스트 페이지</title>
+</head>
+
+<style>
+    .layout{
+        width : 500px;
+        margin: 0 auto;
+        margin-top :40px;
+    }
+</style>
+<body>
+<div class="layout">
+    <table>
+        <thead>
+        <tr>
+            <th>번호 </th>
+            <th>제목 </th>
+            <th>작성일 </th>
+
+            <th>
+                <!--게시글 작성 이동 버튼 (insert.html)-->
+                <button type="button" onclick="location.href='insert'">글 작성</button>
+            </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <!--th:each는 조건부 반복문으로 postDTO list 하나씩 꺼내 반복 출력 -->
+        <tr th:each="postDTO : ${list}">
+            <!--게시글 번호 (PostDTO id) -->
+            <td th:text="${postDTO.id}"></td>
+            <td>
+                <!--게시글 제목(PostDTO title)표시 그리고 제목을 누르면 그 해당한 게시글 상세페이지 이동(구현x) -->
+                <a th:text="${postDTO.title}" th:href="@{/post/view(id=${postDTO.id})}"></a>
+            </td>
+            <td>
+
+                <a th:text="${#dates.format(postDTO.createdDate,'yyyy/mm/dd')}"></a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

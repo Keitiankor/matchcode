@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 등록</title>
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .layout textarea {
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+
+
+    .layout button[id="button"] {
+        margin-top: 10px;
+        margin-left: 377px;
+    }
+
+    .layout input[id="title"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+</style>
+<body>
+<div class="layout">
+<h1>게시글 작성</h1>
+    <form th:action="@{/insert}" th:object="${postDTO}" method="post">
+
+        <!--제목 입력-->
+        <td>제목</td>
+        <input type="text" th:field="*{title}" id="title">
+
+        <!--내용 입력-->
+        <td>내용</td>
+        <textarea type="text" th:field="*{content}"></textarea>
+
+        <!--비공개 체크박스(아직 db구현 안함-->
+        <input type="checkbox">비공개<br>
+
+        <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
+        <th>
+            <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+            <button type="submit" id="button">등록</button>
+        </th>
+
+
+    </form>
+</div>
+</body>
+</html>
