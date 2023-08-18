@@ -4,6 +4,10 @@ import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.util.enums.hyem.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +52,26 @@ public class TeamController {
         System.out.println("time average : " + teamDTO.getUseTime());
 
         return "hyem/message";
+    }
+
+    // 팀 리스트
+    @GetMapping("/list")
+    public String teamList(Model model,
+                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                           String searchKeyword) {
+
+        Page<TeamDTO> list = teamService.teamList(pageable);;
+
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "hyem/teamlist";
     }
 
     //enum 모델 추가
