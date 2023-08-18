@@ -1,10 +1,8 @@
 package com.multicampus.matchcode.service.keitian;
 
 import com.multicampus.matchcode.model.entity.MemberDTO;
-import com.multicampus.matchcode.model.request.keitian.LoginRequest;
 import com.multicampus.matchcode.model.request.keitian.RegistserRequest;
 import com.multicampus.matchcode.repository.MemberRepository;
-import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,12 +28,7 @@ public class MemberService {
         repository.save(dto);
     }
 
-    public void login(LoginRequest request) {
-        long id = getId(request.getAccount(), request.getPassword());
-        if (id != -1) {}
-    }
-
-    private long getId(String acc, String pw) {
+    public long getId(String acc, String pw) {
         Optional<MemberDTO> odto = repository.findByAccountAndPassword(acc, pw);
         if (odto.isPresent()) {
             MemberDTO dto = odto.get();
