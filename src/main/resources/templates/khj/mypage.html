@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="마이페이지"></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/mypage.css">
+    <script src="/js/button.js" defer></script>
+</head>
+<body>
+<!-- 헤더 부분 -->
+<div id="header">
+    <h2>마이페이지</h2>
+</div>
+<div class="jb-division-line"></div>
+<!-- 네비게이션 바 부분 -->
+
+<div id="nav">
+    (이미지가 들어갈 부분)
+    <br>
+    이름 : <p th:text="${memberDTO.name}"></p>
+    <br>
+포인트 :
+    <br>
+    <button id="matchHistoryButton">매치 히스토리</button>
+    <br>
+    <button id="myPositionButton">내 포지션</button>
+    <br>
+    <button id="personalButton">개인 정보</button>
+    <br>
+    <button id="myPostButton">내 게시물</button>
+    <br>
+    <button id="recordButton">개인 기록</button>
+
+</div>
+<!-- 컨텐츠가 들어갈 부분 -->
+<div class="updown"></div>
+<div id="section">
+    <div id="contents">
+     <!-- 여기에 메뉴별 컨텐츠가 나올 예정 -->
+    </div>
+</div>
+
+</body>
+
+</html>

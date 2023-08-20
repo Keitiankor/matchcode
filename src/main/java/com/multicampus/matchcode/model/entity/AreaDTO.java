@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Member")
+@Entity(name = "Area")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
