@@ -18,9 +18,9 @@
 <div id="nav">
     (이미지가 들어갈 부분)
     <br>
-    이름 : <p th:text="${memberDTO.name}"></p>
+    이름 : <p th:text="${memberAndPoint.memberDTO.name}"></p>
     <br>
-포인트 :
+    포인트 : <p th:text="${memberAndPoint.pointDTO.point}"></p>
     <br>
     <button id="matchHistoryButton">매치 히스토리</button>
     <br>

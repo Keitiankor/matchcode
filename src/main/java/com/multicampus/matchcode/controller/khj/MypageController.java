@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.controller.khj;
 
+import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class MypageController {
     //마이페이지 기본 화면
     @GetMapping("mypage")
     public String mypage(Model model){
-        MemberDTO member = service.findById(1);
-        model.addAttribute("memberDTO",member);
+        MemberAndPointDTO memberAndPoint = service.getMemberAndPoint(1); // Replace with the actual member ID
+        model.addAttribute("memberAndPoint", memberAndPoint);
         return "khj/mypage";
     }
 
