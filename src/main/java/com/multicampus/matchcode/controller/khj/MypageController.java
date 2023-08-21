@@ -18,9 +18,10 @@ public class MypageController {
     //마이페이지 기본 화면
     @GetMapping("mypage")
     public String mypage(Model model){
-        MemberAndPointDTO memberAndPoint = service.getMemberAndPoint(1); // Replace with the actual member ID
+        MemberAndPointDTO memberAndPoint = service.getMemberAndPoint(2); // 여기 memberId값에 이제 세션에서 받을 member의 id값을 넣으면 되는걸까?
         model.addAttribute("memberAndPoint", memberAndPoint);
         return "khj/mypage";
+
     }
 
     //매치히스토리
