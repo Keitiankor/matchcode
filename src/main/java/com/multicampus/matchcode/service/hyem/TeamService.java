@@ -34,4 +34,9 @@ public class TeamService {
     public Page<TeamDTO> teamList(Pageable pageable) {
         return teamRepository.findAll(pageable);
     }
+
+    // 팀 정보 불러오기
+    public TeamDTO teamView(Long id) {
+        return teamRepository.findById(id).get();
+    }
 }

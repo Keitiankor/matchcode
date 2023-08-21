@@ -10,10 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/team")
@@ -72,6 +69,13 @@ public class TeamController {
         model.addAttribute("endPage", endPage);
 
         return "hyem/teamlist";
+    }
+
+    // 팀 상세 정보 열람
+    @GetMapping("/oneteam/{id}")
+    public String teamView(@PathVariable Long id, Model model) {
+        model.addAttribute("team", teamService.teamView(id));
+        return "oneteam";
     }
 
     //enum 모델 추가

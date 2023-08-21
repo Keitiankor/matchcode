@@ -32,6 +32,7 @@ public class TeamDTO {
 
     @CreationTimestamp
     private Timestamp createdDate;
+
     private int status;
 
     @Builder
