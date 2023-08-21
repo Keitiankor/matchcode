@@ -75,7 +75,7 @@ public class TeamController {
     @GetMapping("/oneteam/{id}")
     public String teamView(@PathVariable Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
-        return "oneteam";
+        return "hyem/oneteam";
     }
 
     //enum 모델 추가
