@@ -16,14 +16,14 @@ spring:
     password: 1234 # DB비밀번호
     url: jdbc:mysql://localhost:3306/matchcodetest # 이부분을 localhost로 변경하여 로컬환경에서 테스트할수있다.
 
-  data:
-    mongodb:
-      host: keitian.moe
-      port: 27017
-      username: study
-      password: 1234
-      database: connectiontest
-      authentication-database: admin
+  #  data:
+  #    mongodb:
+  #      host: keitian.moe
+  #      port: 27017
+  #      username: study
+  #      password: 1234
+  #      database: connectiontest
+  #      authentication-database: admin
 
   jpa:
     open-in-view: true
