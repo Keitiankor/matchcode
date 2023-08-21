@@ -23,9 +23,8 @@
 
             <th>
                 <!--게시글 작성 이동 버튼 (insert.html)-->
-                <button type="button" onclick="location.href='insert'">글 작성</button>
+                <button type="button" th:onclick="|location.href='@{/post/insert}'|">글 작성</button>
             </th>
-
         </tr>
         </thead>
         <tbody>
@@ -39,12 +38,22 @@
             </td>
             <td>
 
-                <a th:text="${#dates.format(postDTO.createdDate,'yyyy/mm/dd')}"></a>
+                <a th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
 
             </td>
         </tr>
         </tbody>
     </table>
+    <!--페이징 -->
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <button th:if="${page != nowPage}"  th:onclick="|location.href='@{/post/list(page = ${page - 1},searchKeyword = ${param.searchKeyword})}'|" th:text="${page}"class="btn btn-primary"></button>
+        <button th:if="${page == nowPage}" th:text="${page}" style="color : cornflowerblue" class="btn btn-primary"></button>
+    </th:block>
+    <!-- 검색 기능 -->
+    <form th:action="@{/post/list}" method="get">
+        <input type="text" name="searchKeyword" class="form-control">
+        <button type="submit">검색</button>
+    </form>
 </div>
 </body>
 </html>

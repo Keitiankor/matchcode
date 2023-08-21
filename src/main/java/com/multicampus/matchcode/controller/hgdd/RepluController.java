@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class RepluController {
+public class  RepluController {
 
     @Autowired
    private  ReplyService replyService;
@@ -19,12 +19,11 @@ public class RepluController {
 
 
     @PostMapping("/post/comment/insert")
-    private String insertComment(@RequestParam("idx") long idx,@RequestParam("content")String content) throws Exception{
+    private String insertComment(@RequestParam("id") long id,@RequestParam("content")String content) throws Exception{
         ReplyDTO replyDTO=new ReplyDTO();
-        replyDTO.setComment(content);
-        replyDTO.setId(idx);
-        replyService.insert(replyDTO);
 
+        replyService.insert(replyDTO);
+        String redirect_url="redirect:/post/detail?id="+Long.toString(id);
 
         return redirect_url;
     }

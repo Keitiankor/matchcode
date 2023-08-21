@@ -8,12 +8,11 @@
 <body>
 
 <script th:inline="javascript">
-    /*<![CDATA[*/
-    <!--contr -->
+
     var message = [[${message}]]//컨트롤러에 입력된 메시지
     alert(message);
     location.replace([[${searchUrl}]]);//컨트롤러에 입력된 경로로 이동
-    /*]]>*/
+
 </script>
 </body>
 </html>

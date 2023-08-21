@@ -4,15 +4,18 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity(name = "Post")
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostDTO {
 
     @Id
@@ -22,7 +25,6 @@ public class PostDTO {
     private long userId;
     private String title;
     private String content;
-
     @CreationTimestamp
     private Timestamp createdDate;
     @UpdateTimestamp
@@ -31,4 +33,13 @@ public class PostDTO {
     private int likes;
     private int declation;
     private int status;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }

@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>게시글 등록</title>
 </head>
+
+
 <style>
     .layout {
         width: 500px;
@@ -13,7 +15,7 @@
 
 
     .layout button[id="button"] {
-        margin-top: 20px;
+        margin-top: 10px;
         margin-left: 317px;
     }
 
@@ -37,48 +39,48 @@
         margin-top: 150px;
     }
 
-    div {
-        margin-left: 5px;
-    }
 </style>
+
 <body>
 <div class="layout">
+    <tr>
 
+    </tr>
 
     <!--제목-->
     <h2 th:text="${post.title}">제목 입니다.</h2>
 
     <!--내용-->
     <div class="box1">
-        <div th:text="${post.content}"></div>
+
+        <p th:text="${post.content}">.</p>
     </div>
 
-    <div class="box2">
-        <div> 댓글</div>
 
-        <input type="text" id="reply" placeholder="댓글을입력하십시오">
+    <div>
+        <input type="text" id="comment" placeholder="댓글을입력하십시오">
+        <button  >댓글작성</button>
     </div>
 
-    <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
-        <div class="card-body">
-            <form name="comment-form" action="/board/comment/write" method="post" autocomplete="off">
-                <div class="form-group">
-                    <input type="hidden" name="idx" th:value="*{post.id}"/>
-                    <textarea name="content" class="form-control" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
+  <div class="box2" >
+        <table>
+            <tr>
+                <th>댓글번호</th>
+                <th>내용</th>
+            </tr>
 
-
-        <th>
-            <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
-            <button type="button" id="button" th:onclick="|location.href='@{/post/correction/{id}(id=${post.id})}'|">
-                수정페이지로
-            </button>
-        </th>
-
+        </table>
     </div>
+
+
+    <th>
+        <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+        <button type="button" id="button" th:onclick="|location.href='@{/post/correction/{id}(id=${post.id})}'|">
+            수정페이지로
+        </button>
+    </th>
+
+</div>
 </body>
+
 </html>
