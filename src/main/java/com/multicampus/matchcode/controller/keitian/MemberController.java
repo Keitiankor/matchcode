@@ -18,8 +18,8 @@ public class MemberController {
     MemberService service;
 
     @GetMapping("login")
-    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) long id) {
-        if (id == -1) {
+    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) String id) {
+        if (id == null) {
             return "keitian/login";
         } else {
             return "keitian/shortinfo";
