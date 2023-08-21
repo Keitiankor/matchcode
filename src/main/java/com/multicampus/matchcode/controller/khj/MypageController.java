@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.controller.khj;
 
+import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.service.khj.MypageService;

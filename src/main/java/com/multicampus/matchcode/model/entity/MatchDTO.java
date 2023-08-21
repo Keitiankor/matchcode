@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Match")
+@Entity(name = "Match_") //match가 예악어라서 그냥 두면 충돌이 남(테이블 안생김 ㅠ)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

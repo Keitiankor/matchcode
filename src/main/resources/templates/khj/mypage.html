@@ -3,24 +3,24 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="마이페이지"></title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/mypage.css">
-    <script src="/js/button.js" defer></script>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/mypage.css">
+<script src="js/menubutton.js" defer></script>
 <!-- 헤더 부분 -->
 <div id="header">
-    <h2>마이페이지</h2>
+    <h2>MatchCode 로고가 들어갈 부분</h2>
 </div>
 <div class="jb-division-line"></div>
 <!-- 네비게이션 바 부분 -->
-
 <div id="nav">
+    <h3>마이페이지</h3>
     (이미지가 들어갈 부분)
     <br>
-    이름 : <p th:text="${memberAndPoint.memberDTO.name}"></p>
+    이름 : <p style="display:inline;" th:text="${memberAndPoint.memberDTO.name}"></p>
     <br>
-    포인트 : <p th:text="${memberAndPoint.pointDTO.point}"></p>
+    포인트 : <p style="display:inline;" th:text="${memberAndPoint.pointDTO.point}">p</p>
     <br>
     <button id="matchHistoryButton">매치 히스토리</button>
     <br>
@@ -37,7 +37,7 @@
 <div class="updown"></div>
 <div id="section">
     <div id="contents">
-     <!-- 여기에 메뉴별 컨텐츠가 나올 예정 -->
+        <!-- 여기에 메뉴별 컨텐츠가 나올 예정 -->
     </div>
 </div>
 
