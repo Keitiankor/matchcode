@@ -8,11 +8,10 @@ import lombok.Data;
 @Builder
 public class RegistserRequest {
 
-    long areaId;
     String account;
     String password;
     String name;
     String phone;
     String mailAddress;
-    Timestamp birthday;
+    String birthday;
 }

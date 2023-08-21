@@ -1,6 +1,8 @@
 package com.multicampus.matchcode.controller.keitian;
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.keitian.LoginRequest;
+import com.multicampus.matchcode.model.request.keitian.RegistserRequest;
 import com.multicampus.matchcode.service.keitian.MemberService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ public class MemberController {
     MemberService service;
 
     @GetMapping("login")
-    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) String id) {
+    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) Long id) {
         if (id == null) {
             return "keitian/login";
         } else {
@@ -26,10 +28,35 @@ public class MemberController {
         }
     }
 
+    @GetMapping("regist")
+    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) Long id) {
+        if (id == null) {
+            return "keitian/regist";
+        } else {
+            return "index";
+        }
+    }
+
     @PostMapping("login")
     public String pMemberLogin(HttpServletRequest hRequest, LoginRequest request) {
         HttpSession session = hRequest.getSession(true);
-        session.setAttribute(SessionConstant.MEMBER_ID, service.getId(request.getAccount(), request.getPassword()));
-        return "redirect:index";
+        System.out.println(request.getAccount());
+        System.out.println(request.getPassword());
+        MemberDTO dto = service.getId(request.getAccount(), request.getPassword());
+        if (dto != null) {
+            session.setAttribute(SessionConstant.MEMBER_ID, dto);
+            return "redirect:";
+        } else {
+            return "redirect:login";
+        }
+    }
+
+    @PostMapping("regist")
+    public String pMemberRegist(RegistserRequest request) {
+        int result = service.insert(request);
+        if (result == -1) {
+            return "redirect:regist";
+        }
+        return "redirect:";
     }
 }
