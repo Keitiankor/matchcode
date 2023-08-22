@@ -2,7 +2,6 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
-import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,6 +62,16 @@ public class MypageController {
     public  String record(){
 
         return "khj/record";
+    }
+
+    //테스트용
+    //개인 기록
+    @GetMapping("/loadHistoryData")
+    public String loadHistoryData(long sportsId, Model model) {
+        MatchDTO match = service.getMatchBySportsId(sportsId); // 해당 sportsId에 맞는 데이터 가져오기
+
+        model.addAttribute("match", match); // 데이터를 모델에 추가
+        return "khj/history";
     }
 
 }

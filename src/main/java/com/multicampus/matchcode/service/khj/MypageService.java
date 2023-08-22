@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,14 +45,19 @@ public class MypageService {
         }
     }
 
-    //매치 히스토리 화면 내 매치 기록을 불러오기 위한 service메소드
-    public MatchDTO getMatch(long id){
-        Optional<MatchDTO> dto = match.findById(id);
-        if(dto.isPresent()) {
-            return dto.get();
+    //매치 히스토리 화면 내 종목에 맞는 기록을 불러오기 위한 service메소드
+    //문제1) 그런데 '나의' 매치 기록을 가져와야 하는데...?
+    //문제2) 다른 테이블에서도 값들 다 가져와야하는데...?
+    public MatchDTO getMatchBySportsId(long sportsId){
+        Optional<MatchDTO> matchDTO = match.findBySportsId(sportsId);
+        if(matchDTO.isPresent()) {
+            return matchDTO.get();
         }else{
             return null;
         }
     }
 
+//    public MatchDTO getMatchBySportsId(long sportsId) {
+//        return match.findBySportsId(sportsId);
+//    }
 }
