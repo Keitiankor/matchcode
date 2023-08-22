@@ -93,6 +93,25 @@ public class TeamController {
         return "hyem/message";
     }
 
+    // 팀 정보 삭제
+    @DeleteMapping("/delete/{id}")
+    public String teamDelete(@PathVariable("id") long id, Model model) throws Exception{
+        model.addAttribute("message", "정말로 팀을 삭제하시겠습니까?");
+        model.addAttribute("confirmUrl", "/team/deleteconfirmed/" + id);
+        model.addAttribute("cancelUrl", "/team/list");
+        return "hyem/confirmmessage";
+    }
+
+    // 팀 정보 삭제 처리
+    @PostMapping("/deleteconfirmed/{id}")
+    public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
+        teamService.teamDelete(id);
+
+        model.addAttribute("message", "팀 삭제가 완료되었습니다.");
+        model.addAttribute("searchUrl", "/team/list");
+        return "hyem/message";
+    }
+
     //enum 모델 추가
     //팀 생성할 때만 필요한 부분이라 수정 필요
     @ModelAttribute("sports")

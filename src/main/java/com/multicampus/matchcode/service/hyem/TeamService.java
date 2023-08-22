@@ -59,4 +59,9 @@ public class TeamService {
         return teamRepository.save(updatedTeam);
     }
 
+    // 팀 삭제
+    public void teamDelete(long id) {
+        teamRepository.deleteById(id);
+    }
+
 }
