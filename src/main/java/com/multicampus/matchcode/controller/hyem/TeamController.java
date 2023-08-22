@@ -38,6 +38,7 @@ public class TeamController {
     public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest requestDto, Model model) throws Exception{
         teamService.save(requestDto);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/team/list");
         //System.out.println("id : " + requestDto.getId());
         System.out.println("teamName : " + requestDto.getTeamName());
         System.out.println("uri : " + requestDto.getUri());
@@ -47,7 +48,7 @@ public class TeamController {
         System.out.println("week average : " + requestDto.getUseWeek());
         System.out.println("time average : " + requestDto.getUseTime());
 
-        return "redirect:/team/list";
+        return "hyem/message";
     }
 
     // 팀 리스트
@@ -74,6 +75,22 @@ public class TeamController {
     public String teamView(@PathVariable Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
         return "hyem/oneteam";
+    }
+
+    // 팀 정보 수정 페이지
+    @GetMapping("/modify/{id}")
+    public String teamModify(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("team", teamService.teamView(id));
+        return "hyem/teammodify";
+    }
+
+    // 팀 정보 수정
+    @PostMapping("/modify/complete/{id}")
+    public String teamUpdate(@PathVariable("id") Long id, TeamCreateRequest request, Model model) throws Exception{
+        TeamDTO updatedTeam = teamService.teamUpdate(id, request);
+        model.addAttribute("message", "팀 정보 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/team/list");
+        return "hyem/message";
     }
 
     //enum 모델 추가
