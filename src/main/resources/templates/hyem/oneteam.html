@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>팀 정보 상세 페이지</title>
+    <meta charset="UTF-8">
+    <title>팀 정보 상세 페이지</title>
 </head>
 <body>
-  <table>
+<table>
     <thead>
     <tr>
-      <th>팀명</th>
-      <th>선호 스포츠</th>
-      <th>이용 요일</th>
-      <th>이용 시간</th>
-      <th>평균 연령</th>
-      <th>평균 성별</th>
+        <th>팀명</th>
+        <th>선호 스포츠</th>
+        <th>이용 요일</th>
+        <th>이용 시간</th>
+        <th>평균 연령</th>
+        <th>평균 성별</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-      <td th:text="${team.teamName}"></td>
-      <td th:text="${team.sportsId}"></td>
-      <td th:text="${team.useWeek}"></td>
-      <td th:text="${team.useTime}"></td>
-      <td th:text="${team.averageAge}"></td>
-      <td th:text="${team.averageGender}"></td>
+        <td th:text="${team.teamName}"></td>
+        <td th:text="${team.sportsId}"></td>
+        <td th:text="${team.useWeek}"></td>
+        <td th:text="${team.useTime}"></td>
+        <td th:text="${team.averageAge}"></td>
+        <td th:text="${team.averageGender}"></td>
     </tr>
     </tbody>
-  </table>
+</table>
 
-<!--<a th:href="@{/team/modify/{id}(id = ${team.id})}">수정</a>-->
-
+<button type="button"><a th:href="@{/team/modify/{id}(id = ${team.id})}">팀 정보 수정</a></button>
+<form th:action="@{/team/delete/{id}(id = ${team.id})}" th:method="delete">
+    <button class="btn btn-primary" onclick="teamDelete();">삭제</button>
+</form>
 </body>
 </html>

@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum Time {
 
-    MORNING("아침"), AFTERNOON("낮"), EVENING("저녁"),DAYBREAK("심야");
+    아침(1), 낮(10), 저녁(100),심야(1000);
 
-    private final String description;
+    private final Integer count;
 
-    Time(String description) {
-        this.description = description;
+    Time(Integer count) {
+        this.count = count;
     }
 }

@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum Gender {
 
-    Female("여자"), Male("남자"), All("남녀모두");
+    여자(1), 남자(2), 남녀모두(3);
 
-    private final String description;
+    private final Integer count;
 
-    Gender(String description) {
-        this.description = description;
+    Gender(Integer count) {
+        this.count = count;
     }
 }

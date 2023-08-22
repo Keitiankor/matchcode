@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public enum Week {
 
-    MON("월"), TUE("화"), WED("수"),
-    THU("목"), FRI("금"), SAT("토"), SUN("일");
+    월(1), 화(10), 수(100),
+    목(1000), 금(10000), 토(100000), 일(1000000);
 
-    private final String description;
+    private final Integer count;
 
-    Week(String description) {
-        this.description = description;
+    Week(Integer count) {
+        this.count = count;
     }
 }

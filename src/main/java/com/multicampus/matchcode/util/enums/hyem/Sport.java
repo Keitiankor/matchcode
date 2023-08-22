@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum Sport {
 
-    Bascetball("농구"), Futsal("풋살"), Badminton("배드민턴");
+    농구(1), 풋살(2), 배드민턴(3);
 
-    private final String description;
+    private final Integer count;
 
-    Sport(String description) {
-        this.description = description;
+    Sport(Integer count) {
+        this.count = count;
     }
 }

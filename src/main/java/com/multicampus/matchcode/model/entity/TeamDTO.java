@@ -1,51 +1,37 @@
 package com.multicampus.matchcode.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import java.sql.Time;
-import java.sql.Timestamp;
+        import jakarta.persistence.*;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+        import java.sql.Timestamp;
 
-@Entity(name = "Team")
+        import lombok.*;
+        import org.hibernate.annotations.CreationTimestamp;
+
+@Entity(name = "Team_test")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class TeamDTO {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long mapId;
-    private String sportsId;
+    private long mapId ;
+    private long sportsId;
     private String teamName;
     private String uri;
     private String emblem;
-    private String useWeek;
-    private String useTime;
-    private int teamRank;
-    private String averageAge;
-    private String averageGender;
-
+    private long useWeek;
+    private long useTime;
+    private int teamRank ;
+    private long averageAge;
+    private long averageGender;
     @CreationTimestamp
     private Timestamp createdDate;
+    private Integer status ;
 
-    private int status;
-
-    @Builder
-    public TeamDTO(String sportsId, String teamName, String uri,
-                   String useWeek, String useTime, String averageAge,
-                   String averageGender, Timestamp createdDate) {
-        this.sportsId = sportsId;
-        this.teamName = teamName;
-        this.uri = uri;
-        this.useWeek = useWeek;
-        this.useTime = useTime;
-        this.averageAge = averageAge;
-        this.averageGender = averageGender;
-        this.createdDate = createdDate;
-    }
+    //체크박스 테스트코드
+    //@Transientt
+    //private List<String> selectedSports;
 }

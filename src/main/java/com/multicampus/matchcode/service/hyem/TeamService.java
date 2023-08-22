@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,21 +14,18 @@ public class TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
-    public TeamDTO save(TeamDTO teamDTO) {
-        return teamRepository.save(teamDTO);
-    }
-
-    public TeamDTO create(String teamName, String uri, String sportId
-            ,String averageGender, String averageAge, String useWeek, String useTime) {
-        return TeamDTO.builder()
-                .teamName(teamName)
-                .uri(uri)
-                .sportsId(sportId)
-                .averageGender(averageGender)
-                .averageAge(averageAge)
-                .useWeek(useWeek)
-                .useTime(useTime)
+    // 팀 생성
+    public void save(TeamCreateRequest request) {
+        TeamDTO dto = TeamDTO.builder()
+                .sportsId(request.getSportsId())
+                .teamName(request.getTeamName())
+                .uri(request.getUri())
+                .useWeek(request.getUseWeek())
+                .useTime(request.getUseTime())
+                .averageAge(request.getAverageAge())
+                .averageGender(request.getAverageGender())
                 .build();
+        teamRepository.save(dto);
     }
 
     // 팀 리스트 처리
@@ -39,4 +37,5 @@ public class TeamService {
     public TeamDTO teamView(Long id) {
         return teamRepository.findById(id).get();
     }
+
 }

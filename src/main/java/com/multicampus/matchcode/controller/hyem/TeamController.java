@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.controller.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.util.enums.hyem.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,37 +26,34 @@ public class TeamController {
     private Time time;
 
 
-    // 팀 생성 페이지
+    // 팀 생성하기
     @GetMapping("/create")
     public String addTeam(Model model) {
-        TeamDTO teamDTO = teamService.create("","","","","","","");
+        TeamDTO teamDTO = new TeamDTO();
         model.addAttribute("team", teamDTO);
         return "hyem/createteam";
     }
 
-    // 팀 생성하기
     @PostMapping("/addteam")
-    public String createTeam(@ModelAttribute("team") TeamDTO teamDTO, Model model) throws Exception{
-        teamService.save(teamDTO);
+    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest requestDto, Model model) throws Exception{
+        teamService.save(requestDto);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/team/create");
-        System.out.println("id : " + teamDTO.getId());
-        System.out.println("teamName : " + teamDTO.getTeamName());
-        System.out.println("uri : " + teamDTO.getUri());
-        System.out.println("selected sport : " + teamDTO.getSportsId());
-        System.out.println("gender average : " + teamDTO.getAverageGender());
-        System.out.println("age average : " + teamDTO.getAverageAge());
-        System.out.println("week average : " + teamDTO.getUseWeek());
-        System.out.println("time average : " + teamDTO.getUseTime());
+        //System.out.println("id : " + requestDto.getId());
+        System.out.println("teamName : " + requestDto.getTeamName());
+        System.out.println("uri : " + requestDto.getUri());
+        System.out.println("selected sport : " + requestDto.getSportsId());
+        System.out.println("gender average : " + requestDto.getAverageGender());
+        System.out.println("age average : " + requestDto.getAverageAge());
+        System.out.println("week average : " + requestDto.getUseWeek());
+        System.out.println("time average : " + requestDto.getUseTime());
 
-        return "hyem/message";
+        return "redirect:/team/list";
     }
 
     // 팀 리스트
     @GetMapping("/list")
-    public String teamList(Model model,
-                           @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                           String searchKeyword) {
+    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                           String searchKeyword, Model model) {
 
         Page<TeamDTO> list = teamService.teamList(pageable);;
 
@@ -79,6 +77,7 @@ public class TeamController {
     }
 
     //enum 모델 추가
+    //팀 생성할 때만 필요한 부분이라 수정 필요
     @ModelAttribute("sports")
     private Sport[] sports() {
         return Sport.values();

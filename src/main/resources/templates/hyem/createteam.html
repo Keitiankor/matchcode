@@ -6,77 +6,52 @@
   <title>팀 생성하기</title>
 </head>
 <body>
-  <h2>팀 생성하기</h2>
-  <!-- 체크박스 버튼 테스트 -->
-<!--  <button id="toggleButton" onclick="toggleCheckbox()">체크박스</button>
-  <label for="checkBox"></label>
-  <input type="checkbox" id="checkBox" style="display: none">-->
-
-  <form th:object="${team}" th:action="@{/team/addteam}" method="post">
-    <label for="teamName">팀명</label>
-    <input th:field="*{teamName}" type="text" id="teamName" name="teamName" placeholder="팀명을 입력해주세요">
-    <label th:field="*{uri}" for="uri">팀 코드</label>
-    <input type="text" id="uri" name="uri" placeholder="팀 코드를 입력해주세요">
-    <p>선호 스포츠(한개만 선택 가능)</p>
-    <div class="input-group mb-3">
-      <div th:each="sport : ${sports}" class="form-check">
-        <input class="form-check-input" th:field="*{sportsId}"
-               th:value="${sport.description}" type="radio" id="sport" name="sportsId">
-        <label class="form-check-label" th:for="sports"
-               th:text="${sport.description}"></label>
-      </div>
+<h2>팀 생성하기</h2>
+<form th:object="${team}" th:action="@{/team/addteam}" method="post">
+  팀명 <input type="text" name="teamName" placeholder="팀명을 입력해주세요">
+  팀 코드 <input type="text" name="uri" placeholder="팀 코드를 입력해주세요">
+  <p>선호 스포츠(한개만 선택 가능)</p>
+  <div class="input-group mb-3">
+    <div th:each="sport : ${sports}" class="form-check">
+      <input class="form-check-input" th:field="*{sportsId}"
+             th:value="${sport.count}" type="radio" id="sport" name="sportsId">
+      <label class="form-check-label" th:text="${sport.name()}"></label>
     </div>
-    <p>성별</p>
-    <div class="input-group mb-3">
-      <div th:each="gender : ${genders}" class="form-check">
-        <input class="form-check-input" th:field="*{averageGender}"
-               th:value="${gender.description}" type="radio" id="gender" name="averageGender">
-        <label class="form-check-label" th:for="genders"
-               th:text="${gender.description}"></label>
-      </div>
+  </div>
+  <p>성별</p>
+  <div class="input-group mb-3">
+    <div th:each="gender : ${genders}" class="form-check">
+      <input class="form-check-input" th:field="*{averageGender}"
+             th:value="${gender.count}" type="radio" id="gender" name="averageGender">
+      <label class="form-check-label" th:text="${gender.name()}"></label>
     </div>
-    <p>주요나이대</p>
-    <div class="input-group mb-3">
-      <div th:each="age : ${ages}" class="form-check">
-        <input class="form-check-input" th:field="*{averageAge}"
-               th:value="${age.description}" type="radio" id="age" name="averageAge">
-        <label class="form-check-label" th:for="ages"
-               th:text="${age.description}"></label>
-      </div>
+  </div>
+  <p>주요나이대</p>
+  <div class="input-group mb-3">
+    <div th:each="age : ${ages}" class="form-check">
+      <input class="form-check-input" th:field="*{averageAge}"
+             th:value="${age.count}" type="radio" id="age" name="averageAge">
+      <label class="form-check-label" th:text="${age.description}"></label>
     </div>
+  </div>
   <p>활동 요일</p>
-      <div class="input-group mb-3">
-        <div th:each="week : ${weeks}" class="form-check">
-          <input class="form-check-input" th:field="*{useWeek}"
-                 th:value="${week.description}" type="radio" id="week" name="useWeek">
-          <label class="form-check-label" th:for="ages"
-                 th:text="${week.description}"></label>
-        </div>
-      </div>
+  <div class="input-group mb-3">
+    <div th:each="week : ${weeks}" class="form-check">
+      <input class="form-check-input" th:field="*{useWeek}"
+             th:value="${week.count}" type="radio" id="week" name="useWeek">
+      <label class="form-check-label" th:text="${week.name()}"></label>
+    </div>
+  </div>
   <p>활동 시간</p>
-      <div class="input-group mb-3">
-        <div th:each="time : ${times}" class="form-check">
-          <input class="form-check-input" th:field="*{useTime}"
-                 th:value="${time.description}" type="radio" id="time" name="useTime">
-          <label class="form-check-label" th:for="ages"
-                 th:text="${time.description}"></label>
-        </div>
-      </div>
-
-<!--    <script>
-      function toggleCheckbox() {
-        var checkBox = document.getElementById("checkBox");
-        checkBox.checked = !checkBox.checked;
-
-        var toggleButton = document.getElementById("toggleButton");
-        if (checkBox.checked) {
-          toggleButton.style.backgroundColor = "blue";
-        } else {
-          toggleButton.style.backgroundColor = "";
-        }
-      }
-    </script>-->
-    <button id="save" type="submit">등록</button>
-  </form>
+  <div class="input-group mb-3">
+    <div th:each="time : ${times}" class="form-check">
+      <input class="form-check-input" th:field="*{useTime}"
+             th:value="${time.count}" type="radio" id="time" name="useTime">
+      <label class="form-check-label"
+             th:text="${time.name()}"></label>
+    </div>
+  </div>
+  <button id="save" type="submit">등록</button>
+</form>
 </body>
 </html>
