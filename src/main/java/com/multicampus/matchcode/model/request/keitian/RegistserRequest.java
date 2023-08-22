@@ -1,6 +1,5 @@
 package com.multicampus.matchcode.model.request.keitian;
 
-import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.Data;
 
