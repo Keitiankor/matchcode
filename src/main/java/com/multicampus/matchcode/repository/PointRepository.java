@@ -8,6 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PointRepository extends JpaRepository<PointDTO, Long> {
-    public Optional<PointDTO> findByUserId(long memberId);//userid가 있는 pointDTO를 가져와서 담는 메소드<<?
-    //근데 memberId여야 하는거 아닌가...?
+    public Optional<PointDTO> findByUserId(long memberId);//memberId와 pointDTO 내의 userId가 일치하는 데이터를 가져오겠다.
 }
