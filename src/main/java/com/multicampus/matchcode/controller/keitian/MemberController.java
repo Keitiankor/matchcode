@@ -4,6 +4,7 @@ import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.keitian.LoginRequest;
 import com.multicampus.matchcode.model.request.keitian.RegistserRequest;
 import com.multicampus.matchcode.service.keitian.MemberService;
+import com.multicampus.matchcode.util.component.MailComponent;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
@@ -18,6 +20,9 @@ public class MemberController {
 
     @Autowired
     MemberService service;
+
+    @Autowired
+    MailComponent mailSender;
 
     @GetMapping("login")
     public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) Long id) {
@@ -58,5 +63,30 @@ public class MemberController {
             return "redirect:regist";
         }
         return "redirect:";
+    }
+
+    @PostMapping("regist/emailverifying")
+    @ResponseBody
+    public String pMemberRegistEmailVerify(HttpServletRequest hRequest) {
+        HttpSession session = hRequest.getSession(false);
+        String emailAdress = hRequest.getParameter("mailAdress");
+        String verifyString = mailSender.sendVerifyingMail(emailAdress);
+        if (verifyString != null) {
+            session.setAttribute(SessionConstant.VERIFY_STRING, verifyString);
+            return "메일이 정상 발송되었습니다.";
+        }
+        return "메일 발송중 오류가 발생했습니다.";
+    }
+
+    @PostMapping("regist/verifyingcheck")
+    @ResponseBody
+    public Boolean pMemverVerifyingCheck(
+        @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
+        String inputString
+    ) {
+        if (verifyString.equals(inputString)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -20,6 +20,5 @@ public class PointDTO {
 
     private long userId;
     private Timestamp date;
-    private Timestamp expireDate;
     private int point;
 }
