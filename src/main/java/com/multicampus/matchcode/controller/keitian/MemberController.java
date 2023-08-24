@@ -26,7 +26,7 @@ public class MemberController {
     MailComponent mailSender;
 
     @GetMapping("login")
-    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) Long id) {
+    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) Long id) {
         if (id == null) {
             return "keitian/login";
         } else {
@@ -35,7 +35,7 @@ public class MemberController {
     }
 
     @GetMapping("regist")
-    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) Long id) {
+    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) Long id) {
         if (id == null) {
             return "keitian/regist";
         } else {
@@ -48,7 +48,7 @@ public class MemberController {
         HttpSession session = hRequest.getSession(true);
         MemberDTO dto = service.getId(request.getAccount(), request.getPassword());
         if (dto != null) {
-            session.setAttribute(SessionConstant.MEMBER_ID, dto);
+            session.setAttribute(SessionConstant.MEMBER_DTO, dto);
             return "redirect:";
         } else {
             return "redirect:login";
