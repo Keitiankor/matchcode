@@ -58,7 +58,11 @@ public class MypageService {
 
 
     public ResultDTO getResultByMatchId(long matchId) {
-        return result.findByMatchId(matchId);
+        Optional<ResultDTO> odto = result.findByMatchIdAndUserId(matchId, (long)1);
+        if(odto.isPresent()){
+            return odto.get();
+        }
+        return null;
     }
 
 
@@ -69,4 +73,6 @@ public class MypageService {
     public MatchMemberDTO getMatchMemberByMatchId(long matchid) {
         return matchmember.findByMatchId(matchid);
     }
+
+
 }

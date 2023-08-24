@@ -48,6 +48,10 @@ public class MypageController {
 
         for (MatchDTO match : matches) {
             ResultDTO result = service.getResultByMatchId(match.getId());
+            if(result == null){
+                continue;
+            }
+            System.out.println(result.toString());
             MapDTO map = service.getMapByMatchId(match.getMapId());
             MatchMemberDTO matchMember = service.getMatchMemberByMatchId(match.getId());
             MatchHistoryDTO matchHistory = new MatchHistoryDTO(match, result, map, matchMember);
