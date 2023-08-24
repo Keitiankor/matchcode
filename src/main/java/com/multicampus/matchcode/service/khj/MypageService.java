@@ -26,6 +26,9 @@ public class MypageService {
     @Autowired
     ResultRepository result;
 
+    @Autowired
+    MatchMemberRepository matchmember;
+
 
     //메인화면 member 이름과 point를 불러오기 위한 service메소드
     public MemberAndPointDTO getMemberAndPoint(long memberId) {
@@ -47,7 +50,6 @@ public class MypageService {
 
 
     //문제1) 그런데 '나의' 매치 기록을 가져와야 하는데...?
-    //문제2) 다른 테이블에서도 값들 다 가져와야하는데...?
 
     //매치 히스토리 화면 내 종목에 맞는 기록을 불러오기 위한 service메소드
     public List<MatchDTO> getMatchesBySportsId(long sportsId) {
@@ -60,7 +62,11 @@ public class MypageService {
     }
 
 
-//    public MapDTO getMapByMatchId(long matchId) {
-//        return map.findByMatchId(matchId);
-//    }
+    public MapDTO getMapByMatchId(long mapId) {
+        return map.findById(mapId);
+    }
+
+    public MatchMemberDTO getMatchMemberByMatchId(long matchid) {
+        return matchmember.findByMatchId(matchid);
+    }
 }

@@ -19,4 +19,6 @@ public class MatchMemberDTO {
 
     private long matchId;
     private long userId;
+
+
 }

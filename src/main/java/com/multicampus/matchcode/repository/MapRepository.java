@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MapRepository extends JpaRepository<MapDTO, Long> {
 
-//    MapDTO findByMatchId(long matchId);
+    MapDTO findById(long mapId);
 }

@@ -1,20 +1,14 @@
 package com.multicampus.matchcode.controller.khj;
 
-import com.multicampus.matchcode.model.entity.MapDTO;
-import com.multicampus.matchcode.model.entity.MatchDTO;
-import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
-import com.multicampus.matchcode.model.entity.ResultDTO;
+import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MypageController {
@@ -50,15 +44,17 @@ public class MypageController {
     public String loadSportsData(long sportsId, Model model) {
         List<MatchDTO> matches = service.getMatchesBySportsId(sportsId);
 
-        // Create a map to store match and result pairs
-        Map<MatchDTO, ResultDTO> matchResultMap = new HashMap<>();
+        List<MatchHistoryDTO> matchHistoryList = new ArrayList<>();
 
         for (MatchDTO match : matches) {
             ResultDTO result = service.getResultByMatchId(match.getId());
-            matchResultMap.put(match, result);
+            MapDTO map = service.getMapByMatchId(match.getMapId());
+            MatchMemberDTO matchMember = service.getMatchMemberByMatchId(match.getId());
+            MatchHistoryDTO matchHistory = new MatchHistoryDTO(match, result, map, matchMember);
+            matchHistoryList.add(matchHistory);
         }
 
-        model.addAttribute("matchResultMap", matchResultMap);
+        model.addAttribute("matchHistoryList", matchHistoryList);
         return "khj/history";
     }
     
