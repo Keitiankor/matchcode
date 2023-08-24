@@ -1,5 +1,8 @@
 server:
   port: 8083
+  servlet:
+    session:
+      tracking-modes: cookie
 
 spring:
   profiles:
@@ -33,6 +36,19 @@ spring:
       ddl-auto: update # ddl 자동작성여부(update)
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: matchcode.multi@gmail.com
+    password: xevzkrffbzrzojwa
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 ---
 server:
   port: 8083
