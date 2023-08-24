@@ -2,15 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:inline="text">매치 히스토리</title>
+    <link rel="stylesheet" th:href="@{/css/historyTable.css}" />
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<br>
 
-<!-- matches 데이터를 이용하여 표시 -->
-<div th:each="match : ${matches}">
-    <p>date : <span th:text="${match.matchDate}"></span></p>
-    <!-- ... 기타 필요한 데이터 표시 -->
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>결과</th>
+        <th>Date</th>
+        <th>내 점수</th>
+        <th>상대 점수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="entry : ${matchResultMap}">
+        <td>
+            <span th:if="${entry.value.myScore > entry.value.rivalScore}">승리</span>
+            <span th:if="${entry.value.myScore < entry.value.rivalScore}">패배</span>
+            <span th:if="${entry.value.myScore == entry.value.rivalScore}">무승부</span>
+        </td>
+        <td th:text="${#dates.format(entry.key.matchDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${entry.value.myScore}"></td>
+        <td th:text="${entry.value.rivalScore}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

@@ -1,16 +1,10 @@
 package com.multicampus.matchcode.service.khj;
 
-import com.multicampus.matchcode.model.entity.MatchDTO;
-import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
-import com.multicampus.matchcode.model.entity.MemberDTO;
-import com.multicampus.matchcode.model.entity.PointDTO;
-import com.multicampus.matchcode.repository.MatchRepository;
-import com.multicampus.matchcode.repository.MemberRepository;
-import com.multicampus.matchcode.repository.PointRepository;
+import com.multicampus.matchcode.model.entity.*;
+import com.multicampus.matchcode.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +19,12 @@ public class MypageService {
 
     @Autowired
     MatchRepository matches;
+
+    @Autowired
+    MapRepository map;
+
+    @Autowired
+    ResultRepository result;
 
 
     //메인화면 member 이름과 point를 불러오기 위한 service메소드
@@ -45,14 +45,22 @@ public class MypageService {
         }
     }
 
-    //매치 히스토리 화면 내 종목에 맞는 기록을 불러오기 위한 service메소드
+
     //문제1) 그런데 '나의' 매치 기록을 가져와야 하는데...?
     //문제2) 다른 테이블에서도 값들 다 가져와야하는데...?
+
+    //매치 히스토리 화면 내 종목에 맞는 기록을 불러오기 위한 service메소드
     public List<MatchDTO> getMatchesBySportsId(long sportsId) {
         return matches.findBySportsId(sportsId);
     }
 
-//    public MatchDTO getMatchBySportsId(long sportsId) {
-//        return match.findBySportsId(sportsId);
+
+    public ResultDTO getResultByMatchId(long matchId) {
+        return result.findByMatchId(matchId);
+    }
+
+
+//    public MapDTO getMapByMatchId(long matchId) {
+//        return map.findByMatchId(matchId);
 //    }
 }

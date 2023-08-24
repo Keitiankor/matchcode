@@ -1,14 +1,20 @@
 package com.multicampus.matchcode.controller.khj;
 
+import com.multicampus.matchcode.model.entity.MapDTO;
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.MemberAndPointDTO;
+import com.multicampus.matchcode.model.entity.ResultDTO;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MypageController {
@@ -42,9 +48,17 @@ public class MypageController {
     //매치 히스토리 내에서 종목별 페이지
     @GetMapping("/loadSportsData")
     public String loadSportsData(long sportsId, Model model) {
-        List<MatchDTO> matches = service.getMatchesBySportsId(sportsId); // 해당 sportsId에 맞는 데이터 뭉탱이로 가져오기
+        List<MatchDTO> matches = service.getMatchesBySportsId(sportsId);
 
-        model.addAttribute("matches", matches);
+        // Create a map to store match and result pairs
+        Map<MatchDTO, ResultDTO> matchResultMap = new HashMap<>();
+
+        for (MatchDTO match : matches) {
+            ResultDTO result = service.getResultByMatchId(match.getId());
+            matchResultMap.put(match, result);
+        }
+
+        model.addAttribute("matchResultMap", matchResultMap);
         return "khj/history";
     }
     

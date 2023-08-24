@@ -26,4 +26,5 @@ public class MatchDTO {
     private int restrictionMinRate;
     private int restrictionMaxRate;
     private int Status;
+
 }
