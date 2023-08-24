@@ -13,4 +13,6 @@ public class RegistserRequest {
     String phone;
     String mailAddress;
     String birthday;
+    boolean isAccountNotDup;
+    boolean isVerifyied;
 }
