@@ -26,17 +26,17 @@ public class MemberController {
     MailComponent mailSender;
 
     @GetMapping("login")
-    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) Long id) {
-        if (id == null) {
+    public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
+        if (dto == null) {
             return "keitian/login";
         } else {
-            return "keitian/shortinfo";
+            return "index";
         }
     }
 
     @GetMapping("regist")
-    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) Long id) {
-        if (id == null) {
+    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
+        if (dto == null) {
             return "keitian/regist";
         } else {
             return "index";
