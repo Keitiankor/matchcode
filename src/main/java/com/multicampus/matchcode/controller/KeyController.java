@@ -8,7 +8,7 @@ public class KeyController {
 
     @GetMapping("kakaomapkey")
     public String getKakaoMapAPIKey() {
-        return "c80a75ce9529c87ee1ee975834c095bf"; //kakaoMapAPI key
+        return ""; //kakaoMapAPI key
     }
 }
 
