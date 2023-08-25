@@ -1,26 +1,23 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
-import java.sql.Timestamp;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 
-@Entity
-@Getter
+@Entity(name="UsePoint")
 @Data
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-
-public class PointDTO {
+@NoArgsConstructor
+public class PointUseHistoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
-    private Timestamp date;
-    private int point;
-
-
+    private Timestamp paydate;
+    private int price;
 }
+

@@ -39,7 +39,7 @@ spring:
       ddl-auto: update # ddl 자동작성여부(update)
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-
+        
   logging:
     level:
       org.springframework: DEBUG
