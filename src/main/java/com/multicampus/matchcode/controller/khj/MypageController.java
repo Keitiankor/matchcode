@@ -1,6 +1,5 @@
 package com.multicampus.matchcode.controller.khj;
 
-import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.model.request.khj.MemberAndPointRequest;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
