@@ -32,14 +32,15 @@ public class MemberService {
         }
 
         MemberDTO dto = MemberDTO
-            .builder()
-            .account(request.getAccount())
-            .password(pe.encode(request.getPassword()))
-            .name(request.getName())
-            .phone(request.getPhone())
-            .mailAddress(request.getMailAddress())
-            .birthday(bd)
-            .build();
+                .builder()
+                .account(request.getAccount())
+                .password(pe.encode(request.getPassword()))
+                .name(request.getName())
+                .phone(request.getPhone())
+                .mailAddress(request.getMailAddress())
+                .createdDate(new Timestamp(System.currentTimeMillis()))
+                .birthday(bd)
+                .build();
 
         repository.save(dto);
         return 1;
@@ -58,5 +59,13 @@ public class MemberService {
             System.out.println("null");
             return null;
         }
+    }
+
+    public boolean isAccountDup(String acc) {
+        Optional<MemberDTO> odto = repository.findByAccount(acc);
+        if (odto.isPresent()) {
+            return false;
+        }
+        return true;
     }
 }

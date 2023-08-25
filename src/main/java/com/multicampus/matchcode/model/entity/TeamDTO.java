@@ -1,34 +1,34 @@
 package com.multicampus.matchcode.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import java.sql.Time;
-import java.sql.Timestamp;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+        import jakarta.persistence.*;
 
-@Entity(name = "Team")
+        import java.sql.Timestamp;
+        import java.util.List;
+
+        import lombok.*;
+        import org.hibernate.annotations.CreationTimestamp;
+
+@Entity(name = "Team_test")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class TeamDTO {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long mapId;
-    private long sportsId;
+    private long mapId ;
+    private List<Long> sportsId;
     private String teamName;
     private String uri;
     private String emblem;
-    private int useWeek;
-    private Time useTime;
-    private int teamRank;
-    private short averageAge;
-    private short averageGender;
+    private List<Long> useWeek;
+    private long useTime;
+    private int teamRank ;
+    private List<Long> averageAge;
+    private long averageGender;
+    @CreationTimestamp
     private Timestamp createdDate;
-    private int status;
+    private Integer status ;
 }
