@@ -12,6 +12,9 @@ spring:
     view:
       prefix: /resources/templates
       suffix: .html
+    hiddenmethod:
+      filter:
+        enabled: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver # 우리는 mysql을 사용한다.
@@ -38,7 +41,11 @@ spring:
       ddl-auto: update # ddl 자동작성여부(update)
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-
+        
+  logging:
+    level:
+      org.springframework: DEBUG
+      org.thymeleaf: DEBUG
   mail:
     host: smtp.gmail.com
     port: 587

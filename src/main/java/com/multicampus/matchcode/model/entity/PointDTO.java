@@ -1,24 +1,26 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import java.sql.Timestamp;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Entity(name = "Point")
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
+
+
+@Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+
 public class PointDTO {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private long userId;
     private Timestamp date;
     private int point;
+
+
 }
