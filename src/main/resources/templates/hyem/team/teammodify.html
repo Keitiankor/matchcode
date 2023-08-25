@@ -28,14 +28,25 @@
             팀명 <input th:field="*{teamName}" type="text" name="teamName">
             팀 코드 <input th:field="*{uri}" type="text" name="uri">
 
-            <p>선호 스포츠(한개만 선택 가능)</p>
+            <p>선호 스포츠(중복 선택 가능)</p>
             <div class="input-group mb-3">
                 <div th:each="sport : ${sports}" class="form-check">
                     <input class="form-check-input" th:field="*{sportsId}"
-                           th:value="${sport.count}" type="radio" id="sport" name="sportsId">
+                           th:value="${sport.count}" type="checkbox" id="sport" name="sportsId">
                     <label class="form-check-label" th:text="${sport.name()}"></label>
                 </div>
             </div>
+            <!--            다중 체크 가능
+                            <div class="input-group mb-3">
+                            <div th:each="sport, idx : ${sports}" class="form-check">
+                                <input class="form-check-input" th:field="*{selectedSports[__${idx.index}__]}"
+                                       th:value="${sport.count}" type="checkbox" id="sport" name="sportsId">
+                                <label class="form-check-label" th:text="${sport.name()}"></label>
+                            </div>
+                            &lt;!&ndash; null값 처리 &ndash;&gt;
+                            <input th:each="i : ${#numbers.sequence(0, (sports.size() - selectedSports.size()) - 1)}"
+                                   th:field="*{selectedSports[__${i}__]}" type="hidden" />
+                        </div>-->
 
             <p>성별</p>
             <div class="input-group mb-3">
@@ -46,20 +57,20 @@
                 </div>
             </div>
 
-            <p>주요나이대</p>
+            <p>주요 나이대(중복 선택 가능)</p>
             <div class="input-group mb-3">
                 <div th:each="age : ${ages}" class="form-check">
                     <input class="form-check-input" th:field="*{averageAge}"
-                           th:value="${age.count}" type="radio" id="age" name="averageAge">
+                           th:value="${age.count}" type="checkbox" id="age" name="averageAge">
                     <label class="form-check-label" th:text="${age.description}"></label>
                 </div>
             </div>
 
-            <p>활동 요일</p>
+            <p>활동 요일(중복 선택 가능)</p>
             <div class="input-group mb-3">
                 <div th:each="week : ${weeks}" class="form-check">
                     <input class="form-check-input" th:field="*{useWeek}"
-                           th:value="${week.count}" type="radio" id="week" name="useWeek">
+                           th:value="${week.count}" type="checkbox" id="week" name="useWeek">
                     <label class="form-check-label" th:text="${week.name()}"></label>
                 </div>
             </div>

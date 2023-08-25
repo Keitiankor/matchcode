@@ -28,18 +28,16 @@ public class TeamController {
 
     // 팀 생성하기
     @GetMapping("/create")
-    public String addTeam(Model model) {
-        TeamDTO teamDTO = new TeamDTO();
-        model.addAttribute("team", teamDTO);
-        return "hyem/createteam";
+    public String addTeam(@ModelAttribute("team") TeamDTO teamDTO, Model model) {
+        return "hyem/team/createteam";
     }
 
-    @PostMapping("/addteam")
+    @PostMapping("/add")
     public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest requestDto, Model model) throws Exception{
         teamService.save(requestDto);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
-        //System.out.println("id : " + requestDto.getId());
+
         System.out.println("teamName : " + requestDto.getTeamName());
         System.out.println("uri : " + requestDto.getUri());
         System.out.println("selected sport : " + requestDto.getSportsId());
@@ -53,8 +51,7 @@ public class TeamController {
 
     // 팀 리스트
     @GetMapping("/list")
-    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                           String searchKeyword, Model model) {
+    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
 
         Page<TeamDTO> list = teamService.teamList(pageable);;
 
@@ -67,21 +64,21 @@ public class TeamController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "hyem/teamlist";
+        return "hyem/team/teamlist";
     }
 
     // 팀 상세 정보 열람
-    @GetMapping("/oneteam/{id}")
+    @GetMapping("/view/{id}")
     public String teamView(@PathVariable Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
-        return "hyem/oneteam";
+        return "hyem/team/teamview";
     }
 
     // 팀 정보 수정 페이지
     @GetMapping("/modify/{id}")
     public String teamModify(@PathVariable("id") Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
-        return "hyem/teammodify";
+        return "hyem/team/teammodify";
     }
 
     // 팀 정보 수정

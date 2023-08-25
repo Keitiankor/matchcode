@@ -7,14 +7,14 @@
 </head>
 <body>
 <h2>팀 생성하기</h2>
-<form th:object="${team}" th:action="@{/team/addteam}" method="post">
+<form th:object="${team}" th:action="@{/team/createteam}" method="post">
   팀명 <input type="text" name="teamName" placeholder="팀명을 입력해주세요">
   팀 코드 <input type="text" name="uri" placeholder="팀 코드를 입력해주세요">
-  <p>선호 스포츠(한개만 선택 가능)</p>
+  <p>선호 스포츠(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="sport : ${sports}" class="form-check">
       <input class="form-check-input" th:field="*{sportsId}"
-             th:value="${sport.count}" type="radio" id="sport" name="sportsId">
+             th:value="${sport.count}" type="checkbox">
       <label class="form-check-label" th:text="${sport.name()}"></label>
     </div>
   </div>
@@ -26,19 +26,19 @@
       <label class="form-check-label" th:text="${gender.name()}"></label>
     </div>
   </div>
-  <p>주요나이대</p>
+  <p>주요 나이대(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="age : ${ages}" class="form-check">
       <input class="form-check-input" th:field="*{averageAge}"
-             th:value="${age.count}" type="radio" id="age" name="averageAge">
+             th:value="${age.count}" type="checkbox">
       <label class="form-check-label" th:text="${age.description}"></label>
     </div>
   </div>
-  <p>활동 요일</p>
+  <p>활동 요일(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="week : ${weeks}" class="form-check">
       <input class="form-check-input" th:field="*{useWeek}"
-             th:value="${week.count}" type="radio" id="week" name="useWeek">
+             th:value="${week.count}" type="checkbox">
       <label class="form-check-label" th:text="${week.name()}"></label>
     </div>
   </div>

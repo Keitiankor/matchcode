@@ -3,6 +3,7 @@ package com.multicampus.matchcode.model.entity;
         import jakarta.persistence.*;
 
         import java.sql.Timestamp;
+        import java.util.List;
 
         import lombok.*;
         import org.hibernate.annotations.CreationTimestamp;
@@ -18,20 +19,16 @@ public class TeamDTO {
     private long id;
 
     private long mapId ;
-    private long sportsId;
+    private List<Long> sportsId;
     private String teamName;
     private String uri;
     private String emblem;
-    private long useWeek;
+    private List<Long> useWeek;
     private long useTime;
     private int teamRank ;
-    private long averageAge;
+    private List<Long> averageAge;
     private long averageGender;
     @CreationTimestamp
     private Timestamp createdDate;
-    private Integer status;
-
-    //체크박스 테스트코드
-    //@Transientt
-    //private List<String> selectedSports;
+    private Integer status ;
 }

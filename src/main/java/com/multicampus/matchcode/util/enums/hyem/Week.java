@@ -5,12 +5,21 @@ import lombok.Getter;
 @Getter
 public enum Week {
 
-    월(1), 화(10), 수(100),
-    목(1000), 금(10000), 토(100000), 일(1000000);
+    월(1), 화(2), 수(3),
+    목(4), 금(5), 토(6), 일(7);
 
     private final Integer count;
 
     Week(Integer count) {
         this.count = count;
+    }
+
+    public static String getNameFromCount(Integer count) {
+        for (Week week : Week.values()) {
+            if (week.getCount().equals(count)) {
+                return week.name();
+            }
+        }
+        return "Unknown";
     }
 }

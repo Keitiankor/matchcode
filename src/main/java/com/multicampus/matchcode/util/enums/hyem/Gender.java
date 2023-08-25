@@ -12,4 +12,13 @@ public enum Gender {
     Gender(Integer count) {
         this.count = count;
     }
+
+    public static String getNameFromCount(Integer count) {
+        for (Gender gender : Gender.values()) {
+            if (gender.getCount().equals(count)) {
+                return gender.name();
+            }
+        }
+        return "Unknown"; // 또는 다른 디폴트 값을 설정할 수 있습니다.
+    }
 }

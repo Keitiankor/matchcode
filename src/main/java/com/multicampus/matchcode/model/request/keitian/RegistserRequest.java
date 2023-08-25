@@ -1,6 +1,5 @@
 package com.multicampus.matchcode.model.request.keitian;
 
-import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,4 +13,6 @@ public class RegistserRequest {
     String phone;
     String mailAddress;
     String birthday;
+    boolean isAccountNotDup;
+    boolean isVerifyied;
 }
