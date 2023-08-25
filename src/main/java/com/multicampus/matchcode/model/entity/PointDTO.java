@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @Getter
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 public class PointDTO {
     @Id
@@ -20,16 +20,7 @@ public class PointDTO {
     private long id;
     private long userId;
     private Timestamp date;
-    private Timestamp expireDate;
     private int point;
-    private int amount;
 
-    public PointDTO(long id, long userId) {
-        this.id = id;
-        this.userId = userId;
-        this.date = date;
-        this.expireDate = expireDate;
-        this.point = point;
-        this.amount = amount;
-    }
+
 }
