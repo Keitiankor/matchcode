@@ -29,7 +29,7 @@ public class TeamDTO {
     private long averageGender;
     @CreationTimestamp
     private Timestamp createdDate;
-    private Integer status ;
+    private Integer status;
 
     //체크박스 테스트코드
     //@Transientt
