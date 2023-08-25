@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResult;
+import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class MypageController {
 
     @Autowired
     MypageService service;
+
+    @Autowired
+    MyHistoryService myHistoryService;
 
     //마이페이지 기본 화면
     @GetMapping("mypage")
@@ -43,25 +47,7 @@ public class MypageController {
     //매치 히스토리 내에서 종목별 페이지
     @GetMapping("/loadSportsData")
     public String loadSportsData(long sportsId, Model model) {
-        List<MatchDTO> matches = service.getMatchesBySportsId(sportsId);
-
-        //List<MatchHistoryDTO> matchHistoryList = new ArrayList<>();이전 코드
-        List<MatchResult> matchResults = new ArrayList<>();
-
-        //for (MatchDTO match : matches) { 이전 코드
-        for (MatchDTO match : matches) {
-            ResultDTO result = service.getResultByMatchId(match.getId());
-            if(result == null){
-                continue;
-            }
-            MapDTO map = service.getMapByMatchId(match.getMapId());
-            MatchMemberDTO matchMember = service.getMatchMemberByMatchId(match.getId());
-            //MatchHistoryDTO matchHistory = new MatchHistoryDTO(match, result, map, matchMember); 이전 코드
-            MatchResult matchResult = new MatchResult(match, result, map, matchMember);
-            matchResults.add(matchResult);
-        }
-
-        //model.addAttribute("matchHistoryList", matchHistoryList); // 이전 코드
+        List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
     }
