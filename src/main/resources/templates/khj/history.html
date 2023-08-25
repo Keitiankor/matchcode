@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:inline="text">매치 히스토리</title>
+    <link rel="stylesheet" th:href="@{/css/khj/historyTable.css}" />
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<table>
+    <thead>
+    <tr>
+        <th>결과</th>
+        <th>날짜</th>
+        <th>체육시설</th>
+        <th>내 점수</th>
+        <th>상대 점수</th>
+        <!-- 다른 데이터에 해당하는 th 태그들 추가 -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="matchResult : ${matchResults}">
+        <td>
+            <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
+            <span th:if="${matchResult.myScore < matchResult.rivalScore}">패배</span>
+            <span th:if="${matchResult.myScore == matchResult.rivalScore}">무승부</span>
+        </td>
+        <td th:text="${#dates.format(matchResult.matchDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${matchResult.name}"></td>
+        <td th:text="${matchResult.myScore}"></td>
+        <td th:text="${matchResult.rivalScore}"></td>
+        <!-- 다른 데이터에 해당하는 td 태그들 추가 -->
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
