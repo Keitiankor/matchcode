@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResult;
+import com.multicampus.matchcode.model.request.khj.MemberAndPointRequest;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class MypageController {
         //로 작성이 될 것
 
         // long memberId = loggedInMember.getId(); // 로그인한 회원의 memberid
-        // 위 코드는, 이제 로그인 시, 세션에서 memberid를 받아올 경우를 상정한 코드임! 그 전까진 예시로 1,2 같은 예시값을 집어넣어두자.
-        MemberAndPointDTO memberAndPoint = service.getMemberAndPoint(2); // 여기 memberId값에 이제 세션에서 받을 member의 id값을 넣으면 되는 것. 지금은 예시로 걍 2
-        model.addAttribute("memberAndPoint", memberAndPoint);
+        // 위 코드는, 이제 로그인 시, 세션에서 memberid를 받아올 경우를 상정한 코드임! 그 전까진 예시로 memberId값에 1,2 같은 예시값을 집어넣어두자.
+        MemberAndPointRequest nameAndPoint = service.getMemberAndPoint(2);
+        model.addAttribute("nameAndPoint", nameAndPoint);
         return "khj/mypage";
 
     }
