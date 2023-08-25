@@ -41,7 +41,7 @@ public class MypageService {
             if (pointDTO.isPresent()) {
                 return new MemberAndPointRequest(memberDTO.get(), pointDTO.get());
             } else {
-                // If point info is not found, you can pass an empty list or handle it based on your requirement
+
                 return new MemberAndPointRequest(memberDTO.get(), null);
             }
         } else {
