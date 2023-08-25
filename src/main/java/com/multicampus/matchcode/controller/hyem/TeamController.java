@@ -33,18 +33,18 @@ public class TeamController {
     }
 
     @PostMapping("/add")
-    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest requestDto, Model model) throws Exception{
-        teamService.save(requestDto);
+    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception{
+        teamService.save(request);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
 
-        System.out.println("teamName : " + requestDto.getTeamName());
-        System.out.println("uri : " + requestDto.getUri());
-        System.out.println("selected sport : " + requestDto.getSportsId());
-        System.out.println("gender average : " + requestDto.getAverageGender());
-        System.out.println("age average : " + requestDto.getAverageAge());
-        System.out.println("week average : " + requestDto.getUseWeek());
-        System.out.println("time average : " + requestDto.getUseTime());
+        System.out.println("teamName : " + request.getTeamName());
+        System.out.println("uri : " + request.getUri());
+        System.out.println("selected sport : " + request.getSportsId());
+        System.out.println("gender average : " + request.getAverageGender());
+        System.out.println("age average : " + request.getAverageAge());
+        System.out.println("week average : " + request.getUseWeek());
+        System.out.println("time average : " + request.getUseTime());
 
         return "hyem/message";
     }
