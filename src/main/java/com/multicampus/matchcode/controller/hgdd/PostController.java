@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.controller.hgdd;
 
 import com.multicampus.matchcode.model.entity.PostDTO;
-import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.service.hgdd.PostService;
 import com.multicampus.matchcode.service.hgdd.ReplyService;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @RequiredArgsConstructor
 @Controller
@@ -27,9 +24,10 @@ public class PostController {
     @Autowired
     private ReplyService replyService;
 
+
     //게시글 작성창으로 이동
     @GetMapping("/post/insert")
-    public String insert(Model model,PostDTO postDTO) {
+    public String insert(Model model, PostDTO postDTO) {
         model.addAttribute("postDTO", postDTO);
 
         return "hgdd/insert";
@@ -39,7 +37,8 @@ public class PostController {
     @PostMapping("/post/insert2")
     public String insert2(PostDTO postDTO, Model model) {
 
-        postService.insert(postDTO);;//db저장
+        postService.insert(postDTO);
+        ;//db저장
 
         System.out.println("제목: " + postDTO.getTitle());
         System.out.println("내용: " + postDTO.getContent());
@@ -51,13 +50,13 @@ public class PostController {
 
     //게시글 목록으로 이동
     @GetMapping("/post/list")
-    public String list(Model model, @PageableDefault(page = 0,size = 15,sort = "id",direction = Sort.Direction.DESC) Pageable pageable,String searchKeyword) {
+    public String list(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
 
         Page<PostDTO> list = null;
 
-        if(searchKeyword == null) {
+        if (searchKeyword == null) {
             list = postService.list(pageable);  //페이징
-        }else {
+        } else {
             list = postService.postlist(searchKeyword, pageable); //검색
         }
 
@@ -76,9 +75,9 @@ public class PostController {
     @GetMapping("/post/view")
     public String view(Model model, Long id) {
 
-        model.addAttribute("post",postService.view(id));
-        List<ReplyDTO> replyDTOList= replyService.list(id);
-        model.addAttribute("replylist",replyDTOList);
+        model.addAttribute("post", postService.view(id));
+        model.addAttribute("list", replyService.list(id));
+
         return "hgdd/view";
     }
 

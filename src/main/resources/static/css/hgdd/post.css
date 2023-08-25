@@ -1,0 +1,71 @@
+.layout {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+
+/*view*/
+.layout button[id="button.view"] {
+    margin-top: 10px;
+    margin-left: 305px;
+}
+
+
+.layout button[id="button2.view"] {
+    margin-left: 305px;
+
+}
+
+.card2 {
+    width: 100%;
+    border: solid #a09595;
+    height: 400px;
+}
+
+.card {
+
+    margin-top: 15px;
+    width: 100%;
+    border: solid #a09595;
+    height: 265px;
+    white-space: nowrap;
+}
+
+/*correction*/
+.layout textarea[id="textarea.correction"] {
+    width: 100%;
+    margin-top: 10px;
+    min-height: 300px;
+}
+
+
+
+.layout button[id="button.correction"] {
+    margin-top: 10px;
+    margin-left: 305px;
+}
+
+.layout input[id="title.orrection"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+/*insert*/
+.layout textarea[id="textarea.insert"] {
+    width: 100%;
+    margin-top: 10px;
+    min-height: 300px;
+}
+
+
+.layout button[id="button.insert"] {
+    margin-top: 10px;
+    margin-left: 305px;
+}
+
+.layout input[id="title.insert"] {
+    width: 100%;
+    box-sizing: border-box;
+}

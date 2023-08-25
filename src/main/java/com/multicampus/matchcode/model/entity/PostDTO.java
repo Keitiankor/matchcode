@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity(name = "Post")
+@Entity(name = "post")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class PostDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private long userId;
     private String title;
@@ -33,6 +33,8 @@ public class PostDTO {
     private int likes;
     private int declation;
     private int status;
+
+
 
     public void setTitle(String title) {
         this.title = title;
