@@ -19,16 +19,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="matchHistory : ${matchHistoryList}">
+    <tr th:each="matchResult : ${matchResults}">
         <td>
-            <span th:if="${matchHistory.result.myScore > matchHistory.result.rivalScore}">승리</span>
-            <span th:if="${matchHistory.result.myScore < matchHistory.result.rivalScore}">패배</span>
-            <span th:if="${matchHistory.result.myScore == matchHistory.result.rivalScore}">무승부</span>
+            <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
+            <span th:if="${matchResult.myScore < matchResult.rivalScore}">패배</span>
+            <span th:if="${matchResult.myScore == matchResult.rivalScore}">무승부</span>
         </td>
-        <td th:text="${#dates.format(matchHistory.match.matchDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${matchHistory.map.name}"></td>
-        <td th:text="${matchHistory.result.myScore}"></td>
-        <td th:text="${matchHistory.result.rivalScore}"></td>
+        <td th:text="${#dates.format(matchResult.matchDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${matchResult.name}"></td>
+        <td th:text="${matchResult.myScore}"></td>
+        <td th:text="${matchResult.rivalScore}"></td>
         <!-- 다른 데이터에 해당하는 td 태그들 추가 -->
     </tr>
     </tbody>

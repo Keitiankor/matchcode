@@ -64,11 +64,13 @@ public class MypageService {
         }
         return null;
     }
+    //결과는 매치id뿐만 아니라, 유저id까지 가져오면서 '내' 매치기록들만 읽어오도록
 
 
     public MapDTO getMapByMatchId(long mapId) {
         return map.findById(mapId);
     }
+
 
     public MatchMemberDTO getMatchMemberByMatchId(long matchid) {
         return matchmember.findByMatchId(matchid);
