@@ -87,12 +87,12 @@ public class MemberController {
     @PostMapping("regist/verifyingcheck")
     @ResponseBody
     public Boolean pMemverVerifyingCheck(
-            @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
-            @RequestParam String inputString) {
+        @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
+        @RequestParam String inputString
+    ) {
         if (verifyString.equals(inputString)) {
             return true;
         }
         return false;
     }
-
 }

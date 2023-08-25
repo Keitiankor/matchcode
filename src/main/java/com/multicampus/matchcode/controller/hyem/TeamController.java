@@ -19,12 +19,6 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
-    private Sport sport;
-    private Age age;
-    private Gender gender;
-    private Week week;
-    private Time time;
-
 
     // 팀 생성하기
     @GetMapping("/create")
@@ -33,7 +27,7 @@ public class TeamController {
     }
 
     @PostMapping("/add")
-    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception{
+    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception {
         teamService.save(request);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
@@ -51,19 +45,20 @@ public class TeamController {
 
     // 팀 리스트
     @GetMapping("/list")
-    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-
-        Page<TeamDTO> list = teamService.teamList(pageable);;
-
+    public String teamList(
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+        Model model
+    ) {
+        Page<TeamDTO> list = teamService.teamList(pageable);
         int nowPage = list.getPageable().getPageNumber() + 1;
+
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
-
         model.addAttribute("list", list);
+
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
         return "hyem/team/teamlist";
     }
 
@@ -83,8 +78,8 @@ public class TeamController {
 
     // 팀 정보 수정
     @PostMapping("/modify/complete/{id}")
-    public String teamUpdate(@PathVariable("id") Long id, TeamCreateRequest request, Model model) throws Exception{
-        TeamDTO updatedTeam = teamService.teamUpdate(id, request);
+    public String teamUpdate(@PathVariable("id") Long id, TeamCreateRequest request, Model model) throws Exception {
+        teamService.teamUpdate(id, request);
         model.addAttribute("message", "팀 정보 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
         return "hyem/message";
@@ -92,7 +87,7 @@ public class TeamController {
 
     // 팀 정보 삭제
     @DeleteMapping("/delete/{id}")
-    public String teamDelete(@PathVariable("id") long id, Model model) throws Exception{
+    public String teamDelete(@PathVariable("id") long id, Model model) throws Exception {
         model.addAttribute("message", "정말로 팀을 삭제하시겠습니까?");
         model.addAttribute("confirmUrl", "/team/deleteconfirmed/" + id);
         model.addAttribute("cancelUrl", "/team/list");
@@ -135,5 +130,4 @@ public class TeamController {
     private Time[] times() {
         return Time.values();
     }
-
 }

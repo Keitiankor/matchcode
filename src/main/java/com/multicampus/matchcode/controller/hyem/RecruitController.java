@@ -3,9 +3,7 @@ package com.multicampus.matchcode.controller.hyem;
 import com.multicampus.matchcode.model.entity.RecruitDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
-import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
-import com.multicampus.matchcode.service.hyem.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,33 +13,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/recruit")
 public class RecruitController {
 
     @Autowired
     private RecruitService recruitService;
-    private TeamService teamService;
-
-    @Autowired
-    public RecruitController(TeamService teamService) {
-        this.teamService = teamService;
-    }
 
     // 모집글 작성 매핑
     @GetMapping("/write/{teamid}")
     public String writeRecruit(@PathVariable("teamid") Long teamId, Model model) {
         RecruitDTO recruitDTO = new RecruitDTO();
-        model.addAttribute("id",teamId);
+        model.addAttribute("id", teamId);
         model.addAttribute("recruit", recruitDTO);
         return "hyem/recruit/writerecruit";
     }
 
     // 모집글 작성 처리
     @PostMapping("/add/{id}")
-    public String addRecruit(@PathVariable("id") Long id, @ModelAttribute("recruit") RecruitPostRequest request, TeamDTO teamDTO) {
+    public String addRecruit(
+        @PathVariable("id") Long id,
+        @ModelAttribute("recruit") RecruitPostRequest request,
+        TeamDTO teamDTO
+    ) {
         recruitService.save(request);
         System.out.println("content : " + request.getContent());
         return "redirect:/recruit/list";
@@ -49,7 +43,10 @@ public class RecruitController {
 
     // 모집글 리스트
     @GetMapping("/list")
-    public String recruitList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String recruitList(
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+        Model model
+    ) {
         TeamDTO teamDTO = new TeamDTO();
         model.addAttribute("team", teamDTO);
 
@@ -78,7 +75,7 @@ public class RecruitController {
 
     // 모집글 삭제
     @DeleteMapping("/delete/{id}")
-    public String recruitDelete(@PathVariable("id") long id, Model model) throws Exception{
+    public String recruitDelete(@PathVariable("id") long id, Model model) throws Exception {
         model.addAttribute("message", "정말로 모집글을 삭제하시겠습니까?");
         model.addAttribute("confirmUrl", "/recruit/deleteconfirmed/" + id);
         model.addAttribute("cancelUrl", "/recruit/list");

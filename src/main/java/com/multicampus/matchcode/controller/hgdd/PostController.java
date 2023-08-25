@@ -13,17 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 @RequiredArgsConstructor
 @Controller
 public class PostController {
 
-
     @Autowired
     private PostService postService;
+
     @Autowired
     private ReplyService replyService;
-
 
     //게시글 작성창으로 이동
     @GetMapping("/post/insert")
@@ -36,26 +34,28 @@ public class PostController {
     //게시글 입력한 정보를 db로 이동 동시에 message로 성공 출력과 입력된 url로 이동
     @PostMapping("/post/insert2")
     public String insert2(PostDTO postDTO, Model model) {
-
         postService.insert(postDTO);
-        ;//db저장
+        //db저장
 
         System.out.println("제목: " + postDTO.getTitle());
         System.out.println("내용: " + postDTO.getContent());
-        model.addAttribute("message", "글 작성이 완료되었습니다.");//출력되는 메시지
-        model.addAttribute("searchUrl", "/post/list");//이동하는 경로
+        model.addAttribute("message", "글 작성이 완료되었습니다."); //출력되는 메시지
+        model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
 
         return "hgdd/message";
     }
 
     //게시글 목록으로 이동
     @GetMapping("/post/list")
-    public String list(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
-
+    public String list(
+        Model model,
+        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+        String searchKeyword
+    ) {
         Page<PostDTO> list = null;
 
         if (searchKeyword == null) {
-            list = postService.list(pageable);  //페이징
+            list = postService.list(pageable); //페이징
         } else {
             list = postService.postlist(searchKeyword, pageable); //검색
         }
@@ -74,7 +74,6 @@ public class PostController {
     //게시글 열람
     @GetMapping("/post/view")
     public String view(Model model, Long id) {
-
         model.addAttribute("post", postService.view(id));
         model.addAttribute("list", replyService.list(id));
 
@@ -91,7 +90,6 @@ public class PostController {
     //게시글 수정
     @PostMapping("/post/update/{id}")
     public String boardUpdate(@PathVariable("id") Long id, PostDTO postDTO, Model model) {
-
         PostDTO postTemp = postService.view(id);
         postTemp.setTitle(postDTO.getTitle());
         postTemp.setContent(postDTO.getContent());
@@ -108,9 +106,8 @@ public class PostController {
     @GetMapping("/post/delete")
     public String delete(Long id, Model model) {
         postService.delete(id);
-        model.addAttribute("message", "글 삭제가 완료.");//출력되는 메시지
-        model.addAttribute("searchUrl", "/post/list");//이동하는 경로
+        model.addAttribute("message", "글 삭제가 완료."); //출력되는 메시지
+        model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
         return "hgdd/message";
     }
-
 }

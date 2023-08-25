@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.RecruitDTO;
-import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
 import com.multicampus.matchcode.repository.RecruitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,12 @@ public class RecruitService {
 
     // 모집글 작성
     public Long save(RecruitPostRequest request) {
-        RecruitDTO dto = RecruitDTO.builder()
-                .teamId(request.getTeamId())
-                .content(request.getContent())
-                .status(1).build();
+        RecruitDTO dto = RecruitDTO
+            .builder()
+            .teamId(request.getTeamId())
+            .content(request.getContent())
+            .status(1)
+            .build();
 
         recruitRepository.save(dto);
         return request.getId();

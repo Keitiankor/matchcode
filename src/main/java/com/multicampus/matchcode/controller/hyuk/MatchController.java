@@ -1,19 +1,13 @@
 package com.multicampus.matchcode.controller.hyuk;
 
-import com.multicampus.matchcode.domain.Match;
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.service.hyuk.MatchService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/match")
@@ -22,7 +16,7 @@ public class MatchController {
     @Autowired
     MatchService matchService;
 
-    @GetMapping({"", "/list"})
+    @GetMapping({ "", "/list" })
     public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
         List<MatchDTO> matchList = matchService.getMatchlist(pageNum);
         Integer[] pageList = matchService.getPageList(pageNum);
@@ -33,7 +27,7 @@ public class MatchController {
         return "match/list";
     }
 
-/*    @GetMapping({"", "/list"})
+    /*    @GetMapping({"", "/list"})
     public String list(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Match> list = matchService.matchList(pageable);;
 
@@ -48,7 +42,6 @@ public class MatchController {
 
         return "match/list";
     }*/
-
 
     // 글쓰는 페이지
 
@@ -79,7 +72,7 @@ public class MatchController {
 
     // 게시물 수정 페이지이며, {no}로 페이지 넘버를 받는다.
 
-/*    @GetMapping("/post/edit/{no}")
+    /*    @GetMapping("/post/edit/{no}")
     public String edit(@PathVariable("no") Long no, Model model) {
         MatchDTO matchDTO = matchService.getPost(no);
 

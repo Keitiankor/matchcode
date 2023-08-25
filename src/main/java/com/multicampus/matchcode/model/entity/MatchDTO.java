@@ -1,6 +1,5 @@
 package com.multicampus.matchcode.model.entity;
 
-import com.multicampus.matchcode.domain.Match;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Match_") //match가 예악어라서 그냥 두면 충돌이 남(테이블 안생김 ㅠ)
+@Entity(name = "Match_") // match가 예악어라서 그냥 두면 충돌이 남(테이블 안생김 ㅠ)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,5 +28,5 @@ public class MatchDTO {
     private Timestamp expireDate;
     private int restrictionMinRate;
     private int restrictionMaxRate;
-    private int Status;
+    private int status;
 }

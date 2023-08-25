@@ -11,8 +11,7 @@ public class SportCenterSercvice {
     @Autowired
     private MapRepository mapRepository;
 
-    public MapDTO save(MapDTO mapDTO){
+    public MapDTO save(MapDTO mapDTO) {
         return mapRepository.save(mapDTO);
     }
-
 }

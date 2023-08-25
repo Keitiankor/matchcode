@@ -50,4 +50,4 @@ local.properties
 .recommenders
 
 src/main/**/test
-*.yml
+src/main/resources/application.yml

@@ -4,13 +4,11 @@ import com.multicampus.matchcode.model.entity.ReviewDTO;
 import com.multicampus.matchcode.model.request.jun.ReviewRequest;
 import com.multicampus.matchcode.model.request.jun.UpdateReviewRequest;
 import com.multicampus.matchcode.service.jun.ReviewSercvice;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "review")
@@ -22,28 +20,25 @@ public class ReviewController {
     //리뷰할 체육 시설 위치 표시
     @GetMapping("viewSportCenter")
     public String viewSportCenter(Model model) {
-
         return "review/viewSportCenter";
     }
 
     //이용한 체육시설 리뷰 페이지 이동
     @GetMapping("createReview")
     public String createReview() {
-
         return "review/createReview";
     }
 
     //이용한 체육시설 평점 남기기
     @PostMapping("createReview2")
     public String createReview2(ReviewRequest reviewRequest) {
-
         System.out.println("rate : " + reviewRequest.getRate());
         System.out.println("comment : " + reviewRequest.getComment());
 
         reviewSercvice.save(reviewRequest);
 
         return "redirect:/review/viewSportCenter";
-}
+    }
 
     // 리뷰 수정 폼으로 이동
     @GetMapping("updateReview")
@@ -70,7 +65,6 @@ public class ReviewController {
     //리뷰 리스트 가져오기
     @GetMapping("listReview")
     public String showReviewList(Model model, ReviewDTO reviewDTO) {
-
         List<ReviewDTO> reviewList = reviewSercvice.select(reviewDTO);
         model.addAttribute("reviewList", reviewList);
         return "review/listReview";

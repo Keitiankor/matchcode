@@ -6,10 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class ChargeRequest {
+
     private long userId;
     private int point;
-
     // getters, setters...
 }
-
-

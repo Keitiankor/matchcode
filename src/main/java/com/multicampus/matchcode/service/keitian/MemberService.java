@@ -32,15 +32,15 @@ public class MemberService {
         }
 
         MemberDTO dto = MemberDTO
-                .builder()
-                .account(request.getAccount())
-                .password(pe.encode(request.getPassword()))
-                .name(request.getName())
-                .phone(request.getPhone())
-                .mailAddress(request.getMailAddress())
-                .createdDate(new Timestamp(System.currentTimeMillis()))
-                .birthday(bd)
-                .build();
+            .builder()
+            .account(request.getAccount())
+            .password(pe.encode(request.getPassword()))
+            .name(request.getName())
+            .phone(request.getPhone())
+            .mailAddress(request.getMailAddress())
+            .createdDate(new Timestamp(System.currentTimeMillis()))
+            .birthday(bd)
+            .build();
 
         repository.save(dto);
         return 1;

@@ -4,8 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum Time {
-
-    아침(1), 낮(2), 저녁(3),심야(4);
+    아침(1),
+    낮(2),
+    저녁(3),
+    심야(4);
 
     private final Integer count;
 
