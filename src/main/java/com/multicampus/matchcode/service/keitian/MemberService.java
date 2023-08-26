@@ -56,7 +56,6 @@ public class MemberService {
                 return null;
             }
         } else {
-            System.out.println("null");
             return null;
         }
     }

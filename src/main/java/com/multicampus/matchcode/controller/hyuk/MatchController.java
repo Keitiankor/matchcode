@@ -16,7 +16,7 @@ public class MatchController {
     @Autowired
     MatchService matchService;
 
-    @GetMapping({ "", "/list" })
+    @GetMapping({  "/list" })
     public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
         List<MatchDTO> matchList = matchService.getMatchlist(pageNum);
         Integer[] pageList = matchService.getPageList(pageNum);

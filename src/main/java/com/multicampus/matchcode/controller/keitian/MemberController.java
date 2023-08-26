@@ -49,10 +49,10 @@ public class MemberController {
         MemberDTO dto = service.getId(request.getAccount(), request.getPassword());
         if (dto != null) {
             session.setAttribute(SessionConstant.MEMBER_DTO, dto);
-            return "redirect:";
         } else {
-            return "redirect:login";
+            return "keitian/login";
         }
+        return "redirect:";
     }
 
     @PostMapping("regist")
@@ -62,7 +62,7 @@ public class MemberController {
                 service.insert(request);
             }
         } else {
-            return "regist";
+            return "keitian/regist";
         }
         return "redirect:";
     }
