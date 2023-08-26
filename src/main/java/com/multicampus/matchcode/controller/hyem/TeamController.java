@@ -28,6 +28,7 @@ public class TeamController {
 
     @PostMapping("/add")
     public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception {
+
         teamService.save(request);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
