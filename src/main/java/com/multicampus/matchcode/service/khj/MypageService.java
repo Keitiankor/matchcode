@@ -33,7 +33,7 @@ public class MypageService {
         Optional<MemberDTO> memberDTO = member.findById(memberId);
 
         if (memberDTO.isPresent()) {
-            Optional<PointDTO> pointDTO = point.findByMemmberId(memberId);
+            Optional<PointDTO> pointDTO = point.findByUserId(memberId);
             return MemberAndPointRequest.builder().pointDTO(pointDTO.get()).memberDTO(memberDTO.get()).build();
         } else {
             return MemberAndPointRequest.builder().memberDTO(memberDTO.get()).build();
