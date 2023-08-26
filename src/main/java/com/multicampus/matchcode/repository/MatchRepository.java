@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MatchRepository extends JpaRepository<MatchDTO, Long> {
     List<Match> findByMapIdContaining(String keyword);
+
+    List<MatchDTO> findBySportsId(long sportsId);
 }

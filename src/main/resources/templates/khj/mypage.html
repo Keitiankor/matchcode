@@ -20,11 +20,11 @@
     <br>
     이름 : <p style="display:inline;" th:text="${nameAndPoint.memberDTO.name}"></p>
     <br>
-    포인트 : <p style="display:inline;" th:text="${nameAndPoint.pointDTO.point}">p</p>
+    포인트 : <p style="display:inline;" th:if="${nameAndPoint.pointDTO != null}" th:text="${nameAndPoint.pointDTO.point}">p</p>
     <br>
     <button id="matchHistoryButton">매치 히스토리</button>
-    <br>
-    <button id="myPositionButton">내 포지션</button>
+<!--    <br>-->
+<!--    <button id="myPositionButton">내 포지션</button>-->
     <br>
     <button id="personalButton">개인 정보</button>
     <br>

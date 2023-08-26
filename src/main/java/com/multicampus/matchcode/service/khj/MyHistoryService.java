@@ -57,7 +57,7 @@ public class MyHistoryService {
     }
 
     public List<MatchDTO> getMatchesBySportsId(long sportsId) {
-        return null;
+        return matches.findBySportsId(sportsId); // 실제로 매치 리스트를 가져오는 로직을 구현해야 함
     }
 
     public ResultDTO getResultByMatchId(long matchId) {
