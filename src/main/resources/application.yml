@@ -21,7 +21,7 @@ spring:
     username: root # DB계정명
     password: 1234 # DB비밀번호
 
-    url: jdbc:mysql://localhost:3306/matchtest # 이부분을 localhost로 변경하여 로컬환경에서 테스트할수있다.
+    url: jdbc:mysql://localhost:3306/matchcodetest # 이부분을 localhost로 변경하여 로컬환경에서 테스트할수있다.
 
 
   #  data:
@@ -41,7 +41,7 @@ spring:
       ddl-auto: update # ddl 자동작성여부(update)
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        
+
   logging:
     level:
       org.springframework: DEBUG
