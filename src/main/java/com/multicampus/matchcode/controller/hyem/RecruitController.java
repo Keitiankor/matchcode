@@ -24,18 +24,15 @@ public class RecruitController {
     @GetMapping("/write/{teamid}")
     public String writeRecruit(@PathVariable("teamid") Long teamId, Model model) {
         RecruitDTO recruitDTO = new RecruitDTO();
-        model.addAttribute("id", teamId);
+        model.addAttribute("teamid", teamId);
         model.addAttribute("recruit", recruitDTO);
         return "hyem/recruit/writerecruit";
     }
 
     // 모집글 작성 처리
-    @PostMapping("/add/{id}")
-    public String addRecruit(
-        @PathVariable("id") Long id,
-        @ModelAttribute("recruit") RecruitPostRequest request,
-        TeamDTO teamDTO
-    ) {
+    @PostMapping("/write/{id}")
+    public String addRecruit(@ModelAttribute("recruit") RecruitPostRequest request,Long teamId, Model model) {
+        model.addAttribute("teamid", teamId);
         recruitService.save(request);
         System.out.println("content : " + request.getContent());
         return "redirect:/recruit/list";

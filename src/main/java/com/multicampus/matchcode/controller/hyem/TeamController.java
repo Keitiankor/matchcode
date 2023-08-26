@@ -26,7 +26,7 @@ public class TeamController {
         return "hyem/team/createteam";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception {
 
         teamService.save(request);
