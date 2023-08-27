@@ -17,8 +17,8 @@ public class ReviewSercvice {
     public void save(ReviewRequest request) {
         ReviewDTO reviewdto = ReviewDTO
             .builder()
-            .userId(23)
-            .mapId(55)
+            .userId(7)
+            .mapId(34)
             .rate(request.getRate())
             .comment(request.getComment())
             .build();

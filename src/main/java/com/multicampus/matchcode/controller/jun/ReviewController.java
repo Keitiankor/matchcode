@@ -37,7 +37,7 @@ public class ReviewController {
 
         reviewSercvice.save(reviewRequest);
 
-        return "redirect:/review/viewSportCenter";
+        return "redirect:/review/listReview";
     }
 
     // 리뷰 수정 폼으로 이동
@@ -52,14 +52,14 @@ public class ReviewController {
     @PostMapping("updateReview")
     public String updateReview(UpdateReviewRequest updateReviewRequest) {
         reviewSercvice.update(updateReviewRequest);
-        return "redirect:/review/viewSportCenter";
+        return "redirect:/review/listReview";
     }
 
     //예전 사용자가 썼던 리뷰 삭제
     @GetMapping("deleteReview")
     public String deleteReview(Long id) {
         reviewSercvice.delete(id);
-        return "redirect:/review/viewSportCenter";
+        return "redirect:/review/listReview";
     }
 
     //리뷰 리스트 가져오기
