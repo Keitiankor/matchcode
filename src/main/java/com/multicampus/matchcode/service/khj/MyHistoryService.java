@@ -43,6 +43,7 @@ public class MyHistoryService {
             MapDTO map = getMapByMatchId(match.getMapId());
             MatchResult matchResult = MatchResult
                 .builder()
+                    .matchId(match.getId())
                 .matchDate(match.getMatchDate())
                 .name(map.getName())
                 .myScore(result.getMyScore())

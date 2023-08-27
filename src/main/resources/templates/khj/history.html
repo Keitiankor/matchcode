@@ -3,11 +3,14 @@
 <head>
     <title th:inline="text">매치 히스토리</title>
     <link rel="stylesheet" th:href="@{/css/khj/historyTable.css}" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="js/khj/sportsbutton.js"></script>
 
-<table>
+<tr>
     <thead>
     <tr>
         <th>결과</th>
@@ -19,7 +22,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="matchResult : ${matchResults}">
+    <th:block th:each="matchResult : ${matchResults}">
+    <tr>
         <td>
             <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
             <span th:if="${matchResult.myScore < matchResult.rivalScore}">패배</span>
@@ -30,10 +34,11 @@
         <td th:text="${matchResult.myScore}"></td>
         <td th:text="${matchResult.rivalScore}"></td>
         <td>
-            <input type="button" class="show-names-button" data-matchid="${matchResult.matchId}" value="▽">
-            <div class="names-table-container" style="display: none;"></div>
+            <button class="show-names-button" th:attr="data-matchid=${matchResult.matchId}">▽</button>
         </td>
     </tr>
+        <tr class="names-table-container" style="display: none;"></tr>
+    </th:block>
     </tbody>
 </table>
 <tr th:each="memberName : ${MemberNames}">

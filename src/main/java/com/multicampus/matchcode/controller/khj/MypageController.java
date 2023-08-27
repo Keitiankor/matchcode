@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MypageController {
@@ -41,7 +42,7 @@ public class MypageController {
     }
 
     //매치 히스토리 내에서 종목별 페이지
-    @GetMapping("/loadSportsData")
+    @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model) {
         List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
         model.addAttribute("matchResults", matchResults);
@@ -49,9 +50,10 @@ public class MypageController {
     }
 
     //매치 기록으로 매치 멤버들 찾기
-    @PostMapping("/loadMatchData")
-    public String loadMatchData(long matchId, Model model) {
-        List<String> memberNames = myHistoryService.getMemberNamesByMatchId(matchId);
+    @GetMapping("/loadmatchdata")
+    public String loadMatchData(@RequestParam String matchId, Model model) {
+        System.out.println(matchId);
+        List<String> memberNames = myHistoryService.getMemberNamesByMatchId(Long.valueOf(matchId));
         model.addAttribute("MemberNames", memberNames);
         return "khj/history";
     }
