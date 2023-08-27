@@ -16,7 +16,6 @@
         <th>내 점수</th>
         <th>상대 점수</th>
         <th></th>
-        <!-- 다른 데이터에 해당하는 th 태그들 추가 -->
     </tr>
     </thead>
     <tbody>
@@ -30,11 +29,15 @@
         <td th:text="${matchResult.name}"></td>
         <td th:text="${matchResult.myScore}"></td>
         <td th:text="${matchResult.rivalScore}"></td>
-        <td><button>▽</button></td>
-        <!-- 다른 데이터에 해당하는 td 태그들 추가 -->
+        <td>
+            <input type="button" class="show-names-button" data-matchid="${matchResult.matchId}" value="▽">
+            <div class="names-table-container" style="display: none;"></div>
+        </td>
     </tr>
     </tbody>
 </table>
-
+<tr th:each="memberName : ${MemberNames}">
+    <td th:text="${memberName}"></td>
+</tr>
 </body>
 </html>

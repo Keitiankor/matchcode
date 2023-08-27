@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MypageController {
@@ -44,6 +45,14 @@ public class MypageController {
     public String loadSportsData(long sportsId, Model model) {
         List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
         model.addAttribute("matchResults", matchResults);
+        return "khj/history";
+    }
+
+    //매치 기록으로 매치 멤버들 찾기
+    @PostMapping("/loadMatchData")
+    public String loadMatchData(long matchId, Model model) {
+        List<String> memberNames = myHistoryService.getMemberNamesByMatchId(matchId);
+        model.addAttribute("MemberNames", memberNames);
         return "khj/history";
     }
 

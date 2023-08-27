@@ -18,7 +18,7 @@
     <h3>마이페이지</h3>
     (이미지가 들어갈 부분)
     <br>
-    이름 : <p style="display:inline;" th:text="${nameAndPoint.memberDTO.name}"></p>
+    이름 : <p style="display:inline;" th:text="${nameAndPoint.memberDTO.name}"></p> <!--단, member DB에 name이 없으면 500 에러페이지 뜸. -->
     <br>
     포인트 : <p style="display:inline;" th:if="${nameAndPoint.pointDTO != null}" th:text="${nameAndPoint.pointDTO.point}">p</p>
     <br>
