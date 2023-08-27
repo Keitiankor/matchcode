@@ -11,6 +11,7 @@ public class SportCenterController {
     //모든 유저 검색한 장소 표시
     @GetMapping("sportCenter/findSportCenter")
     public String findSportCenter() {
+
         return "sportCenter/findSportCenter";
     }
 
