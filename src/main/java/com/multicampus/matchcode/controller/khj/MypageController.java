@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MypageController {
@@ -51,11 +52,10 @@ public class MypageController {
 
     //매치 기록으로 매치 멤버들 찾기
     @GetMapping("/loadmatchdata")
-    public String loadMatchData(@RequestParam String matchId, Model model) {
+    @ResponseBody
+    public List<String> loadMatchData(@RequestParam String matchId) {
         System.out.println(matchId);
-        List<String> memberNames = myHistoryService.getMemberNamesByMatchId(Long.valueOf(matchId));
-        model.addAttribute("MemberNames", memberNames);
-        return "khj/history";
+        return myHistoryService.getMemberNamesByMatchId(Long.parseLong(matchId));
     }
 
     //포지션 설정

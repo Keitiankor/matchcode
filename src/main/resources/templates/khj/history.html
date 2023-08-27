@@ -9,9 +9,8 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="js/khj/sportsbutton.js"></script>
-
+<table>
 <tr>
-    <thead>
     <tr>
         <th>결과</th>
         <th>날짜</th>
@@ -20,9 +19,7 @@
         <th>상대 점수</th>
         <th></th>
     </tr>
-    </thead>
-    <tbody>
-    <th:block th:each="matchResult : ${matchResults}">
+    <tbody th:each="matchResult : ${matchResults}">
     <tr>
         <td>
             <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
@@ -37,12 +34,9 @@
             <button class="show-names-button" th:attr="data-matchid=${matchResult.matchId}">▽</button>
         </td>
     </tr>
-        <tr class="names-table-container" style="display: none;"></tr>
-    </th:block>
+    <tr th:attr="id=${matchResult.matchId}" class="names-table-container" style="display: none;">
+    </tr>
     </tbody>
 </table>
-<tr th:each="memberName : ${MemberNames}">
-    <td th:text="${memberName}"></td>
-</tr>
 </body>
 </html>
