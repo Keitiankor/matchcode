@@ -63,10 +63,12 @@ public class RecruitController {
 
     // 모집글 상세 페이지
     @GetMapping("/view/{id}")
-    public String recruitView(@PathVariable("id") Long id, Model model) {
+    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model) {
         RecruitDTO dto = recruitService.recruitView(id);
 
+
         model.addAttribute("recruit", dto);
+        model.addAttribute("team", teamId);
         return "hyem/recruit/recruitview";
     }
 
