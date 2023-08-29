@@ -134,4 +134,32 @@ public class MatchService {
 
         return pageList;
     }
+    @Transactional
+    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long regionId) {
+        Page<MatchDTO> page = matchRepository.findByMapId(regionId,
+                PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
+        );
+        return page.getContent();
+    }
+
+    @Transactional
+    public Integer[] getPageListByRegion(Integer pageNum, long region) {
+        Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
+        return calculatePageList(pageNum, matchTotalCount);
+    }
+    private Integer[] calculatePageList(Integer pageNum, Double totalCount) {
+        int totalLastPageNum = (int) (Math.ceil(totalCount / PAGE_POST_COUNT));
+        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT)
+                ? pageNum + BLOCK_PAGE_NUM_COUNT
+                : totalLastPageNum;
+
+        int curPageNum = (pageNum <= 3) ? 1 : pageNum - 2;
+
+        Integer[] pageList = new Integer[blockLastPageNum - curPageNum + 1];
+        for (int i = curPageNum, idx = 0; i <= blockLastPageNum; i++, idx++) {
+            pageList[idx] = i;
+        }
+
+        return pageList;
+    }
 }
