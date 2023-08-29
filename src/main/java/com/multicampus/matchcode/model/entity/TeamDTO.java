@@ -18,13 +18,16 @@ public class TeamDTO {
     private long id;
 
     private long mapId;
+    @ElementCollection
     private List<Long> sportsId;
     private String teamName;
     private String uri;
     private String emblem;
+    @ElementCollection
     private List<Long> useWeek;
     private long useTime;
     private int teamRank;
+    @ElementCollection
     private List<Long> averageAge;
     private long averageGender;
 
