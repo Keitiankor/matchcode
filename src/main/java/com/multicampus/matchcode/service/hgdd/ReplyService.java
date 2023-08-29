@@ -22,7 +22,7 @@ public class ReplyService {
         ReplyDTO replyDTO = ReplyDTO
             .builder()
             .post(requst.getPost())
-            //  .userId(requst.getUserId())
+                //.userId(requst.getUserId())
             .comment(requst.getComment())
             .build();
         replyRepository.save(replyDTO);

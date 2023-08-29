@@ -32,14 +32,8 @@ public class PostDTO {
 
     private int views;
     private int likes;
-    private int declation;
+    private boolean privates;
     private int status;
+    private int declation;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 }
