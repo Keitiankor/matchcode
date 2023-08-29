@@ -18,11 +18,23 @@
         </tr>
         <tr>
             <th>선호 스포츠</th>
-            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getNameFromCount(team.sportsId)}"></td>
+            <td>
+                <span th:each="num : ${#numbers.sequence(0, team.sportsId.size() - 1)}">
+                    <span class="text"
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getNameFromCount(team.sportsId[num])}">
+                    </span>
+                </span>
+            </td>
         </tr>
         <tr>
             <th>이용 요일</th>
-            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getNameFromCount(team.useWeek)}"></td>
+            <td>
+                <span th:each="num : ${#numbers.sequence(0, team.useWeek.size() - 1)}">
+                    <span class="text"
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getNameFromCount(team.useWeek[num])}">
+                    </span>
+                </span>
+            </td>
         </tr>
         <tr>
             <th>이용 시간</th>
@@ -30,7 +42,13 @@
         </tr>
         <tr>
             <th>평균 연령</th>
-            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Age).getDescriptionFromCount(team.averageAge)}"></td>
+            <td>
+                <span th:each="num : ${#numbers.sequence(0, team.averageAge.size() - 1)}">
+                    <span class="text"
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Age).getDescriptionFromCount(team.averageAge[num])}">
+                    </span>
+                </span>
+            </td>
         </tr>
         <tr>
             <th>평균 성별</th>

@@ -1,8 +1,13 @@
 package com.multicampus.matchcode.controller.hgdd;
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
+import com.multicampus.matchcode.model.request.hgdd.PostInsertRequest;
+import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.service.hgdd.PostService;
 import com.multicampus.matchcode.service.hgdd.ReplyService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
+@RequestMapping("/post")
 @RequiredArgsConstructor
 @Controller
 public class PostController {
@@ -24,21 +31,31 @@ public class PostController {
     private ReplyService replyService;
 
     //게시글 작성창으로 이동
-    @GetMapping("/post/insert")
-    public String insert(Model model, PostDTO postDTO) {
+    @GetMapping("/insert")
+    public String insert(Model model, PostDTO postDTO, @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false)MemberDTO memberDTO) {
         model.addAttribute("postDTO", postDTO);
 
-        return "hgdd/insert";
+        if (memberDTO != null) {
+            System.out.println(memberDTO.getId());
+            /*model.addAttribute("userId",memberDTO.getId());*/
+            return "hgdd/insert"; // 로그인한 사용자인 경우 작성 페이지로 이동
+        } else {
+            model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
+            model.addAttribute("searchUrl", "/login"); //이동하는 경로
+
+            return "hgdd/message";
+        }
+
     }
 
-    //게시글 입력한 정보를 db로 이동 동시에 message로 성공 출력과 입력된 url로 이동
-    @PostMapping("/post/insert2")
-    public String insert2(PostDTO postDTO, Model model) {
-        postService.insert(postDTO);
-        //db저장
+   //게시글 입력한 정보를 db로 이동 동시에 message로 성공 출력과 입력된 url로 이동   //두번째 방법에서 id가 0으로 들어가서 첫번째로 일단 바꿨습니다.
+    @PostMapping("/insert2")
+    public String insert2(@ModelAttribute("postDTO") PostInsertRequest request, Model model, @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false)MemberDTO memberDTO) {
 
-        System.out.println("제목: " + postDTO.getTitle());
-        System.out.println("내용: " + postDTO.getContent());
+        postService.insert(request,memberDTO.getId()); //db저장
+
+        System.out.println("제목: " + request.getTitle());
+        System.out.println("내용: " + request.getContent());
         model.addAttribute("message", "글 작성이 완료되었습니다."); //출력되는 메시지
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
 
@@ -46,11 +63,11 @@ public class PostController {
     }
 
     //게시글 목록으로 이동
-    @GetMapping("/post/list")
+    @GetMapping("/list")
     public String list(
-        Model model,
-        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        String searchKeyword
+            Model model,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            String searchKeyword
     ) {
         Page<PostDTO> list = null;
 
@@ -72,42 +89,67 @@ public class PostController {
     }
 
     //게시글 열람
-    @GetMapping("/post/view")
-    public String view(Model model, Long id) {
+    @GetMapping("/view")
+    public String view(Model model, Long id, @SessionAttribute(name = SessionConstant.MEMBER_ID,required = false)MemberDTO memberDTO) {
+        PostDTO post = postService.view(id);
+
+
+
         model.addAttribute("post", postService.view(id));
         model.addAttribute("list", replyService.list(id));
+        if (memberDTO != null) {
+            if (post.isPrivates()) //비공개 여부 확인
+            {
+                if (post.getUserId() == memberDTO.getId()) //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
+                {
+                    model.addAttribute("post", post);
+                    postService.views(id); //조회수 증가
+                    return "hgdd/view"; // 게시글 조회 페이지 (view.html)
+                } else {
+                    model.addAttribute("message", "비 공개 글입니다.");
+                    model.addAttribute("searchUrl", "/post/list");
 
-        return "hgdd/view";
+                    return "hgdd/message";
+                }
+            }
+        }
+        else if (post.isPrivates()){
+            model.addAttribute("message", "비 공개 글입니다.");
+            model.addAttribute("searchUrl", "/post/list");
+
+            return "hgdd/message";
+        }
+        postService.views(id); //조회수 증가
+        return "hgdd/view"; // 게시글 조회 페이지 (view.html)
     }
 
+
     //게시글 수정 페이지 이동
-    @GetMapping("/post/correction/{id}")
+    @GetMapping("/correction/{id}")
     public String correction(@PathVariable("id") Long id, Model model) {
         model.addAttribute("post", postService.view(id));
         return "hgdd/correction";
     }
 
     //게시글 수정
-    @PostMapping("/post/update/{id}")
-    public String boardUpdate(@PathVariable("id") Long id, PostDTO postDTO, Model model) {
-        PostDTO postTemp = postService.view(id);
-        postTemp.setTitle(postDTO.getTitle());
-        postTemp.setContent(postDTO.getContent());
 
+    @PostMapping("/update/{id}")
+    public String boardUpdate(@PathVariable("id") Long id, PostUpdateRequest request, Model model,@SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false)MemberDTO memberDTO) throws  Exception {
+
+        postService.update(id,request,memberDTO.getId());
         model.addAttribute("message", "글 수정 완료.");
         model.addAttribute("searchUrl", "/post/list");
-
-        postService.insert(postTemp);
 
         return "hgdd/message";
     }
 
     //게시글 삭제
-    @GetMapping("/post/delete")
+    @GetMapping("/delete")
     public String delete(Long id, Model model) {
         postService.delete(id);
         model.addAttribute("message", "글 삭제가 완료."); //출력되는 메시지
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
         return "hgdd/message";
     }
+
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class MatchResult {
-
+    private  long matchId;
     private Timestamp matchDate;
     private String name;
     private int myScore;

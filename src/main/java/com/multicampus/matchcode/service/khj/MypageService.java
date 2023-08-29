@@ -34,9 +34,15 @@ public class MypageService {
 
         if (memberDTO.isPresent()) {
             Optional<PointDTO> pointDTO = point.findByUserId(memberId);
-            return MemberAndPointRequest.builder().pointDTO(pointDTO.get()).memberDTO(memberDTO.get()).build();
+
+            if (pointDTO.isPresent()) {
+                return MemberAndPointRequest.builder().pointDTO(pointDTO.get()).memberDTO(memberDTO.get()).build();
+            } else {
+                return MemberAndPointRequest.builder().memberDTO(memberDTO.get()).build();
+            }
         } else {
-            return MemberAndPointRequest.builder().memberDTO(memberDTO.get()).build();
+            // memberId에 해당하는 회원 정보가 없는 경우 처리
+            return MemberAndPointRequest.builder().build();
         }
     }
 }

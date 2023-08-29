@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class MatchDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long mapId;

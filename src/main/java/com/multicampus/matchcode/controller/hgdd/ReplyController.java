@@ -34,6 +34,7 @@ public class ReplyController {
         return service.list(postId);
     }
 
+
     @GetMapping("/delete/{id}/{postId}")
     public String deleteReply(@PathVariable Long id, @PathVariable Long postId) {
         System.out.println("id: " + id);

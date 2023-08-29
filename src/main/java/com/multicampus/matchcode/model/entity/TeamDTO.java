@@ -14,17 +14,20 @@ import org.hibernate.annotations.CreationTimestamp;
 public class TeamDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long mapId;
+    @ElementCollection
     private List<Long> sportsId;
     private String teamName;
     private String uri;
     private String emblem;
+    @ElementCollection
     private List<Long> useWeek;
     private long useTime;
     private int teamRank;
+    @ElementCollection
     private List<Long> averageAge;
     private long averageGender;
 
@@ -32,4 +35,7 @@ public class TeamDTO {
     private Timestamp createdDate;
 
     private Integer status;
+
+    @OneToOne(mappedBy = "teamId", cascade = CascadeType.REMOVE)
+    private RecruitDTO recruitDTO;
 }

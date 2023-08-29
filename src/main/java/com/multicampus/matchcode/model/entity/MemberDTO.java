@@ -15,7 +15,7 @@ import lombok.*;
 public class MemberDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long areaId;

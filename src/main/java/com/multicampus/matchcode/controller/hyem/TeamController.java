@@ -26,8 +26,9 @@ public class TeamController {
         return "hyem/team/createteam";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception {
+
         teamService.save(request);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
@@ -63,8 +64,8 @@ public class TeamController {
     }
 
     // 팀 상세 정보 열람
-    @GetMapping("/view/{id}")
-    public String teamView(@PathVariable Long id, Model model) {
+    @GetMapping("/view/{uri}/{id}")
+    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
         return "hyem/team/teamview";
     }
