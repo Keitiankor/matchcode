@@ -3,12 +3,14 @@ package com.multicampus.matchcode.controller.hyem;
 import com.multicampus.matchcode.model.entity.RecruitDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
+import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,11 +67,26 @@ public class RecruitController {
     @GetMapping("/view/{id}")
     public String recruitView(@PathVariable("id") Long id, Long teamId, Model model) {
         RecruitDTO dto = recruitService.recruitView(id);
-
-
         model.addAttribute("recruit", dto);
         model.addAttribute("team", teamId);
         return "hyem/recruit/recruitview";
+    }
+
+    // 모집글 수정 페이지
+    @GetMapping("/modify/{id}")
+    public String recruitModify(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("recruit", recruitService.recruitView(id));
+        return "hyem/recruit/modifyrecruit";
+    }
+
+    // 모집글 내용 수정
+    @PostMapping("/modify/complete/{id}")
+    public String recruitUpdate(@RequestParam("id") Long id, /*@RequestBody*/ RecruitPostRequest request, Model model) throws Exception {
+        model.addAttribute("recruit", request);
+        recruitService.recruitUpdate(id, request);
+        model.addAttribute("message", "모집글 수정이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/recruit/list");
+        return "hyem/message";
     }
 
     // 모집글 삭제

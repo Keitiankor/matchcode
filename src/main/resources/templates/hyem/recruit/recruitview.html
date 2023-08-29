@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>팀 정보 상세 페이지</title>
+    <title>모집글 상세 페이지</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container mt-3" id="hyem/team/teamlist">
-    <h2>팀 정보</h2>
+    <h2>모집글 정보</h2>
     <table class="table">
         <tr>
             <th>팀명</th>
@@ -73,8 +73,13 @@
         <textarea cols="60" rows="5" th:text="${recruit.content}" readonly></textarea>
     </div>
 
-    <button class="btn btn-primary">가입신청하기</button>
-    <form th:action="@{/recruit/delete/{id}(id = ${recruit.id})}" th:method="delete">
+    <button class="btn btn-primary">
+        <a th:href="@{/application/join}" style="color: white; text-decoration: none;">가입신청하기</a>
+    </button>
+    <button class="btn btn-info">
+        <a th:href="@{/recruit/modify/{id}(id = ${recruit.id})}" style="color: white; text-decoration: none;">모집글 내용 수정</a>
+    </button>
+        <form th:action="@{/recruit/delete/{id}(id = ${recruit.id})}" th:method="delete">
         <button class="btn btn-danger" onclick="recruitDelete();">모집글 삭제</button>
     </form>
     <button class="btn btn-warning">
