@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,10 +14,15 @@ import lombok.NoArgsConstructor;
 public class ApplicationDTO {
 
     @Id
+    @Column(name = "application_id")
     private long id;
 
     private long userId;
-    private long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private TeamDTO teamId;
+
     private String rejectReason;
     private String introduction;
     private int status;

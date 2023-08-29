@@ -74,7 +74,7 @@
     </div>
 
     <button class="btn btn-primary">
-        <a th:href="@{/application/join}" style="color: white; text-decoration: none;">가입신청하기</a>
+        <a th:href="@{/application/join/{id}(id = ${recruit.teamId.id})}" style="color: white; text-decoration: none;">가입신청하기</a>
     </button>
     <button class="btn btn-info">
         <a th:href="@{/recruit/modify/{id}(id = ${recruit.id})}" style="color: white; text-decoration: none;">모집글 내용 수정</a>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>가입신청 리스트</title>
+</head>
+
+<style>
+  .layout {
+    width : 500px;
+    margin : 0 auto;
+    margin-top : 40px;
+  }
+</style>
+<body>
+  <div class="layout">
+  <h2>가입신청 리스트</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>팀명</th>
+        <th>모집글 내용</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="application : ${list}">
+        <td th:text="${application.id}">1</td>
+        <td>
+          <a th:text="${application.teamId.teamName}" th:href="@{/application/view/{id}(id=${application.id})}"></a>
+        </td>
+        <td th:text="${application.introduce"></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+      <a th:if="${page != nowPage}" th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+      <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+    </th:block>
+  </div>
+</body>
+</html>
