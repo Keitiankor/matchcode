@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+    </script>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
+    <p>얼마를 환불하시겠습니까?
+      <input type="number" id="refundAmount" min="0">
+      <button onclick="check2">환불</button>
+  </tr>
+  </thead>
+</table>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script>
+    $("#check2").click(function(e){
+            $.ajax({
+                url: "",
+                type:"GET",
+                contentType : "application/json",
+                data : {
+                   // "biz_email" : '<%=email%>' // 주문번호
+                    "cancle_request_amount" : 2000, //환불금액
+                    //"reason": "테스트 결제 환불", //환불사유
+                    //"refund_holder": "홍길동", //[가상계좌 환불시 필수입력] 환불 가상계좌 예금주
+                    //"refund_bank":"88", //[가상계좌 환불시 필수입력] 환불 가상계좌 은행코드(ex Kg이니시스의 경우 신한은행 88)
+                    //"refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 가상계좌 번호
+                }
+            }).done(function(result){ //환불 성공
+                console.log("환불 성공 : "+ result);
+            }).fail(function(error){
+                console.log("환불 실패 : "+ error);
+            });//ajax
+        });
+
+
+</script>
+</body>
+</html>

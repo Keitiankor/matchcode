@@ -1,23 +1,24 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import java.sql.Timestamp;
+
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Match")
+@Entity(name = "Match_")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class MatchDTO {
-
-    @Id
+@Id
+@OneToOne (mappedBy = "match")
     private long id;
-
     private long mapId;
     private long sportsId;
     private Timestamp matchDate;
