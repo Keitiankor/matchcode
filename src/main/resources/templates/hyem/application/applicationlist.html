@@ -24,12 +24,12 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="application : ${list}">
-        <td th:text="${application.id}">1</td>
+      <tr th:each="joinapplication : ${list}">
+        <td th:text="${joinapplication.id}">1</td>
         <td>
-          <a th:text="${application.teamId.teamName}" th:href="@{/application/view/{id}(id=${application.id})}"></a>
+          <a th:text="${joinapplication.teamId.teamName}" th:href="@{/application/view/{id}(id=${joinapplication.id})}"></a>
         </td>
-        <td th:text="${application.introduce"></td>
+        <td th:text="${joinapplication.introduction}"></td>
       </tr>
       </tbody>
     </table>

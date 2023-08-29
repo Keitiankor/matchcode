@@ -25,16 +25,17 @@ public class ApplicationController {
 
     // 가입 신청하기
     @GetMapping("/join/{teamid}")
-    public String joinTeam(@PathVariable("teamid") Long teamId, @ModelAttribute("join") ApplicationDTO applicationDTO, Model model) {
-        return "hyem/join/application";
+    public String joinTeam(@PathVariable("teamid") Long teamId,
+                           @ModelAttribute("join") ApplicationDTO applicationDTO, Model model) {
+        return "hyem/application/joinapplication";
     }
 
-    @PostMapping("/join/complete")
-    public String recruitPostWrite(@ModelAttribute("join")ApplicationRequest request, Model model) throws Exception {
+    @PostMapping("/join/{teamid}/{id}")
+    public String recruitPostWrite(@PathVariable("teamid") Long teamId,
+                                   @ModelAttribute("join") ApplicationRequest request, Model model) throws Exception {
         applicationService.save(request);
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/join/list");
-
+        model.addAttribute("searchUrl", "/application/list");
         return "hyem/message";
     }
 
@@ -42,40 +43,40 @@ public class ApplicationController {
     @GetMapping("/list")
     public String applicationList(
         @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        Model model
-    ) {
+        Model model) {
         Page<ApplicationDTO> list = applicationService.applicationList(pageable);
-        int nowPage = list.getPageable().getPageNumber() + 1;
 
+        int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
-        model.addAttribute("list", list);
 
+        model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "hyem/join/applicationlist";
+        return "hyem/application/applicationlist";
     }
 
     // 가입 신청 정보
     @GetMapping("/view/{id}")
     public String applicationView(@PathVariable Long id, Model model) {
         model.addAttribute("join", applicationService.applicationView(id));
-        return "hyem/join/applicationview";
+        return "hyem/application/applicationview";
     }
 
     // 가입 신청 내용 수정
     @GetMapping("/modify/{id}")
     public String applicationModify(@PathVariable("id") Long id, Model model) {
         model.addAttribute("join", applicationService.applicationView(id));
-        return "hyem/join/joinmodify";
+        return "hyem/application/modifyintroduction";
     }
 
     @PostMapping("/modify/complete/{id}")
-    public String applicationUpdate(@PathVariable("id") Long id, ApplicationRequest request, Model model) throws Exception {
+    public String applicationUpdate(@PathVariable("id") Long id,
+                                    @ModelAttribute("join") ApplicationRequest request, Model model) throws Exception {
         applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입 신청 내용 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/join/list");
+        model.addAttribute("searchUrl", "/application/list");
         return "hyem/message";
     }
 
@@ -83,8 +84,8 @@ public class ApplicationController {
     @DeleteMapping("/cancel/{id}")
     public String applicationCancel(@PathVariable("id") long id, Model model) throws Exception {
         model.addAttribute("message", "정말로 가입을 취소하시겠습니까?");
-        model.addAttribute("confirmUrl", "/join/deleteconfirmed/" + id);
-        model.addAttribute("cancelUrl", "/join/list");
+        model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
+        model.addAttribute("cancelUrl", "/application/list");
         return "hyem/confirmmessage";
     }
 
@@ -94,7 +95,7 @@ public class ApplicationController {
         applicationService.applicationCancel(id);
 
         model.addAttribute("message", "가입 취소가 완료되었습니다.");
-        model.addAttribute("searchUrl", "/join/list");
+        model.addAttribute("searchUrl", "/application/list");
         return "hyem/message";
     }
 }

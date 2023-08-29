@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>가입신청폼 수정하기</title>
+</head>
+<body>
+<h2>가입신청 수정하기</h2>
+<form th:action="@{/application/modify/complete/{id}(id = ${join.id})}" method="post">
+    <p>자기소개</p>
+<!--    <input type="hidden" name="_method" value="put">-->
+    <input type="hidden" name="teamId" th:value="${join.teamId.id}">
+    <input type="hidden" name="id" th:value="${join.id}">
+    <textarea name="introduction" cols="60" rows="5" th:text="${join.introduction}"></textarea>
+    <button type="submit">수정</button>
+    <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+</form>
+</body>
+</html>
