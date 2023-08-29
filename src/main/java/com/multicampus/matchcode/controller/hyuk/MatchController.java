@@ -16,16 +16,30 @@ public class MatchController {
     @Autowired
     MatchService matchService;
 
-    @GetMapping({  "/list" })
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
-        List<MatchDTO> matchList = matchService.getMatchlist(pageNum);
-        Integer[] pageList = matchService.getPageList(pageNum);
+    @GetMapping("/list")
+    public String listByRegion(Model model,
+                               @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
+                               @RequestParam(value = "region", defaultValue = "0") long regionId) {
+        List<MatchDTO> matchList;
+        Integer[] pageList;
+
+        if (regionId != 0) {
+            // regionId가 0이 아닌 경우, 해당 지역 데이터만 조회
+            matchList = matchService.getMatchlistByRegion(pageNum, regionId);
+            pageList = matchService.getPageListByRegion(pageNum, regionId);
+        } else {
+            // region이 비어있는 경우, 전체 데이터 조회
+            matchList = matchService.getMatchlist(pageNum);
+            pageList = matchService.getPageList(pageNum);
+        }
 
         model.addAttribute("matchList", matchList);
         model.addAttribute("pageList", pageList);
+        model.addAttribute("selectedRegion", regionId); // 선택된 지역을 뷰로 전달
 
         return "match/list";
     }
+
 
     /*    @GetMapping({"", "/list"})
     public String list(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -50,6 +64,11 @@ public class MatchController {
         return "match/write";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "match/test";
+    }
+
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
@@ -69,6 +88,7 @@ public class MatchController {
         model.addAttribute("matchDto", matchDTO);
         return "match/detail";
     }
+
 
     // 게시물 수정 페이지이며, {no}로 페이지 넘버를 받는다.
 
