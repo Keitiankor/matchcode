@@ -26,14 +26,13 @@ public class RecruitController {
     @GetMapping("/write/{teamid}")
     public String writeRecruit(@PathVariable("teamid") Long teamId, Model model) {
         RecruitDTO recruitDTO = new RecruitDTO();
-        model.addAttribute("teamid", teamId);
         model.addAttribute("recruit", recruitDTO);
         return "hyem/recruit/writerecruit";
     }
 
     // 모집글 작성 처리
     @PostMapping("/write/{id}")
-    public String addRecruit(@ModelAttribute("recruit") RecruitPostRequest request,Long teamId, Model model) {
+    public String addRecruit(@ModelAttribute("recruit") RecruitPostRequest request, Long teamId, Model model) {
         model.addAttribute("teamid", teamId);
         recruitService.save(request);
         System.out.println("content : " + request.getContent());
@@ -44,11 +43,7 @@ public class RecruitController {
     @GetMapping("/list")
     public String recruitList(
         @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        Model model
-    ) {
-        TeamDTO teamDTO = new TeamDTO();
-        model.addAttribute("team", teamDTO);
-
+        Model model) {
         Page<RecruitDTO> list = recruitService.recruitList(pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -81,8 +76,8 @@ public class RecruitController {
 
     // 모집글 내용 수정
     @PostMapping("/modify/complete/{id}")
-    public String recruitUpdate(@RequestParam("id") Long id, /*@RequestBody*/ RecruitPostRequest request, Model model) throws Exception {
-        model.addAttribute("recruit", request);
+    public String recruitUpdate(@RequestParam("id") Long id,
+                                @ModelAttribute("recruit") RecruitPostRequest request, Model model) throws Exception {
         recruitService.recruitUpdate(id, request);
         model.addAttribute("message", "모집글 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/recruit/list");
