@@ -11,7 +11,7 @@
 <body>
 <div class="layout">
     <h2>게시글 수정 및 삭제</h2>
-    <form th:action="@{/post/update/{id}(id = ${post.id})}" method="post">
+    <form th:action="@{/post/update/{id}(id = ${post.id})}" th:object="${post}" method="post">
 
         <!--제목수정-->
         <div class="mb-3">
@@ -28,8 +28,24 @@
 
 
 
+        <!--
+              <div class="mb-3">
+                    <label for="exampleFormControlInput1"  class="form-label">제목</label>
+                    <input name="title"  type="text" class="form-control" id="exampleFormControlInput1" th:value="${post.title}">
+                </div>
+
+
+                &lt;!&ndash; 내용 수정&ndash;&gt;
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">내용입력</label>
+                    <textarea name="content" th:text ="${post.content}" class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
+                </div>
+        -->
+
+
+
         <!--비공개 체크박스(아직 db구현 안함-->
-        <input type="checkbox">비공개<br>
+        <input type="checkbox" th:field="*{privates}">비공개<br>
 
 
         <!--수정버튼과 삭제 버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
@@ -37,6 +53,7 @@
             <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
             <button type="submit" id="button.correction">수정</button>
             <button th:onclick="|location.href='@{/post/delete?(id=${post.id})}'|">삭제</button>
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
         </th>
     </form>
 
