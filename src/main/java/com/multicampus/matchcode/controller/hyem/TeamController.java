@@ -64,8 +64,8 @@ public class TeamController {
     }
 
     // 팀 상세 정보 열람
-    @GetMapping("/view/{id}")
-    public String teamView(@PathVariable Long id, Model model) {
+    @GetMapping("/view/{uri}/{id}")
+    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model) {
         model.addAttribute("team", teamService.teamView(id));
         return "hyem/team/teamview";
     }

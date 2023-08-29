@@ -42,7 +42,7 @@ public class TeamService {
     }
 
     // 팀 정보 불러오기
-    public TeamDTO teamView(Long id) {
+    public TeamDTO teamView(long id) {
         return teamRepository.findById(id).get();
     }
 
