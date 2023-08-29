@@ -36,18 +36,6 @@
                     <label class="form-check-label" th:text="${sport.name()}"></label>
                 </div>
             </div>
-            <!--            다중 체크 가능
-                            <div class="input-group mb-3">
-                            <div th:each="sport, idx : ${sports}" class="form-check">
-                                <input class="form-check-input" th:field="*{selectedSports[__${idx.index}__]}"
-                                       th:value="${sport.count}" type="checkbox" id="sport" name="sportsId">
-                                <label class="form-check-label" th:text="${sport.name()}"></label>
-                            </div>
-                            &lt;!&ndash; null값 처리 &ndash;&gt;
-                            <input th:each="i : ${#numbers.sequence(0, (sports.size() - selectedSports.size()) - 1)}"
-                                   th:field="*{selectedSports[__${i}__]}" type="hidden" />
-                        </div>-->
-
             <p>성별</p>
             <div class="input-group mb-3">
                 <div th:each="gender : ${genders}" class="form-check">
