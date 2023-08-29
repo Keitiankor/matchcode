@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class ApplicationDTO {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_id")
     private long id;
 
