@@ -32,4 +32,7 @@ public class TeamDTO {
     private Timestamp createdDate;
 
     private Integer status;
+
+    @OneToOne(mappedBy = "teamId", cascade = CascadeType.REMOVE)
+    private RecruitDTO recruitDTO;
 }
