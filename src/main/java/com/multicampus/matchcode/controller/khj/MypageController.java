@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MypageController {
@@ -40,11 +43,19 @@ public class MypageController {
     }
 
     //매치 히스토리 내에서 종목별 페이지
-    @GetMapping("/loadSportsData")
+    @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model) {
         List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
+    }
+
+    //매치 기록으로 매치 멤버들 찾기
+    @GetMapping("/loadmatchdata")
+    @ResponseBody
+    public List<String> loadMatchData(@RequestParam String matchId) {
+        System.out.println(matchId);
+        return myHistoryService.getMemberNamesByMatchId(Long.parseLong(matchId));
     }
 
     //포지션 설정
