@@ -1,6 +1,8 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,11 +17,13 @@ import lombok.NoArgsConstructor;
 public class ResultDTO {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long matchId;
     private long userId;
-    private int status;
-    private int myScore;
-    private int rivalScore;
+    //private long sportsId;
+    private int status; // 단순히 '상태'만을 표현. 아직 어떤 값이 들어올지 명확하진 않음
+    private int myScore; // 경기에서 우리팀이 얻은 점수
+    private int rivalScore; // 경기에서 상대팀이 얻은 점수
 }

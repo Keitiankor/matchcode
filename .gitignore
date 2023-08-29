@@ -48,3 +48,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+src/main/**/test
+src/main/resources/application.yml
+
+*.yml

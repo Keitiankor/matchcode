@@ -1,12 +1,8 @@
 package com.multicampus.matchcode.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
-import lombok.Data;
-
+import jakarta.persistence.*;
 import java.sql.Timestamp;
+import lombok.*;
 
 // Match : 실제 DB와 매칭될 클래스 (Entity Class)
 

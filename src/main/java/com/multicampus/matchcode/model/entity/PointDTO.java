@@ -18,9 +18,9 @@ public class PointDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    //@OneToOne(mappedBy = "point")
     private long userId;
     private Timestamp date;
+    private Timestamp expireDate;
     private int point;
 
 //
@@ -30,5 +30,3 @@ private Timestamp matchDate;
 
 
 }
-
-

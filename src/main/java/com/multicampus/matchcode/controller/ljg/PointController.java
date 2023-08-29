@@ -23,30 +23,26 @@ import java.util.List;
 @Controller
 public class PointController {
 
-    private final PointService pointService;
-
-
     @Autowired
-    public PointController(PointService pointService) {
-        this.pointService = pointService;
-    }
+    private PointService pointService;
 
     //포인트표시
     @GetMapping("/point")
-    public String viewPointPage(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
-                                Model model) {
-
+    public String viewPointPage(
+        @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
+        Model model
+    ) {
         long userId = 1;
         List<PointDTO> chargeHistories = pointService.findAllByUserId(1/*member.getId()*/);
         int totalPoints = pointService.calculateTotalPoints(chargeHistories); // 수정: 총 포인트 계산
-        List<PointDTO> pointUseHistories = pointService.findAllByUserId(userId);//포인트 사용내역
+        List<PointUseHistoryDTO> pointUseHistories = pointService.findAllUsePointByUserId(userId); //포인트 사용내역
 
         System.out.println(chargeHistories.size());
         model.addAttribute("chargeHistories", chargeHistories);
         model.addAttribute("totalPoints", totalPoints);
-        model.addAttribute("pointUseHistories", pointUseHistories);//포인트 사용내역
+        model.addAttribute("pointUseHistories", pointUseHistories); //포인트 사용내역
 
-        return "/pointPage"; // pointPage는 Thymeleaf 템플릿의 이름입니다.
+        return "/ljg/pointPage"; // pointPage는 Thymeleaf 템플릿의 이름입니다.
     }
 
     @GetMapping("/test")

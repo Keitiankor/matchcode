@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>팀원 모집글 작성하기</title>
+</head>
+<body>
+<h2>모집글 작성하기</h2>
+<form th:action="@{/recruit/write/{id}(id = ${recruit.id})}" method="post">
+    <p>글 내용</p>
+    <input type="text" name="teamId" th:value="${teamid}" hidden>
+    <textarea name="content" cols="60" rows="5" placeholder="모집글 내용을 입력하세요."></textarea>
+    <button type="submit">등록</button>
+    <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+</form>
+</body>
+</html>

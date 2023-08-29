@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="number"],
+        textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Update Review</h1>
+    <form th:action="@{/review/updateReview}" method="post">
+        <input type="hidden" name="id" th:value="${review.id}" />
+        <label for="rate">Rate: </label>
+        <input type="number" id="rate" name="rate" th:value="${review.rate}" />
+        <label for="comment">Comment: </label>
+        <textarea id="comment" name="comment" rows="10" th:text="${review.comment}"></textarea>
+        <button type="submit">Update</button>
+        <input type="hidden" th:name="_csrf" th:value="${_csrf.token}">
+    </form>
+    <div class="back-link">
+        <a href="/review/listReview">Back to Review List</a>
+    </div>
+</div>
+</body>
+</html>
