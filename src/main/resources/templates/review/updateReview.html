@@ -58,6 +58,7 @@
 <div class="container">
     <h1>Update Review</h1>
     <form th:action="@{/review/updateReview}" method="post">
+        <input type="hidden" name="dto" th:value="${review}">
         <input type="hidden" name="id" th:value="${review.id}" />
         <label for="rate">Rate: </label>
         <input type="number" id="rate" name="rate" th:value="${review.rate}" />

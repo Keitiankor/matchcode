@@ -3,6 +3,8 @@ package com.multicampus.matchcode.service.khj;
 import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MemberAndPointRequest;
 import com.multicampus.matchcode.repository.*;
+
+import java.lang.reflect.Member;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +46,14 @@ public class MypageService {
             // memberId에 해당하는 회원 정보가 없는 경우 처리
             return MemberAndPointRequest.builder().build();
         }
+    }
+
+    public MemberDTO getMemberById(long id){
+        Optional<MemberDTO> odto = member.findById(id);
+        //지금 임의로 userid가 1이지만, 나중에 세션값에서 받아올 것
+        if (odto.isPresent()) {
+            return odto.get();
+        }
+        return null;
     }
 }
