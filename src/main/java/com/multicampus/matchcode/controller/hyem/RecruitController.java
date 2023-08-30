@@ -1,10 +1,12 @@
 package com.multicampus.matchcode.controller.hyem;
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.RecruitDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,11 +62,25 @@ public class RecruitController {
 
     // 모집글 상세 페이지
     @GetMapping("/view/{id}")
-    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model) {
-        RecruitDTO dto = recruitService.recruitView(id);
+    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model,
+                              @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+        /*RecruitDTO dto = recruitService.recruitView(id);
         model.addAttribute("recruit", dto);
-        model.addAttribute("team", teamId);
-        return "hyem/recruit/recruitview";
+        model.addAttribute("team", teamId);*/
+
+        if (memberDTO != null) {
+            System.out.println(memberDTO.getId());
+            RecruitDTO dto = recruitService.recruitView(id);
+            model.addAttribute("recruit", dto);
+            model.addAttribute("team", teamId);
+            return "hyem/recruit/recruitview";
+        } else {
+            model.addAttribute("message", "로그인 후 열람이 가능합니다."); //출력되는 메시지
+            model.addAttribute("searchUrl", "/login");
+            return "hgdd/message";
+        }
+
+        /*return "hyem/recruit/recruitview";*/
     }
 
     // 모집글 수정 페이지

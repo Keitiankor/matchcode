@@ -18,7 +18,6 @@ public class MemberDTO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long areaId;
     private String account;
     private String password;
     private String name;
