@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.model.entity;
 
+import com.multicampus.matchcode.util.enums.hyem.Sport;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ public class PostDTO {
 
     @UpdateTimestamp
     private Timestamp editedDate;
+
 
     private int views;
     private int likes;

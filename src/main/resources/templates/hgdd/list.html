@@ -17,6 +17,7 @@
             <th>번호</th>
             <th>제목</th>
             <th>작성일</th>
+            <th>조회수</th>
 
             <th>
                 <!--게시글 작성 이동 버튼 (insert.html)-->
@@ -31,12 +32,13 @@
             <td th:text="${postDTO.id}"></td>
             <td>
                 <!--게시글 제목(PostDTO title)표시 그리고 제목을 누르면 그 해당한 게시글 상세페이지 이동 -->
-                <a th:text="${postDTO.title}" th:href="@{/post/view(id=${postDTO.id},postDTO=${postDTO.id})}"></a>
+                <a th:text="${postDTO.title}" th:href="@{/post/view(id=${postDTO.id})}"></a>
             </td>
             <td>
-
                 <a th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
-
+            </td>
+            <td>
+                <a th:text="${postDTO.views}"></a>
             </td>
         </tr>
         </tbody>
