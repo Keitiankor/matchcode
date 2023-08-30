@@ -2,7 +2,6 @@ package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
-import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.service.hyuk.MatchService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,8 +3,8 @@ package com.multicampus.matchcode.controller.khj;
 import com.multicampus.matchcode.model.entity.EmblemDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.RatingDTO;
-import com.multicampus.matchcode.model.request.khj.MatchResult;
-import com.multicampus.matchcode.model.request.khj.MemberInfo;
+import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
+import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import java.util.List;
@@ -33,7 +33,7 @@ public class MypageController {
 
         // long memberId = loggedInMember.getId(); // 로그인한 회원의 memberid
         // 위 코드는, 이제 로그인 시, 세션에서 memberid를 받아올 경우를 상정한 코드임! 그 전까진 예시로 memberId값에 1,2 같은 예시값을 집어넣어두자.
-        MemberInfo memberInfo = service.getMemberInfo(2);
+        MemberInfoRequest memberInfo = service.getMemberInfo(2);
         model.addAttribute("memberInfo", memberInfo);
         return "khj/mypage";
     }
@@ -49,7 +49,7 @@ public class MypageController {
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model) {
         RatingDTO rating = myHistoryService.getRatingBySportsIdAndUserId(sportsId, 2);
-        List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
+        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
         EmblemDTO emblem = myHistoryService.getEmblemById(rating.getEmblemId());
 
         model.addAttribute("emblem", emblem);

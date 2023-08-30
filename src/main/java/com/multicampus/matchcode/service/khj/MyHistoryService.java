@@ -1,7 +1,7 @@
 package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.khj.MatchResult;
+import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.repository.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +37,9 @@ public class MyHistoryService {
     EmblemRepository emblem;
 
     //스포츠 종목에 맞는 매치 기록
-    public List<MatchResult> getMatchResultsBySportsId(long sportsId) {
+    public List<MatchResultRequest> getMatchResultsBySportsId(long sportsId) {
         List<MatchDTO> matches = getMatchesBySportsId(sportsId);
-        List<MatchResult> matchResults = new ArrayList<>();
+        List<MatchResultRequest> matchResults = new ArrayList<>();
 
         for (MatchDTO match : matches) {
             ResultDTO result = getResultByMatchId(match.getId());
@@ -47,7 +47,7 @@ public class MyHistoryService {
                 continue;
             }
             MapDTO map = getMapByMatchId(match.getMapId());
-            MatchResult matchResult = MatchResult
+            MatchResultRequest matchResult = MatchResultRequest
                 .builder()
                 .matchId(match.getId())
                 .matchDate(match.getMatchDate())

@@ -1,7 +1,7 @@
 package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.khj.MemberInfo;
+import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.repository.*;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class MypageService {
     TeamRepository team;
 
     //메인화면 member 이름과 point를 불러오기 위한 service메소드
-    public MemberInfo getMemberInfo(long memberId) {
+    public MemberInfoRequest getMemberInfo(long memberId) {
         Optional<MemberDTO> memberDTO = member.findById(memberId);
         Optional<List<PointDTO>> pointDTO = point.findAllByUserId(memberId);
         Optional<TeamMemberDTO> teamMemberDTO = teammember.findByUserId(memberId);
@@ -57,7 +57,7 @@ public class MypageService {
             }
         }
 
-        return MemberInfo
+        return MemberInfoRequest
                 .builder()
                 .name(memberDTO.get().getName())
                 .point(sum)
