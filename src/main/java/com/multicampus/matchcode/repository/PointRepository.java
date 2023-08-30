@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface PointRepository extends JpaRepository<PointDTO, Long> {
 
+
     public Optional<List<PointDTO>> findAllByUserId(Long userId);
 }

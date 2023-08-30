@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Page Title</title>
+    <style>
+        .box-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .box {
+            width: calc(48% - 10px);
+            padding-bottom: 66.66%;
+            position: relative;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+        .box img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .sticky-box {
+            position: sticky;
+            top: 0;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="header-box">
+    <img src="/path/to/your/image.jpg" alt="Your Image">
+</div>
+<div class="description-box">
+    <div class="description-content">
+        <p>
+            Your description text goes here. It should be in a 6:4 aspect ratio box.
+            You can use Thymeleaf expressions like <span th:text="${yourVariable}"></span>.
+        </p>
+    </div>
+</div>
+<div class="box-container">
+    <div class="box">
+        <img src="/path/to/image1.jpg" alt="Image 1">
+    </div>
+    <div style="width: 100%; margin-bottom: 20px;"></div> <!-- 간격을 두는 엘리먼트 추가 -->
+    <div class="box">
+        <img src="/path/to/image1.jpg" alt="Image 1">
+    </div>
+    <div class="box sticky-box">
+        <img src="/path/to/image2.jpg" alt="Image 2">
+    </div>
+    <div class="box">
+        <img src="/path/to/image1.jpg" alt="Image 1">
+    </div>
+</div>
+</body>
+</html>
