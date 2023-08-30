@@ -4,14 +4,13 @@ import com.multicampus.matchcode.model.entity.TeamDTO;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 @Builder
-public class RecruitPostRequest {
+public class ApplicationRequest {
 
     private long id;
+    private long userId;
     private TeamDTO teamId;
-    private String content;
-    private Timestamp createdDate;
+    private String introduction;
+    private int status;
 }

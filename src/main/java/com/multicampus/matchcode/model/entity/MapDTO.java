@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class MapDTO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private long areaId;

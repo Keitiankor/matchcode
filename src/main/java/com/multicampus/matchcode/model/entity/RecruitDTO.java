@@ -21,7 +21,7 @@ public class RecruitDTO {
     @Column(name = "recruit_id")
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "team_id")
     private TeamDTO teamId;
 

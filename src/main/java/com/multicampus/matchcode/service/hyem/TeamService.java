@@ -10,6 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class TeamService {
 
@@ -37,7 +42,7 @@ public class TeamService {
     }
 
     // 팀 정보 불러오기
-    public TeamDTO teamView(Long id) {
+    public TeamDTO teamView(long id) {
         return teamRepository.findById(id).get();
     }
 
@@ -65,5 +70,29 @@ public class TeamService {
     // 팀 삭제
     public void teamDelete(long id) {
         teamRepository.deleteById(id);
+    }
+
+    // 데이터 저장 비트 연산
+    public long saveValue(List<Long> selectedColumns) {
+        int selectedValues = 0;
+        for(Long id : selectedColumns) {
+            selectedValues |= 1 << id.intValue();
+        }
+        return selectedValues;
+    }
+
+    // 비트 데이터 반환
+    public List<Long> extractValue(long selectedValues) {
+        List<Long> extractedValues = new ArrayList<>();
+        int index = 0;
+
+        while (selectedValues > 0) {
+            if ((selectedValues & 1) == 1) {
+                extractedValues.add((long) index);
+            }
+            selectedValues >>= 1;
+            index++;
+        }
+        return extractedValues;
     }
 }
