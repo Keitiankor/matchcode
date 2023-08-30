@@ -1,10 +1,10 @@
 package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.khj.MemberAndPointRequest;
+import com.multicampus.matchcode.model.request.khj.MemberInfo;
 import com.multicampus.matchcode.repository.*;
 
-import java.lang.reflect.Member;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,22 +30,40 @@ public class MypageService {
     @Autowired
     MatchMemberRepository matchmember;
 
+    @Autowired
+    TeamMemberRepository teammember;
+
+    @Autowired
+    TeamRepository team;
+
     //메인화면 member 이름과 point를 불러오기 위한 service메소드
-    public MemberAndPointRequest getMemberAndPoint(long memberId) {
+    public MemberInfo getMemberInfo(long memberId) {
         Optional<MemberDTO> memberDTO = member.findById(memberId);
+        Optional<List<PointDTO>> pointDTO = point.findAllByUserId(memberId);
+        Optional<TeamMemberDTO> teamMemberDTO = teammember.findByUserId(memberId);
+        System.out.println(team.findById((long)1).toString());
+        Optional<TeamDTO> teamDTO =
+                teamMemberDTO.isPresent()
+                ? team.findById(teamMemberDTO.get().getTeamId())
+                : Optional.empty();
 
-        if (memberDTO.isPresent()) {
-            Optional<PointDTO> pointDTO = point.findByUserId(memberId);
-
-            if (pointDTO.isPresent()) {
-                return MemberAndPointRequest.builder().pointDTO(pointDTO.get()).memberDTO(memberDTO.get()).build();
-            } else {
-                return MemberAndPointRequest.builder().memberDTO(memberDTO.get()).build();
+        String teamName = teamDTO.isPresent()
+                ? teamDTO.get().getTeamName()
+                : "현재 소속된 팀이 없습니다";
+        int sum = 0;
+        if(pointDTO.isPresent()){
+            for (PointDTO dto: pointDTO.get()) {
+                sum += dto.getPoint();
             }
-        } else {
-            // memberId에 해당하는 회원 정보가 없는 경우 처리
-            return MemberAndPointRequest.builder().build();
         }
+
+        return MemberInfo
+                .builder()
+                .name(memberDTO.get().getName())
+                .point(sum)
+                .communityLevel(memberDTO.get().getCommunityLevel())
+                .teamName(teamName)
+                .build();
     }
 
     public MemberDTO getMemberById(long id){
