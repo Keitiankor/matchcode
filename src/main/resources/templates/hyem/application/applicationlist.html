@@ -18,18 +18,26 @@
     <table>
       <thead>
       <tr>
-        <th>번호</th>
+        <th>신청번호</th>
         <th>팀명</th>
+<!--        <th>신청자</th>-->
         <th>모집글 내용</th>
+        <th>신청현황</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="application : ${list}">
-        <td th:text="${application.id}">1</td>
+      <tr th:each="joinapplication : ${list}">
+        <td th:text="${joinapplication.id}">1</td>
+        <td th:text="${joinapplication.teamId.teamName}"></td>
+<!--        <td th:text="${joinapplication.userId.userName}"></td>-->
         <td>
-          <a th:text="${application.teamId.teamName}" th:href="@{/application/view/{id}(id=${application.id})}"></a>
+          <a th:text="${joinapplication.introduction}" th:href="@{/application/view/{id}(id=${joinapplication.id})}"></a>
         </td>
-        <td th:text="${application.introduce"></td>
+        <td>
+          <span th:if="${joinapplication.status == 1}">가입 대기</span>
+          <span th:if="${joinapplication.status == 2}">가입 승인</span>
+          <span th:if="${joinapplication.status == 3}">가입 반려</span>
+        </td>
       </tr>
       </tbody>
     </table>
