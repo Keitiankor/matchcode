@@ -23,13 +23,15 @@ public class ApplicationService {
     private ApplicationRepository applicationRepository;
 
     // 가입 신청
-    public void save(ApplicationRequest request) {
+    public void save(ApplicationRequest request, long userId) {
         ApplicationDTO dto = ApplicationDTO
             .builder()
+            .userId(userId)
             .teamId(request.getTeamId())
             .introduction(request.getIntroduction())
             .status(1) // 1: 가입 대기, 2: 가입 승인, 3: 가입 반려
             .build();
+
         applicationRepository.save(dto);
     }
 
@@ -37,6 +39,11 @@ public class ApplicationService {
     public Page<ApplicationDTO> applicationList(Pageable pageable) {
         return applicationRepository.findAll(pageable);
     }
+
+    // 팀별 가입신청 리스트
+/*    public Page<ApplicationDTO> teamApplicationList(long id) {
+        return applicationRepository.findByRecruit0Id(id);
+    }*/
 
     // 가입신청 정보
     public ApplicationDTO applicationView(long id) {
@@ -51,9 +58,10 @@ public class ApplicationService {
 
         ApplicationDTO applicationUpdate = ApplicationDTO
             .builder()
-                .teamId(request.getTeamId())
-                .introduction(request.getIntroduction())
-                .status(1)
+            .id(id)
+            .teamId(existingApplication.getTeamId())
+            .introduction(request.getIntroduction())
+            .status(1)
             .build();
 
         return applicationRepository.save(applicationUpdate);

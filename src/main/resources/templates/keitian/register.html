@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{header :: head(~{::title})}">
+        <title>회원가입</title>
+    </head>
+    <body>
+        <script src="/js/keitian/regist.js"></script>
+        <legend>회원가입</legend>
+        아이디 : <input type="text" id="id-account" />
+        <input type="button" value="아이디 중복확인" id="id-dupchek" />
+        <input type="radio" id="id-isAccountNotDup" hidden /><br />
+
+        비밀번호 : <input type="password" id="id-password" /><br />
+        이름 : <input type="text" id="id-name" /><br />
+        전화번호 : <input type="tel" id="id-phone" /><br />
+
+        이메일 주소 : <input type="email" id="id-mailAddress" />
+        <input type="button" value="인증번호 발송" id="id-verifymail" /><br />
+
+        이메일 인증 : <input type="text" id="id-verifycode" />
+        <input type="button" value="인증번호 확인" id="id-verifyingcheck" disabled />
+        <input type="radio" id="id-isverifyied" hidden /><br />
+
+        생년월일 : <input type="date" id="id-birthday" /><br />
+
+        <input type="button" id="id-resister" value="회원가입" />
+    </body>
+</html>
