@@ -9,6 +9,8 @@ import com.multicampus.matchcode.repository.RatingRepository;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -67,8 +67,11 @@ public class MyHistoryService {
     }
 
     public EmblemDTO getEmblemById(long emblemId) {
-
-        return emblem.findById(emblemId);
+        Optional<EmblemDTO> odto = emblem.findById(emblemId);
+        if(odto.isPresent()){
+            return odto.get();
+        }
+        return null;
     }
 
 
