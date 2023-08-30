@@ -1,4 +1,4 @@
-package com.multicampus.matchcode.domain;
+package com.multicampus.matchcode.model.request.hyuk;
 
 import jakarta.persistence.*;
 import java.sql.Timestamp;

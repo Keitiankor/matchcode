@@ -1,6 +1,6 @@
 package com.multicampus.matchcode.service.hyuk;
 
-import com.multicampus.matchcode.domain.Match;
+import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.repository.MatchRepository;
@@ -130,6 +130,34 @@ public class MatchService {
         // 페이지 번호 할당
         for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
             pageList[idx] = val;
+        }
+
+        return pageList;
+    }
+    @Transactional
+    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
+        Page<MatchDTO> page = matchRepository.findByMapId(region,
+                PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
+        );
+        return page.getContent();
+    }
+
+    @Transactional
+    public Integer[] getPageListByRegion(Integer pageNum, long region) {
+        Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
+        return calculatePageList(pageNum, matchTotalCount);
+    }
+    private Integer[] calculatePageList(Integer pageNum, Double totalCount) {
+        int totalLastPageNum = (int) (Math.ceil(totalCount / PAGE_POST_COUNT));
+        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT)
+                ? pageNum + BLOCK_PAGE_NUM_COUNT
+                : totalLastPageNum;
+
+        int curPageNum = (pageNum <= 3) ? 1 : pageNum - 2;
+
+        Integer[] pageList = new Integer[blockLastPageNum - curPageNum + 1];
+        for (int i = curPageNum, idx = 0; i <= blockLastPageNum; i++, idx++) {
+            pageList[idx] = i;
         }
 
         return pageList;
