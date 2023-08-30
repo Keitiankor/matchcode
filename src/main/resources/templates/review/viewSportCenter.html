@@ -6,31 +6,27 @@
     <link rel="stylesheet" type="text/css" href="/css/jun/viewSportCenterStyle.css">
 </head>
 <body>
-<p style="margin-top:-12px">
-    <em class="link">
-        <a href="/web/documentation/#CategoryCode" target="_blank">카테고리 코드목록을 보시려면 여기를 클릭하세요!</a>
-    </em>
-</p>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-    <ul id="category">
-        <li id="BK9" data-order="0">
-            <span class="category_bg bank"></span>
-            농구장
-        </li>
-        <li id="MT1" data-order="1">
-            <span class="category_bg mart"></span>
-            풋살장
-        </li>
-        <li id="PM9" data-order="2">
-            <span class="category_bg pharmacy"></span>
-            배드민턴장
-        </li>
-    </ul>
+
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="농구장" id="keyword" size="15">
+                    <button type="submit">검색하기</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
+    </div>
 </div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c80a75ce9529c87ee1ee975834c095bf"></script>
 <a th:href="@{/sportCenter/createSportCenter}"><input type="button" value="시설 등록"></a>
+<a th:href="@{/sportCenter/updateSportCenter}"><input type="button" value="시설 수정"></a>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${{ secrets.OUR_KAKAO_MAP_KEY }}"></script>
 <script src="/js/jun/viewSportCenter.js"></script>
 </body>
 </html>

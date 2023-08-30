@@ -20,21 +20,29 @@ public class SportCenterService {
                 .SportCenterName(request.getSportCenterName())
                 .areaId(request.getAreaId())
                 .resistrationCode(request.getResistrationCode())
+                .longitude(request.getLongitude())
+                .latitude(request.getLatitude())
                 .build();
         System.out.println("M.insert : " + mapDTO);
         mapRepository.save(mapDTO);
     }
 
-    public void update(SportCenterRequest request){
-        MapDTO mapDTO = MapDTO
+    public void update(SportCenterRequest request,MapDTO mapDTO){
+        MapDTO dto = MapDTO
                 .builder()
+                .id(mapDTO.getId())
+                .areaId(request.getAreaId())
+                .sportsId(mapDTO.getSportsId())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .SportCenterName(request.getSportCenterName())
                 .managerName(request.getManagerName())
                 .phone(request.getPhone())
-                .SportCenterName(request.getSportCenterName())
-                .areaId(request.getAreaId())
                 .resistrationCode(request.getResistrationCode())
+                .price(mapDTO.getPrice())
+                .status(mapDTO.getStatus())
                 .build();
-        System.out.println("M.insert : " + mapDTO);
+        System.out.println("M.updata : " + mapDTO);
         mapRepository.save(mapDTO);
     }
 
