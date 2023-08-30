@@ -24,7 +24,8 @@ public class MapDTO {
     private long sportsId;
     private double latitude;
     private double longitude;
-    private String name;
+    private String SportCenterName;
+    private String managerName;
     private String phone;
     private String resistrationCode;
     private int price;

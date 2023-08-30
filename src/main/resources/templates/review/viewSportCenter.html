@@ -28,8 +28,9 @@
         </li>
     </ul>
 </div>
+<a th:href="@{/sportCenter/createSportCenter}"><input type="button" value="시설 등록"></a>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<script id="kakaomapapi" type="text/javascript"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${{ secrets.OUR_KAKAO_MAP_KEY }}"></script>
 <script src="/js/jun/viewSportCenter.js"></script>
 </body>
 </html>

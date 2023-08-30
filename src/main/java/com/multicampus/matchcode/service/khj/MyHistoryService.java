@@ -51,7 +51,7 @@ public class MyHistoryService {
                 .builder()
                 .matchId(match.getId())
                 .matchDate(match.getMatchDate())
-                .name(map.getName())
+                .name(map.getSportCenterName())
                 .myScore(result.getMyScore())
                 .rivalScore(result.getRivalScore())
                 .build();
