@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.model.request.ljg;
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -10,4 +11,5 @@ public class ReserveRequest {
    private long mapId;
    private long userId;
    private int pricePoints;
+   private MemberDTO memberId;
 }

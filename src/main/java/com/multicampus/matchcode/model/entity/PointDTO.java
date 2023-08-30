@@ -19,9 +19,12 @@ public class PointDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long userId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private MemberDTO memberId;
     private Timestamp date;
-    private Timestamp expireDate;
     private int point;
+    private int refundAmount;
 
 //
     //

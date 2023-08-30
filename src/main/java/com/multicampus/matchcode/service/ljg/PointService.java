@@ -6,29 +6,16 @@ import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
 import com.multicampus.matchcode.repository.MatchRepository;
 import com.multicampus.matchcode.repository.PointRepository;
-import com.nimbusds.jose.shaded.gson.Gson;
-import com.nimbusds.jose.shaded.gson.JsonObject;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.Data;
-import net.minidev.json.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.*;
-import java.net.URL;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -50,11 +37,28 @@ public class PointService {
         return pointRepository.save(dto);
     }
 
-    public List<PointDTO> findAllByUserId(long userId) {
-        return pointRepository.findAllByUserId(userId).get();
+    public List<PointDTO> findAllByUserId(long memberId) {
+        Optional<List<PointDTO>> odto = pointRepository.findAllByUserId(memberId);
 
+        if(odto.isPresent()){
+            return  odto.get();
+        }
+        return  null;
+        //return (List<PointDTO>) pointRepository.findAllByUserId(memberId).get();
 
     }
+//    @PostMapping("/refundPoint")
+//    public PointDTO pointRefund(@RequestParam("userId") Long userId,
+//                                @RequestParam("refundAmount") int refundAmount){
+//        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+//        PointDTO pointDTO = PointDTO
+//                .builder()
+//                .point(-refundAmount) // 환불 금액을 음수로 저장
+//                .build();
+//        return pointRepository.save(pointDTO); // 변경: dto 대신 pointDTO 저장
+//    }
+
+
 
     public int calculateTotalPoints(List<PointDTO> pointDTOs) {
         return pointDTOs.stream()
@@ -69,7 +73,7 @@ public class PointService {
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
-                .userId(request.getUserId())
+                .memberId(request.getMemberId())
                 .point(-request.getPricePoints()) // Deducted points as a negative value
                 .build();
 
@@ -81,6 +85,19 @@ public class PointService {
 
         return matchRepository.save(matchDTO).getId();
     }
+    public PointDTO refundPoints(PointDTO dto) {
+
+        Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
+        PointDTO pointDTO = PointDTO
+                .builder()
+                .date(paydate)
+                .memberId(dto.getMemberId())
+                .refundAmount(dto.getRefundAmount())  // Set refundAmount here
+                .point(-dto.getRefundAmount())  // Deducted points as a negative value
+                .build();
+        return pointRepository.save(pointDTO); // Save pointDTO, not dto
+    }
+
 }
 
 //취소요청보내기

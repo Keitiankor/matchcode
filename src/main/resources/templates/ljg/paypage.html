@@ -24,7 +24,7 @@
 <table>
     <tr><b>결제</b></tr>
     <tr>
-        <p>이용 포인트 <span id="pricePoints">3000</span></p>
+        <p>이용 포인트 <span id="pricePoints" th:text="${price}"></span></p>
 <!--        임시로 3000사용-->
         <td>결제 포인트 :<span id="payPointsValue"></span><button type="button" onclick="location.href='test3'">추가충전</button></td>
     </tr>
