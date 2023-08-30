@@ -34,10 +34,10 @@ public class MemberController {
         }
     }
 
-    @GetMapping("regist")
-    public String gMemberRegist(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
+    @GetMapping("register")
+    public String gMemberRegister(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
         if (dto == null) {
-            return "keitian/regist";
+            return "keitian/register";
         } else {
             return "index";
         }
@@ -55,27 +55,24 @@ public class MemberController {
         return "redirect:";
     }
 
-    @PostMapping("regist")
-    public String pMemberRegist(RegistserRequest request) {
-        if (request.isAccountNotDup()) {
-            if (request.isVerifyied()) {
-                service.insert(request);
-            }
-        } else {
-            return "keitian/regist";
+    @PostMapping("register")
+    public String pMemberRegister(RegistserRequest request) {
+        if (request.isAccountNotDup() && request.isVerifyied()) {
+            service.insert(request);
+            return "redirect:";
         }
-        return "redirect:";
+        return "keitian/register";
     }
 
-    @PostMapping("regist/accountduplicationcheck")
+    @PostMapping("register/accountduplicationcheck")
     @ResponseBody
     public boolean pAccountNotDupe(@RequestParam String account) {
         return service.isAccountDup(account);
     }
 
-    @PostMapping("regist/emailverifying")
+    @PostMapping("register/emailverifying")
     @ResponseBody
-    public String pMemberRegistEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
+    public String pMemberRegisterEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
         String verifyString = mailSender.sendVerifyingMail(mailAddress);
         if (verifyString != null) {
             hRequest.getSession(false).setAttribute(SessionConstant.VERIFY_STRING, verifyString);
@@ -84,15 +81,12 @@ public class MemberController {
         return "메일 발송중 오류가 발생했습니다.";
     }
 
-    @PostMapping("regist/verifyingcheck")
+    @PostMapping("register/verifyingcheck")
     @ResponseBody
-    public Boolean pMemverVerifyingCheck(
+    public Boolean pMemberVerifyingCheck(
         @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
         @RequestParam String inputString
     ) {
-        if (verifyString.equals(inputString)) {
-            return true;
-        }
-        return false;
+        return verifyString.equals(inputString);
     }
 }
