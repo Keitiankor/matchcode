@@ -4,22 +4,24 @@ import lombok.Getter;
 
 @Getter
 public enum Gender {
-    여자(1),
-    남자(2),
-    남녀모두(3);
+    MALE("남자", 1),
+    FEMALE("여자", 2),
+    ALL("남녀모두", 3);
 
+    private final String description;
     private final Integer count;
 
-    Gender(Integer count) {
+    Gender(String description, Integer count) {
+        this.description = description;
         this.count = count;
     }
 
-    public static String getNameFromCount(Integer count) {
+    public static String getDescriptionFromCount(Integer count) {
         for (Gender gender : Gender.values()) {
             if (gender.getCount().equals(count)) {
-                return gender.name();
+                return gender.getDescription();
             }
         }
-        return "Unknown"; // 또는 다른 디폴트 값을 설정할 수 있습니다.
+        return "Unknown";
     }
 }
