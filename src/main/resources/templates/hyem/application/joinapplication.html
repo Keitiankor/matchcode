@@ -6,11 +6,11 @@
 </head>
 <body>
 <h2>가입신청</h2>
-<form th:action="@{/application/join/{id}(id = ${teamid.id})}" method="post">
+<form th:action="@{/application/join/{teamid}/{id}(teamid=${teamid}, id=${join.id})}" method="post">
     <p>자기소개</p>
-    <input type="text" name="teamId" th:value="${teamid.id}" hidden>
-<!--    <input type="text" name="userId" th:value="${uesrId}" hidden>-->
-    <textarea name="introduce" cols="60" rows="5" placeholder="팁 가입 신청합니다."></textarea>
+    <input type="hidden" name="teamId" th:value="${teamid}">
+    <input type="hidden" name="userId" th:value="${userid}">
+    <textarea name="introduction" cols="60" rows="5" placeholder="팁 가입 신청합니다."></textarea>
     <button type="submit">등록</button>
     <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
 </form>
