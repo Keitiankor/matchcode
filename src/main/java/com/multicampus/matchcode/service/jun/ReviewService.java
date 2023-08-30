@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReviewSercvice {
+public class ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public void save(ReviewRequest request) {
+    public void save(ReviewRequest request, long memberId) {
         ReviewDTO reviewdto = ReviewDTO
             .builder()
-            .userId(23)
-            .mapId(55)
+            .userId(memberId)
+            .mapId(34)
             .rate(request.getRate())
             .comment(request.getComment())
             .build();
@@ -36,6 +36,8 @@ public class ReviewSercvice {
         ReviewDTO review = ReviewDTO
             .builder()
             .id(updateReviewRequest.getId())
+                .userId(updateReviewRequest.getDto().getUserId())
+                .mapId(updateReviewRequest.getDto().getMapId())
             .rate(updateReviewRequest.getRate())
             .comment(updateReviewRequest.getComment())
             .build();
