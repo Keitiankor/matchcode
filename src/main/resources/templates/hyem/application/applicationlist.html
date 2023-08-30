@@ -21,6 +21,7 @@
         <th>번호</th>
         <th>팀명</th>
         <th>모집글 내용</th>
+        <th>신청현황</th>
       </tr>
       </thead>
       <tbody>
@@ -30,6 +31,11 @@
           <a th:text="${joinapplication.teamId.teamName}" th:href="@{/application/view/{id}(id=${joinapplication.id})}"></a>
         </td>
         <td th:text="${joinapplication.introduction}"></td>
+        <td>
+          <span th:if="${joinapplication.status == 1}">가입 대기</span>
+          <span th:if="${joinapplication.status == 2}">가입 승인</span>
+          <span th:if="${joinapplication.status == 3}">가입 반려</span>
+        </td>
       </tr>
       </tbody>
     </table>
