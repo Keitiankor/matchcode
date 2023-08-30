@@ -1,6 +1,10 @@
 package com.multicampus.matchcode.repository;
 
 import com.multicampus.matchcode.model.entity.EmblemDTO;
+import com.multicampus.matchcode.model.entity.RatingDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface EmblemRepository extends JpaRepository<EmblemDTO, Long> {}
+public interface EmblemRepository extends JpaRepository<EmblemDTO, Long> {
+
+    EmblemDTO findById(long id);
+}

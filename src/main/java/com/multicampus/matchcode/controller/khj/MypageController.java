@@ -1,11 +1,16 @@
 package com.multicampus.matchcode.controller.khj;
 
+import com.multicampus.matchcode.model.entity.EmblemDTO;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.model.request.khj.MemberAndPointRequest;
+import com.multicampus.matchcode.repository.RatingRepository;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +50,12 @@ public class MypageController {
     //매치 히스토리 내에서 종목별 페이지
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model) {
+        RatingDTO rating = myHistoryService.getRatingBySportsIdAndUserId(sportsId, 2);
         List<MatchResult> matchResults = myHistoryService.getMatchResultsBySportsId(sportsId);
+        EmblemDTO emblem = myHistoryService.getEmblemById(rating.getEmblemId());
+
+        model.addAttribute("emblem", emblem);
+        model.addAttribute("rating", rating);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
     }
@@ -55,20 +65,41 @@ public class MypageController {
     @ResponseBody
     public List<String> loadMatchData(@RequestParam String matchId) {
         System.out.println(matchId);
-        return myHistoryService.getMemberNamesByMatchId(Long.parseLong(matchId));
+        return myHistoryService.getMembersByMatchId(Long.parseLong(matchId));
     }
 
-    //포지션 설정
+    //매너온도 증감은 지금은 잘 몰라서 보류.
 
-    @GetMapping("myposition")
-    public String myposition() {
-        return "khj/myposition";
-    }
+//    //매치 멤버 id로 매치 멤버의 매너온도 조작
+//    //매너온도 증가시
+//    @PostMapping
+//    public ResponseEntity<String> increaseManner(@RequestParam long memberId){
+//        boolean success = myHistoryService.increaseManner(memberId);
+//        if (success) {
+//            return ResponseEntity.ok("매너 온도 증가!");
+//        } else {
+//            return ResponseEntity.badRequest().body("Failed to increase manner");
+//        }
+//    }
+//
+//    //매너온도 감소시
+//    @PostMapping("/decreaseManner")
+//    public ResponseEntity<String> decreaseManner(@RequestParam long memberId) {
+//        boolean success = myHistoryService.decreaseManner(memberId);
+//        if (success) {
+//            return ResponseEntity.ok("매너 온도 감소!");
+//        } else {
+//            return ResponseEntity.badRequest().body("Failed to decrease manner");
+//        }
+//    }
 
     //개인정보
 
     @GetMapping("personal")
-    public String personal() {
+    public String personal(Model model) {
+        MemberDTO member = service.getMemberById(2);
+
+        model.addAttribute("member", member);
         return "khj/personal";
     }
 
@@ -78,13 +109,5 @@ public class MypageController {
     public String mypost() {
         return "khj/mypost";
     }
-
-    //개인 기록
-
-    @GetMapping("record")
-    public String record() {
-        return "khj/record";
-    }
-    //개인 기록
 
 }
