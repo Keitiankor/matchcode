@@ -6,8 +6,7 @@
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="js/khj/menubutton.js" defer></script>
-<h2 style="display:inline">개인정보</h2>
+<h2 style="display:inline">개인정보 수정 페이지입니다.</h2>
 
 <p>이름: <span th:text="${member.name}"></span></p>
 <p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
@@ -18,7 +17,7 @@
 <p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
 <br><br>
 <p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
+
 </div>
-<button id="update">수정하기</button>
 </body>
 </html>
