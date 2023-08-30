@@ -25,10 +25,16 @@ public class MyHistoryService {
     MapRepository map;
 
     @Autowired
+    RatingRepository rating;
+
+    @Autowired
     ResultRepository result;
 
     @Autowired
     MatchMemberRepository matchmember;
+
+    @Autowired
+    EmblemRepository emblem;
 
     //스포츠 종목에 맞는 매치 기록
     public List<MatchResult> getMatchResultsBySportsId(long sportsId) {
@@ -43,7 +49,7 @@ public class MyHistoryService {
             MapDTO map = getMapByMatchId(match.getMapId());
             MatchResult matchResult = MatchResult
                 .builder()
-                    .matchId(match.getId())
+                .matchId(match.getId())
                 .matchDate(match.getMatchDate())
                 .name(map.getName())
                 .myScore(result.getMyScore())
@@ -55,19 +61,33 @@ public class MyHistoryService {
         return matchResults;
     }
 
-    public List<MatchDTO> getMatchesBySportsId(long sportsId) {
-        return matches.findBySportsId(sportsId);
+    public RatingDTO getRatingBySportsIdAndUserId(long sportsId, long userId) {
+
+        return rating.findBySportsIdAndUserId(sportsId, userId);
     }
 
-    public ResultDTO getResultByMatchId(long matchId) {
-        Optional<ResultDTO> odto = result.findByMatchIdAndUserId(matchId, (long) 1);
-        if (odto.isPresent()) {
+    public EmblemDTO getEmblemById(long emblemId) {
+        Optional<EmblemDTO> odto = emblem.findById(emblemId);
+        if(odto.isPresent()){
             return odto.get();
         }
         return null;
     }
 
+
+    public List<MatchDTO> getMatchesBySportsId(long sportsId) {
+        return matches.findBySportsId(sportsId);
+    }
+
     //결과는 매치id뿐만 아니라, 유저id까지 가져오면서 '내' 매치기록들만 읽어오도록
+    public ResultDTO getResultByMatchId(long matchId) {
+        Optional<ResultDTO> odto = result.findByMatchIdAndUserId(matchId, (long) 1);
+        //지금 임의로 userid가 1이지만, 나중에 세션값에서 받아올 것
+        if (odto.isPresent()) {
+            return odto.get();
+        }
+        return null;
+    }
 
     public MapDTO getMapByMatchId(long mapId) {
         return map.findById(mapId).get();
@@ -75,7 +95,7 @@ public class MyHistoryService {
 
 
     //매치 id가 주어졌을때, 그 매치id로 경기 뛴 유저들 이름 찾기
-    public List<String> getMemberNamesByMatchId(long matchId) {
+    public List<String> getMembersByMatchId(long matchId) {
         List<MatchMemberDTO> matchMembers = matchmember.findAllByMatchId(matchId);
         List<String> memberNames = new ArrayList<>();
 
@@ -88,4 +108,28 @@ public class MyHistoryService {
 
         return memberNames;
     }
+
+    // 매너 점수증감 서비스는 지금은 무리인 것 같다.
+
+//    public boolean increaseManner(long memberId) {
+//        Optional<MemberDTO> memberOptional = member.findById(memberId);
+//        if (memberOptional.isPresent()) {
+//            MemberDTO member = memberOptional.get();
+//            member.setMannerTemperture(member.getMannerTemperture() + 1); // 매너점수 증가
+//            member.save(member); // 변경 내용 저장
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean decreaseManner(long memberId) {
+//        Optional<MemberDTO> memberOptional = member.findById(memberId);
+//        if (memberOptional.isPresent()) {
+//            MemberDTO member = memberOptional.get();
+//            member.setMannerTemperture(member.getMannerTemperture() - 1); // 매너점수 감소
+//            member.save(member); // 변경 내용 저장
+//            return true;
+//        }
+//        return false;
+//    }
 }

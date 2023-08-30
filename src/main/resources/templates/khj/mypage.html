@@ -16,11 +16,14 @@
         <div id="nav">
             <h3>마이페이지</h3>
             (이미지가 들어갈 부분)
-            <br />
+            <br>
+            level :
+            <p style="display: inline" th:text="${nameAndPoint.memberDTO.communityLevel}"></p>
+            <br>
             이름 :
             <p style="display: inline" th:text="${nameAndPoint.memberDTO.name}"></p>
             <!--단, member DB에 name이 없으면 500 에러페이지 뜸. -->
-            <br />
+            <br>
             포인트 :
             <p
                 style="display: inline"
@@ -29,16 +32,12 @@
             >
                 p
             </p>
-            <br />
+            <br>
             <button id="matchHistoryButton">매치 히스토리</button>
-            <!--    <br>-->
-            <!--    <button id="myPositionButton">내 포지션</button>-->
-            <br />
+            <br>
             <button id="personalButton">개인 정보</button>
-            <br />
+            <br>
             <button id="myPostButton">내 게시물</button>
-            <br />
-            <button id="recordButton">개인 기록</button>
         </div>
         <!-- 컨텐츠가 들어갈 부분 -->
         <div class="updown"></div>
