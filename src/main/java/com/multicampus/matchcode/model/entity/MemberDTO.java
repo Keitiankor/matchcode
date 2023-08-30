@@ -18,11 +18,10 @@ public class MemberDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long areaId;
     private String account;
-    private String password;
+    private String password; //수정가능
     private String name;
-    private String phone;
+    private String phone; //수정가능
     private String mailAddress;
     private Timestamp birthday;
     private Timestamp createdDate;

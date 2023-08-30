@@ -13,20 +13,6 @@ $(document).ready(function () {
         });
     }); // 매치 히스토리 버튼 클릭시
 
-    $("#myPositionButton").click(function () {
-        $.ajax({
-            url: "myposition", // 매치 히스토리를 가져오는 URL
-            dataType: "html",
-            success: function (data) {
-                $("#contents").html(data);
-            },
-            error: function () {
-
-                console.error("Error loading match history.");
-            }
-        });
-    }); // 포지션 버튼 클릭시
-
     $("#personalButton").click(function () {
         $.ajax({
             url: "personal", // 매치 히스토리를 가져오는 URL
@@ -39,7 +25,7 @@ $(document).ready(function () {
                 console.error("Error loading match history.");
             }
         });
-    }); // 매치 히스토리 버튼 클릭시
+    }); // 개인정보 버튼 클릭시
 
     $("#myPostButton").click(function () {
         $.ajax({
@@ -53,11 +39,11 @@ $(document).ready(function () {
                 console.error("Error loading match history.");
             }
         });
-    }); // 매치 히스토리 버튼 클릭시
+    }); // 내 게시물 버튼 클릭시
 
-    $("#recordButton").click(function () {
+    $("#update").click(function () {
         $.ajax({
-            url: "record", // 매치 히스토리를 가져오는 URL
+            url: "personalupdate", // 매치 히스토리를 가져오는 URL
             dataType: "html",
             success: function (data) {
                 $("#contents").html(data);
@@ -67,7 +53,7 @@ $(document).ready(function () {
                 console.error("Error loading match history.");
             }
         });
-    }); // 매치 히스토리 버튼 클릭시
+    }); //개인정보 탭에서 '수정하기' 버튼 누를 시
 
 
 });

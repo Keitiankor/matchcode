@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PointRepository extends JpaRepository<PointDTO, Long> {
     Optional<PointDTO> findByUserId(long userId);
 
+
     public Optional<List<PointDTO>> findAllByUserId(Long userId);
 }
