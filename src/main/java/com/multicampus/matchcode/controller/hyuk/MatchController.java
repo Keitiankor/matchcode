@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
+import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.service.hyuk.MatchService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,4 +131,15 @@ public class MatchController {
 
         return "match/list";
     }
+    @GetMapping("/getmatchesbyregion")
+    @ResponseBody
+    public List<MatchDTO> getMatchesByRegion(@RequestParam("region") long region) {
+        return matchService.getMatchlistByRegion(1, region); // 여기서 1은 pageNum을 의미합니다. 필요에 따라 수정하세요.
+    }
+/*    @GetMapping("/loadsportsdata")
+    public String loadmapdata(long mapId, Model model) {
+        List<MatchResult> matchResults = MatchService.getMatchlistByRegion(mapId);
+        model.addAttribute("matchResults", matchResults);
+        return "khj/history";
+    }*/
 }
