@@ -1,6 +1,6 @@
 package com.multicampus.matchcode.service.hyuk;
 
-import com.multicampus.matchcode.domain.Match;
+import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.repository.MatchRepository;
@@ -135,8 +135,8 @@ public class MatchService {
         return pageList;
     }
     @Transactional
-    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long regionId) {
-        Page<MatchDTO> page = matchRepository.findByMapId(regionId,
+    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
+        Page<MatchDTO> page = matchRepository.findByMapId(region,
                 PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
         );
         return page.getContent();
