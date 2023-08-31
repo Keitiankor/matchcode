@@ -42,4 +42,6 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     int updatedeclation(Long id);
 
     List<PostDTO> findAllByUserId(long memberId);
+
+    List<PostDTO> findTop3ByOrderByLikesDesc();
 }
