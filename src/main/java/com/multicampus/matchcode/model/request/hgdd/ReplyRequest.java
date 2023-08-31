@@ -9,8 +9,7 @@ import lombok.Data;
 @Data
 public class ReplyRequest {
 
-    private PostDTO post;
-    //private long userId;
+    private long postId;
     private String comment;
     private Timestamp createdDate;
 }

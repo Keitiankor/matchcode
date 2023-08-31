@@ -55,7 +55,7 @@ public class PostController {
     @PostMapping("/insert2")
     public String insert2(@ModelAttribute("postDTO") PostInsertRequest request, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
 
-        postService.insert(request, memberDTO.getId(),memberDTO.getName()); //db저장
+        postService.insert(request, memberDTO); //db저장
 
         System.out.println("제목: " + request.getTitle());
         System.out.println("내용: " + request.getContent());
