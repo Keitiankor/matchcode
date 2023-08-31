@@ -54,14 +54,14 @@
     }
     function performPayment(pricePoints) {
         alert(pricePoints+"결제를 진행합니다.")
-        var userId = 1; // 실제 사용자 ID로 대체
+        var memberId = 1; // 실제 사용자 ID로 대체
         //var pointToCharge = parseInt(document.getElementById("pricePoints").textContent);
         // 결제 처리를 위해 컨트롤러로 AJAX 요청 전송
         $.ajax({
             url: "/payPoint",
             type: "GET",
             data: {
-                userId: userId,
+                memberId: memberId,
                 price: pricePoints,
                 matchDate: matchDate,
                 mapId: mapId,

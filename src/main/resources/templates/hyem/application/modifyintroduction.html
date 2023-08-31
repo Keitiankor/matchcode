@@ -11,7 +11,7 @@
 <!--    <input type="hidden" name="_method" value="put">-->
     <input type="hidden" name="teamId" th:value="${join.teamId.id}">
     <input type="hidden" name="id" th:value="${join.id}">
-    <input type="hidden" name="userId" th:value="${join.userId}">
+    <input type="hidden" name="memberId" th:value="${join.memberId}">
     <textarea name="introduction" cols="60" rows="5" th:text="${join.introduction}"></textarea>
     <button type="submit">수정</button>
     <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>

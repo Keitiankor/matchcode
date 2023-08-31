@@ -29,7 +29,7 @@
       <tr th:each="joinapplication : ${list}">
         <td th:text="${joinapplication.id}">1</td>
         <td th:text="${joinapplication.teamId.teamName}"></td>
-<!--        <td th:text="${joinapplication.userId.userName}"></td>-->
+<!--        <td th:text="${joinapplication.memberId.userName}"></td>-->
         <td>
           <a th:text="${joinapplication.introduction}" th:href="@{/application/view/{id}(id=${joinapplication.id})}"></a>
         </td>

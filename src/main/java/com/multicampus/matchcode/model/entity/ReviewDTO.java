@@ -22,7 +22,7 @@ public class ReviewDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long userId;
+    private long memberId;
     private long mapId;
     private String comment;
     private int rate;

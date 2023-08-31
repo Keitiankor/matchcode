@@ -9,7 +9,7 @@ import lombok.Data;
 public class ApplicationRequest {
 
     //private long id;
-    private long userId;
+    private long memberId;
     private long teamId;
     private String introduction;
 }

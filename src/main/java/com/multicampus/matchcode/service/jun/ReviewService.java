@@ -17,7 +17,7 @@ public class ReviewService {
     public void save(ReviewRequest request, long memberId) {
         ReviewDTO reviewdto = ReviewDTO
             .builder()
-            .userId(memberId)
+            .memberId(memberId)
             .mapId(34)
             .rate(request.getRate())
             .comment(request.getComment())
@@ -36,8 +36,8 @@ public class ReviewService {
         ReviewDTO review = ReviewDTO
             .builder()
             .id(updateReviewRequest.getId())
-                .userId(updateReviewRequest.getDto().getUserId())
-                .mapId(updateReviewRequest.getDto().getMapId())
+            .memberId(updateReviewRequest.getDto().getMemberId())
+            .mapId(updateReviewRequest.getDto().getMapId())
             .rate(updateReviewRequest.getRate())
             .comment(updateReviewRequest.getComment())
             .build();

@@ -1,7 +1,5 @@
 package com.multicampus.matchcode.model.entity;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,9 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-
-
 
 @Entity(name = "post_like")
 @Getter
@@ -25,6 +20,6 @@ public class PostLikeDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long userId;
+    private long memberId;
     private long postId;
 }

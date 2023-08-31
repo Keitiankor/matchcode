@@ -1,13 +1,11 @@
 package com.multicampus.matchcode.service.hgdd;
 
-
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.request.hgdd.PostInsertRequest;
 import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.repository.PostRepository;
-
-
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,16 +28,15 @@ public class PostService {
     }
 
     //게시글 작성
-    public void insert(PostInsertRequest request,MemberDTO member) {
-
+    public void insert(PostInsertRequest request, MemberDTO member) {
         PostDTO dto = PostDTO
-                .builder()
-                .title(request.getTitle())
-                .content(request.getContent())
-                .userId(member.getId())
-                .writer(member.getName())
-                .privates(request.isPrivates())
-                .build();
+            .builder()
+            .title(request.getTitle())
+            .content(request.getContent())
+            .memberId(member.getId())
+            .writer(member.getName())
+            .privates(request.isPrivates())
+            .build();
         postRepository.save(dto);
     }
 
@@ -49,22 +44,27 @@ public class PostService {
     public Page<PostDTO> list(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
+
     // 페이징 및 검색
     public Page<PostDTO> postlist(String SearchKeyword, Pageable pageable) {
         return postRepository.findByTitleContaining(SearchKeyword, pageable);
     }
+
     // 게시글 리스트 (좋아요 수가 많은 순서로)
     public Page<PostDTO> listByLikes(Pageable pageable) {
         return postRepository.findAllByOrderByLikesDesc(pageable);
     }
+
     // 페이징 및 검색 (좋아요 수가 많은 순서로)
     public Page<PostDTO> postlistByLikes(String searchKeyword, Pageable pageable) {
         return postRepository.findByTitleContainingOrderByLikesDesc(searchKeyword, pageable);
     }
+
     // 게시글 리스트 (조회수 수가 많은 순서로)
     public Page<PostDTO> listByViews(Pageable pageable) {
         return postRepository.findAllByOrderByViewsDesc(pageable);
     }
+
     // 페이징 및 검색 (조회수 수가 많은 순서로)
     public Page<PostDTO> postlistByViews(String searchKeyword, Pageable pageable) {
         return postRepository.findByTitleContainingOrderByViewsDesc(searchKeyword, pageable);
@@ -78,20 +78,20 @@ public class PostService {
     //게시글 업데이트
     public PostDTO update(long id, PostUpdateRequest request) {
         PostDTO post = postRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
 
         PostDTO update = PostDTO
-                .builder()
-                .id(post.getId())
-                .userId(post.getUserId())
-                .content(request.getContent())
-                .title(request.getTitle())
-                .views(post.getViews())
-                .createdDate(post.getCreatedDate())
-                .privates(request.isPrivates())
-                .writer(post.getWriter())
-                .build();
+            .builder()
+            .id(post.getId())
+            .memberId(post.getMemberId())
+            .content(request.getContent())
+            .title(request.getTitle())
+            .views(post.getViews())
+            .createdDate(post.getCreatedDate())
+            .privates(request.isPrivates())
+            .writer(post.getWriter())
+            .build();
 
         return postRepository.save(update);
     }
@@ -111,7 +111,6 @@ public class PostService {
     public int declations(Long id) {
         return postRepository.updatedeclation(id);
     }
-
 
     public List<PostDTO> listTop3ByLikes() {
         return postRepository.findTop3ByOrderByLikesDesc(); // 좋아요가 제일 많은 순서로 상위 3개 검색

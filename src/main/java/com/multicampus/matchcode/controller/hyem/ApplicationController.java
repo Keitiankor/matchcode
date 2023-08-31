@@ -27,20 +27,24 @@ public class ApplicationController {
 
     // 가입 신청하기
     @GetMapping("/join/{teamid}")
-    public String joinTeam(@PathVariable("teamid") Long teamId,
-                           @ModelAttribute("join") ApplicationDTO applicationDTO,
-                           @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-                           Model model) {
-        model.addAttribute("userid", memberDTO.getId());
+    public String joinTeam(
+        @PathVariable("teamid") Long teamId,
+        @ModelAttribute("join") ApplicationDTO applicationDTO,
+        @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+        Model model
+    ) {
+        model.addAttribute("memberid", memberDTO.getId());
         return "hyem/application/joinapplication";
     }
 
     @PostMapping("/join/{teamid}/{id}")
-    public String recruitPostWrite(@PathVariable("teamid") Long teamId,
-                                   @ModelAttribute("join") ApplicationRequest request,
-                                   @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-                                   Model model) throws Exception {
-        //model.addAttribute("userId", memberDTO.getId());
+    public String recruitPostWrite(
+        @PathVariable("teamid") Long teamId,
+        @ModelAttribute("join") ApplicationRequest request,
+        @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+        Model model
+    ) throws Exception {
+        //model.addAttribute("memberId", memberDTO.getId());
         applicationService.save(request, memberDTO.getId());
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
         model.addAttribute("searchUrl", "/application/list");
@@ -52,7 +56,8 @@ public class ApplicationController {
     @GetMapping("/list")
     public String applicationList(
         @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        Model model) {
+        Model model
+    ) {
         Page<ApplicationDTO> list = applicationService.applicationList(pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -81,9 +86,11 @@ public class ApplicationController {
     }
 
     @PostMapping("/modify/complete/{id}")
-    public String applicationUpdate(@PathVariable("id") Long id,
-                                    @ModelAttribute("join") ApplicationRequest request,
-                                    Model model) throws Exception {
+    public String applicationUpdate(
+        @PathVariable("id") Long id,
+        @ModelAttribute("join") ApplicationRequest request,
+        Model model
+    ) throws Exception {
         applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입 신청 내용 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/application/list");

@@ -10,12 +10,12 @@ $(".show-names-button").click(function () {
             success: function (data) {
                 let list = Object.values(data);
                 for (let i = 0; i < list.length; i++) {
-                    container.append($("<td>").append(list[i]))
+                    container.append($("<td>").append(list[i]));
                     //매너점수 증감은 아직 무리인 것 같다 ㅠㅠ
                     //매너점수 리뷰를 위한 추가 버튼
-                        // $("<button>").text("▲").addClass("increase-manner").attr("data-userid", userId),
-                        // $("<button>").text("▼").addClass("decrease-manner").attr("data-userid", userId)
-                        // ));
+                    // $("<button>").text("▲").addClass("increase-manner").attr("data-memberid", memberId),
+                    // $("<button>").text("▼").addClass("decrease-manner").attr("data-memberid", memberId)
+                    // ));
                 }
                 container.show(); // 테이블 보이도록 표시
             },
@@ -25,16 +25,13 @@ $(".show-names-button").click(function () {
     }
 });
 
-
 // -----------여기서부턴 매너점수 증가,감소 관련
-
-
 
 // '+' 버튼 클릭 시 매너점수 증가
 // $(document).on("click", ".increase-manner", function () {
-//     var userId = $(this).data("userid");
-//     console.log("Increase manner for member: " + userId);
-//     alert("서버로 보내는 Id는 " + userId + "입니다.")
+//     var memberId = $(this).data("memberid");
+//     console.log("Increase manner for member: " + memberId);
+//     alert("서버로 보내는 Id는 " + memberId + "입니다.")
 //
 //     //서버로 매너점수를 증가시키는 명령을 서버로 전송
 //     $.ajax({
@@ -51,16 +48,11 @@ $(".show-names-button").click(function () {
 //     });
 // });
 
-
-
-
-
-
 // '-' 버튼 클릭 시 매너점수 감소
 // $(document).on("click", ".decrease-manner", function () {
-//     var userId = $(this).data("userid");
-//     console.log("Decrease manner for member: " + userId);
-//     alert("서버로 보내는 Id는 " + userId + "입니다.")
+//     var memberId = $(this).data("memberid");
+//     console.log("Decrease manner for member: " + memberId);
+//     alert("서버로 보내는 Id는 " + memberId + "입니다.")
 //
 //
 //     //AJAX 요청을 통해 매너점수를 감소시키는 서버로 데이터 전송

@@ -21,7 +21,7 @@ public class ReplyDTO {
 
     private long postId;
 
-    private long userId;
+    private long memberId;
     private String comment;
 
     @CreationTimestamp
