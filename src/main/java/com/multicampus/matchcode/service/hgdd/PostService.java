@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.service.hgdd;
 
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.request.hgdd.PostInsertRequest;
 import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
@@ -31,14 +32,14 @@ public class PostService {
     }
 
     //게시글 작성
-    public void insert(PostInsertRequest request, long userid,String writer) {
+    public void insert(PostInsertRequest request,MemberDTO member) {
 
         PostDTO dto = PostDTO
                 .builder()
                 .title(request.getTitle())
                 .content(request.getContent())
-                .userId(userid)
-                .writer(writer)
+                .userId(member.getId())
+                .writer(member.getName())
                 .privates(request.isPrivates())
                 .build();
         postRepository.save(dto);
@@ -88,7 +89,6 @@ public class PostService {
                 .title(request.getTitle())
                 .views(post.getViews())
                 .createdDate(post.getCreatedDate())
-                .editedDate(request.getEditedDate())
                 .privates(request.isPrivates())
                 .writer(post.getWriter())
                 .build();

@@ -29,7 +29,7 @@ public class ReplyController {
         service.save(request,memberDTO.getId(),id);
         System.out.println("제목: " + request.getComment());
         System.out.println("게시글 번호: " +id);
-        System.out.println("게시글 번호: " + id);
+
         return "redirect:/post/view?id=" + id;
         } else {
             model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지

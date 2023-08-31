@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity(name = "reply")
+@Entity(name = "Reply")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
