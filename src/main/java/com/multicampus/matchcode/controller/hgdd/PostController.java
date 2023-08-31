@@ -8,6 +8,7 @@ import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.service.hgdd.PostService;
 import com.multicampus.matchcode.service.hgdd.ReplyService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
+import com.multicampus.matchcode.util.enums.hyem.Sport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RequestMapping("/post")
@@ -52,7 +55,7 @@ public class PostController {
     @PostMapping("/insert2")
     public String insert2(@ModelAttribute("postDTO") PostInsertRequest request, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
 
-        postService.insert(request, memberDTO.getId()); //db저장
+        postService.insert(request, memberDTO.getId(),memberDTO.getName()); //db저장
 
         System.out.println("제목: " + request.getTitle());
         System.out.println("내용: " + request.getContent());
@@ -96,12 +99,15 @@ public class PostController {
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
+        List<PostDTO> top3ByLikes = postService.listTop3ByLikes();//좋아요 많은 3개
+        model.addAttribute("top3ByLikes", top3ByLikes);
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         return "hgdd/list";
     }
+
 
     //게시글 열람
     @GetMapping("/view")
@@ -175,6 +181,7 @@ public class PostController {
         return "hgdd/message";
     }
 
+    //신고
     @PostMapping("/declation/{postId}")
     public String reportPost(@PathVariable Long postId,Model model ,@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
         if (memberDTO != null) {
