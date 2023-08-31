@@ -22,12 +22,12 @@ public class ReviewService {
             .rate(request.getRate())
             .comment(request.getComment())
             .build();
-        System.out.println("S.insert : " + reviewdto);
+        System.out.println("Review.insert : " + reviewdto);
         reviewRepository.save(reviewdto);
     }
 
     public void delete(Long id) {
-        System.out.println("S.delete : " + id);
+        System.out.println("Review.delete : " + id);
         reviewRepository.deleteById(id);
     }
 
@@ -45,7 +45,7 @@ public class ReviewService {
     }
 
     public List<ReviewDTO> select(ReviewDTO reviewDTO) {
-        System.out.println("S.select : " + reviewDTO);
+        System.out.println("Review.select : " + reviewDTO);
         List<ReviewDTO> reviewList = reviewRepository.findAll();
         return reviewList;
     }
