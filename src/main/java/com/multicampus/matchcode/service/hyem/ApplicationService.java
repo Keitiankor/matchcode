@@ -6,15 +6,14 @@ import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.repository.ApplicationRepository;
 import com.multicampus.matchcode.repository.TeamRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ApplicationService {
@@ -23,10 +22,10 @@ public class ApplicationService {
     private ApplicationRepository applicationRepository;
 
     // 가입 신청
-    public void save(ApplicationRequest request, long userId) {
+    public void save(ApplicationRequest request, long memberId) {
         ApplicationDTO dto = ApplicationDTO
             .builder()
-            .userId(userId)
+            .memberId(memberId)
             .teamId(request.getTeamId())
             .introduction(request.getIntroduction())
             .status(1) // 1: 가입 대기, 2: 가입 승인, 3: 가입 반려
@@ -41,7 +40,7 @@ public class ApplicationService {
     }
 
     // 팀별 가입신청 리스트
-/*    public Page<ApplicationDTO> teamApplicationList(long id) {
+    /*    public Page<ApplicationDTO> teamApplicationList(long id) {
         return applicationRepository.findByRecruit0Id(id);
     }*/
 

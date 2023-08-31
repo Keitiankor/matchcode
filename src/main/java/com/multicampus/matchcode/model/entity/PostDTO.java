@@ -1,9 +1,7 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.*;
-
 import java.sql.Timestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +20,7 @@ public class PostDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private long userId;
+    private long memberId;
     private String title;
     private String content;
     private String writer;
@@ -38,5 +36,4 @@ public class PostDTO {
     private boolean privates;
     private int status;
     private int declation;
-
 }

@@ -5,9 +5,7 @@ import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.model.request.hgdd.ReplyRequest;
 import com.multicampus.matchcode.repository.PostRepository;
 import com.multicampus.matchcode.repository.ReplyRepository;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +19,8 @@ public class ReplyService {
     PostRepository postRepository;
 
     //댓글 저장
-    public Long save(ReplyRequest requst, long memberId,long postId) {
-        ReplyDTO replyDTO = ReplyDTO
-                .builder()
-                .postId(postId)
-                .userId(memberId)
-                .comment(requst.getComment())
-                .build();
+    public Long save(ReplyRequest requst, long memberId, long postId) {
+        ReplyDTO replyDTO = ReplyDTO.builder().postId(postId).memberId(memberId).comment(requst.getComment()).build();
         replyRepository.save(replyDTO);
         return null;
     }

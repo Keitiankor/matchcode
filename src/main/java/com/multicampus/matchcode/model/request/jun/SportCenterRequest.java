@@ -6,6 +6,8 @@ import lombok.Data;
 public class SportCenterRequest {
 
     long areaId;
+    double longitude;
+    double latitude;
     String SportCenterName;
     String managerName;
     String phone;

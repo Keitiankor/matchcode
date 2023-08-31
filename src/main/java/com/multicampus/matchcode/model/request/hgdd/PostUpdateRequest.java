@@ -8,8 +8,7 @@ import lombok.Data;
 @Data
 public class PostUpdateRequest {
 
-
-    private Timestamp editedDate;
+    private Timestamp createdDate;
     private String title;
     private String content;
     private boolean privates;

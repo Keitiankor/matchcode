@@ -60,7 +60,7 @@
             <th class="actions">Action</th>
         </tr>
         <tr th:each="review : ${reviewList}">
-            <td th:text="${review.userId}"></td>
+            <td th:text="${review.memberId}"></td>
             <td th:text="${review.mapId}"></td>
             <td th:text="${review.rate}"></td>
             <td th:text="${review.comment}"></td>

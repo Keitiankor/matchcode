@@ -17,17 +17,17 @@ public class ReviewService {
     public void save(ReviewRequest request, long memberId) {
         ReviewDTO reviewdto = ReviewDTO
             .builder()
-            .userId(memberId)
+            .memberId(memberId)
             .mapId(34)
             .rate(request.getRate())
             .comment(request.getComment())
             .build();
-        System.out.println("S.insert : " + reviewdto);
+        System.out.println("Review.insert : " + reviewdto);
         reviewRepository.save(reviewdto);
     }
 
     public void delete(Long id) {
-        System.out.println("S.delete : " + id);
+        System.out.println("Review.delete : " + id);
         reviewRepository.deleteById(id);
     }
 
@@ -36,8 +36,8 @@ public class ReviewService {
         ReviewDTO review = ReviewDTO
             .builder()
             .id(updateReviewRequest.getId())
-                .userId(updateReviewRequest.getDto().getUserId())
-                .mapId(updateReviewRequest.getDto().getMapId())
+            .memberId(updateReviewRequest.getDto().getMemberId())
+            .mapId(updateReviewRequest.getDto().getMapId())
             .rate(updateReviewRequest.getRate())
             .comment(updateReviewRequest.getComment())
             .build();
@@ -45,7 +45,7 @@ public class ReviewService {
     }
 
     public List<ReviewDTO> select(ReviewDTO reviewDTO) {
-        System.out.println("S.select : " + reviewDTO);
+        System.out.println("Review.select : " + reviewDTO);
         List<ReviewDTO> reviewList = reviewRepository.findAll();
         return reviewList;
     }

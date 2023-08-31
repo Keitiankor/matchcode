@@ -11,20 +11,21 @@ import java.util.List;
 
 
 public interface PostRepository extends JpaRepository<PostDTO, Long> {
-    Page<PostDTO> findByTitleContaining(String searchKeyword, Pageable pageable);
 
     //페이징 처리
+    Page<PostDTO> findByTitleContaining(String searchKeyword, Pageable pageable);
 
+    //조회수 증가
     @Modifying
     @Query("update post p set p.views = p.views + 1 where p.id = :id")
     int updateView(Long id);
-    //좋아요 증가
 
+    //좋아요 증가
     @Modifying
     @Query("update post p set p.likes = p.likes + 1 where p.id = :id")
     int likesup(Long id);
-    //좋아요 감소
 
+    //좋아요 감소
     @Modifying
     @Query("update post p set p.likes = p.likes - 1 where p.id = :id")
     int likesdown(Long id);
@@ -41,7 +42,7 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     @Query("update post p set p.declation = p.declation + 1 where p.id = :id")
     int updatedeclation(Long id);
 
-    List<PostDTO> findAllByUserId(long memberId);
-
     List<PostDTO> findTop3ByOrderByLikesDesc();
+
+    List<PostDTO> findAllByMemberId(long memberId);
 }

@@ -5,5 +5,5 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResultRepository extends JpaRepository<ResultDTO, Long> {
-    Optional<ResultDTO> findByMatchIdAndUserId(long matchId, long userId);
+    Optional<ResultDTO> findByMatchIdAndMemberId(long matchId, long memberId);
 }

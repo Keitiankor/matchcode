@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Review SportCenter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    td.actions {
+      text-align: center;
+    }
+    a.action-link {
+      margin-right: 10px;
+    }
+    .new-review-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>체육 시설 목록</h1>
+  <table>
+    <tr>
+      <th>담당자 이름</th>
+      <th>전화번호</th>
+      <th>체육 시설 이름</th>
+      <th>등록 코드</th>
+      <th>경도</th>
+      <th>위도</th>
+      <th class="actions">동작</th>
+    </tr>
+    <tr th:each="map : ${sportCenterList}">
+      <td th:text="${map.managerName}"></td>
+      <td th:text="${map.phone}"></td>
+      <td th:text="${map.sportCenterName}"></td>
+      <td th:text="${map.resistrationCode}"></td>
+      <td th:text="${map.longitude}"></td>
+      <td th:text="${map.latitude}"></td>
+      <td class="actions">
+        <a class="action-link" th:href="@{/sportCenter/updateSportCenter(id=${map.id})}" onclick="return confirm('이 리뷰를 수정하시겠습니까?')">수정</a>
+        <a class="action-link" th:href="@{/sportCenter/deleteSportCenter(id=${map.id})}" onclick="return confirm('정말 삭제 하시겠습니까?')">삭제</a>
+      </td>
+    </tr>
+  </table>
+  <a class="new-review-link" href="/sportCenter/createSportCenter">체육 시설 작성</a>
+</div>
+</body>
+</html>

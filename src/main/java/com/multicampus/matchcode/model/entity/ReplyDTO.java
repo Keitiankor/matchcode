@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity(name = "reply")
+@Entity(name = "Reply")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class ReplyDTO {
 
     private long postId;
 
-    private long userId;
+    private long memberId;
     private String comment;
 
     @CreationTimestamp

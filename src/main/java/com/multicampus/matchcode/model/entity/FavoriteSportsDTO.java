@@ -20,7 +20,7 @@ public class FavoriteSportsDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long userId;
+    private long memberId;
     private long sportsId;
     private String Text;
 }

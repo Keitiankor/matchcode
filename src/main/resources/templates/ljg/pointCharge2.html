@@ -90,12 +90,12 @@
                     msg += '결제 금액 : ' + rsp.paid_amount;
                     msg += '카드 승인번호 : ' + rsp.apply_num;
 
-                   //location.href = "/point?userId=" + 1 + "&point=" + money
+                   //location.href = "/point?memberId=" + 1 + "&point=" + money
                     $.ajax({
                         type: "GET",
                         url: "/chargePoint", //충전 금액값을 보낼 url 설정
                         data: {
-                            "userId" : 1,
+                            "memberId" : 1,
                             "point" : money
                         },
                         success:function(){
