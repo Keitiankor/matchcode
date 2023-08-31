@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="마이페이지"></title>
+    <head th:replace="~{header :: head(~{::title})}">
+        <title>마이 페이지</title>
     </head>
     <body>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/khj/mypage.css"/>
-        <script src="js/khj/menubutton.js" defer></script>
+        <link rel="stylesheet" type="text/css" href="/css/khj/mypage.css" />
+        <script src="/js/khj/menubutton.js" defer></script>
         <!-- 헤더 부분 -->
         <div id="header">
             <h2>MatchCode 로고가 들어갈 부분</h2>

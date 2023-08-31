@@ -7,6 +7,7 @@ import com.multicampus.matchcode.repository.PostRepository;
 import com.multicampus.matchcode.repository.ReplyRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ReplyService {
     public Long save(ReplyRequest requst, long memberId) {
         ReplyDTO replyDTO = ReplyDTO
                 .builder()
-                .post(requst.getPost())
+                .postId(requst.getPostId())
                 .userId(memberId)
                 .comment(requst.getComment())
                 .build();
@@ -33,7 +34,8 @@ public class ReplyService {
     }
 
     public ReplyDTO view(long id) {
-        return replyRepository.findById(id).get();
+        Optional<ReplyDTO> odto = replyRepository.findById(id);
+        return odto.orElseGet(ReplyDTO::new);
     }
 
     //댓글 리스트

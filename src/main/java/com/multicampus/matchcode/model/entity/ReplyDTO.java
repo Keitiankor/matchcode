@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity(name = "reply")
+@Entity(name = "Reply")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,12 +17,9 @@ public class ReplyDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "posts_id")
-    private PostDTO post;
-
+    private long postId;
     private long userId;
     private String comment;
 

@@ -10,7 +10,5 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<ReplyDTO, Long> {
 
 
-    List<ReplyDTO> findByPostId(Long postId);
-
-
+    List<ReplyDTO> findByPostId(long postId);
 }

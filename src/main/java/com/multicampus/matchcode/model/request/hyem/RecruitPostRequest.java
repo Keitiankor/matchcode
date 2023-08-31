@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class RecruitPostRequest {
 
     private long id;
-    private TeamDTO teamId;
+    private long teamId;
     private String content;
     private Timestamp createdDate;
 }

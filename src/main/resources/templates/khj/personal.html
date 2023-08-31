@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<script src="js/khj/menubutton.js" defer></script>
+<script src="/js/khj/menubutton.js" defer></script>
+
 <h2 style="display:inline">개인정보</h2>
 
 <p>이름: <span th:text="${member.name}"></span></p>
@@ -14,6 +15,3 @@
 <br/>
 <p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
 <button id="update">수정하기</button>
-
-
-//여기까지 오케이
