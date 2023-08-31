@@ -11,4 +11,6 @@ public interface ReplyRepository extends JpaRepository<ReplyDTO, Long> {
 
 
     List<ReplyDTO> findByPostId(long postId);
+
+    List<ReplyDTO> findAllByUserId(long memberId);
 }

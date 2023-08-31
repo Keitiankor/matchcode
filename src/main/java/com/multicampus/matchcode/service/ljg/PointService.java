@@ -92,8 +92,8 @@ public class PointService {
                 .builder()
                 .date(paydate)
                 .memberId(dto.getMemberId())
-                .refundAmount(dto.getRefundAmount())  // Set refundAmount here
-                .point(-dto.getRefundAmount())  // Deducted points as a negative value
+//                .refundAmount(dto.getRefundAmount())  // Set refundAmount here
+//                .point(-dto.getRefundAmount())  // Deducted points as a negative value
                 .build();
         return pointRepository.save(pointDTO); // Save pointDTO, not dto
     }
