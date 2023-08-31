@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 public class ReserveRequest {
    private Timestamp matchDate;
    private long mapId;
-   private long userId;
+   private long memberId;
    private int pricePoints;
-   private MemberDTO memberId;
 }

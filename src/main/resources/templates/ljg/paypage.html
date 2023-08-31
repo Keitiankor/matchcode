@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,24 +9,18 @@
 </head>
 <body>
 <table>
-    <thead>
-    <tr>날짜</tr>
-    <!-- 매치주요정보에서 사용된 time?-->
-    <span id ="matchDate"></span>
-    <p>장소 </p>
-    <!-- 매치주요정보에서 사용된 장소-->
-    <span id ="mapId"></span>
-    </thead>
+    <label for="calendar">날짜:</label>
+    <input type="datetime-local" id="calendar" name="calendar">
+    <p> 장소: <span th:text="${mapId}"></span></p>
 </table>
 <table>
-    <tr>포인트</tr>
+    <tr><b>포인트</b></tr>
     <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
 </table>
 <table>
     <tr><b>결제</b></tr>
     <tr>
-        <p>이용 포인트 <span id="pricePoints" th:text="${price}"></span></p>
-<!--        임시로 3000사용-->
+        <p>가격 :<span id="pricePoints" th:text="${price}"></span></p>
         <td>결제 포인트 :<span id="payPointsValue"></span><button type="button" onclick="location.href='test3'">추가충전</button></td>
     </tr>
 </table>
@@ -61,7 +56,6 @@
         alert(pricePoints+"결제를 진행합니다.")
         var userId = 1; // 실제 사용자 ID로 대체
         //var pointToCharge = parseInt(document.getElementById("pricePoints").textContent);
-
         // 결제 처리를 위해 컨트롤러로 AJAX 요청 전송
         $.ajax({
             url: "/payPoint",
@@ -71,9 +65,6 @@
                 price: pricePoints,
                 matchDate: matchDate,
                 mapId: mapId,
-            //     장소 추가
-                //날짜 추가
-                //
             },
             success: function(response) {
                 if (response === "success") {

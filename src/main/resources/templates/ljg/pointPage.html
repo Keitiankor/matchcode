@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Point Page</title>
     <link rel="stylesheet" href="/css/ljg/pointPage.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>Point Information</h1>
+<h1>내 포인트</h1>
 <table>
     <thead>
     <tr>
@@ -29,7 +29,6 @@
 </tr>
 </thead>
 </table>
-
 <div id="chargeTable" style="display: none;">
     <h2>충전 내역</h2>
     <table>
@@ -44,8 +43,6 @@
         </tbody>
     </table>
 </div>
-
-
 <h2>포인트 내역</h2>
 <table>
     <thead>
@@ -61,12 +58,9 @@
     <tr th:each="history : ${chargeHistories}">
         <td th:text="${#dates.format(history.date, 'yyyy-MM-dd HH:mm')}"></td>
         <td>
-            <span th:if="${history.point > 0}">충전</span>
-            <span th:if="${history.point < 0 && history.refundAmount > 0}">환불</span>
-            <span th:if="${history.point < 0 && history.price > 0}">결제</span>
+            <span th:text="${history.details}"></span>
         </td>
         <td th:text="${history.point}"></td>
-
     </tr>
     </tbody>
 </table>
