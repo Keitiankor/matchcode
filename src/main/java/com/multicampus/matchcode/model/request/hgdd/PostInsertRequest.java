@@ -14,7 +14,6 @@ import java.util.List;
 @Data
 public class PostInsertRequest {
 
-    private List<Long> sportsId;
     private String title;
     private String content;
     private boolean privates;
