@@ -1,7 +1,9 @@
 package com.multicampus.matchcode.model.entity;
 
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +31,7 @@ public class PostDTO {
 
     @UpdateTimestamp
     private Timestamp editedDate;
+
 
     private int views;
     private int likes;

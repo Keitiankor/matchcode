@@ -19,30 +19,11 @@
             <input name="title"  type="text" class="form-control" id="exampleFormControlInput1" th:value="${post.title}">
         </div>
 
-
         <!-- 내용 수정-->
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">내용입력</label>
             <textarea name="content" th:text ="${post.content}" class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
         </div>
-
-
-
-        <!--
-              <div class="mb-3">
-                    <label for="exampleFormControlInput1"  class="form-label">제목</label>
-                    <input name="title"  type="text" class="form-control" id="exampleFormControlInput1" th:value="${post.title}">
-                </div>
-
-
-                &lt;!&ndash; 내용 수정&ndash;&gt;
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">내용입력</label>
-                    <textarea name="content" th:text ="${post.content}" class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
-                </div>
-        -->
-
-
 
         <!--비공개 체크박스(아직 db구현 안함-->
         <input type="checkbox" th:field="*{privates}">비공개<br>

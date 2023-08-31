@@ -11,6 +11,8 @@
 
 <body>
 <div class="layout">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="/js/hgdd/like.js"></script>
 
 
     <!--제목-->
@@ -21,6 +23,20 @@
         <p th:text="${post.content}">.</p>
     </div>
 
+    <!--좋아요-->
+     <div>
+         <form th:action="@{/like/{postId}(postId=${post.id})}" method="post">
+             <button type="submit" class="btn btn-outline-primary">
+                 <span th:if="${liked}">좋아요 취소</span>
+                 <span th:unless="${liked}">좋아요</span>
+             </button>
+         </form>
+         <a th:text="${post.likes}"></a>
+     </div>
+
+    <form th:action="@{/post/declation/{postId}(postId=${post.id})}" method="post">
+        <button type="submit" class="btn-outline-danger" >신고</button>
+    </form>
 
     <!--댓글 입력-->
     <div class="card">
@@ -45,17 +61,17 @@
 
                 <!--댓글 리스트  -->
                 <div th:id="'reply-' + ${replyDTO.id}" class="reply-item">
-                        <td>
-                            <a th:text="${replyDTO.comment}"></a>
-                        <td th:text="${#dates.format(replyDTO.createdDate,'yyyy/MM/dd')}"></td>
+                    <td>
+                        <a th:text="${replyDTO.comment}"></a>
+                    <td th:text="${#dates.format(replyDTO.createdDate,'yyyy/MM/dd')}"></td>
 
-                        <!--댓글 삭제-->
-                        <td>
+                    <!--댓글 삭제-->
+                    <td>
                         <button
                             th:onclick="|location.href='@{/reply/delete/{id}/{postId}(id=${replyDTO.id},postId=${post.id})}'|">
                             삭제
                         </button>
-                        </td>
+                    </td>
                     </td>
                 </div>
             </tr>
