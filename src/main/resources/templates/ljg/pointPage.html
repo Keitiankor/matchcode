@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Point Page</title>
     <link rel="stylesheet" href="/css/ljg/pointPage.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<h1>Point Information</h1>
+<h1>내 포인트</h1>
 <table>
     <thead>
     <tr>
         <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
     </tr>
     <button type="button" onclick="location.href='test'">충전하기</button>
-    <button type="button" onclick="location.href='test2'">환불하기</button>
+    <button type="button" onclick="location.href='refund'">환불하기</button>
     </thead>
     <tbody>
     <tr>
@@ -24,13 +24,11 @@
 </table>
 <tr>
     <td>
-        <button type="button" onclick="toggleTable('chargeTable')">충전내역</button>
-        <button type="button" onclick="toggleTable('useTable')">사용내역</button>
+
     </td>
 </tr>
 </thead>
 </table>
-
 <div id="chargeTable" style="display: none;">
     <h2>충전 내역</h2>
     <table>
@@ -41,32 +39,31 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="history : ${chargeHistories}">
-            <td th:text="${#dates.format(history.date, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${history.point}"></td>
         </tr>
         </tbody>
     </table>
 </div>
+<h2>포인트 내역</h2>
+<table>
+    <thead>
+    <tr>
+        <th>일시</th>
+        <th>내역</th>
+        <th>포인트</th>
 
-<div id="useTable" style="display: none;">
-    <h2>사용 내역</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>일시</th>
-            <th>사용 포인트</th>
-            <th>내용?</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="usehistory : ${pointUseHistories}">
-            <td th:text="${#dates.format(usehistory.paydate, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${usehistory.price}"></td>
-            <td><!-- 내용 추가 --></td>
-        </tr>
-        </tbody>
-    </table>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="history : ${chargeHistories}">
+        <td th:text="${#dates.format(history.date, 'yyyy-MM-dd HH:mm')}"></td>
+        <td>
+            <span th:text="${history.details}"></span>
+        </td>
+        <td th:text="${history.point}"></td>
+    </tr>
+    </tbody>
+</table>
 </div>
 <script src="/js/ljg/pointPage.js"></script>
 </body>
