@@ -1,15 +1,16 @@
 package com.multicampus.matchcode.controller.jun;
 
 import com.multicampus.matchcode.model.entity.MapDTO;
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.jun.SportCenterRequest;
 import com.multicampus.matchcode.service.jun.SportCenterService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("sportCenter")
@@ -25,11 +26,12 @@ public class SportCenterController {
         return "sportCenter/findSportCenter";
     }
 
-    //시설 상세 페이지
-    @GetMapping("detailSportCenter")
-    public String detailSportCenter() {
-
-        return "review/veiwSportCenter";
+    //시설 리스트 페이지
+    @GetMapping("listSportCenter")
+    public String detailSportCenter(Model model, MapDTO mapDTO) {
+        List<MapDTO> mapList = sportCenterService.select(mapDTO);
+        model.addAttribute("sportCenterList", mapList);
+        return "sportCenter/listSportCenter";
     }
 
     //모든 유저가 다른 지역 체육시설 검색
@@ -40,7 +42,10 @@ public class SportCenterController {
 
     //체육 시설 등록 폼 이동
     @GetMapping("createSportCenter")
-    public String createSportCenter() {
+    public String createSportCenter(@SessionAttribute(name = SessionConstant.MEMBER_DTO)MemberDTO memberDTO) {
+        if (memberDTO == null) {
+            return "redirect:/login";
+        }
         return "sportCenter/createSportCenter";
     }
 

@@ -70,17 +70,7 @@
             </td>
         </tr>
     </table>
-    <a class="new-review-link"
-       th:href="${session[MEMBER_DTO] != null ? '/review/createReview' : null}"
-       th:onclick="${session[MEMBER_DTO] != null ? null : 'showAlert()'}">
-        Write a Review
-    </a>
-
-    <script th:inline="javascript">
-        function showAlert() {
-            alert("로그인 후 리뷰 사용 가능합니다.");
-        }
-    </script>
+    <a class="new-review-link" href="/review/createReview">Write a Review</a>
 </div>
 </body>
 </html>

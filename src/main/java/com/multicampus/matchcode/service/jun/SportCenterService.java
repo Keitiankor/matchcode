@@ -6,6 +6,8 @@ import com.multicampus.matchcode.repository.MapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SportCenterService {
 
@@ -23,7 +25,7 @@ public class SportCenterService {
                 .longitude(request.getLongitude())
                 .latitude(request.getLatitude())
                 .build();
-        System.out.println("M.insert : " + mapDTO);
+        System.out.println("SportCenter.insert : " + mapDTO);
         mapRepository.save(mapDTO);
     }
 
@@ -42,10 +44,21 @@ public class SportCenterService {
                 .price(mapDTO.getPrice())
                 .status(mapDTO.getStatus())
                 .build();
-        System.out.println("M.updata : " + mapDTO);
+        System.out.println("SportCenter : " + mapDTO);
         mapRepository.save(mapDTO);
     }
 
     //해당 id에 해당하는 스포츠 센터 정보를 가져오는 메서드
     public MapDTO findById(Long id) { return mapRepository.findById(id).orElse(null);}
+
+    public void delete(Long id) {
+        System.out.println("SportCenter.delete" + id);
+        mapRepository.deleteById(id);
+    }
+
+    public List<MapDTO> select(MapDTO mapDTO) {
+        System.out.println("SportCenter.select : " + mapDTO);
+        List<MapDTO> mapList = mapRepository.findAll();
+        return mapList;
+    }
 }
