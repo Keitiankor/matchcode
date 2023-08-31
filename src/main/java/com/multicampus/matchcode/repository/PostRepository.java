@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 
 public interface PostRepository extends JpaRepository<PostDTO, Long> {
     Page<PostDTO> findByTitleContaining(String searchKeyword, Pageable pageable);
@@ -38,4 +40,6 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     @Modifying
     @Query("update post p set p.declation = p.declation + 1 where p.id = :id")
     int updatedeclation(Long id);
+
+    List<PostDTO> findAllByUserId(long memberId);
 }
