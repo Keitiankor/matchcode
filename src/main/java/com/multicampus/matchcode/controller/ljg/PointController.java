@@ -64,7 +64,7 @@ public class PointController {
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
-                .memberId(member)
+                .memberId(member.getId())
                 .point(point)
                 .build();
         System.out.println(pointDTO);
@@ -87,7 +87,7 @@ public class PointController {
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
-                .memberId(member)
+                .memberId(member.getId())
                 .point(point)
                 .build();
         pointService.pointCharge(pointDTO); // Call the pointCharge method to save the point
