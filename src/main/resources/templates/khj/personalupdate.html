@@ -1,23 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title th:text="개인정보"></title>
-</head>
-<body>
+
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <h2 style="display:inline">개인정보 수정 페이지입니다.</h2>
 
 <p>이름: <span th:text="${member.name}"></span></p>
 <p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
-<p>핸드폰: <span th:text="${member.phone}"></span></p>
-<p>이메일: <span th:text="${member.mailAddress}"></span></p>
+<p>핸드폰: <input th:text="${member.phone}" /></p>
+<p>이메일: <input th:text="${member.mailAddress}" /></p>
 <p>활동레벨: <span th:text="${member.communityLevel}"></span></p>
 <p>활동경험치: <span th:text="${member.communityExp + '%'}"></span></p>
 <p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
-<br><br>
+<br />
+<br />
 <p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
-
-</div>
-</body>
-</html>

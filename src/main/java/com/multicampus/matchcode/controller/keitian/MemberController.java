@@ -57,7 +57,7 @@ public class MemberController {
 
     @PostMapping("register")
     public String pMemberRegister(RegistserRequest request) {
-        if (request.isAccountNotDup() && request.isVerifyied()) {
+        if (request.isVerifyied() && request.isAccountNotDup()){
             service.insert(request);
             return "redirect:";
         }
@@ -88,5 +88,16 @@ public class MemberController {
         @RequestParam String inputString
     ) {
         return verifyString.equals(inputString);
+    }
+
+    @GetMapping("login/findpw")
+    public String gFindpw(){
+        return "keitian/findpw";
+    }
+
+    @PostMapping("login/findpw")
+    @ResponseBody
+    public String pFindpw(String email){
+        return "";
     }
 }
