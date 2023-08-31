@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -29,13 +31,14 @@ public class PostService {
     }
 
     //게시글 작성
-    public void insert(PostInsertRequest request, long userid) {
+    public void insert(PostInsertRequest request, long userid,String writer) {
 
         PostDTO dto = PostDTO
                 .builder()
                 .title(request.getTitle())
                 .content(request.getContent())
                 .userId(userid)
+                .writer(writer)
                 .privates(request.isPrivates())
                 .build();
         postRepository.save(dto);
@@ -87,6 +90,7 @@ public class PostService {
                 .createdDate(post.getCreatedDate())
                 .editedDate(request.getEditedDate())
                 .privates(request.isPrivates())
+                .writer(post.getWriter())
                 .build();
 
         return postRepository.save(update);
@@ -109,4 +113,7 @@ public class PostService {
     }
 
 
+    public List<PostDTO> listTop3ByLikes() {
+        return postRepository.findTop3ByOrderByLikesDesc(); // 좋아요가 제일 많은 순서로 상위 3개 검색
+    }
 }

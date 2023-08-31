@@ -88,18 +88,6 @@ public class PointService {
     public PointDTO refundPoints(PointDTO dto) {
         Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
         return pointRepository.save(dto);
-//    public PointDTO refundPoints(PointDTO dto) {
-////
-////        Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
-////        PointDTO pointDTO = PointDTO
-////                .builder()
-////                .date(paydate)
-////                .memberId(dto.getMemberId())
-////                //.refundAmount(dto.getRefundAmount())  // Set refundAmount here
-////                .point(-dto.getRefundAmount())  // Deducted points as a negative value
-////                .build();
-//        return pointRepository.save(dto); // Save pointDTO, not dto
-//    }
 
     }
 }
