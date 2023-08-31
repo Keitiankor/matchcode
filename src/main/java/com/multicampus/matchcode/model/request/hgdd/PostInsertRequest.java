@@ -15,11 +15,8 @@ import java.util.List;
 public class PostInsertRequest {
 
     private List<Long> sportsId;
-    /*private long userId;*/
     private String title;
     private String content;
-    @CreationTimestamp
-    private Timestamp createdDate;
     private boolean privates;
 
 }

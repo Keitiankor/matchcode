@@ -36,7 +36,6 @@ public class PostService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .userId(userid)
-                .createdDate(request.getCreatedDate())
                 .privates(request.isPrivates())
                 .build();
         postRepository.save(dto);
