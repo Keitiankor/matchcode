@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
+    <p>얼마를 환불하시겠습니까?
+      <input type="number" id="refundAmount" min="0">
+      <button onclick="check2()">환불</button>
+  </tr>
+  </thead>
+</table>
+<script>
+    window.onload = function() {
+        var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
+    }
+    function check2() {
+        var totalPoints = parseInt(document.getElementById("totalPoints").innerText);
+        var refundAmount = parseInt(document.getElementById("refundAmount").value);
+
+        if (refundAmount > totalPoints) {
+            alert("환불 금액이 보유 포인트를 초과합니다.");
+        } else {
+            alert("환불이 처리되었습니다. 환불 금액: " + refundAmount);
+            performRefund(refundAmount);
+        }
+    }
+    function performRefund(refundAmount){
+        var userId=1;
+        $.ajax({
+            url: "/refundPoint",
+            type: "GET",
+            data: {
+                userId: userId,
+                refundAmount: refundAmount,
+            },
+            success: function(response) {
+                if (response === "success") {
+                    var totalPointsValueElement = document.getElementById("totalPointsValue");
+                    var totalPointsValue = parseInt(totalPointsValueElement.textContent);
+                    alert("환불 성공!");
+                    document.location.href="/point";
+                    // UI를 업데이트하거나 필요한 다른 작업 수행
+                } else {
+                    alert("An error occurred while processing the payment.");
+                }
+            },
+            error: function() {
+                alert("An error occurred while communicating with the server.");
+            }
+        });
+    }
+</script>
+
+
+
+</body>
+</html>
