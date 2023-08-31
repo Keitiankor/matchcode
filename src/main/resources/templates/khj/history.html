@@ -9,8 +9,13 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="js/khj/membername.js"></script>
-<p><img th:src="${emblem.uri}" alt="Emblem Image" /></p>
-<p>MMR: <span th:text="${rating.mmr}"></span></p>
+<div th:if="${rating == null}">
+    <p>경기 기록이 없습니다.</p>
+</div>
+<div th:if="${rating != null}">
+    <p><img th:src="${rating.uri}" alt="Emblem Image" /></p>
+    <p>MMR: <span th:text="${rating.mmr}"></span></p>
+</div>
 <table>
 <tr>
     <tr>
