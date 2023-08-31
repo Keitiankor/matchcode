@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{header :: head(~{::title})}">
-        <title>회원가입</title>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
     </head>
     <body>
+        <div th:replace="~{commons :: topper}"></div>
         <form action="/register" method="post">
             <script src="/js/keitian/register.js"></script>
             <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
