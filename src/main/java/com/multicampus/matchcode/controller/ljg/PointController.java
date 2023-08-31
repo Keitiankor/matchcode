@@ -120,8 +120,7 @@ public class PointController {
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
-                .memberId(member)
-                .refundAmount(refundAmount) // Set refundAmount here
+                .memberId(member.getId())// Set refundAmount here
                 .point(-refundAmount)
                 .build();
         pointService.refundPoints(pointDTO);
