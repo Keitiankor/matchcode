@@ -2,12 +2,17 @@ package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
+import com.multicampus.matchcode.model.request.khj.RatingRequest;
 import com.multicampus.matchcode.repository.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Service
 public class MyHistoryService {
@@ -36,13 +41,20 @@ public class MyHistoryService {
     @Autowired
     EmblemRepository emblem;
 
+    @ModelAttribute("memberId")
+    public long getMemberId(@SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO loggedInMember) {
+        return loggedInMember.getId();
+    }
+
+
+
     //스포츠 종목에 맞는 매치 기록
-    public List<MatchResultRequest> getMatchResultsBySportsId(long sportsId) {
+    public List<MatchResultRequest> getMatchResultsBySportsIdAndUserId(long sportsId, long memberId) {
         List<MatchDTO> matches = getMatchesBySportsId(sportsId);
         List<MatchResultRequest> matchResults = new ArrayList<>();
 
         for (MatchDTO match : matches) {
-            ResultDTO result = getResultByMatchId(match.getId());
+            ResultDTO result = getResultByMatchId(match.getId(), memberId);
             if (result == null) {
                 continue;
             }
@@ -61,9 +73,19 @@ public class MyHistoryService {
         return matchResults;
     }
 
-    public RatingDTO getRatingBySportsIdAndUserId(long sportsId, long userId) {
+    public RatingRequest getRatingBySportsIdAndUserId(long sportsId, long userId) {
+        Optional<RatingDTO> ratingDTO = rating.findBySportsIdAndUserId(sportsId, userId);
 
-        return rating.findBySportsIdAndUserId(sportsId, userId);
+        if(ratingDTO.isPresent()) {
+            Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO.get().getEmblemId());
+            RatingRequest ratingRequest = RatingRequest
+                    .builder()
+                    .mmr(ratingDTO.get().getMmr())
+                    .uri(emblemDTO.get().getUri())
+                    .build();
+            return ratingRequest;
+        }
+        return null;
     }
 
     public EmblemDTO getEmblemById(long emblemId) {
@@ -80,9 +102,9 @@ public class MyHistoryService {
     }
 
     //결과는 매치id뿐만 아니라, 유저id까지 가져오면서 '내' 매치기록들만 읽어오도록
-    public ResultDTO getResultByMatchId(long matchId) {
-        Optional<ResultDTO> odto = result.findByMatchIdAndUserId(matchId, (long) 1);
-        //지금 임의로 userid가 1이지만, 나중에 세션값에서 받아올 것
+    public ResultDTO getResultByMatchId(long matchId, long memberId) {
+
+        Optional<ResultDTO> odto = result.findByMatchIdAndUserId(matchId, memberId);
         if (odto.isPresent()) {
             return odto.get();
         }
