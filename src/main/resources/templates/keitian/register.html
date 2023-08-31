@@ -5,10 +5,12 @@
     </head>
     <body>
         <form action="/register" method="post">
-            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <script src="/js/keitian/register.js"></script>
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <legend>회원가입</legend>
-            아이디 : <input name="account" />
+            아이디 : <input type="text" name="account-input" />
+            <input type="text" name="account" hidden>
+
             <input type="button" value="아이디 중복확인" id="dupcheck" />
             <input type="checkbox" name="isAccountNotDup" hidden/><br />
 

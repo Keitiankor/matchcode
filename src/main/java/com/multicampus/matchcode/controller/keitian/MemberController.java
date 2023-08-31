@@ -2,7 +2,7 @@ package com.multicampus.matchcode.controller.keitian;
 
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.keitian.LoginRequest;
-import com.multicampus.matchcode.model.request.keitian.RegistserRequest;
+import com.multicampus.matchcode.model.request.keitian.RegisterRequest;
 import com.multicampus.matchcode.service.keitian.MemberService;
 import com.multicampus.matchcode.util.component.MailComponent;
 import com.multicampus.matchcode.util.constants.SessionConstant;
@@ -56,7 +56,7 @@ public class MemberController {
     }
 
     @PostMapping("register")
-    public String pMemberRegister(RegistserRequest request) {
+    public String pMemberRegister(RegisterRequest request) {
         if (request.isVerifyied() && request.isAccountNotDup()){
             service.insert(request);
             return "redirect:";
