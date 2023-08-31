@@ -37,13 +37,13 @@ public class PointService {
         return pointRepository.save(dto);
     }
 
-    public List<PointDTO> findAllByUserId(long memberId) {
-        Optional<List<PointDTO>> odto = pointRepository.findAllByUserId(memberId);
+    public List<PointDTO> findAllByMemberId(long memberId) {
+        Optional<List<PointDTO>> odto = pointRepository.findAllByMemberId(memberId);
 
-        if(odto.isPresent()){
-            return  odto.get();
+        if (odto.isPresent()) {
+            return odto.get();
         }
-        return  null;
+        return null;
         //return (List<PointDTO>) pointRepository.findAllByUserId(memberId).get();
 
     }
@@ -57,7 +57,6 @@ public class PointService {
 //                .build();
 //        return pointRepository.save(pointDTO); // 변경: dto 대신 pointDTO 저장
 //    }
-
 
 
     public int calculateTotalPoints(List<PointDTO> pointDTOs) {
@@ -85,20 +84,13 @@ public class PointService {
 
         return matchRepository.save(matchDTO).getId();
     }
+
     public PointDTO refundPoints(PointDTO dto) {
-
         Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
-        PointDTO pointDTO = PointDTO
-                .builder()
-                .date(paydate)
-                .memberId(dto.getMemberId())
-                .point(-dto.getPoint())  // Deducted points as a negative value
-                .build();
-        return pointRepository.save(pointDTO); // Save pointDTO, not dto
+        return pointRepository.save(dto);
+
     }
-
 }
-
 //취소요청보내기
 
 

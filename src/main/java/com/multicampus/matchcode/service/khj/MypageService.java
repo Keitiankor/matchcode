@@ -39,7 +39,7 @@ public class MypageService {
     //메인화면에 이름,포인트,활동레벨,팀네임을 가져오기 위한 service메소드
     public MemberInfoRequest getMemberInfo(long memberId) {
         Optional<MemberDTO> memberDTO = member.findById(memberId);
-        Optional<List<PointDTO>> pointDTO = point.findAllByUserId(memberId);
+        Optional<List<PointDTO>> pointDTO = point.findAllByMemberId(memberId);
         Optional<TeamMemberDTO> teamMemberDTO = teammember.findByUserId(memberId);
         System.out.println(team.findById((long)1).toString());
         Optional<TeamDTO> teamDTO =

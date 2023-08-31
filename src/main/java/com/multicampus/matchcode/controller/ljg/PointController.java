@@ -30,20 +30,22 @@ public class PointController {
     //포인트표시
     @GetMapping("/point")
     public String viewPointPage(
-        @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,Long memberId,
-        Model model) {
+            @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, Long memberId,
+            Model model) {
+        System.out.println(member.getId());
         if (member != null) {
-            List<PointDTO> chargeHistories = pointService.findAllByUserId(member.getId());//(1/*member.getId()*/);//userId추가
+            List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());//(1/*member.getId()*/);//userId추가
             chargeHistories.sort(Comparator.comparing(PointDTO::getDate).reversed());
             int totalPoints = pointService.calculateTotalPoints(chargeHistories); // 수정: 총 포인트 계산
-            List<PointDTO> pointUseHistories = pointService.findAllByUserId(member.getId()); //포인트 사용내역
+            List<PointDTO> pointUseHistories = pointService.findAllByMemberId(member.getId()); //포인트 사용내역
 
             System.out.println(chargeHistories.size());
             model.addAttribute("chargeHistories", chargeHistories);
             model.addAttribute("totalPoints", totalPoints);
+            System.out.println(totalPoints);
             model.addAttribute("pointUseHistories", pointUseHistories); //포인트 사용내역
 
-            return "/ljg/pointPage"; // pointPage는 Thymeleaf 템플릿의 이름입니다.
+            return "/ljg/pointPage";
         } else {
             return "redirect:/login";
         }
@@ -59,11 +61,11 @@ public class PointController {
     public String chargePoint(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false)MemberDTO member,
                               @RequestParam("point")  int point) {
 
-        //Long userId = member.getId();
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
+                .details("충전")
                 .memberId(member.getId())
                 .point(point)
                 .build();
@@ -82,11 +84,11 @@ public class PointController {
     @ResponseBody
     public String chargePoint2(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false)MemberDTO member,
                                @RequestParam("point") int point) {
-        //Long userId = member.getId();
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
+                .details("충전")
                 .memberId(member.getId())
                 .point(point)
                 .build();
@@ -101,25 +103,30 @@ public class PointController {
                           Model model) {
         //long userId = 1;
        // Long userId = member.getId();
-        List<PointDTO> chargeHistories = pointService.findAllByUserId(member.getId());
+        List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
         model.addAttribute("totalPoints", totalPoints);
         return "/ljg/payPage"; // PayPage 템플릿의 이름
     }
 ////////////////환불페이지//////////////
 @GetMapping("/refund")
-    public String refundPoint(){
-        return"/ljg/refundPoint";
+public String refundPoint(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
+                          Model model) {
+    List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
+    int totalPoints = pointService.calculateTotalPoints(chargeHistories);
+    model.addAttribute("totalPoints", totalPoints);
+    return "/ljg/refundPoint";
 }
     @GetMapping("/refundPoint")
     @ResponseBody
     public String refundPoints(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false)MemberDTO member,
-                               @RequestParam("refundAmount") int refundAmount) {
+                               @RequestParam("point") int refundAmount) {
 
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO
                 .builder()
                 .date(date)
+                .details("환불")
                 .memberId(member.getId())// Set refundAmount here
                 .point(-refundAmount)
                 .build();
