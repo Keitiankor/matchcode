@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title th:inline="text">매치 히스토리</title>
-    <link rel="stylesheet" th:href="@{/css/khj/historyTable.css}" />
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-</head>
-<body>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<link rel="stylesheet" th:href="@{/css/khj/historyTable.css}"/>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 <script src="js/khj/membername.js"></script>
-<p><img th:src="${emblem.uri}" alt="Emblem Image" /></p>
-<p>MMR: <span th:text="${rating.mmr}"></span></p>
+<div th:if="${rating == null}">
+    <p>경기 기록이 없습니다.</p>
+</div>
+<div th:if="${rating != null}">
+    <p><img th:src="${rating.uri}" alt="Emblem Image"/></p>
+    <p>MMR: <span th:text="${rating.mmr}"></span></p>
+</div>
 <table>
-<tr>
+    <tr>
     <tr>
         <th>결과</th>
         <th>날짜</th>
@@ -22,23 +22,21 @@
         <th></th>
     </tr>
     <tbody th:each="matchResult : ${matchResults}">
-    <tr>
-        <td>
-            <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
-            <span th:if="${matchResult.myScore < matchResult.rivalScore}">패배</span>
-            <span th:if="${matchResult.myScore == matchResult.rivalScore}">무승부</span>
-        </td>
-        <td th:text="${#dates.format(matchResult.matchDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${matchResult.name}"></td>
-        <td th:text="${matchResult.myScore}"></td>
-        <td th:text="${matchResult.rivalScore}"></td>
-        <td>
-            <button class="show-names-button" th:attr="data-matchid=${matchResult.matchId}">▽</button>
-        </td>
-    </tr>
-    <tr th:attr="id=${matchResult.matchId}" class="names-table-container" style="display: none;">
-    </tr>
+        <tr>
+            <td>
+                <span th:if="${matchResult.myScore > matchResult.rivalScore}">승리</span>
+                <span th:if="${matchResult.myScore < matchResult.rivalScore}">패배</span>
+                <span th:if="${matchResult.myScore == matchResult.rivalScore}">무승부</span>
+            </td>
+            <td th:text="${#dates.format(matchResult.matchDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${matchResult.name}"></td>
+            <td th:text="${matchResult.myScore}"></td>
+            <td th:text="${matchResult.rivalScore}"></td>
+            <td>
+                <button class="show-names-button" th:attr="data-matchid=${matchResult.matchId}">▽</button>
+            </td>
+        </tr>
+        <tr th:attr="id=${matchResult.matchId}" class="names-table-container" style="display: none;">
+        </tr>
     </tbody>
 </table>
-</body>
-</html>

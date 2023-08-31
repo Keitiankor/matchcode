@@ -15,14 +15,11 @@ public class ApplicationDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "application_id")
     private long id;
 
     private long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private TeamDTO teamId;
+    private long teamId;
 
     private String rejectReason;
     private String introduction;

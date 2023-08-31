@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class MatchResult {
+public class MatchResultRequest {
     private  long matchId;
     private Timestamp matchDate;
     private String name;

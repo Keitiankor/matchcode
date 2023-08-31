@@ -20,10 +20,7 @@ public class MemberService {
     @Autowired
     private PasswordEncoder pe;
 
-    public int insert(RegistserRequest request) {
-        if (repository.findByAccount(request.getAccount()).isPresent()) {
-            return -1;
-        }
+    public void insert(RegistserRequest request) {
         Timestamp bd = null;
         try {
             bd = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getBirthday()).getTime());
@@ -43,7 +40,6 @@ public class MemberService {
             .build();
 
         repository.save(dto);
-        return 1;
     }
 
     public MemberDTO getId(String acc, String pw) {

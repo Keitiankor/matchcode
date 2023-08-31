@@ -22,7 +22,7 @@
             <td>
                 <span th:each="num : ${#numbers.sequence(0, recruit.teamId.sportsId.size() - 1)}">
                     <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getNameFromCount(recruit.teamId.sportsId[num])}">
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(recruit.teamId.sportsId[num])}">
                     </span>
                 </span>
             </td>
@@ -32,14 +32,14 @@
             <td>
                 <span th:each="num : ${#numbers.sequence(0, recruit.teamId.useWeek.size() - 1)}">
                     <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getNameFromCount(recruit.teamId.useWeek[num])}">
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(recruit.teamId.useWeek[num])}">
                     </span>
                 </span>
             </td>
         </tr>
         <tr>
             <th>이용 시간</th>
-            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Time).getNameFromCount(recruit.teamId.useTime)}"></td>
+            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Time).getDescriptionFromCount(recruit.teamId.useTime)}"></td>
         </tr>
         <tr>
             <th>평균 연령</th>
@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <th>평균 성별</th>
-            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getNameFromCount(recruit.teamId.averageGender)}"></td>
+            <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(recruit.teamId.averageGender)}"></td>
         </tr>
     </table>
 <!--    <script>

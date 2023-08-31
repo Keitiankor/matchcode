@@ -8,9 +8,8 @@ import lombok.Data;
 @Builder
 public class ApplicationRequest {
 
-    private long id;
+    //private long id;
     private long userId;
-    private TeamDTO teamId;
+    private long teamId;
     private String introduction;
-    private int status;
 }
