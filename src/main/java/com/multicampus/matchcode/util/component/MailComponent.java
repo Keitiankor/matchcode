@@ -1,24 +1,50 @@
 package com.multicampus.matchcode.util.component;
 
-import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
-
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-@Component
-public class MailComponent {
+import java.util.Random;
+import java.util.concurrent.Executor;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+@Component
+@Slf4j
+public class MailComponent extends Thread {
+
+
+    private final JavaMailSender javaMailSender;
+    private final Executor executor;
+
+    public MailComponent(JavaMailSender javaMailSender, Executor executor) {
+        this.javaMailSender = javaMailSender;
+        this.executor = executor;
+    }
+
+    protected void sendMailThread(String... params) {
+        Runnable runnable = () -> {
+            log.info("Thread Name : {}", Thread.currentThread().getName());
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            if (params == null) {
+                return;
+            }
+            try {
+                simpleMailMessage.setTo(params[0]);
+                simpleMailMessage.setSubject(params[1]);
+                simpleMailMessage.setText(params[2]);
+                javaMailSender.send(simpleMailMessage);
+            } catch (MailException ex) {
+                log.error("Mail Error ! {}", ex.getMessage());
+            }
+        };
+        executor.execute(runnable);
+    }
 
     public String sendVerifyingMail(String mailAddress) {
         if (mailAddress == null) {
             return null;
         }
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         Random r = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 6; i++) {
@@ -29,16 +55,9 @@ public class MailComponent {
         sb.append("<Match Code 인증 번호는 \"");
         sb.append(verifyCode);
         sb.append("\" 입니다.>");
+        String subject = "<Match Code 인증 메일입니다>";
 
-        try {
-            simpleMailMessage.setTo(mailAddress);
-            simpleMailMessage.setSubject("<Match Code 인증 메일입니다>");
-            simpleMailMessage.setText(sb.toString());
-            javaMailSender.send(simpleMailMessage);
-            return verifyCode;
-        } catch (MailException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+        sendMailThread(mailAddress, subject, sb.toString());
+        return verifyCode;
     }
 }
