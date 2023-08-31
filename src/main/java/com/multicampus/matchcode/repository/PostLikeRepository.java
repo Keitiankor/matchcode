@@ -10,8 +10,6 @@ import java.util.Optional;
 
 
 public interface PostLikeRepository extends JpaRepository<PostLikeDTO, Long> {
-
-
-
     PostLikeDTO findByPostIdAndUserId(Long postId, Long memberId);
+
 }
