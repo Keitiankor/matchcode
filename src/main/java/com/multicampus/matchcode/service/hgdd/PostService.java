@@ -98,7 +98,7 @@ public class PostService {
 
     //조회수 증가
     @Transactional
-    public int views(Long id) {
+    public int views(long id) {
         return postRepository.updateView(id);
     }
 
@@ -108,7 +108,7 @@ public class PostService {
     }
 
     @Transactional
-    public int declations(Long id) {
+    public int declations(long id) {
         return postRepository.updatedeclation(id);
     }
 

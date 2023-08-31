@@ -18,17 +18,17 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     //조회수 증가
     @Modifying
     @Query("update post p set p.views = p.views + 1 where p.id = :id")
-    int updateView(Long id);
+    int updateView(long id);
 
     //좋아요 증가
     @Modifying
     @Query("update post p set p.likes = p.likes + 1 where p.id = :id")
-    int likesup(Long id);
+    int likesup(long id);
 
     //좋아요 감소
     @Modifying
     @Query("update post p set p.likes = p.likes - 1 where p.id = :id")
-    int likesdown(Long id);
+    int likesdown(long id);
 
     // 좋아요 수가 많은 순서로 게시글 목록 가져오기
     Page<PostDTO> findAllByOrderByLikesDesc(Pageable pageable);

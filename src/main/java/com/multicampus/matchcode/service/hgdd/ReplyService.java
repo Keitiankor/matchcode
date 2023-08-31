@@ -35,7 +35,7 @@ public class ReplyService {
     }
 
     //댓글 삭제
-    public void deleteReply(Long id) {
+    public void deleteReply(long id) {
         replyRepository.deleteById(id);
     }
 }

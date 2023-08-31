@@ -17,10 +17,9 @@ public class ReplyDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private long postId;
-
     private long memberId;
     private String comment;
 
