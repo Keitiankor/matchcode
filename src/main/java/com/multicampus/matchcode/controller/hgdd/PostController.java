@@ -5,17 +5,16 @@ import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.entity.PostLikeDTO;
 import com.multicampus.matchcode.model.request.hgdd.PostInsertRequest;
 import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
-import com.multicampus.matchcode.service.hgdd.PostLikeService;
 import com.multicampus.matchcode.service.hgdd.PostService;
 import com.multicampus.matchcode.service.hgdd.ReplyService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +31,6 @@ public class PostController {
     @Autowired
     private ReplyService replyService;
 
-/*
-    @Autowired
-    private PostLikeService likeService;
-*/
-
     //게시글 작성창으로 이동
     @GetMapping("/insert")
     public String insert(Model model, PostDTO postDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
@@ -44,7 +38,6 @@ public class PostController {
 
         if (memberDTO != null) {
             System.out.println(memberDTO.getId());
-            /*model.addAttribute("userId",memberDTO.getId());*/
             return "hgdd/insert"; // 로그인한 사용자인 경우 작성 페이지로 이동
         } else {
             model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
@@ -70,19 +63,33 @@ public class PostController {
         return "hgdd/message";
     }
 
-    //게시글 목록으로 이동
+    //게시글 목록
     @GetMapping("/list")
     public String list(
             Model model,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            String searchKeyword
-    ) {
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, // 드롭다운 값 받아옴
+            String searchKeyword) {
         Page<PostDTO> list = null;
 
-        if (searchKeyword == null) {
-            list = postService.list(pageable); //페이징
+        if ("likes".equals(sortBy)) {
+            if (searchKeyword == null) {//최신순
+                list = postService.listByLikes(pageable);
+            } else {
+                list = postService.postlistByLikes(searchKeyword, pageable);
+            }
+        } else if ("views".equals(sortBy)) {//좋아요순
+            if (searchKeyword == null) {
+                list = postService.listByViews(pageable);
+            } else {
+                list = postService.postlistByViews(searchKeyword, pageable);
+            }
         } else {
-            list = postService.postlist(searchKeyword, pageable); //검색
+            if (searchKeyword == null) {//조회수 순
+                list = postService.list(pageable);
+            } else {
+                list = postService.postlist(searchKeyword, pageable);
+            }
         }
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -168,4 +175,17 @@ public class PostController {
         return "hgdd/message";
     }
 
+    @PostMapping("/declation/{postId}")
+    public String reportPost(@PathVariable Long postId,Model model ,@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+        if (memberDTO != null) {
+            System.out.println(memberDTO.getId());
+            postService.declations(postId);
+            return "redirect:/post/view?id=" + postId;
+        } else {
+            model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
+            model.addAttribute("searchUrl", "/login"); //이동하는 경로
+            return "hgdd/message";
+        }
+
+    }
 }

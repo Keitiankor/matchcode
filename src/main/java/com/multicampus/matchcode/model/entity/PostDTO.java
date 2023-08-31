@@ -1,8 +1,9 @@
 package com.multicampus.matchcode.model.entity;
 
-import com.multicampus.matchcode.util.enums.hyem.Sport;
 import jakarta.persistence.*;
+
 import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

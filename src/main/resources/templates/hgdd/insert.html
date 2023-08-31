@@ -28,6 +28,13 @@
         <!--비공개 -->
         <input type="checkbox" th:field="*{privates}">비공개<br>
 
+        <!--<td>
+                <span th:each="num : ${#numbers.sequence(0, recruit.teamId.sportsId.size() - 1)}">
+                    <span class="text"
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(recruit.postId.sportsId[num])}">
+                    </span>
+                </span>
+        </td>-->
         <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
         <th>
             <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>

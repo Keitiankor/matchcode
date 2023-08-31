@@ -6,7 +6,7 @@ import com.multicampus.matchcode.model.request.hgdd.PostInsertRequest;
 import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.repository.PostRepository;
 
-import com.multicampus.matchcode.util.enums.hyem.Sport;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,15 +42,29 @@ public class PostService {
         postRepository.save(dto);
     }
 
-
-    // 게시글 리스트
+    // 게시글 리스트 (최신순서로)
     public Page<PostDTO> list(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
-
     // 페이징 및 검색
     public Page<PostDTO> postlist(String SearchKeyword, Pageable pageable) {
         return postRepository.findByTitleContaining(SearchKeyword, pageable);
+    }
+    // 게시글 리스트 (좋아요 수가 많은 순서로)
+    public Page<PostDTO> listByLikes(Pageable pageable) {
+        return postRepository.findAllByOrderByLikesDesc(pageable);
+    }
+    // 페이징 및 검색 (좋아요 수가 많은 순서로)
+    public Page<PostDTO> postlistByLikes(String searchKeyword, Pageable pageable) {
+        return postRepository.findByTitleContainingOrderByLikesDesc(searchKeyword, pageable);
+    }
+    // 게시글 리스트 (조회수 수가 많은 순서로)
+    public Page<PostDTO> listByViews(Pageable pageable) {
+        return postRepository.findAllByOrderByViewsDesc(pageable);
+    }
+    // 페이징 및 검색 (조회수 수가 많은 순서로)
+    public Page<PostDTO> postlistByViews(String searchKeyword, Pageable pageable) {
+        return postRepository.findByTitleContainingOrderByViewsDesc(searchKeyword, pageable);
     }
 
     // 게시글 열람
@@ -89,5 +103,11 @@ public class PostService {
     public void delete(long id) {
         postRepository.deleteById(id);
     }
+
+    @Transactional
+    public int declations(Long id) {
+        return postRepository.updatedeclation(id);
+    }
+
 
 }
