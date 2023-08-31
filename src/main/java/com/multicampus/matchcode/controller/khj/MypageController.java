@@ -111,9 +111,12 @@ public class MypageController {
 
     @GetMapping("mypost")
     public String mypost(Model model, @ModelAttribute("memberId") long memberId) {
-        List<PostDTO> MyPosts = MyPost.getMyPostsByMemberId(memberId);
+        List<PostDTO> myPosts = MyPost.getMyPostsByMemberId(memberId);
 
-        model.addAttribute("Myposts", MyPosts);
+        List<PostDTO> fivePosts = myPosts.subList(0, Math.min(myPosts.size(), 5));
+        //게시물 최근 5개까지만 보여주기
+
+        model.addAttribute("myposts", fivePosts);
 
         return "khj/mypost";
     }
