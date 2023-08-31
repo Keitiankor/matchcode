@@ -18,9 +18,12 @@ public class ReplyDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long postId;
-    private long userId;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "posts_id")
+    private PostDTO post;
+
+    private long userId;
     private String comment;
 
     @CreationTimestamp

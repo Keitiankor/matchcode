@@ -4,25 +4,28 @@
         <title>회원가입</title>
     </head>
     <body>
-        <script src="/js/keitian/regist.js"></script>
-        <legend>회원가입</legend>
-        아이디 : <input type="text" id="id-account" />
-        <input type="button" value="아이디 중복확인" id="id-dupchek" />
-        <input type="radio" id="id-isAccountNotDup" hidden /><br />
+        <form action="/register" method="post">
+            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
+            <script src="/js/keitian/register.js"></script>
+            <legend>회원가입</legend>
+            아이디 : <input name="account" />
+            <input type="button" value="아이디 중복확인" id="dupcheck" />
+            <input type="checkbox" name="isAccountNotDup" hidden/><br />
 
-        비밀번호 : <input type="password" id="id-password" /><br />
-        이름 : <input type="text" id="id-name" /><br />
-        전화번호 : <input type="tel" id="id-phone" /><br />
+            비밀번호 : <input type="password" name="password" /><br />
+            이름 : <input type="text" name="name" /><br />
+            전화번호 : <input type="tel" name="phone" /><br />
 
-        이메일 주소 : <input type="email" id="id-mailAddress" />
-        <input type="button" value="인증번호 발송" id="id-verifymail" /><br />
+            이메일 주소 : <input type="email" name="mailAddress" />
+            <input type="button" value="인증번호 발송" id="verify-mail" /><br />
 
-        이메일 인증 : <input type="text" id="id-verifycode" />
-        <input type="button" value="인증번호 확인" id="id-verifyingcheck" disabled />
-        <input type="radio" id="id-isverifyied" hidden /><br />
+            이메일 인증 : <input type="text" name="verifycode" />
+            <input type="button" value="인증번호 확인" id="verifyingcheck" disabled />
+            <input type="checkbox" name="isVerifyied" /><br />
 
-        생년월일 : <input type="date" id="id-birthday" /><br />
+            생년월일 : <input type="date" name="birthday" /><br />
 
-        <input type="button" id="id-resister" value="회원가입" />
+            <input type="submit" value="회원가입" />
+        </form>
     </body>
 </html>

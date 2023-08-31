@@ -21,10 +21,10 @@ public class ReplyService {
     PostRepository postRepository;
 
     //댓글 저장
-    public Long save(ReplyRequest requst, long memberId,long postId) {
+    public Long save(ReplyRequest requst, long memberId) {
         ReplyDTO replyDTO = ReplyDTO
                 .builder()
-                .postId(postId)
+                .post(requst.getPost())
                 .userId(memberId)
                 .comment(requst.getComment())
                 .build();

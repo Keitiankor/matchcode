@@ -19,9 +19,7 @@ public class ApplicationDTO {
 
     private long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private TeamDTO teamId;
+    private long teamId;
 
     private String rejectReason;
     private String introduction;

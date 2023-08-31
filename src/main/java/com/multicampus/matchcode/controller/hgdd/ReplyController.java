@@ -26,9 +26,9 @@ public class ReplyController {
     public String replyInsert(@PathVariable Long id, ReplyRequest request,Model model, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
 
         if (memberDTO != null) {
-        service.save(request,memberDTO.getId(),id);
+        service.save(request,memberDTO.getId());
         System.out.println("제목: " + request.getComment());
-        System.out.println("게시글 번호: " + id);
+        System.out.println("게시글 번호: " + request.getPost());
         System.out.println("게시글 번호: " + id);
         return "redirect:/post/view?id=" + id;
         } else {

@@ -2,11 +2,13 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.EmblemDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
+import com.multicampus.matchcode.service.khj.MyPostService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class MypageController {
 
     @Autowired
     MyHistoryService myHistoryService;
+
+    @Autowired
+    MyPostService MyPost;
 
     @ModelAttribute("memberId")
     public long getMemberId(@SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO loggedInMember) {
@@ -105,7 +110,11 @@ public class MypageController {
     //내 게시물
 
     @GetMapping("mypost")
-    public String mypost() {
+    public String mypost(Model model, @ModelAttribute("memberId") long memberId) {
+        List<PostDTO> MyPosts = MyPost.getMyPostsByMemberId(memberId);
+
+        model.addAttribute("Myposts", MyPosts);
+
         return "khj/mypost";
     }
 
