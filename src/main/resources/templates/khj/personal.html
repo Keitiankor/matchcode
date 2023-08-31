@@ -1,11 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title th:text="개인정보"></title>
-</head>
-<body>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <script src="js/khj/menubutton.js" defer></script>
 <h2 style="display:inline">개인정보</h2>
 
@@ -16,9 +10,10 @@
 <p>활동레벨: <span th:text="${member.communityLevel}"></span></p>
 <p>활동경험치: <span th:text="${member.communityExp + '%'}"></span></p>
 <p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
-<br><br>
+<br/>
+<br/>
 <p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
-</div>
 <button id="update">수정하기</button>
-</body>
-</html>
+
+
+//여기까지 오케이
