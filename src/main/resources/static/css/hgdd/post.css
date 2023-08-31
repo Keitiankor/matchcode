@@ -1,19 +1,19 @@
 .layout {
-    width: 500px;
+    width: 800px;
     margin: 0 auto;
     margin-top: 40px;
 }
 
 
-/*view*/
+
 .layout button[id="button.view"] {
-    margin-top: 10px;
-    margin-left: 305px;
+  /*  margin-top: 14px;*/
+    margin-left: 580px;
 }
 
 
 .layout button[id="button2.view"] {
-    margin-left: 305px;
+    margin-left: 405px;
 
 }
 
@@ -21,6 +21,8 @@
     width: 100%;
     border: solid #a09595;
     height: 400px;
+    margin-bottom: 10px;
+
 }
 
 .card {
@@ -35,15 +37,16 @@
 /*correction*/
 .layout textarea[id="textarea.correction"] {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 14px;
     min-height: 300px;
+    margin-bottom: 10px;
 }
 
 
 
 .layout button[id="button.correction"] {
-    margin-top: 10px;
-    margin-left: 305px;
+    /*margin-top: 14px;*/
+    margin-left: 580px;
 }
 
 .layout input[id="title.orrection"] {
@@ -55,17 +58,28 @@
 /*insert*/
 .layout textarea[id="textarea.insert"] {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 14px;
     min-height: 300px;
 }
 
 
 .layout button[id="button.insert"] {
-    margin-top: 10px;
-    margin-left: 305px;
+    margin-top: 14px;
+    margin-left: 605px;
 }
 
 .layout input[id="title.insert"] {
     width: 100%;
     box-sizing: border-box;
+}
+
+.layout a[id="writer.view"]  {
+    margin-top: 14px;
+    margin-left: 600px;
+    font-weight: bold;
+}
+.layout a[id="writer.view2"]  {
+    margin-top: 14px;
+    margin-left: 600px;
+    font-weight: bold;
 }

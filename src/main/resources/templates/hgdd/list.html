@@ -19,16 +19,36 @@
             <th>번호</th>
             <th>제목</th>
             <th>작성일</th>
+            <th>작성자</th>
             <th>조회수</th>
             <th>좋아요</th>
-
             <th>
                 <!--게시글 작성 이동 버튼 (insert.html)-->
-                <button type="button" th:onclick="|location.href='@{/post/insert}'|">글 작성</button>
+                <button type="button"  class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/insert}'|">글 작성</button>
             </th>
         </tr>
         </thead>
         <tbody>
+        <tr th:each="postDTO : ${top3ByLikes}">
+            <td>
+                <a>인기글</a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.title}" th:href="@{/post/view(id=${postDTO.id})}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.writer}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3"  th:text="${postDTO.views}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.likes}"></a>
+            </td>
+        </tr>
         <!--th:each는 조건부 반복문으로 postDTO list 하나씩 꺼내 반복 출력 -->
         <tr th:each="postDTO : ${list}">
             <!--게시글 번호 (PostDTO id) -->
@@ -39,6 +59,9 @@
             </td>
             <td>
                 <a th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
+            </td>
+            <td>
+                <a th:text="${postDTO.writer}"></a>
             </td>
             <td>
                 <a th:text="${postDTO.views}"></a>
@@ -61,6 +84,7 @@
         </th:block>
     </div>
 
+    <!--정렬 방법 선탣 -->
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             정렬 방법 선택

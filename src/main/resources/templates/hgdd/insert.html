@@ -25,20 +25,16 @@
             <textarea class="form-control" id="exampleFormControlTextarea1"  th:field="*{content}"   placeholder="내용을 입력하십시오"  rows="3"></textarea>
         </div>
 
+
         <!--비공개 -->
         <input type="checkbox" th:field="*{privates}">비공개<br>
 
-        <!--<td>
-                <span th:each="num : ${#numbers.sequence(0, recruit.teamId.sportsId.size() - 1)}">
-                    <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(recruit.postId.sportsId[num])}">
-                    </span>
-                </span>
-        </td>-->
+
+
         <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
         <th>
-            <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
-            <button type="submit" id="button.insert">등록</button>
+            <button type="button" class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
+            <button type="submit" class="btn btn-outline-secondary" id="button.insert">등록</button>
            <!-- <input type="text"  th:field="*{userId}" disabled>-->
             <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
 
