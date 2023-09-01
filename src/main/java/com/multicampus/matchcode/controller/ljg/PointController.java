@@ -60,9 +60,7 @@ public class PointController {
 
     @GetMapping("/chargePoint")
     @ResponseBody
-    public String chargePoint(
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
-            @RequestParam("point") int point) {
+    public String chargePoint(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, @RequestParam("point") int point) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder()
                                     .date(date)
@@ -83,9 +81,7 @@ public class PointController {
 
     @GetMapping("/chargePoint2")
     @ResponseBody
-    public String chargePoint2(
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
-            @RequestParam("point") int point) {
+    public String chargePoint2(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, @RequestParam("point") int point) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder()
                                     .date(date)
@@ -97,8 +93,7 @@ public class PointController {
         return "success";
     }
 
-
-    //결제페이지
+  //결제페이지
     @GetMapping("/payPage")
     public String payPage(
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
@@ -108,7 +103,6 @@ public class PointController {
 // http://localhost:8765/payPage?mapId=1&price=1000
 //        MatchDTO matchDTO = new MatchDTO();
 //        MapDTO mapDTO = new MapDTO();
-
 
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
@@ -159,8 +153,4 @@ public class PointController {
             return "failure";
         }
     }
-
-
-
-
 }

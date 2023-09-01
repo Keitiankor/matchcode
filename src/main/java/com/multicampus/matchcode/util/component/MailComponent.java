@@ -58,9 +58,19 @@ public class MailComponent extends Thread {
         sb.append("<Match Code 인증 번호는 \"");
         sb.append(verifyCode);
         sb.append("\" 입니다.>");
-        String subject = "<Match Code 인증 메일입니다>";
+        String subject = "<Match Code 인증 메일 입니다>";
 
         sendMailThread(mailAddress, subject, sb.toString());
         return verifyCode;
+    }
+
+    public void sendTempPassword(String mailAddress, String tempPassword) {
+
+        String subject = "<Match Code 임시 비밀번호 입니다.>";
+        StringBuilder sb= new StringBuilder();
+        sb.append("<임시 비밀번호는 [");
+        sb.append(tempPassword);
+        sb.append("] 입니다");
+        sendMailThread(mailAddress, subject, sb.toString());
     }
 }

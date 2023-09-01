@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 @Data
 public class ReplyRequest {
 
-    private long postId;
     private String comment;
-    private Timestamp createdDate;
+
 }

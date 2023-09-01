@@ -19,7 +19,7 @@ public class MemberController {
     MemberService service;
 
     @Autowired
-    MailComponent mailSender;
+    MailComponent mailComponent;
 
     @GetMapping("login")
     public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
@@ -63,13 +63,14 @@ public class MemberController {
     @PostMapping("register/accountduplicationcheck")
     @ResponseBody
     public boolean pAccountNotDupe(@RequestParam String account) {
-        return service.isAccountDup(account);
+        return service.isAccountDup(account)
+                      .isEmpty();
     }
 
     @PostMapping("register/emailverifying")
     @ResponseBody
     public String pMemberRegisterEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
-        String verifyString = mailSender.sendVerifyingMail(mailAddress);
+        String verifyString = mailComponent.sendVerifyingMail(mailAddress);
         if (verifyString != null) {
             hRequest.getSession(false)
                     .setAttribute(SessionConstant.VERIFY_STRING, verifyString);
@@ -93,7 +94,7 @@ public class MemberController {
 
     @PostMapping("login/findpw")
     @ResponseBody
-    public String pFindpw(String email) {
-        return "";
+    public String pFindpw(String account, String mailAddress) {
+        return service.findPassword(account, mailAddress);
     }
 }
