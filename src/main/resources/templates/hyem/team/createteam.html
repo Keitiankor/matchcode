@@ -7,13 +7,14 @@
 </head>
 <body>
 <h2>팀 생성하기</h2>
-<form th:object="${team}" th:action="@{/team/create}" method="post">
+<form th:action="@{/team/create}" method="post">
+  <input type="text" name="userId" th:value="${userid}" hidden>
   팀명 <input type="text" name="teamName" placeholder="팀명을 입력해주세요">
   팀 코드 <input type="text" name="uri" placeholder="팀 코드를 입력해주세요">
   <p>선호 스포츠(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="sport : ${sports}" class="form-check">
-      <input class="form-check-input" th:field="*{sportsId}"
+      <input class="form-check-input" th:field="*{team.sportsId}"
              th:value="${sport.count}" type="checkbox">
       <label class="form-check-label" th:text="${sport.description}"></label>
     </div>
@@ -21,7 +22,7 @@
   <p>성별</p>
   <div class="input-group mb-3">
     <div th:each="gender : ${genders}" class="form-check">
-      <input class="form-check-input" th:field="*{averageGender}"
+      <input class="form-check-input" th:field="*{team.averageGender}"
              th:value="${gender.count}" type="radio" id="gender" name="averageGender">
       <label class="form-check-label" th:text="${gender.description}"></label>
     </div>
@@ -29,7 +30,7 @@
   <p>주요 나이대(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="age : ${ages}" class="form-check">
-      <input class="form-check-input" th:field="*{averageAge}"
+      <input class="form-check-input" th:field="*{team.averageAge}"
              th:value="${age.count}" type="checkbox">
       <label class="form-check-label" th:text="${age.description}"></label>
     </div>
@@ -37,7 +38,7 @@
   <p>활동 요일(중복 선택 가능)</p>
   <div class="input-group mb-3">
     <div th:each="week : ${weeks}" class="form-check">
-      <input class="form-check-input" th:field="*{useWeek}"
+      <input class="form-check-input" th:field="*{team.useWeek}"
              th:value="${week.count}" type="checkbox">
       <label class="form-check-label" th:text="${week.description}"></label>
     </div>
@@ -45,12 +46,13 @@
   <p>활동 시간</p>
   <div class="input-group mb-3">
     <div th:each="time : ${times}" class="form-check">
-      <input class="form-check-input" th:field="*{useTime}"
+      <input class="form-check-input" th:field="*{team.useTime}"
              th:value="${time.count}" type="radio" id="time" name="useTime">
       <label class="form-check-label" th:text="${time.description}"></label>
     </div>
   </div>
   <button id="save" type="submit">등록</button>
+  <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
 </form>
 </body>
 </html>

@@ -33,7 +33,7 @@
                 <div th:each="sport : ${sports}" class="form-check">
                     <input class="form-check-input" th:field="*{sportsId}"
                            th:value="${sport.count}" type="checkbox" id="sport" name="sportsId">
-                    <label class="form-check-label" th:text="${sport.name()}"></label>
+                    <label class="form-check-label" th:text="${sport.description}"></label>
                 </div>
             </div>
             <p>성별</p>
@@ -41,7 +41,7 @@
                 <div th:each="gender : ${genders}" class="form-check">
                     <input class="form-check-input" th:field="*{averageGender}"
                            th:value="${gender.count}" type="radio" id="gender" name="averageGender">
-                    <label class="form-check-label" th:text="${gender.name()}"></label>
+                    <label class="form-check-label" th:text="${gender.description}"></label>
                 </div>
             </div>
 
@@ -59,7 +59,7 @@
                 <div th:each="week : ${weeks}" class="form-check">
                     <input class="form-check-input" th:field="*{useWeek}"
                            th:value="${week.count}" type="checkbox" id="week" name="useWeek">
-                    <label class="form-check-label" th:text="${week.name()}"></label>
+                    <label class="form-check-label" th:text="${week.description}"></label>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                 <div th:each="time : ${times}" class="form-check">
                     <input class="form-check-input" th:field="*{useTime}"
                            th:value="${time.count}" type="radio" id="time" name="useTime">
-                    <label class="form-check-label" th:text="${time.name()}"></label>
+                    <label class="form-check-label" th:text="${time.description}"></label>
                 </div>
             </div>
 
