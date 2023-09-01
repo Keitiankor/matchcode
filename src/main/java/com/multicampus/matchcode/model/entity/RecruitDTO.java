@@ -19,7 +19,6 @@ public class RecruitDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recruit_id")
     private long id;
 
     private long teamId;
