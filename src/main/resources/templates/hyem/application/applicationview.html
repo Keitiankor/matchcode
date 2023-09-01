@@ -31,6 +31,17 @@
             <button class="btn btn-warning">
                 <a style="color: white; text-decoration: none;" th:href="@{/application/list}">이전 화면으로</a>
             </button>
+            <hr>
+            <div>
+                <p>팀장 권한</p>
+                <form th:action="@{/addteammember}" th:method="post">
+                    <input name="id" type="hidden" th:value="${join.id}">
+                    <button class="btn btn-primary" onclick="addTeamMember();">수락</button>
+                </form>
+                <button class="btn btn-warning">
+                    <a style="color: white; text-decoration: none;" th:href="@{/application/list}">거절</a>
+                </button>
+            </div>
         </div>
     </body>
 </html>

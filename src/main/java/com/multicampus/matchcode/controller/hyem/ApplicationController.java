@@ -101,8 +101,9 @@ public class ApplicationController {
         ApplicationDTO applicationDTO = applicationService.applicationView(id);
         model.addAttribute("join", applicationDTO);
         model.addAttribute("memberId", memberDTO.getId());
-
-        if(teamMemberService.isApplicatedMember(applicationDTO.getTeamId(), memberDTO.getId())) {
+        boolean isApplicatedMember = teamMemberService.isApplicatedMember(applicationDTO.getTeamId(), memberDTO.getId());
+        Integer isTeamLeader = teamMemberService.isTeamLeader(applicationDTO.getTeamId(), memberDTO.getId());
+        if(isApplicatedMember | (isTeamLeader == 1)) {
             return "hyem/application/applicationview";
         } else {
             model.addAttribute("message", "열람 권한이 없습니다.");
