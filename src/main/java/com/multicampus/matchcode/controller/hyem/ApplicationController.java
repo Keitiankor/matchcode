@@ -54,7 +54,7 @@ public class ApplicationController {
         return "hyem/message";
     }
 
-    // 가입 신청 리스트
+    // 전체 가입 신청 리스트
     @GetMapping("/list")
     public String applicationList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
@@ -73,17 +73,41 @@ public class ApplicationController {
         return "hyem/application/applicationlist";
     }
 
+    // 팀별 가입 신청 리스트 조회
+    @GetMapping("/list/{teamId}")
+    public String applicationSortByTeamList(
+            @PathVariable Long teamId,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
+        Page<ApplicationDTO> list = applicationService.teamApplicationList(teamId, pageable);
+
+        int nowPage = list.getPageable()
+                          .getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "hyem/application/applicationlist";
+    }
+
     // 가입 신청 정보
     @GetMapping("/view/{id}")
-    public String applicationView(@PathVariable Long id, Model model) {
+    public String applicationView(@PathVariable Long id, Model model,
+                                  @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         model.addAttribute("join", applicationService.applicationView(id));
+        model.addAttribute("memberId", memberDTO.getId());
         return "hyem/application/applicationview";
     }
 
     // 가입 신청 내용 수정
     @GetMapping("/modify/{id}")
-    public String applicationModify(@PathVariable("id") Long id, Model model) {
+    public String applicationModify(@PathVariable("id") Long id, Model model,
+                                    @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         model.addAttribute("join", applicationService.applicationView(id));
+        model.addAttribute("memberId", memberDTO.getId());
         return "hyem/application/modifyintroduction";
     }
 
