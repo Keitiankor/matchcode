@@ -22,7 +22,7 @@ public class PostDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private long memberId;
     private String title;

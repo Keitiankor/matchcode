@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.controller.hgdd;
 
+import com.multicampus.matchcode.model.entity.DeclationDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.entity.PostLikeDTO;
@@ -102,12 +103,13 @@ public class PostController {
 
     //게시글 열람
     @GetMapping("/view")
-    public String view(Model model, Long id, PostLikeDTO likeDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
 
         model.addAttribute("post", postService.view(id));
         model.addAttribute("likeDTO", likeDTO);
         model.addAttribute("list", replyService.list(id));
+        model.addAttribute("declation",declationDTO);
         if (memberDTO != null) {
             if (post.isPrivates()) { //비공개 여부 확인
                 if (post.getMemberId() == memberDTO.getId()) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -179,5 +181,5 @@ public class PostController {
             model.addAttribute("searchUrl", "/login"); //이동하는 경로
             return "hgdd/message";
         }
-    }
+    }*/
 }
