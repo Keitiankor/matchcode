@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{header :: head(~{::title})}">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
         <title>Match Code</title>
     </head>
     <body>
-        <a th:href="@{/register}"><input type="button" value="회원가입 화면으로" /></a> <br />
-        <a th:href="@{/login}"><input type="button" value="로그인 화면으로" /></a>
+        <div>
+            <div th:replace="~{commons :: topper}"></div>
+        </div>
     </body>
 </html>

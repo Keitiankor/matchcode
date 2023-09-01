@@ -2,13 +2,13 @@ package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
-import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.service.hyuk.MatchService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/match")
@@ -18,9 +18,7 @@ public class MatchController {
     MatchService matchService;
 
     @GetMapping("/list")
-    public String listByRegion(Model model,
-                               @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-                               @RequestParam(value = "region", defaultValue = "0") long regionId) {
+    public String listByRegion(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum, @RequestParam(value = "region", defaultValue = "0") long regionId) {
         List<MatchDTO> matchList;
         Integer[] pageList;
 
@@ -131,6 +129,7 @@ public class MatchController {
 
         return "match/list";
     }
+
     @GetMapping("/getmatchesbyregion")
     @ResponseBody
     public List<MatchDTO> getMatchesByRegion(@RequestParam("region") long region) {

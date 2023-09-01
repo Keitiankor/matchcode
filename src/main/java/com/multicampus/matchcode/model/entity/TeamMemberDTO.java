@@ -19,6 +19,6 @@ public class TeamMemberDTO {
     private long id;
 
     private long teamId;
-    private long userId;
+    private long memberId;
     private int privilege;
 }

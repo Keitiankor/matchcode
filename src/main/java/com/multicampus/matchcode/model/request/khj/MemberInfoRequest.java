@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class MemberInfo {
+public class MemberInfoRequest {
 
     private int communityLevel;
     private String name;

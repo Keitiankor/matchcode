@@ -1,6 +1,9 @@
 package com.multicampus.matchcode.model.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +20,9 @@ public class ApplicationDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long userId;
+    private long memberId;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private TeamDTO teamId;
+    private long teamId;
 
     private String rejectReason;
     private String introduction;
