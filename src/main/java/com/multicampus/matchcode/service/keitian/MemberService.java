@@ -27,12 +27,21 @@ public class MemberService {
     public void insert(RegisterRequest request) {
         Timestamp bd = null;
         try {
-            bd = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getBirthday()).getTime());
+            bd = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(request.getBirthday())
+                                                                 .getTime());
         } catch (ParseException ex) {
             log.error("Parse Error ! {}", ex.getMessage());
         }
 
-        MemberDTO dto = MemberDTO.builder().account(request.getAccount()).password(pe.encode(request.getPassword())).name(request.getName()).phone(request.getPhone()).mailAddress(request.getMailAddress()).createdDate(new Timestamp(System.currentTimeMillis())).birthday(bd).build();
+        MemberDTO dto = MemberDTO.builder()
+                                 .account(request.getAccount())
+                                 .password(pe.encode(request.getPassword()))
+                                 .name(request.getName())
+                                 .phone(request.getPhone())
+                                 .mailAddress(request.getMailAddress())
+                                 .createdDate(new Timestamp(System.currentTimeMillis()))
+                                 .birthday(bd)
+                                 .build();
 
         repository.save(dto);
     }

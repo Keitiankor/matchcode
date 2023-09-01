@@ -21,7 +21,15 @@ public class TeamService {
 
     // 팀 생성
     public void save(TeamCreateRequest request) {
-        TeamDTO dto = TeamDTO.builder().sportsId(request.getSportsId()).teamName(request.getTeamName()).uri(request.getUri()).useWeek(request.getUseWeek()).useTime(request.getUseTime()).averageAge(request.getAverageAge()).averageGender(request.getAverageGender()).build();
+        TeamDTO dto = TeamDTO.builder()
+                             .sportsId(request.getSportsId())
+                             .teamName(request.getTeamName())
+                             .uri(request.getUri())
+                             .useWeek(request.getUseWeek())
+                             .useTime(request.getUseTime())
+                             .averageAge(request.getAverageAge())
+                             .averageGender(request.getAverageGender())
+                             .build();
         teamRepository.save(dto);
     }
 
@@ -32,14 +40,25 @@ public class TeamService {
 
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {
-        return teamRepository.findById(id).get();
+        return teamRepository.findById(id)
+                             .get();
     }
 
     // 팀 정보 수정
     public TeamDTO teamUpdate(long id, TeamCreateRequest request) {
-        TeamDTO existingTeam = teamRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
+        TeamDTO existingTeam = teamRepository.findById(id)
+                                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
 
-        TeamDTO updatedTeam = TeamDTO.builder().id(existingTeam.getId()).sportsId(request.getSportsId()).teamName(request.getTeamName()).uri(request.getUri()).useWeek(request.getUseWeek()).useTime(request.getUseTime()).averageAge(request.getAverageAge()).averageGender(request.getAverageGender()).build();
+        TeamDTO updatedTeam = TeamDTO.builder()
+                                     .id(existingTeam.getId())
+                                     .sportsId(request.getSportsId())
+                                     .teamName(request.getTeamName())
+                                     .uri(request.getUri())
+                                     .useWeek(request.getUseWeek())
+                                     .useTime(request.getUseTime())
+                                     .averageAge(request.getAverageAge())
+                                     .averageGender(request.getAverageGender())
+                                     .build();
 
         return teamRepository.save(updatedTeam);
     }

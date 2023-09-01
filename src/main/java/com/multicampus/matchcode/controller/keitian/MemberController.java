@@ -71,7 +71,8 @@ public class MemberController {
     public String pMemberRegisterEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
         String verifyString = mailSender.sendVerifyingMail(mailAddress);
         if (verifyString != null) {
-            hRequest.getSession(false).setAttribute(SessionConstant.VERIFY_STRING, verifyString);
+            hRequest.getSession(false)
+                    .setAttribute(SessionConstant.VERIFY_STRING, verifyString);
             return "메일이 정상 발송되었습니다.";
         }
         return "메일 발송중 오류가 발생했습니다.";
@@ -79,7 +80,9 @@ public class MemberController {
 
     @PostMapping("register/verifyingcheck")
     @ResponseBody
-    public Boolean pMemberVerifyingCheck(@SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString, @RequestParam String inputString) {
+    public Boolean pMemberVerifyingCheck(
+            @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
+            @RequestParam String inputString) {
         return verifyString.equals(inputString);
     }
 

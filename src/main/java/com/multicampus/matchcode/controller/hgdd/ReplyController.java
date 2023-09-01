@@ -23,7 +23,11 @@ public class ReplyController {
 
     //댓글 등록
     @PostMapping("/insert/{id}")
-    public String replyInsert(@PathVariable Long id, ReplyRequest request, Model model, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String replyInsert(
+            @PathVariable Long id,
+            ReplyRequest request,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
         if (memberDTO != null) {
             service.save(request, memberDTO.getId(), id);
             System.out.println("제목: " + request.getComment());
@@ -45,7 +49,11 @@ public class ReplyController {
     }
 
     @GetMapping("/delete/{id}/{postId}")
-    public String deleteReply(@PathVariable Long id, Model model, @PathVariable Long postId, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String deleteReply(
+            @PathVariable Long id,
+            Model model,
+            @PathVariable Long postId,
+            @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
         System.out.println("id: " + id);
         System.out.println("postid: " + postId);
         ReplyDTO reply = service.view(id);

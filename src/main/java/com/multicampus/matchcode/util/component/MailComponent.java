@@ -24,7 +24,8 @@ public class MailComponent extends Thread {
 
     protected void sendMailThread(String... params) {
         Runnable runnable = () -> {
-            log.info("Thread Name : {}", Thread.currentThread().getName());
+            log.info("Thread Name : {}", Thread.currentThread()
+                                               .getName());
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             if (params == null) {
                 return;
@@ -37,7 +38,8 @@ public class MailComponent extends Thread {
             } catch (MailException ex) {
                 log.error("Mail Error ! {}", ex.getMessage());
             }
-            log.info("Thread Name : {} Done!", Thread.currentThread().getName());
+            log.info("Thread Name : {} Done!", Thread.currentThread()
+                                                     .getName());
         };
         executor.execute(runnable);
     }

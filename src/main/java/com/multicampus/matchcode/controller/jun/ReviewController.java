@@ -34,7 +34,9 @@ public class ReviewController {
 
     //이용한 체육시설 평점 남기기
     @PostMapping("createReview2")
-    public String createReview2(ReviewRequest reviewRequest, @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO memberDTO) {
+    public String createReview2(
+            ReviewRequest reviewRequest,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO memberDTO) {
 
         //클라이언트(로그인X) -> 로그인페이지로 리다이렉트
         if (memberDTO == null) {

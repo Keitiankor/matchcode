@@ -1,115 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Point Page</title>
-    <link rel="stylesheet" href="/css/ljg/pointPage.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            background-color: #f0f0f0;
-            padding: 20px;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Point Page</title>
+        <link rel="stylesheet" href="/css/ljg/pointPage.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            body {
+                background-color: #f0f0f0;
+                padding: 20px;
+            }
 
-        .card-body {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+            .card-body {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
 
-        .box-radio-input {
-            display: inline-block;
-            margin-right: 10px;
-        }
+            .box-radio-input {
+                display: inline-block;
+                margin-right: 10px;
+            }
 
-        .btn-custom {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-        }
+            .btn-custom {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                width: 100%;
+                margin-top: 20px;
+            }
 
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-        .small-text {
-            font-size: 30px; /* Adjust the font size as needed */
-        }
-    </style>
-</head>
-<body>
-<div class="container mt-4 mx-3">
-    <h1 class="mb-4"><small class="small-text"><b>내 포인트</b></small></h1>
-<table>
-    <thead>
-    <tr>
-        <div class="mb-2">
-        <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
-    <button type="button" onclick="location.href='test'">충전하기</button>
-    <button type="button" onclick="location.href='refund'">환불하기</button>
-    </div>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    </tr>
-    </tbody>
-</table>
-<tr>
-    <td>
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
 
-    </td>
-</tr>
-</thead>
-</table>
-<div id="chargeTable" style="display: none;">
-    <h2 class="mb-4"><small class="small-text">충전 내역</small></h2>
-    <table>
-        <thead>
-        <tr>
-            <th>일시</th>
-            <th>충전 포인트</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <h2 class="mb-4"><small class="small-text"><b>포인트 내역</b></small></h2>
-<table>
-    <thead>
-    <tr>
-        <th>일시</th>
-        <th>내역</th>
-        <th>포인트</th>
+            .small-text {
+                font-size: 30px; /* Adjust the font size as needed */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-4 mx-3">
+            <h1 class="mb-4"><small class="small-text"><b>내 포인트</b></small></h1>
+            <table>
+                <thead>
+                    <tr>
+                        <div class="mb-2">
+                            <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
+                            <button type="button" onclick="location.href='test'">충전하기</button>
+                            <button type="button" onclick="location.href='refund'">환불하기</button>
+                        </div>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+            <tr>
+                <td>
 
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="history : ${chargeHistories}">
-        <td th:text="${#dates.format(history.date, 'yyyy-MM-dd HH:mm')}"></td>
-        <td>
-            <span th:text="${history.details}"></span>
-        </td>
-        <td th:text="${history.point}"></td>
-    </tr>
-    </tbody>
-</table>
-</div>
-<script src="/js/ljg/pointPage.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                </td>
+            </tr>
+            </thead>
+            </table>
+            <div id="chargeTable" style="display: none;">
+                <h2 class="mb-4"><small class="small-text">충전 내역</small></h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>일시</th>
+                            <th>충전 포인트</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h2 class="mb-4"><small class="small-text"><b>포인트 내역</b></small></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>일시</th>
+                        <th>내역</th>
+                        <th>포인트</th>
 
 
-</body>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="history : ${chargeHistories}">
+                        <td th:text="${#dates.format(history.date, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                            <span th:text="${history.details}"></span>
+                        </td>
+                        <td th:text="${history.point}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="/js/ljg/pointPage.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    </body>
 
 </html>
