@@ -17,6 +17,7 @@
     height: 600px;
     line-height: 50px;
     float: left;
+    padding-top: 60px;
 }
 
 #section {
@@ -24,6 +25,7 @@
     height: 600px;
     line-height: 50px;
     float: left;
+    padding-top: 60px;
 }
 
 #footer {
