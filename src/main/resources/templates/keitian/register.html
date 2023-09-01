@@ -5,7 +5,7 @@
     </head>
     <body>
         <div th:replace="~{commons :: topper}"></div>
-        <form action="/register" method="post">
+        <form style="padding-top: 60px" action="/register" method="post">
             <script src="/js/keitian/register.js"></script>
             <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
             <legend>회원가입</legend>
