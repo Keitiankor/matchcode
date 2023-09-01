@@ -37,6 +37,7 @@ public class MailComponent extends Thread {
             } catch (MailException ex) {
                 log.error("Mail Error ! {}", ex.getMessage());
             }
+            log.info("Thread Name : {} Done!", Thread.currentThread().getName());
         };
         executor.execute(runnable);
     }

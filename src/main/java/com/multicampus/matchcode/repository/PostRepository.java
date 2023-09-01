@@ -32,10 +32,12 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
 
     // 좋아요 수가 많은 순서로 게시글 목록 가져오기
     Page<PostDTO> findAllByOrderByLikesDesc(Pageable pageable);
+
     Page<PostDTO> findByTitleContainingOrderByLikesDesc(String searchKeyword, Pageable pageable);
 
     //조회수가 많은 순서로 게시글 목록 가져오기
     Page<PostDTO> findAllByOrderByViewsDesc(Pageable pageable);
+
     Page<PostDTO> findByTitleContainingOrderByViewsDesc(String searchKeyword, Pageable pageable);
 
     @Modifying

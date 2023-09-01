@@ -5,14 +5,13 @@ import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
 import com.multicampus.matchcode.repository.MatchRepository;
 import com.multicampus.matchcode.repository.PointRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class PointService {
@@ -63,12 +62,8 @@ public class PointService {
     public long payPoints(ReserveRequest request) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
 
-        PointDTO pointDTO = PointDTO
-            .builder()
-            .date(date)
-            .memberId(request.getMemberId())
-            .point(-request.getPricePoints()) // Deducted points as a negative value
-            .build();
+        PointDTO pointDTO = PointDTO.builder().date(date).memberId(request.getMemberId()).point(-request.getPricePoints()) // Deducted points as a negative value
+                .build();
 
         MatchDTO matchDTO = MatchDTO.builder().mapId(request.getMapId()).matchDate(request.getMatchDate()).build();
 

@@ -1,54 +1,54 @@
-$(document).ready(function () {
-    $("#matchHistoryButton").click(function () {
+$(document).ready(function() {
+    $("#matchHistoryButton").click(function() {
         $.ajax({
             url: "matchhistory", // 매치 히스토리를 가져오는 URL
             dataType: "html",
-            success: function (data) {
+            success: function(data) {
                 $("#contents").html(data);
             },
-            error: function () {
+            error: function() {
 
                 console.error("Error loading match history.");
             }
         });
     }); // 매치 히스토리 버튼 클릭시
 
-    $("#personalButton").click(function () {
+    $("#personalButton").click(function() {
         $.ajax({
             url: "personal", // 매치 히스토리를 가져오는 URL
             dataType: "html",
-            success: function (data) {
+            success: function(data) {
                 $("#contents").html(data);
             },
-            error: function () {
+            error: function() {
 
                 console.error("Error loading match history.");
             }
         });
     }); // 개인정보 버튼 클릭시
 
-    $("#myPostButton").click(function () {
+    $("#myPostButton").click(function() {
         $.ajax({
             url: "mypost", // 매치 히스토리를 가져오는 URL
             dataType: "html",
-            success: function (data) {
+            success: function(data) {
                 $("#contents").html(data);
             },
-            error: function () {
+            error: function() {
 
                 console.error("Error loading match history.");
             }
         });
     }); // 내 게시물 버튼 클릭시
 
-    $("#update").click(function () {
+    $("#update").click(function() {
         $.ajax({
             url: "personalupdate", // 매치 히스토리를 가져오는 URL
             dataType: "html",
-            success: function (data) {
+            success: function(data) {
                 $("#contents").html(data);
             },
-            error: function () {
+            error: function() {
 
                 console.error("Error loading match history.");
             }

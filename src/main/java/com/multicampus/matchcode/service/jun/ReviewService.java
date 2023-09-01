@@ -4,9 +4,10 @@ import com.multicampus.matchcode.model.entity.ReviewDTO;
 import com.multicampus.matchcode.model.request.jun.ReviewRequest;
 import com.multicampus.matchcode.model.request.jun.UpdateReviewRequest;
 import com.multicampus.matchcode.repository.ReviewRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -15,13 +16,7 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     public void save(ReviewRequest request, long memberId) {
-        ReviewDTO reviewdto = ReviewDTO
-            .builder()
-            .memberId(memberId)
-            .mapId(34)
-            .rate(request.getRate())
-            .comment(request.getComment())
-            .build();
+        ReviewDTO reviewdto = ReviewDTO.builder().memberId(memberId).mapId(34).rate(request.getRate()).comment(request.getComment()).build();
         System.out.println("Review.insert : " + reviewdto);
         reviewRepository.save(reviewdto);
     }
@@ -33,14 +28,7 @@ public class ReviewService {
 
     // 리뷰 수정 처리 메서드
     public void update(UpdateReviewRequest updateReviewRequest) {
-        ReviewDTO review = ReviewDTO
-            .builder()
-            .id(updateReviewRequest.getId())
-            .memberId(updateReviewRequest.getDto().getMemberId())
-            .mapId(updateReviewRequest.getDto().getMapId())
-            .rate(updateReviewRequest.getRate())
-            .comment(updateReviewRequest.getComment())
-            .build();
+        ReviewDTO review = ReviewDTO.builder().id(updateReviewRequest.getId()).memberId(updateReviewRequest.getDto().getMemberId()).mapId(updateReviewRequest.getDto().getMapId()).rate(updateReviewRequest.getRate()).comment(updateReviewRequest.getComment()).build();
         reviewRepository.save(review);
     }
 
