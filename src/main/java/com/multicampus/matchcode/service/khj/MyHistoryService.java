@@ -57,13 +57,14 @@ public class MyHistoryService {
                 continue;
             }
             MapDTO map = getMapByMatchId(match.getMapId());
-            MatchResultRequest matchResult = MatchResultRequest.builder()
-                                                               .matchId(match.getId())
-                                                               .matchDate(match.getMatchDate())
-                                                               .name(map.getSportCenterName())
-                                                               .myScore(result.getMyScore())
-                                                               .rivalScore(result.getRivalScore())
-                                                               .build();
+            MatchResultRequest matchResult = MatchResultRequest
+                    .builder()
+                    .matchId(match.getId())
+                    .matchDate(match.getMatchDate())
+                    .name(map.getSportCenterName())
+                    .myScore(result.getMyScore())
+                    .rivalScore(result.getRivalScore())
+                    .build();
             matchResults.add(matchResult);
         }
 
@@ -74,14 +75,18 @@ public class MyHistoryService {
         Optional<RatingDTO> ratingDTO = rating.findBySportsIdAndMemberId(sportsId, memberId);
 
         if (ratingDTO.isPresent()) {
-            Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO.get()
-                                                                     .getEmblemId());
-            RatingRequest ratingRequest = RatingRequest.builder()
-                                                       .mmr(ratingDTO.get()
-                                                                     .getMmr())
-                                                       .uri(emblemDTO.get()
-                                                                     .getUri())
-                                                       .build();
+            Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO
+                                                                    .get()
+                                                                    .getEmblemId());
+            RatingRequest ratingRequest = RatingRequest
+                    .builder()
+                    .mmr(ratingDTO
+                                 .get()
+                                 .getMmr())
+                    .uri(emblemDTO
+                                 .get()
+                                 .getUri())
+                    .build();
             return ratingRequest;
         }
         return null;
@@ -109,8 +114,9 @@ public class MyHistoryService {
     }
 
     public MapDTO getMapByMatchId(long mapId) {
-        return map.findById(mapId)
-                  .get();
+        return map
+                .findById(mapId)
+                .get();
     }
 
     //매치 id가 주어졌을때, 그 매치id로 경기 뛴 유저들 이름 찾기
@@ -121,8 +127,9 @@ public class MyHistoryService {
         for (MatchMemberDTO matchMember : matchMembers) {
             Optional<MemberDTO> members = member.findById(matchMember.getMemberId());
             if (members.isPresent()) {
-                memberNames.add(members.get()
-                                       .getName());
+                memberNames.add(members
+                                        .get()
+                                        .getName());
             }
         }
 

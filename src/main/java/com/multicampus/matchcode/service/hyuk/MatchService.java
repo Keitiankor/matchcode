@@ -25,24 +25,12 @@ public class MatchService {
     //matchRepository 객체 생성
     private MatchRepository matchRepository;
 
-    // Entity -> DTO로 변환
-    private MatchDTO convertEntityToDTO(Match match) {
-        return MatchDTO.builder()
-                       .id(match.getId())
-                       .mapId(match.getMapId())
-                       .sportsId(match.getSportsId())
-                       .matchDate(match.getMatchDate())
-                       .createdDate(match.getCreatedDate())
-                       .expireDate(match.getExpireDate())
-                       .restrictionMinRate(match.getRestrictionMinRate())
-                       .restrictionMaxRate(match.getRestrictionMaxRate())
-                       .status(match.getStatus())
-                       .build();
-    }
-
     @Transactional
     public ArrayList<MatchDTO> getMatchlist(Integer pageNum) {
-        Page<MatchDTO> page = matchRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
+        Page<MatchDTO> page = matchRepository.findAll(PageRequest.of(pageNum - 1,
+                                                                     PAGE_POST_COUNT,
+                                                                     Sort.by(Sort.Direction.ASC, "createdDate")
+        ));
 
         List<MatchDTO> matchEntities = page.getContent();
         ArrayList<MatchDTO> matchDTOs = new ArrayList<>();
@@ -61,24 +49,28 @@ public class MatchService {
 
     @Transactional
     public Long savePost(MatchData data) {
-        MatchDTO matchDTO = MatchDTO.builder()
-                                    .mapId(data.getMapId())
-                                    .sportsId(data.getSportsId())
-                                    .createdDate(new Timestamp(System.currentTimeMillis()))
-                                    .build();
-        return matchRepository.save(matchDTO)
-                              .getId();
+        MatchDTO matchDTO = MatchDTO
+                .builder()
+                .mapId(data.getMapId())
+                .sportsId(data.getSportsId())
+                .createdDate(new Timestamp(System.currentTimeMillis()))
+                .build();
+        return matchRepository
+                .save(matchDTO)
+                .getId();
     }
 
     public Long updatePost(long id, MatchData data) {
-        MatchDTO matchDTO = MatchDTO.builder()
-                                    .id(id)
-                                    .mapId(data.getMapId())
-                                    .sportsId(data.getSportsId())
-                                    .createdDate(new Timestamp(System.currentTimeMillis()))
-                                    .build();
-        return matchRepository.save(matchDTO)
-                              .getId();
+        MatchDTO matchDTO = MatchDTO
+                .builder()
+                .id(id)
+                .mapId(data.getMapId())
+                .sportsId(data.getSportsId())
+                .createdDate(new Timestamp(System.currentTimeMillis()))
+                .build();
+        return matchRepository
+                .save(matchDTO)
+                .getId();
     }
 
     @Transactional
@@ -87,7 +79,7 @@ public class MatchService {
     }
 
     // 검색 API
-    @Transactional
+/*    @Transactional
     public List<MatchDTO> searchPosts(String keyword) {
         List<Match> matchEntities = matchRepository.findByMapIdContaining(keyword);
         List<MatchDTO> matchDTOList = new ArrayList<>();
@@ -99,7 +91,7 @@ public class MatchService {
         }
 
         return matchDTOList;
-    }
+    }*/
 
     // 페이징
     @Transactional
@@ -135,14 +127,22 @@ public class MatchService {
     }
 
     @Transactional
-    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
-        Page<MatchDTO> page = matchRepository.findByMapId(region, PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
+    public List<MatchDTO> getMatchlistByRegionAndSports(Integer pageNum, long region, long sports) {
+        Page<MatchDTO> page = matchRepository.findByMapIdAndSportsId(region,
+                                                                     sports,
+                                                                     PageRequest.of(pageNum - 1,
+                                                                                    PAGE_POST_COUNT,
+                                                                                    Sort.by(Sort.Direction.ASC,
+                                                                                            "createdDate"
+                                                                                    )
+                                                                     )
+        );
         return page.getContent();
     }
 
     @Transactional
-    public Integer[] getPageListByRegion(Integer pageNum, long region) {
-        Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
+    public Integer[] getPageListByRegionAndSports(Integer pageNum, long region, long sports) {
+        Double matchTotalCount = Double.valueOf(matchRepository.countByMapIdAndSportsId(region, sports));
         return calculatePageList(pageNum, matchTotalCount);
     }
 
