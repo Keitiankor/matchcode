@@ -100,4 +100,13 @@ public class MemberService {
                 });
         return ref.generatedPassword;
     }
+
+    @Transactional
+    public boolean changePassword(MemberDTO dto, String oldPassword, String newPassword) {
+        if (pe.matches(oldPassword, dto.getPassword())) {
+            repository.updatePasswordById(dto.getId(), pe.encode(newPassword));
+            return true;
+        }
+        return false;
+    }
 }

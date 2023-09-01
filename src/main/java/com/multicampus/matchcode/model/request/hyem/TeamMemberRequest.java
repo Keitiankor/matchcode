@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AddTeamMemberRequest {
-    private long memberId;
+public class TeamMemberRequest {
+
     private long teamId;
-    private int privilege;
+    private long userId;
 }

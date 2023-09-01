@@ -4,6 +4,7 @@ import com.multicampus.matchcode.model.entity.ApplicationDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
+import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,9 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
 
+    @Autowired
+    private TeamMemberService teamMemberService;
+
     // 가입 신청하기
     @GetMapping("/join/{teamid}")
     public String joinTeam(
@@ -28,8 +32,14 @@ public class ApplicationController {
             @ModelAttribute("join") ApplicationDTO applicationDTO,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model) {
-        model.addAttribute("memberid", memberDTO.getId());
-        return "hyem/application/joinapplication";
+        if(teamMemberService.isTeamMember(memberDTO.getId())) {
+            model.addAttribute("memberid", memberDTO.getId());
+            return "hyem/application/joinapplication";
+        } else {
+            model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
+            model.addAttribute("searchUrl", "/recruit/list");
+            return "hyem/message";
+        }
     }
 
     @PostMapping("/join/{teamid}/{id}")

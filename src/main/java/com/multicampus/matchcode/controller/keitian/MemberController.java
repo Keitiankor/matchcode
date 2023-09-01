@@ -108,12 +108,17 @@ public class MemberController {
         return jsonObject.toString();
     }
 
-    @GetMapping("login/changepassword")
+    @GetMapping("changepassword")
     public String gChangePassword() {
         return "keitian/changepassword";
     }
 
-    @PostMapping("changepassword")
-    public void pChangePassword() {
+    @PostMapping("changepassword/requestchange")
+    @ResponseBody
+    public boolean pChangePassword(
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO dto, String oldPassword, String newPassword
+    ) {
+        return service.changePassword(dto, oldPassword, newPassword);
+
     }
 }

@@ -13,7 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Entity(name = "Team")
+@Entity(name = "TeamTest")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,5 +37,6 @@ public class TeamDTO {
 
     @CreationTimestamp
     private Timestamp createdDate;
+
     private Integer status;
 }
