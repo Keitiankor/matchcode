@@ -1,37 +1,65 @@
 $(document).ready(function() {
-    function getMatchesByRegionAndSports(region, sports) {
+    var isLoading = false;
+    var pageNum = 1;
+
+    function loadMatches(region, sports) {
+        if (isLoading) return;
+
+        isLoading = true;
+        $("#loading").show();
+
+        // "전체" 선택 시 0으로 변경
+        if (region === "전체") {
+            region = "";
+        }
+        if (sports === "전체") {
+            sports = "";
+        }
+
         $.ajax({
             url: "/match/getmatchesbyregionandsports",
-            data: { page: 1, region: region, sports: sports }, // "page" 값을 추가하여 요청
+            data: { page: pageNum, region: region, sports: sports },
             method: "GET",
             success: function(matches) {
-                console.log(typeof matches);
-                $("#result").html(matches);
+                if (matches.length === 0) {
+                    $("#loading").text("No more matches");
+                } else {
+                    var tableHtml = '';
+                    for (var i = 0; i < matches.length; i++) {
+                        tableHtml += '<tr>';
+                        tableHtml += '<td>' + matches[i].id + '</td>';
+                        tableHtml += '<td><a href="/match/post/' + matches[i].id + '">' + matches[i].mapId + '</a></td>';
+                        tableHtml += '<td>' + matches[i].sportsId + '</td>';
+                        tableHtml += '<td>' + matches[i].createdDate + '</td>';
+                        tableHtml += '</tr>';
+                    }
+                    $("#matchesTable").append(tableHtml);
+                    pageNum++;
+                }
+
+                isLoading = false;
+                $("#loading").hide();
             },
         });
     }
 
-    $("#seoulButton").click(function() {
-        getMatchesByRegionAndSports(1, -1); // 0은 모든 종목을 의미
+    // 드롭다운 값이 변경될 때의 이벤트 핸들러 등록
+    $("#regionSelect, #sportsSelect").change(function() {
+        pageNum = 1;
+        $("#matchesTable").empty();
+        var region = $("#regionSelect").val();
+        var sports = $("#sportsSelect").val();
+
+        loadMatches(region, sports);
     });
 
-    $("#gyeonggiButton").click(function() {
-        getMatchesByRegionAndSports(2, -1);
-    });
+    // 초기 데이터 로드
+    loadMatches($("#regionSelect").val(), $("#sportsSelect").val());
 
-    $("#incheonButton").click(function() {
-        getMatchesByRegionAndSports(3, -1);
-    });
-
-    $("#footballButton").click(function() {
-        getMatchesByRegionAndSports(1, 1); // 1은 풋살을 의미
-    });
-
-    $("#basketballButton").click(function() {
-        getMatchesByRegionAndSports(2, 2); // 2는 농구를 의미
-    });
-
-    $("#badmintonButton").click(function() {
-        getMatchesByRegionAndSports(3, 3); // 3은 배드민턴을 의미
+    // 스크롤 이벤트 감지
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMatches($("#regionSelect").val(), $("#sportsSelect").val());
+        }
     });
 });
