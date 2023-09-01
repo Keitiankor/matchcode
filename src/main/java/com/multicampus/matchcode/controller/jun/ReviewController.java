@@ -5,13 +5,13 @@ import com.multicampus.matchcode.model.entity.ReviewDTO;
 import com.multicampus.matchcode.model.request.jun.ReviewRequest;
 import com.multicampus.matchcode.model.request.jun.UpdateReviewRequest;
 import com.multicampus.matchcode.service.jun.ReviewService;
-import java.util.List;
-
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "review")
@@ -34,11 +34,10 @@ public class ReviewController {
 
     //이용한 체육시설 평점 남기기
     @PostMapping("createReview2")
-    public String createReview2(ReviewRequest reviewRequest,
-                                @SessionAttribute(name = SessionConstant.MEMBER_DTO)MemberDTO memberDTO) {
+    public String createReview2(ReviewRequest reviewRequest, @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO memberDTO) {
 
         //클라이언트(로그인X) -> 로그인페이지로 리다이렉트
-        if (memberDTO  == null) {
+        if (memberDTO == null) {
             return "redirect:/login";
         }
         System.out.println("rate : " + reviewRequest.getRate());

@@ -5,13 +5,14 @@ import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
 import com.multicampus.matchcode.repository.*;
 import com.multicampus.matchcode.util.constants.SessionConstant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MyHistoryService {
@@ -56,14 +57,7 @@ public class MyHistoryService {
                 continue;
             }
             MapDTO map = getMapByMatchId(match.getMapId());
-            MatchResultRequest matchResult = MatchResultRequest
-                .builder()
-                .matchId(match.getId())
-                .matchDate(match.getMatchDate())
-                .name(map.getSportCenterName())
-                .myScore(result.getMyScore())
-                .rivalScore(result.getRivalScore())
-                .build();
+            MatchResultRequest matchResult = MatchResultRequest.builder().matchId(match.getId()).matchDate(match.getMatchDate()).name(map.getSportCenterName()).myScore(result.getMyScore()).rivalScore(result.getRivalScore()).build();
             matchResults.add(matchResult);
         }
 
@@ -75,11 +69,7 @@ public class MyHistoryService {
 
         if (ratingDTO.isPresent()) {
             Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO.get().getEmblemId());
-            RatingRequest ratingRequest = RatingRequest
-                .builder()
-                .mmr(ratingDTO.get().getMmr())
-                .uri(emblemDTO.get().getUri())
-                .build();
+            RatingRequest ratingRequest = RatingRequest.builder().mmr(ratingDTO.get().getMmr()).uri(emblemDTO.get().getUri()).build();
             return ratingRequest;
         }
         return null;

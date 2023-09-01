@@ -42,7 +42,7 @@ public class SportCenterController {
 
     //체육 시설 등록 폼 이동
     @GetMapping("createSportCenter")
-    public String createSportCenter(@SessionAttribute(name = SessionConstant.MEMBER_DTO)MemberDTO memberDTO) {
+    public String createSportCenter(@SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO memberDTO) {
         if (memberDTO == null) {
             return "redirect:/login";
         }
@@ -73,7 +73,7 @@ public class SportCenterController {
         System.out.println("phone" + sportCenterRequest.getPhone());
         System.out.println("SportCenterName" + sportCenterRequest.getSportCenterName());
         System.out.println("resistrationCode" + sportCenterRequest.getResistrationCode());
-        MapDTO mapDTO =sportCenterService.findById(mapId);
+        MapDTO mapDTO = sportCenterService.findById(mapId);
         model.addAttribute("mapDTO", mapDTO);
 
         //sportCenterService.save(sportCenterRequest);
@@ -82,7 +82,7 @@ public class SportCenterController {
 
     //체육 시설 수정
     @PostMapping("updateSportCenter")
-    public String updateSportCenter2(SportCenterRequest sportCenterRequest){
+    public String updateSportCenter2(SportCenterRequest sportCenterRequest) {
 
         sportCenterService.save(sportCenterRequest);
 

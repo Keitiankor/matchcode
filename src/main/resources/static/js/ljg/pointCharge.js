@@ -1,9 +1,9 @@
-$(function () {
-    $("#charge_kakao").click(function () {
+$(function() {
+    $("#charge_kakao").click(function() {
         // getter
         var IMP = window.IMP;
         IMP.init("imp22284462");
-        var money = $('input[name="cp_item"]:checked').val();
+        var money = $("input[name=\"cp_item\"]:checked").val();
         console.log(money);
 
         IMP.request_pay(
@@ -17,9 +17,9 @@ $(function () {
                 buyer_name: "구매자이름",
                 buyer_tel: "010-1234-5678",
                 buyer_addr: "인천광역시 부평구",
-                buyer_postcode: "123-456",
+                buyer_postcode: "123-456"
             },
-            function (rsp) {
+            function(rsp) {
                 console.log(rsp);
                 if (rsp.success) {
                     var msg = "결제가 완료되었습니다.";
@@ -34,11 +34,11 @@ $(function () {
                         url: "/chargePoint", //충전 금액값을 보낼 url 설정
                         data: {
                             memberId: 1,
-                            point: money,
+                            point: money
                         },
-                        success: function () {
+                        success: function() {
                             alert("성공");
-                        },
+                        }
                     });
                 } else {
                     var msg = "결제에 실패하였습니다.";

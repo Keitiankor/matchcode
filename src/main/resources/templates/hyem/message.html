@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
 
-<script th:inline="javascript">
+    <script th:inline="javascript">
 
-    /*<![CDATA[*/
+        /*<![CDATA[*/
 
-    var message = [[${message}]];
-    alert(message);
+        var message = [[${message}]];
+        alert(message);
 
-    location.replace([[${searchUrl}]]);
+        location.replace([[${searchUrl}]]);
 
-    /*]]>*/
-</script>
+        /*]]>*/
+    </script>
 
-<body>
+    <body>
 
-</body>
+    </body>
 </html>
