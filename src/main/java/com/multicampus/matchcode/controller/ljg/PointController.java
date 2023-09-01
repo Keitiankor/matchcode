@@ -9,14 +9,12 @@ import com.multicampus.matchcode.service.ljg.PointService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import jakarta.servlet.http.HttpServletRequest;
 
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -82,7 +80,6 @@ public class PointController {
     public String pointCharge2( @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,Model model) {
         model.addAttribute("memberId",member.getId());
         return "/ljg/pointCharge2";
-
     }
 
     @GetMapping("/chargePoint2")
@@ -122,6 +119,7 @@ public class PointController {
         model.addAttribute("matchDate", matchDate);
         return "/ljg/paypage";
     }
+
     //결제처리
     @GetMapping("/payPoint")
     public String payPoints(HttpServletRequest request, ReserveRequest reserveRequest) {

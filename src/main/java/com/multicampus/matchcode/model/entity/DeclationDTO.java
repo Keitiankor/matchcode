@@ -8,25 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
-
-@Entity(name = "Reply")
+@Entity(name = "Declation")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReplyDTO {
+public class DeclationDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long postId;
     private long memberId;
-    private String comment;
-
-    @CreationTimestamp
-    private Timestamp createdDate;
+    private long postId;
 }

@@ -97,7 +97,7 @@ public class PostService {
 
     //조회수 증가
     @Transactional
-    public int views(Long id) {
+    public int views(long id) {
         return postRepository.updateView(id);
     }
 
@@ -106,10 +106,10 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    @Transactional
-    public int declations(Long id) {
+/*    @Transactional
+    public int declations(long id) {
         return postRepository.updatedeclation(id);
-    }
+    }*/
 
     public List<PostDTO> listTop3ByLikes() {
         return postRepository.findTop3ByOrderByLikesDesc(); // 좋아요가 제일 많은 순서로 상위 3개 검색
