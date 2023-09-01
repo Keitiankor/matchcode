@@ -6,7 +6,7 @@
 
     </head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <input type="text"  id="memberId" th:value="${memberId}" hidden="hidden">
     <body>
         <table>
             <thead>
@@ -34,15 +34,13 @@
                     performRefund(refundAmount);
                 }
             }
-
-            function performRefund(refundAmount) {
-                var memberId;
+            function performRefund(refundAmount){
                 $.ajax({
                     url: "/refundPoint",
                     type: "GET",
                     data: {
-                        memberId: memberId,
-                        point: refundAmount
+                        memberId: $("#memberId").val(),
+                        point: refundAmount,
                     },
                     success: function(response) {
                         if (response === "success") {

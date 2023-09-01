@@ -76,8 +76,8 @@
                                 type: "GET",
                                 url: "/chargePoint", //충전 금액값을 보낼 url 설정
                                 data: {
-                                    "memberId": 1,
-                                    "point": money
+                                    memberId: $("#memberId").val(),
+                                    point: money
                                 },
                                 success: function() {
                                     alert("성공");
@@ -96,6 +96,7 @@
         </script>
     </head>
     <body>
+        <input type="text"  id="memberId" th:value="${memberId}" hidden="hidden">
         <div class="card-body bg-white mt-0 shadow">
             <p style="font-weight: bold">카카오페이 충전</p>
             <label class="box-radio-input"><input name="cp_item" type="radio" value="1000"><span>1,000원</span></label>
