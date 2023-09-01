@@ -1,8 +1,12 @@
 package com.multicampus.matchcode.controller.hyem;
 
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
+import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import com.multicampus.matchcode.util.enums.hyem.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,27 +24,35 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private TeamMemberService teamMemberService;
+
     // 팀 생성하기
     @GetMapping("/create")
-    public String addTeam(@ModelAttribute("team") TeamDTO teamDTO, Model model) {
-        return "hyem/team/createteam";
+    public String createTeam(
+            @ModelAttribute("team") TeamDTO teamDTO,
+            @ModelAttribute("member") TeamMemberDTO teamMemberDTO,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+            Model model) {
+        if (memberDTO != null) {
+            model.addAttribute("userid", memberDTO.getId());
+            return "hyem/team/createteam";
+        } else {
+            model.addAttribute("message", "로그인 후 팀 생성이 가능합니다.");
+            model.addAttribute("searchUrl", "/login");
+            return "hyem/message";
+        }
     }
 
     @PostMapping("/create")
-    public String recruitPostWrite(@ModelAttribute("team") TeamCreateRequest request, Model model) throws Exception {
-
-        teamService.save(request);
+    public String createTeamPro(
+            @ModelAttribute("team") TeamCreateRequest request_team,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+            Model model) throws Exception {
+        long teamId = teamService.createTeam(request_team);
+        teamMemberService.addTeamLeader(teamId, memberDTO.getId());
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
-
-        System.out.println("teamName : " + request.getTeamName());
-        System.out.println("uri : " + request.getUri());
-        System.out.println("selected sport : " + request.getSportsId());
-        System.out.println("gender average : " + request.getAverageGender());
-        System.out.println("age average : " + request.getAverageAge());
-        System.out.println("week average : " + request.getUseWeek());
-        System.out.println("time average : " + request.getUseTime());
-
         return "hyem/message";
     }
 

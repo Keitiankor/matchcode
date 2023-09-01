@@ -24,9 +24,9 @@
                 </thead>
                 <tbody>
                     <tr th:each="recruit : ${list}">
-                        <td th:text="${recruit.id}">1</td>
+                        <td th:text="${recruit.recruitId}">1</td>
                         <td>
-                            <a th:href="@{/recruit/view/{id}(id=${recruit.id})}" th:text="${recruit.teamId.teamName}"></a>
+                            <a th:href="@{/recruit/view/{id}(id=${recruit.recruitId})}" th:text="${recruit.teamName}"></a>
                         </td>
                     </tr>
                 </tbody>
@@ -36,6 +36,9 @@
                 <a th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
                 <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
             </th:block>
+            <div class="layout">
+                <button><a th:href="@{/team/create}">팀 생성하기</a></button>
+            </div>
         </div>
     </body>
 </html>
