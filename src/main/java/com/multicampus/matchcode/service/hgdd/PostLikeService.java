@@ -19,10 +19,11 @@ public class PostLikeService {
         PostLikeDTO like = likeRepository.findByPostIdAndMemberId(postId, memberId);
 
         if (like == null) {
-            PostLikeDTO like2 = PostLikeDTO.builder()
-                                           .postId(postId)
-                                           .memberId(memberId)
-                                           .build();
+            PostLikeDTO like2 = PostLikeDTO
+                    .builder()
+                    .postId(postId)
+                    .memberId(memberId)
+                    .build();
             likeRepository.save(like2); // 새로운 좋아요 추가
             return postRepository.likesup(postId); //post 좋아요 증가
         } else {

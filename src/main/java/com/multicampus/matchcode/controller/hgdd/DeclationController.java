@@ -27,7 +27,8 @@ public class DeclationController {
     public String toggleDeclation(
             @PathVariable("postId") Long postId,
             Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         PostDTO post = postService.view(postId);
 
         if (memberDTO != null) {

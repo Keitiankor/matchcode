@@ -13,19 +13,21 @@ public class TeamMemberService {
 
     // 팀장 추가
     public void addTeamLeader(long teamid, long mamberid) {
-        TeamMemberDTO dto = TeamMemberDTO.builder()
-                                         .memberId(mamberid)
-                                         .teamId(teamid)
-                                         .privilege(1) // 0 : 관리자, 1 : 팀장, 2 : 팀원
-                                         .build();
+        TeamMemberDTO dto = TeamMemberDTO
+                .builder()
+                .memberId(mamberid)
+                .teamId(teamid)
+                .privilege(1) // 0 : 관리자, 1 : 팀장, 2 : 팀원
+                .build();
         teamMemberRepository.save(dto);
     }
 
     // 팀원 추가
     public void addTeamMember() {
-        TeamMemberDTO dto = TeamMemberDTO.builder()
-                                         .privilege(2) // 0 : 관리자, 1 : 팀장, 2 : 팀원
-                                         .build();
+        TeamMemberDTO dto = TeamMemberDTO
+                .builder()
+                .privilege(2) // 0 : 관리자, 1 : 팀장, 2 : 팀원
+                .build();
         teamMemberRepository.save(dto);
     }
 

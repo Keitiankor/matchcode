@@ -16,8 +16,9 @@ public enum Gender {
 
     public static String getDescriptionFromCount(Integer count) {
         for (Gender gender : Gender.values()) {
-            if (gender.getCount()
-                      .equals(count)) {
+            if (gender
+                    .getCount()
+                    .equals(count)) {
                 return gender.getDescription();
             }
         }

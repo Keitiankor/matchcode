@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>안내 메시지</title>
+    </head>
+    <body>
+        <div id="header">
+            <div th:replace="~{commons :: topper}"></div>
+        </div>
+        <h1>알림(어차피 토퍼에 가려지니 대충 패딩 대신 쓴다고 생각하자)</h1>
+        <p>로그인 후 이용가능합니다.</p>
+        <button onclick="location.href='/';">홈으로 돌아가기</button>
+    </body>
+</html>

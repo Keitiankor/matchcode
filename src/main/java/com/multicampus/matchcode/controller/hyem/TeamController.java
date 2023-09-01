@@ -33,7 +33,8 @@ public class TeamController {
             @ModelAttribute("team") TeamDTO teamDTO,
             @ModelAttribute("member") TeamMemberDTO teamMemberDTO,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-            Model model) {
+            Model model
+    ) {
         if (memberDTO != null) {
             model.addAttribute("memberId", memberDTO.getId());
             return "hyem/team/createteam";
@@ -48,7 +49,8 @@ public class TeamController {
     public String createTeamPro(
             @ModelAttribute("team") TeamCreateRequest request_team,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-            Model model) throws Exception {
+            Model model
+    ) throws Exception {
         long teamId = teamService.createTeam(request_team);
         teamMemberService.addTeamLeader(teamId, memberDTO.getId());
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
@@ -60,10 +62,12 @@ public class TeamController {
     @GetMapping("/list")
     public String teamList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model) {
+            Model model
+    ) {
         Page<TeamDTO> list = teamService.teamList(pageable);
-        int nowPage = list.getPageable()
-                          .getPageNumber() + 1;
+        int nowPage = list
+                .getPageable()
+                .getPageNumber() + 1;
 
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());

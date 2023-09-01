@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -40,6 +39,14 @@ public class MemberController {
         } else {
             return "index";
         }
+    }
+
+    @GetMapping("logout")
+    public String gMemberLogout(HttpServletRequest request) {
+        request
+                .getSession()
+                .setAttribute(SessionConstant.MEMBER_DTO, null);
+        return "index";
     }
 
     @PostMapping("login")
@@ -108,12 +115,17 @@ public class MemberController {
         return jsonObject.toString();
     }
 
-    @GetMapping("login/changepassword")
+    @GetMapping("changepassword")
     public String gChangePassword() {
         return "keitian/changepassword";
     }
 
-    @PostMapping("changepassword")
-    public void pChangePassword() {
+    @PostMapping("changepassword/requestchange")
+    @ResponseBody
+    public boolean pChangePassword(
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO dto, String oldPassword, String newPassword
+    ) {
+        return service.changePassword(dto, oldPassword, newPassword);
+
     }
 }

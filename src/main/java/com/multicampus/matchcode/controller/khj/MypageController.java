@@ -30,13 +30,21 @@ public class MypageController {
     MyPostService MyPost;
 
     @ModelAttribute("memberId")
-    public long getMemberId(@SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO loggedInMember) {
-        return loggedInMember.getId();
+    public Long getMemberId(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO loggedInMember) {
+        if (loggedInMember != null) {
+            return loggedInMember.getId();
+        }
+        return null; // 세션에 memberId가 없는 경우 null 반환
     }
 
     //마이페이지 기본 화면
     @GetMapping("mypage")
-    public String mypage(Model model, @ModelAttribute("memberId") long memberId) { //만약 로그인 세션에서 받아온다면 매개변수는
+    public String mypage(Model model, @ModelAttribute("memberId") Long memberId) {
+        if (memberId == null) {
+            // 로그인하지 않은 경우, 알림 메시지 화면으로 이동
+            return "khj/message";
+        }
+
         MemberInfoRequest memberInfo = service.getMemberInfo(memberId);
         model.addAttribute("memberInfo", memberInfo);
         return "khj/mypage";
@@ -53,7 +61,9 @@ public class MypageController {
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model, @ModelAttribute("memberId") long memberId) {
         RatingRequest ratingRequest = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
-        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId, memberId);
+        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
+                                                                                                      memberId
+        );
 
         model.addAttribute("rating", ratingRequest);
         model.addAttribute("matchResults", matchResults);
