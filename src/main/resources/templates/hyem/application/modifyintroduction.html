@@ -9,9 +9,9 @@
         <form method="post" th:action="@{/application/modify/complete/{id}(id = ${join.id})}">
             <p>자기소개</p>
             <!--    <input type="hidden" name="_method" value="put">-->
-            <input name="teamId" th:value="${join.teamId.id}" type="hidden">
+            <input name="teamId" th:value="${join.teamId}" type="hidden">
             <input name="id" th:value="${join.id}" type="hidden">
-            <input name="memberId" th:value="${join.memberId}" type="hidden">
+            <input name="memberId" th:value="${memberId}" type="hidden">
             <textarea cols="60" name="introduction" rows="5" th:text="${join.introduction}"></textarea>
             <button type="submit">수정</button>
             <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
