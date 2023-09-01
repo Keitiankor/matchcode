@@ -76,8 +76,9 @@ public class PointService {
 
         PointDTO pointDTO = PointDTO.builder()
                                     .date(date)
+                                    .details("결제")
                                     .memberId(request.getMemberId())
-                                    .point(-request.getPricePoints()) // Deducted points as a negative value
+                                    .point(-request.getPrice()) // Deducted points as a negative value
                                     .build();
 
         MatchDTO matchDTO = MatchDTO.builder()
