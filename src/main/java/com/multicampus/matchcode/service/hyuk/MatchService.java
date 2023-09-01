@@ -26,7 +26,7 @@ public class MatchService {
     private static final int PAGE_POST_COUNT = 4; // 한 페이지에 존재하는 게시글 수
 
     // Entity -> DTO로 변환
-    private MatchDTO convertEntityToDTO(Match match) {
+/*    private MatchDTO convertEntityToDTO(Match match) {
         return MatchDTO
             .builder()
             .id(match.getId())
@@ -39,7 +39,7 @@ public class MatchService {
             .restrictionMaxRate(match.getRestrictionMaxRate())
             .status(match.getStatus())
             .build();
-    }
+    }*/
 
     @Transactional
     public ArrayList<MatchDTO> getMatchlist(Integer pageNum) {
@@ -63,7 +63,7 @@ public class MatchService {
     }
 
     @Transactional
-    public Long savePost(MatchData data) {
+    public Long savePost(Match data) {
         MatchDTO matchDTO = MatchDTO
             .builder()
             .mapId(data.getMapId())
@@ -90,7 +90,7 @@ public class MatchService {
     }
 
     // 검색 API
-    @Transactional
+/*    @Transactional
     public List<MatchDTO> searchPosts(String keyword) {
         List<Match> matchEntities = matchRepository.findByMapIdContaining(keyword);
         List<MatchDTO> matchDTOList = new ArrayList<>();
@@ -102,7 +102,7 @@ public class MatchService {
         }
 
         return matchDTOList;
-    }
+    }*/
 
     // 페이징
     @Transactional
@@ -135,16 +135,16 @@ public class MatchService {
         return pageList;
     }
     @Transactional
-    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
-        Page<MatchDTO> page = matchRepository.findByMapId(region,
+    public List<MatchDTO> getMatchlistByRegionAndSports(Integer pageNum, long region, long sports) {
+        Page<MatchDTO> page = matchRepository.findByMapIdAndSportsId(region, sports,
                 PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
         );
         return page.getContent();
     }
 
     @Transactional
-    public Integer[] getPageListByRegion(Integer pageNum, long region) {
-        Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
+    public Integer[] getPageListByRegionAndSports(Integer pageNum, long region, long sports) {
+        Double matchTotalCount = Double.valueOf(matchRepository.countByMapIdAndSportsId(region, sports));
         return calculatePageList(pageNum, matchTotalCount);
     }
     private Integer[] calculatePageList(Integer pageNum, Double totalCount) {

@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
+import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.service.hyuk.MatchService;
@@ -18,18 +19,19 @@ public class MatchController {
     MatchService matchService;
 
     @GetMapping("/list")
-    public String listByRegion(Model model,
-                               @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-                               @RequestParam(value = "region", defaultValue = "0") long regionId) {
+    public String listByRegionAndSports(Model model,
+                                        @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
+                                        @RequestParam(value = "region", defaultValue = "0") long regionId,
+                                        @RequestParam(value = "sports", defaultValue = "0") long sportsId) {
         List<MatchDTO> matchList;
         Integer[] pageList;
 
-        if (regionId != 0) {
-            // regionId가 0이 아닌 경우, 해당 지역 데이터만 조회
-            matchList = matchService.getMatchlistByRegion(pageNum, regionId);
-            pageList = matchService.getPageListByRegion(pageNum, regionId);
-        } else {
-            // region이 비어있는 경우, 전체 데이터 조회
+        if (regionId != 0 && sportsId != 0) {
+            // regionId와 sportsId가 0이 아닌 경우, 해당 지역과 종목 데이터만 조회
+            matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
+            pageList = matchService.getPageListByRegionAndSports(pageNum, regionId, sportsId);
+        }else {
+            // regionId와 sportsId가 모두 0인 경우, 전체 데이터 조회
             matchList = matchService.getMatchlist(pageNum);
             pageList = matchService.getPageList(pageNum);
         }
@@ -37,9 +39,11 @@ public class MatchController {
         model.addAttribute("matchList", matchList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("selectedRegion", regionId); // 선택된 지역을 뷰로 전달
+        model.addAttribute("selectedSports", sportsId); // 선택된 종목을 뷰로 전달
 
         return "match/list";
     }
+
 
 
     /*    @GetMapping({"", "/list"})
@@ -73,9 +77,10 @@ public class MatchController {
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
-    @PostMapping("/post")
-    public String write(MatchData data) {
-        matchService.savePost(data);
+    @GetMapping("/post2")
+    public String write(Match match) {
+        System.out.println(match);
+        matchService.savePost(match);
         return "redirect:/match/list";
     }
 
@@ -123,19 +128,24 @@ public class MatchController {
     // keyword를 view로부터 전달 받고
     // Service로부터 받은 matchDtoList를 model의 attribute로 전달해준다.
 
-    @GetMapping("/match/search")
+/*    @GetMapping("/match/search")
     public String search(@RequestParam(value = "keyword") String keyword, Model model) {
         List<MatchDTO> matchDtoList = matchService.searchPosts(keyword);
 
         model.addAttribute("matchList", matchDtoList);
 
         return "match/list";
-    }
-    @GetMapping("/getmatchesbyregion")
+    }*/
+    @GetMapping("/getmatchesbyregionandsports")
     @ResponseBody
-    public List<MatchDTO> getMatchesByRegion(@RequestParam("region") long region) {
-        return matchService.getMatchlistByRegion(1, region); // 여기서 1은 pageNum을 의미합니다. 필요에 따라 수정하세요.
+    public List<MatchDTO> getMatchesByRegionAndSports(
+            @RequestParam("page") Integer pageNum,
+            @RequestParam("region") long region,
+            @RequestParam("sports") long sports) {
+        return matchService.getMatchlistByRegionAndSports(pageNum, region, sports);
     }
+
+
 /*    @GetMapping("/loadsportsdata")
     public String loadmapdata(long mapId, Model model) {
         List<MatchResult> matchResults = MatchService.getMatchlistByRegion(mapId);

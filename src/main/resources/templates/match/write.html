@@ -24,7 +24,7 @@
     <h1>게시글 등록</h1>
   </div>
   <div class="starter-template">
-    <form class="form-horizontal" th:action="@{/match/post}" method="post">
+    <form class="form-horizontal" th:action="@{/match/post2}" method="get">
       <div class="form-group">
         <label style="float: left" for="mapId" class="col-sm-2 control-label">장소</label>
         <div class="col-sm-10" style="margin-top: 10px;">
@@ -48,7 +48,7 @@
 
       <div class="btn_wrap text-center">
         <a th:href="@{/match/list}" class="btn btn-secondary">뒤로 가기</a>
-        <button type="input" class="btn btn-primary waves-effect waves-light">저장 하기</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">저장 하기</button>
       </div>
     </form>
   </div>
