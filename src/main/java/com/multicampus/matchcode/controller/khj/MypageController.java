@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.controller.khj;
 
-import com.multicampus.matchcode.model.entity.MemberDTO;
-import com.multicampus.matchcode.model.entity.PostDTO;
+import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
@@ -106,9 +105,16 @@ public class MypageController {
 
     @GetMapping("mypost")
     public String mypost(Model model, @ModelAttribute("memberId") long memberId) {
-        List<PostDTO> MyPosts = MyPost.getMyPostsByMemberId(memberId);
+        List<PostDTO> myPosts = MyPost.getMyPostsByMemberId(memberId);
+        List<ReplyDTO> myReplies = MyPost.getMyRepliesByMemberId(memberId);
 
-        model.addAttribute("Myposts", MyPosts);
+        List<PostDTO> fivePosts = myPosts.subList(0, Math.min(myPosts.size(), 5));
+        //게시물 최근 5개까지만 보여주기
+        List<ReplyDTO> fiveReplies = myReplies.subList(0, Math.min(myPosts.size(), 5));
+        //게시물 최근 5개까지만 보여주기
+
+        model.addAttribute("myPosts", fivePosts);
+        model.addAttribute("myReplies", fiveReplies);
 
         return "khj/mypost";
     }
