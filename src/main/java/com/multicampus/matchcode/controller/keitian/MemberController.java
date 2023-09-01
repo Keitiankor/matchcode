@@ -41,6 +41,14 @@ public class MemberController {
         }
     }
 
+    @GetMapping("logout")
+    public String gMemberLogout(HttpServletRequest request) {
+        request
+                .getSession()
+                .setAttribute(SessionConstant.MEMBER_DTO, null);
+        return "index";
+    }
+
     @PostMapping("login")
     public String pMemberLogin(HttpServletRequest hRequest, LoginRequest request) {
         HttpSession session = hRequest.getSession(true);

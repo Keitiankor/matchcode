@@ -25,22 +25,6 @@ public class MatchService {
     //matchRepository 객체 생성
     private MatchRepository matchRepository;
 
-    // Entity -> DTO로 변환
-    private MatchDTO convertEntityToDTO(Match match) {
-        return MatchDTO
-                .builder()
-                .id(match.getId())
-                .mapId(match.getMapId())
-                .sportsId(match.getSportsId())
-                .matchDate(match.getMatchDate())
-                .createdDate(match.getCreatedDate())
-                .expireDate(match.getExpireDate())
-                .restrictionMinRate(match.getRestrictionMinRate())
-                .restrictionMaxRate(match.getRestrictionMaxRate())
-                .status(match.getStatus())
-                .build();
-    }
-
     @Transactional
     public ArrayList<MatchDTO> getMatchlist(Integer pageNum) {
         Page<MatchDTO> page = matchRepository.findAll(PageRequest.of(pageNum - 1,
