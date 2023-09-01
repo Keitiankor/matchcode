@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.hyem;
 
 import com.multicampus.matchcode.model.entity.ApplicationDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.RecruitDTO;
 import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
@@ -97,18 +98,34 @@ public class ApplicationController {
     @GetMapping("/view/{id}")
     public String applicationView(@PathVariable Long id, Model model,
                                   @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        model.addAttribute("join", applicationService.applicationView(id));
+        ApplicationDTO applicationDTO = applicationService.applicationView(id);
+        model.addAttribute("join", applicationDTO);
         model.addAttribute("memberId", memberDTO.getId());
-        return "hyem/application/applicationview";
+
+        if(teamMemberService.isApplicatedMember(applicationDTO.getTeamId(), memberDTO.getId())) {
+            return "hyem/application/applicationview";
+        } else {
+            model.addAttribute("message", "열람 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            return "hyem/message";
+        }
     }
 
     // 가입 신청 내용 수정
     @GetMapping("/modify/{id}")
     public String applicationModify(@PathVariable("id") Long id, Model model,
                                     @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        model.addAttribute("join", applicationService.applicationView(id));
+        ApplicationDTO applicationDTO = applicationService.applicationView(id);
+        model.addAttribute("join", applicationDTO);
         model.addAttribute("memberId", memberDTO.getId());
-        return "hyem/application/modifyintroduction";
+
+        if(teamMemberService.isApplicatedMember(applicationDTO.getTeamId(), memberDTO.getId())) {
+            return "hyem/application/modifyintroduction";
+        } else {
+            model.addAttribute("message", "수정 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            return "hyem/message";
+        }
     }
 
     @PostMapping("/modify/complete/{id}")
@@ -124,11 +141,19 @@ public class ApplicationController {
 
     // 가입신청 취소
     @DeleteMapping("/cancel/{id}")
-    public String applicationCancel(@PathVariable("id") long id, Model model) throws Exception {
-        model.addAttribute("message", "정말로 가입을 취소하시겠습니까?");
-        model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
-        model.addAttribute("cancelUrl", "/application/list");
-        return "hyem/confirmmessage";
+    public String applicationCancel(@PathVariable("id") long id, Model model,
+                                    @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) throws Exception {
+        if(applicationService.applicationView(id).getMemberId() == memberDTO.getId()) {
+            model.addAttribute("message", "정말로 가입을 취소하시겠습니까?");
+            model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
+            model.addAttribute("cancelUrl", "/application/list");
+            return "hyem/confirmmessage";
+        } else {
+            model.addAttribute("message", "삭제 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/application/list");
+            return "hyem/message";
+        }
+
     }
 
     // 팀 정보 삭제 처리
