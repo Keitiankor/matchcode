@@ -7,7 +7,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class MatchcodeApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(MatchcodeApplication.class).properties("spring.config.location=classpath:application.yml")
-                                                                .run(args);
+        new SpringApplicationBuilder(MatchcodeApplication.class)
+                .properties("spring.config.location=classpath:application.yml")
+                .run(args);
     }
 }

@@ -6,16 +6,8 @@ import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
 import com.multicampus.matchcode.repository.MatchRepository;
 import com.multicampus.matchcode.repository.PointRepository;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -65,9 +57,10 @@ public class PointService {
     //    }
 
     public int calculateTotalPoints(List<PointDTO> pointDTOs) {
-        return pointDTOs.stream()
-                        .mapToInt(PointDTO::getPoint)
-                        .sum();
+        return pointDTOs
+                .stream()
+                .mapToInt(PointDTO::getPoint)
+                .sum();
     }
 
     // 포인트 사용 내역 추가

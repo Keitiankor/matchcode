@@ -25,14 +25,10 @@ public class RecruitDTO {
     private long id;
 
     private long teamId;
-
     private String content;
-
     @CreationTimestamp
     private Timestamp createdDate;
-
     @UpdateTimestamp
     private Timestamp modifiedDate;
-
     private int status;
 }

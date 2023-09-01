@@ -16,7 +16,8 @@ public enum Time {
 
     public static String getDescriptionFromCount(Integer count) {
         for (Time time : Time.values()) {
-            if (time.getCount()
+            if (time
+                    .getCount()
                     .equals(count)) {
                 return time.getDescription();
             }

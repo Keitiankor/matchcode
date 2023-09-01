@@ -4,6 +4,7 @@ import com.multicampus.matchcode.model.entity.ApplicationDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
+import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,15 +22,25 @@ public class ApplicationController {
     @Autowired
     private ApplicationService applicationService;
 
+    @Autowired
+    private TeamMemberService teamMemberService;
+
     // 가입 신청하기
     @GetMapping("/join/{teamid}")
     public String joinTeam(
             @PathVariable("teamid") Long teamId,
             @ModelAttribute("join") ApplicationDTO applicationDTO,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-            Model model) {
-        model.addAttribute("memberid", memberDTO.getId());
-        return "hyem/application/joinapplication";
+            Model model
+    ) {
+        if (teamMemberService.isTeamMember(memberDTO.getId())) {
+            model.addAttribute("memberid", memberDTO.getId());
+            return "hyem/application/joinapplication";
+        } else {
+            model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
+            model.addAttribute("searchUrl", "/recruit/list");
+            return "hyem/message";
+        }
     }
 
     @PostMapping("/join/{teamid}/{id}")
@@ -37,7 +48,8 @@ public class ApplicationController {
             @PathVariable("teamid") Long teamId,
             @ModelAttribute("join") ApplicationRequest request,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-            Model model) throws Exception {
+            Model model
+    ) throws Exception {
         //model.addAttribute("memberId", memberDTO.getId());
         applicationService.save(request, memberDTO.getId());
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
@@ -50,11 +62,13 @@ public class ApplicationController {
     @GetMapping("/list")
     public String applicationList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model) {
+            Model model
+    ) {
         Page<ApplicationDTO> list = applicationService.applicationList(pageable);
 
-        int nowPage = list.getPageable()
-                          .getPageNumber() + 1;
+        int nowPage = list
+                .getPageable()
+                .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
@@ -81,9 +95,8 @@ public class ApplicationController {
 
     @PostMapping("/modify/complete/{id}")
     public String applicationUpdate(
-            @PathVariable("id") Long id,
-            @ModelAttribute("join") ApplicationRequest request,
-            Model model) throws Exception {
+            @PathVariable("id") Long id, @ModelAttribute("join") ApplicationRequest request, Model model
+    ) throws Exception {
         applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입 신청 내용 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/application/list");

@@ -51,7 +51,7 @@
                         </div>
                         <h2 class="mb-4"><small class="small-text"><b>포인트</b></small></h2>
                         <div class="mb-3">
-                            <p><b>보유 포인트 <span id="totalPointsValue" th:text="${totalPoints}" class="float-end"></span></b></p>
+                            <p><b>보유 포인트 <span class="float-end" id="totalPointsValue" th:text="${totalPoints}"></span></b></p>
                         </div>
                         <div class="separator"></div>
 
@@ -60,7 +60,7 @@
                             <p><b>가격: <span id="price" th:text="${price}" class="float-end"></span></b></p>
                             <p><b>결제 포인트: <span id="payPointsValue" class="float-end"></span> <a href="#" class="btn btn-primary" onclick="location.href='test3'">추가충전</a></b></p>
                         </div>
-                        <button type="button" class="btn btn-success float-end" onclick="handlePayment()">결제</button>
+                        <button class="btn btn-success float-end" onclick="handlePayment()" type="button">결제</button>
                     </form>
                 </div>
             </div>

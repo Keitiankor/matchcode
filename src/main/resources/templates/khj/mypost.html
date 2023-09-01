@@ -45,8 +45,8 @@
                 <!--게시글 번호 (PostDTO id) -->
                 <td th:text="${ReplyDTO.id}"></td>
                 <td>
-                    <!--게시글 제목(PostDTO title)표시 그리고 제목을 누르면 그 해당한 게시글 상세페이지 이동 -->
-                    <a th:text="${ReplyDTO.comment}"></a>
+                    <!--댓글 내용 클릭시 해당 게시물로 이동-->
+                    <a th:href="@{/post/view(id=${ReplyDTO.postId})}" th:text="${ReplyDTO.comment}"></a>
                 </td>
             </tr>
         </tbody>

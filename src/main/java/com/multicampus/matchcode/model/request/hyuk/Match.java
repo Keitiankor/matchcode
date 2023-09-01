@@ -1,8 +1,5 @@
 package com.multicampus.matchcode.model.request.hyuk;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,16 +15,16 @@ import java.sql.Timestamp;
 @Builder
 public class Match {
 
-    @Id // PK Field
-    @GeneratedValue(strategy = GenerationType.AUTO) // PK의 생성 규칙
-    private long id;
+/*    @Id // PK Field
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성 규칙
+    private long id;*/
 
     private long mapId;
     private long sportsId;
     private Timestamp matchDate;
     private Timestamp createdDate;
     private Timestamp expireDate;
-    private int restrictionMinRate;
+/*    private int restrictionMinRate;
     private int restrictionMaxRate;
-    private int status;
+    private int status;*/
 }

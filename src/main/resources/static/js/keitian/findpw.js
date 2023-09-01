@@ -5,20 +5,21 @@ $(function() {
     $("#ok").on("click", function() {
         $.ajax({
             method: "POST",
-            url: "changepassword/requestchange",
+            url: "findpassword/requestpassword",
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(header, token);
             },
             data: {
-                oldPassword: $("#password-old").val(),
-                newPassword: $("#password-new").val()
+                account: $("#account").val(),
+                mailAddress: $("#mailAddress").val()
             },
             success: function(data) {
-                if (data) {
-                    alert("변경되었습니다.");
+                const receive = JSON.parse(data);
+                if (receive.noAccount !== receive.tempPassword && receive.noMatchEmail !== receive.tempPassword) {
+                    alert("메일이 전송되었습니다.");
                     location.replace("/login");
                 } else {
-                    alert("비밀번호가 일치하지 않습니다.");
+                    alert(receive.tempPassword);
                     location.reload();
                 }
             }
