@@ -29,36 +29,58 @@
         <div th:replace="~{fragments/common :: menu('home')}"></div>
         <main class="container" role="main">
             <div class="starter-template">
-                <button class="btn btn-primary" id="seoulButton">서울</button>
-                <button class="btn btn-primary" id="gyeonggiButton">경기</button>
-                <button class="btn btn-primary" id="incheonButton">인천</button>
-                <button class="btn btn-primary" id="footballButton">풋살</button>
-                <button class="btn btn-primary" id="basketballButton">농구</button>
-                <button class="btn btn-primary" id="badmintonButton">배드민턴</button>
+                <!-- HTML 코드 -->
+                <select id="regionSelect">
+                    <option value="0">전체</option>
+                    <option value="1">서울</option>
+                    <option value="2">경기</option>
+                    <option value="3">인천</option>
+                </select>
+
+                <select id="sportsSelect">
+                    <option value="0">전체</option>
+                    <option value="1">축구</option>
+                    <option value="2">농구</option>
+                    <option value="3">배드민턴</option>
+                </select>
 
                 <div id="result">
 
                     <table class="table table-bordered">
                         <!-- CONTENTS !-->
                         <thead>
-                            <tr>
-                                <th class="col-md-1">번호</th>
-                                <th class="col-md-4">장소</th>
-                                <th class="col-md-3">종목</th>
-                                <th class="col-md-2">작성일</th>
-                                <!--        <th class="col-md-2">매치일</th>-->
-                            </tr>
+                        <tr>
+                            <th class="col-md-1">번호</th>
+                            <th class="col-md-4">장소</th>
+                            <th class="col-md-3">종목</th>
+                            <th class="col-md-2">작성일</th>
+                            <!--        <th class="col-md-2">매치일</th>-->
+                        </tr>
                         </thead>
 
                         <tbody>
-                            <!-- CONTENTS !-->
-                            <tr th:each="match : ${matchList}">
-                                <td th:text="${match.id}"></td>
-                                <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId}"></a></td>
-                                <td th:text="${match.sportsId}"></td>
-                                <td th:text="${match.createdDate}"></td>
-                                <!--<td th:text="${match.matchDate} ? ${#temporals.format(match.matchDate,'yyyy-MM-dd HH:mm')} : ${match.matchDate}"></td>-->
-                            </tr>
+                        <!-- Existing data -->
+                        </tbody>
+
+                        <!-- New tbody for infinite scroll -->
+                        <tbody id="matchesTable">
+                        <!-- ... -->
+                        <!-- Existing data -->
+                        <tr th:each="match : ${matchList}">
+                            <td th:text="${match.id}"></td>
+                            <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId}"></a></td>
+                            <td th:text="${match.sportsId}"></td>
+                            <td th:text="${match.createdDate}"></td>
+                            <!-- ... -->
+                        </tr>
+                        <!-- ... -->
+
+                        <!-- Loading indicator -->
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <div id="loading" style="display: none;">Loading...</div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

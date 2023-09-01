@@ -1,29 +1,29 @@
 package com.multicampus.matchcode.service.hyuk;
 
-import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.Match;
+import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.repository.MatchRepository;
 import jakarta.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @AllArgsConstructor
 @Service
 public class MatchService {
 
-    private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
-    private static final int PAGE_POST_COUNT = 4; // 한 페이지에 존재하는 게시글 수
     //matchRepository 객체 생성
     private MatchRepository matchRepository;
+
+    private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
+    private static final int PAGE_POST_COUNT = 4; // 한 페이지에 존재하는 게시글 수
 
     // Entity -> DTO로 변환
     private MatchDTO convertEntityToDTO(Match match) {
@@ -87,7 +87,7 @@ public class MatchService {
     }
 
     // 검색 API
-    @Transactional
+/*    @Transactional
     public List<MatchDTO> searchPosts(String keyword) {
         List<Match> matchEntities = matchRepository.findByMapIdContaining(keyword);
         List<MatchDTO> matchDTOList = new ArrayList<>();
@@ -99,7 +99,7 @@ public class MatchService {
         }
 
         return matchDTOList;
-    }
+    }*/
 
     // 페이징
     @Transactional
@@ -135,14 +135,16 @@ public class MatchService {
     }
 
     @Transactional
-    public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
-        Page<MatchDTO> page = matchRepository.findByMapId(region, PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
+    public List<MatchDTO> getMatchlistByRegionAndSports(Integer pageNum, long region, long sports) {
+        Page<MatchDTO> page = matchRepository.findByMapIdAndSportsId(region, sports,
+                PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
+        );
         return page.getContent();
     }
 
     @Transactional
-    public Integer[] getPageListByRegion(Integer pageNum, long region) {
-        Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
+    public Integer[] getPageListByRegionAndSports(Integer pageNum, long region, long sports) {
+        Double matchTotalCount = Double.valueOf(matchRepository.countByMapIdAndSportsId(region, sports));
         return calculatePageList(pageNum, matchTotalCount);
     }
 

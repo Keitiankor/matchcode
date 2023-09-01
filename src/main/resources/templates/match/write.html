@@ -26,31 +26,31 @@
                 <h1>게시글 등록</h1>
             </div>
             <div class="starter-template">
-                <form class="form-horizontal" method="post" th:action="@{/match/post}">
+                <form class="form-horizontal" th:action="@{/match/post2}" method="post">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="mapId" style="float: left">장소</label>
+                        <label style="float: left" for="mapId" class="col-sm-2 control-label">장소</label>
                         <div class="col-sm-10" style="margin-top: 10px;">
-                            <input class="form-control" id="mapId" name="mapId" placeholder="장소" type="mapId" />
+                            <input type="mapId" class="form-control" id="mapId" name="mapId" placeholder="장소"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="sportsId" style="float: left">종목</label>
                         <div class="col-sm-10" style="margin-top: 10px;">
-                            <input class="form-control" id="sportsId" name="sportsId" placeholder="종목" type="sportsId" />
+                            <input class="form-control" id="sportsId" name="sportsId" placeholder="종목" type="text" />
                         </div>
                     </div>
 
                     <!--  <div class="form-group">
-                        <label style="float: left" for="content" class="col-sm-2 control-label">내용</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
-                        </div>
-                      </div>-->
+                      <label style="float: left" for="content" class="col-sm-2 control-label">내용</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
+                      </div>
+                    </div>-->
 
                     <div class="btn_wrap text-center">
                         <a class="btn btn-secondary" th:href="@{/match/list}">뒤로 가기</a>
-                        <button class="btn btn-primary waves-effect waves-light" type="input">저장 하기</button>
+                        <button class="btn btn-primary waves-effect waves-light" type="submit">저장 하기</button>
                     </div>
                 </form>
             </div>

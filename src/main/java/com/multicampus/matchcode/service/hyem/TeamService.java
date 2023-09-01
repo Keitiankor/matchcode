@@ -36,7 +36,6 @@ public class TeamService {
                              .averageAge(request.getAverageAge())
                              .averageGender(request.getAverageGender())
                              .build();
-
         teamRepository.save(dto);
         return dto.getId();
     }

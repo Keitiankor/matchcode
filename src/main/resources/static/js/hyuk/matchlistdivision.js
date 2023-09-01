@@ -1,37 +1,65 @@
 $(document).ready(function() {
-    function getMatchesByRegion(region) {
-        $.ajax({
-            url: "/match/getmatchesbyregion",
-            data: { region: region },
-            method: "GET",
-            dataType: "json", // 데이터를 JSON 형식으로 받아옴
-            success: function(matches) {
-                console.log(typeof matches); // 데이터를 콘솔에 출력
+    var isLoading = false;
+    var pageNum = 1;
 
-                // 받아온 데이터를 화면에 렌더링
-                var resultHtml = "";
-                for (var i = 0; i < matches.length; i++) {
-                    resultHtml += "<tr>";
-                    resultHtml += "<td>" + matches[i].id + "</td>";
-                    resultHtml += "<td><a href=\"/match/post/" + matches[i].id + "\">" + matches[i].mapId + "</a></td>";
-                    resultHtml += "<td>" + matches[i].sportsId + "</td>";
-                    resultHtml += "<td>" + matches[i].createdDate + "</td>";
-                    resultHtml += "</tr>";
+    function loadMatches(region, sports) {
+        if (isLoading) return;
+
+        isLoading = true;
+        $("#loading").show();
+
+        // "전체" 선택 시 0으로 변경
+        if (region === "전체") {
+            region = "";
+        }
+        if (sports === "전체") {
+            sports = "";
+        }
+
+        $.ajax({
+            url: "/match/getmatchesbyregionandsports",
+            data: { page: pageNum, region: region, sports: sports },
+            method: "GET",
+            success: function(matches) {
+                if (matches.length === 0) {
+                    $("#loading").text("No more matches");
+                } else {
+                    var tableHtml = '';
+                    for (var i = 0; i < matches.length; i++) {
+                        tableHtml += '<tr>';
+                        tableHtml += '<td>' + matches[i].id + '</td>';
+                        tableHtml += '<td><a href="/match/post/' + matches[i].id + '">' + matches[i].mapId + '</a></td>';
+                        tableHtml += '<td>' + matches[i].sportsId + '</td>';
+                        tableHtml += '<td>' + matches[i].createdDate + '</td>';
+                        tableHtml += '</tr>';
+                    }
+                    $("#matchesTable").append(tableHtml);
+                    pageNum++;
                 }
-                $("#result tbody").html(resultHtml);
-            }
+
+                isLoading = false;
+                $("#loading").hide();
+            },
         });
     }
 
-    $("#seoulButton").click(function() {
-        getMatchesByRegion(1);
+    // 드롭다운 값이 변경될 때의 이벤트 핸들러 등록
+    $("#regionSelect, #sportsSelect").change(function() {
+        pageNum = 1;
+        $("#matchesTable").empty();
+        var region = $("#regionSelect").val();
+        var sports = $("#sportsSelect").val();
+
+        loadMatches(region, sports);
     });
 
-    $("#gyeonggiButton").click(function() {
-        getMatchesByRegion(2);
-    });
+    // 초기 데이터 로드
+    loadMatches($("#regionSelect").val(), $("#sportsSelect").val());
 
-    $("#incheonButton").click(function() {
-        getMatchesByRegion(3);
+    // 스크롤 이벤트 감지
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+            loadMatches($("#regionSelect").val(), $("#sportsSelect").val());
+        }
     });
 });
