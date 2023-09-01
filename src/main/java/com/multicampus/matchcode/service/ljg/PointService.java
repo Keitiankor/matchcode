@@ -6,7 +6,10 @@ import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
 import com.multicampus.matchcode.repository.MatchRepository;
 import com.multicampus.matchcode.repository.PointRepository;
-
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,22 +50,20 @@ public class PointService {
         //return (List<PointDTO>) pointRepository.findAllByUserId(memberId).get();
 
     }
-//    @PostMapping("/refundPoint")
-//    public PointDTO pointRefund(@RequestParam("userId") Long userId,
-//                                @RequestParam("refundAmount") int refundAmount){
-//        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
-//        PointDTO pointDTO = PointDTO
-//                .builder()
-//                .point(-refundAmount) // 환불 금액을 음수로 저장
-//                .build();
-//        return pointRepository.save(pointDTO); // 변경: dto 대신 pointDTO 저장
-//    }
 
+    //    @PostMapping("/refundPoint")
+    //    public PointDTO pointRefund(@RequestParam("memberId") Long memberId,
+    //                                @RequestParam("refundAmount") int refundAmount){
+    //        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+    //        PointDTO pointDTO = PointDTO
+    //                .builder()
+    //                .point(-refundAmount) // 환불 금액을 음수로 저장
+    //                .build();
+    //        return pointRepository.save(pointDTO); // 변경: dto 대신 pointDTO 저장
+    //    }
 
     public int calculateTotalPoints(List<PointDTO> pointDTOs) {
-        return pointDTOs.stream()
-                .mapToInt(PointDTO::getPoint)
-                .sum();
+        return pointDTOs.stream().mapToInt(PointDTO::getPoint).sum();
     }
 
     // 포인트 사용 내역 추가
@@ -88,29 +89,11 @@ public class PointService {
     public PointDTO refundPoints(PointDTO dto) {
         Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
         return pointRepository.save(dto);
-//    public PointDTO refundPoints(PointDTO dto) {
-////
-////        Timestamp paydate = Timestamp.valueOf(LocalDateTime.now());
-////        PointDTO pointDTO = PointDTO
-////                .builder()
-////                .date(paydate)
-////                .memberId(dto.getMemberId())
-////                //.refundAmount(dto.getRefundAmount())  // Set refundAmount here
-////                .point(-dto.getRefundAmount())  // Deducted points as a negative value
-////                .build();
-//        return pointRepository.save(dto); // Save pointDTO, not dto
-//    }
-
     }
 }
 //취소요청보내기
-
-
-
-
-
 //MatchDTO에서 mapId,matchDate, MapId에서 price가져오기
-    //포인트환불
+//포인트환불
 //    public PointDTO pointRefund(PointDTO dto) {
 //        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
 //        dto.setDate(date);

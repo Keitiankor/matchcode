@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Sport {
-    BASKETBALL("농구", 1),
-    FUTSAL("풋살", 2),
-    BADMINTON("배드민턴", 3);
+    BASKETBALL("농구", 1), FUTSAL("풋살", 2), BADMINTON("배드민턴", 3);
 
     private final String description;
     private final Integer count;

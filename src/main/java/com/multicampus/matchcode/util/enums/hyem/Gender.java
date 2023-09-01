@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Gender {
-    MALE("남자", 1),
-    FEMALE("여자", 2),
-    ALL("남녀모두", 3);
+    MALE("남자", 1), FEMALE("여자", 2), ALL("남녀모두", 3);
 
     private final String description;
     private final Integer count;

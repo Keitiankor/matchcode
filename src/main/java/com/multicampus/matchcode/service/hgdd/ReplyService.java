@@ -1,13 +1,13 @@
 package com.multicampus.matchcode.service.hgdd;
 
-import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.model.request.hgdd.ReplyRequest;
 import com.multicampus.matchcode.repository.PostRepository;
 import com.multicampus.matchcode.repository.ReplyRepository;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReplyService {
