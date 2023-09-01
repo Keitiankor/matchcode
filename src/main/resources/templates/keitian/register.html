@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{header :: head(~{::title})}">
-        <title>회원가입</title>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
     </head>
     <body>
+        <div th:replace="~{commons :: topper}"></div>
         <form action="/register" method="post">
-            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
             <script src="/js/keitian/register.js"></script>
+            <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
             <legend>회원가입</legend>
-            아이디 : <input name="account" />
-            <input type="button" value="아이디 중복확인" id="dupcheck" />
-            <input type="checkbox" name="isAccountNotDup" hidden/><br />
+            아이디 : <input name="account-input" type="text" />
+            <input hidden name="account" type="text">
 
-            비밀번호 : <input type="password" name="password" /><br />
-            이름 : <input type="text" name="name" /><br />
-            전화번호 : <input type="tel" name="phone" /><br />
+            <input id="dupcheck" type="button" value="아이디 중복확인" />
+            <input hidden name="isAccountNotDup" type="checkbox" /><br />
 
-            이메일 주소 : <input type="email" name="mailAddress" />
-            <input type="button" value="인증번호 발송" id="verify-mail" /><br />
+            비밀번호 : <input name="password" type="password" /><br />
+            이름 : <input name="name" type="text" /><br />
+            전화번호 : <input name="phone" type="tel" /><br />
 
-            이메일 인증 : <input type="text" name="verifycode" />
-            <input type="button" value="인증번호 확인" id="verifyingcheck" disabled />
-            <input type="checkbox" name="isVerifyied" /><br />
+            이메일 주소 : <input name="mailAddress" type="email" />
+            <input id="verify-mail" type="button" value="인증번호 발송" /><br />
 
-            생년월일 : <input type="date" name="birthday" /><br />
+            이메일 인증 : <input name="verifycode" type="text" />
+            <input disabled id="verifyingcheck" type="button" value="인증번호 확인" />
+            <input name="isVerifyied" type="checkbox" /><br />
+
+            생년월일 : <input name="birthday" type="date" /><br />
 
             <input type="submit" value="회원가입" />
         </form>

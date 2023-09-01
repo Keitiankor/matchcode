@@ -1,51 +1,38 @@
 package com.multicampus.matchcode.service.hyuk;
 
-import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.entity.MatchDTO;
+import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.repository.MatchRepository;
 import jakarta.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class MatchService {
 
+    private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
+    private static final int PAGE_POST_COUNT = 4; // 한 페이지에 존재하는 게시글 수
     //matchRepository 객체 생성
     private MatchRepository matchRepository;
 
-    private static final int BLOCK_PAGE_NUM_COUNT = 5; // 블럭에 존재하는 페이지 번호 수
-    private static final int PAGE_POST_COUNT = 4; // 한 페이지에 존재하는 게시글 수
-
     // Entity -> DTO로 변환
     private MatchDTO convertEntityToDTO(Match match) {
-        return MatchDTO
-            .builder()
-            .id(match.getId())
-            .mapId(match.getMapId())
-            .sportsId(match.getSportsId())
-            .matchDate(match.getMatchDate())
-            .createdDate(match.getCreatedDate())
-            .expireDate(match.getExpireDate())
-            .restrictionMinRate(match.getRestrictionMinRate())
-            .restrictionMaxRate(match.getRestrictionMaxRate())
-            .status(match.getStatus())
-            .build();
+        return MatchDTO.builder().id(match.getId()).mapId(match.getMapId()).sportsId(match.getSportsId()).matchDate(match.getMatchDate()).createdDate(match.getCreatedDate()).expireDate(match.getExpireDate()).restrictionMinRate(match.getRestrictionMinRate()).restrictionMaxRate(match.getRestrictionMaxRate()).status(match.getStatus()).build();
     }
 
     @Transactional
     public ArrayList<MatchDTO> getMatchlist(Integer pageNum) {
-        Page<MatchDTO> page = matchRepository.findAll(
-            PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
-        );
+        Page<MatchDTO> page = matchRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
 
         List<MatchDTO> matchEntities = page.getContent();
         ArrayList<MatchDTO> matchDTOs = new ArrayList<>();
@@ -64,23 +51,12 @@ public class MatchService {
 
     @Transactional
     public Long savePost(MatchData data) {
-        MatchDTO matchDTO = MatchDTO
-            .builder()
-            .mapId(data.getMapId())
-            .sportsId(data.getSportsId())
-            .createdDate(new Timestamp(System.currentTimeMillis()))
-            .build();
+        MatchDTO matchDTO = MatchDTO.builder().mapId(data.getMapId()).sportsId(data.getSportsId()).createdDate(new Timestamp(System.currentTimeMillis())).build();
         return matchRepository.save(matchDTO).getId();
     }
 
     public Long updatePost(long id, MatchData data) {
-        MatchDTO matchDTO = MatchDTO
-            .builder()
-            .id(id)
-            .mapId(data.getMapId())
-            .sportsId(data.getSportsId())
-            .createdDate(new Timestamp(System.currentTimeMillis()))
-            .build();
+        MatchDTO matchDTO = MatchDTO.builder().id(id).mapId(data.getMapId()).sportsId(data.getSportsId()).createdDate(new Timestamp(System.currentTimeMillis())).build();
         return matchRepository.save(matchDTO).getId();
     }
 
@@ -120,9 +96,7 @@ public class MatchService {
         Integer totalLastPageNum = (int) (Math.ceil((matchTotalCount / PAGE_POST_COUNT)));
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-            ? curPageNum + BLOCK_PAGE_NUM_COUNT
-            : totalLastPageNum;
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT) ? curPageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
 
         // 페이지 시작 번호 조정
         curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
@@ -134,11 +108,10 @@ public class MatchService {
 
         return pageList;
     }
+
     @Transactional
     public List<MatchDTO> getMatchlistByRegion(Integer pageNum, long region) {
-        Page<MatchDTO> page = matchRepository.findByMapId(region,
-                PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
-        );
+        Page<MatchDTO> page = matchRepository.findByMapId(region, PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
         return page.getContent();
     }
 
@@ -147,11 +120,10 @@ public class MatchService {
         Double matchTotalCount = Double.valueOf(matchRepository.countByMapId(region));
         return calculatePageList(pageNum, matchTotalCount);
     }
+
     private Integer[] calculatePageList(Integer pageNum, Double totalCount) {
         int totalLastPageNum = (int) (Math.ceil(totalCount / PAGE_POST_COUNT));
-        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT)
-                ? pageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
+        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT) ? pageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
 
         int curPageNum = (pageNum <= 3) ? 1 : pageNum - 2;
 

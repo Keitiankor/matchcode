@@ -4,10 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Time {
-    MORNING("아침", 1),
-    AFTERNOON("낮", 2),
-    EVENING("저녁", 3),
-    NIGHT("심야", 4);
+    MORNING("아침", 1), AFTERNOON("낮", 2), EVENING("저녁", 3), NIGHT("심야", 4);
 
     private final String description;
     private final Integer count;

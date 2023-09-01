@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Review List</title>
+        <title>Review SportCenter</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -58,27 +58,31 @@
     </head>
     <body>
         <div class="container">
-            <h1>Review List</h1>
+            <h1>체육 시설 목록</h1>
             <table>
                 <tr>
-                    <th>User ID</th>
-                    <th>Map ID</th>
-                    <th>Rate</th>
-                    <th>Comment</th>
-                    <th class="actions">Action</th>
+                    <th>담당자 이름</th>
+                    <th>전화번호</th>
+                    <th>체육 시설 이름</th>
+                    <th>등록 코드</th>
+                    <th>경도</th>
+                    <th>위도</th>
+                    <th class="actions">동작</th>
                 </tr>
-                <tr th:each="review : ${reviewList}">
-                    <td th:text="${review.memberId}"></td>
-                    <td th:text="${review.mapId}"></td>
-                    <td th:text="${review.rate}"></td>
-                    <td th:text="${review.comment}"></td>
+                <tr th:each="map : ${sportCenterList}">
+                    <td th:text="${map.managerName}"></td>
+                    <td th:text="${map.phone}"></td>
+                    <td th:text="${map.sportCenterName}"></td>
+                    <td th:text="${map.resistrationCode}"></td>
+                    <td th:text="${map.longitude}"></td>
+                    <td th:text="${map.latitude}"></td>
                     <td class="actions">
-                        <a class="action-link" onclick="return confirm('이 리뷰를 수정하시겠습니까?')" th:href="@{/review/updateReview(id=${review.id})}">Edit</a>
-                        <a class="action-link" onclick="return confirm('정말 삭제 하시겠습니까?')" th:href="@{/review/deleteReview(id=${review.id})}">Delete</a>
+                        <a class="action-link" onclick="return confirm('이 리뷰를 수정하시겠습니까?')" th:href="@{/sportCenter/updateSportCenter(id=${map.id})}">수정</a>
+                        <a class="action-link" onclick="return confirm('정말 삭제 하시겠습니까?')" th:href="@{/sportCenter/deleteSportCenter(id=${map.id})}">삭제</a>
                     </td>
                 </tr>
             </table>
-            <a class="new-review-link" href="/review/createReview">Write a Review</a>
+            <a class="new-review-link" href="/sportCenter/createSportCenter">체육 시설 작성</a>
         </div>
     </body>
 </html>

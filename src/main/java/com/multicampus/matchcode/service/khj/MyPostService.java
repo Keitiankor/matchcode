@@ -19,12 +19,12 @@ public class MyPostService {
     ReplyRepository reply;
 
     public List<PostDTO> getMyPostsByMemberId(long memberId) {
-        List<PostDTO> MyPosts = post.findAllByUserId(memberId);
+        List<PostDTO> MyPosts = post.findAllByMemberId(memberId);
         return MyPosts;
     }
 
     public List<ReplyDTO> getMyRepliesByMemberId(long memberId) {
-        List<ReplyDTO> MyReplies = reply.findAllByUserId(memberId);
+        List<ReplyDTO> MyReplies = reply.findAllByMemberId(memberId);
         return MyReplies;
     }
 }

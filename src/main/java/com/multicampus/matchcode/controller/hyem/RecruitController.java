@@ -2,9 +2,7 @@ package com.multicampus.matchcode.controller.hyem;
 
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.RecruitDTO;
-import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
-import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +40,7 @@ public class RecruitController {
 
     // 모집글 리스트
     @GetMapping("/list")
-    public String recruitList(
-        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        Model model) {
+    public String recruitList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<RecruitDTO> list = recruitService.recruitList(pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1;
@@ -62,8 +57,7 @@ public class RecruitController {
 
     // 모집글 상세 페이지
     @GetMapping("/view/{id}")
-    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model,
-                              @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
 
         if (memberDTO != null) {
             RecruitDTO dto = recruitService.recruitView(id);
@@ -86,8 +80,7 @@ public class RecruitController {
 
     // 모집글 내용 수정
     @PostMapping("/modify/complete/{id}")
-    public String recruitUpdate(@RequestParam("id") Long id,
-                                @ModelAttribute("recruit") RecruitPostRequest request, Model model) throws Exception {
+    public String recruitUpdate(@RequestParam("id") Long id, @ModelAttribute("recruit") RecruitPostRequest request, Model model) throws Exception {
         recruitService.recruitUpdate(id, request);
         model.addAttribute("message", "모집글 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/recruit/list");

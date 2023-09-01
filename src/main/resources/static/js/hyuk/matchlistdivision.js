@@ -9,17 +9,17 @@ $(document).ready(function() {
                 console.log(typeof matches); // 데이터를 콘솔에 출력
 
                 // 받아온 데이터를 화면에 렌더링
-                var resultHtml = '';
+                var resultHtml = "";
                 for (var i = 0; i < matches.length; i++) {
-                    resultHtml += '<tr>';
-                    resultHtml += '<td>' + matches[i].id + '</td>';
-                    resultHtml += '<td><a href="/match/post/' + matches[i].id + '">' + matches[i].mapId + '</a></td>';
-                    resultHtml += '<td>' + matches[i].sportsId + '</td>';
-                    resultHtml += '<td>' + matches[i].createdDate + '</td>';
-                    resultHtml += '</tr>';
+                    resultHtml += "<tr>";
+                    resultHtml += "<td>" + matches[i].id + "</td>";
+                    resultHtml += "<td><a href=\"/match/post/" + matches[i].id + "\">" + matches[i].mapId + "</a></td>";
+                    resultHtml += "<td>" + matches[i].sportsId + "</td>";
+                    resultHtml += "<td>" + matches[i].createdDate + "</td>";
+                    resultHtml += "</tr>";
                 }
                 $("#result tbody").html(resultHtml);
-            },
+            }
         });
     }
 
