@@ -4,7 +4,7 @@ import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
-import com.multicampus.matchcode.service.hyem.TeamMemService;
+import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import com.multicampus.matchcode.util.enums.hyem.*;
@@ -25,7 +25,7 @@ public class TeamController {
     private TeamService teamService;
 
     @Autowired
-    private TeamMemService teamMemService;
+    private TeamMemberService teamMemberService;
 
     // 팀 생성하기
     @GetMapping("/create")
@@ -50,7 +50,7 @@ public class TeamController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model) throws Exception {
         long teamId = teamService.createTeam(request_team);
-        teamMemService.addTeamLeader(teamId, memberDTO.getId());
+        teamMemberService.addTeamLeader(teamId, memberDTO.getId());
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
         return "hyem/message";

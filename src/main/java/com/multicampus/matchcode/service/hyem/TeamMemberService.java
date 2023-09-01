@@ -1,14 +1,12 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
-import com.multicampus.matchcode.model.request.hyem.AddTeamMemberRequest;
-import com.multicampus.matchcode.model.request.hyem.TeamMemberRequest;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamMemService {
+public class TeamMemberService {
 
     @Autowired
     private TeamMemberRepository teamMemberRepository;
@@ -29,6 +27,12 @@ public class TeamMemService {
                                          .privilege(2) // 0 : 관리자, 1 : 팀장, 2 : 팀원
                                          .build();
         teamMemberRepository.save(dto);
+    }
+
+    // 팀원 확인
+    public boolean isTeamMember(long memberid) {
+        //return teamMemberRepository.findTeamMember(memberid);
+        return teamMemberRepository.existsByMemberId(memberid);
     }
 
     /*// 팀 리스트 처리
