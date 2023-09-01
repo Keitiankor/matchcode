@@ -34,7 +34,10 @@ public class PostController {
 
     //게시글 작성창으로 이동
     @GetMapping("/insert")
-    public String insert(Model model, PostDTO postDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String insert(
+            Model model,
+            PostDTO postDTO,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         model.addAttribute("postDTO", postDTO);
 
         if (memberDTO != null) {
@@ -50,7 +53,10 @@ public class PostController {
 
     //게시글 입력한 정보를 db로 이동 동시에 message로 성공 출력과 입력된 url로 이동   //두번째 방법에서 id가 0으로 들어가서 첫번째로 일단 바꿨습니다.
     @PostMapping("/insert2")
-    public String insert2(@ModelAttribute("postDTO") PostInsertRequest request, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String insert2(
+            @ModelAttribute("postDTO") PostInsertRequest request,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         postService.insert(request, memberDTO); //db저장
 
         System.out.println("제목: " + request.getTitle());
@@ -64,8 +70,12 @@ public class PostController {
 
     //게시글 목록
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(name = "sortBy", defaultValue = "id") String sortBy, // 드롭다운 값 받아옴
-                       String searchKeyword) {
+    public String list(
+            Model model,
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+            // 드롭다운 값 받아옴
+            String searchKeyword) {
         Page<PostDTO> list = null;
 
         if ("likes".equals(sortBy)) {
@@ -88,7 +98,8 @@ public class PostController {
             }
         }
 
-        int nowPage = list.getPageable().getPageNumber() + 1;
+        int nowPage = list.getPageable()
+                          .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
@@ -168,5 +179,4 @@ public class PostController {
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
         return "hgdd/message";
     }
-
 }

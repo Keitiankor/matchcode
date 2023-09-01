@@ -13,7 +13,7 @@
                 <tr>
                     <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
                     <p>얼마를 환불하시겠습니까?
-                        <input id="refundAmount" min="0" type="number">
+                        <input type="number" id="refundAmount" min="0">
                         <button onclick="check2()">환불</button>
                 </tr>
             </thead>
@@ -21,8 +21,7 @@
         <script>
             window.onload = function() {
                 var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
-            };
-
+            }
             function check2() {
                 var totalPoints = parseInt(document.getElementById("totalPointsValue").textContent);
                 var refundAmount = parseInt(document.getElementById("refundAmount").value);
@@ -34,22 +33,21 @@
                     performRefund(refundAmount);
                 }
             }
-
-            function performRefund(refundAmount) {
+            function performRefund(refundAmount){
                 var memberId;
                 $.ajax({
                     url: "/refundPoint",
                     type: "GET",
                     data: {
                         memberId: memberId,
-                        point: refundAmount
+                        point: refundAmount,
                     },
                     success: function(response) {
                         if (response === "success") {
                             var totalPointsValueElement = document.getElementById("totalPointsValue");
                             var totalPointsValue = parseInt(totalPointsValueElement.textContent);
                             alert("환불 성공!");
-                            document.location.href = "/point";
+                            document.location.href="/point";
                             // UI를 업데이트하거나 필요한 다른 작업 수행
                         } else {
                             alert("An error occurred while processing the payment.");
@@ -61,6 +59,7 @@
                 });
             }
         </script>
+
 
 
     </body>

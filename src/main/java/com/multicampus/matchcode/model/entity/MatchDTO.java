@@ -21,7 +21,6 @@ public class MatchDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private long mapId;
     private long sportsId;
     private Timestamp matchDate;

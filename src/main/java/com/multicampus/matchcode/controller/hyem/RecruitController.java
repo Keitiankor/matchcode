@@ -40,10 +40,13 @@ public class RecruitController {
 
     // 모집글 리스트
     @GetMapping("/list")
-    public String recruitList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String recruitList(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
         Page<RecruitDTO> list = recruitService.recruitList(pageable);
 
-        int nowPage = list.getPageable().getPageNumber() + 1;
+        int nowPage = list.getPageable()
+                          .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
@@ -57,7 +60,11 @@ public class RecruitController {
 
     // 모집글 상세 페이지
     @GetMapping("/view/{id}")
-    public String recruitView(@PathVariable("id") Long id, Long teamId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String recruitView(
+            @PathVariable("id") Long id,
+            Long teamId,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
 
         if (memberDTO != null) {
             RecruitDTO dto = recruitService.recruitView(id);
@@ -80,7 +87,10 @@ public class RecruitController {
 
     // 모집글 내용 수정
     @PostMapping("/modify/complete/{id}")
-    public String recruitUpdate(@RequestParam("id") Long id, @ModelAttribute("recruit") RecruitPostRequest request, Model model) throws Exception {
+    public String recruitUpdate(
+            @RequestParam("id") Long id,
+            @ModelAttribute("recruit") RecruitPostRequest request,
+            Model model) throws Exception {
         recruitService.recruitUpdate(id, request);
         model.addAttribute("message", "모집글 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/recruit/list");
