@@ -77,7 +77,7 @@ public class MatchController {
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
-    @GetMapping("/post2")
+    @PostMapping("/post2")
     public String write(Match match) {
         System.out.println(match);
         matchService.savePost(match);

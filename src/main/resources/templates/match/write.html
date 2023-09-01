@@ -20,32 +20,32 @@
         <div th:replace="~{fragments/common :: head('게시판입니다.')}"></div>
         <div th:replace="~{fragments/common :: menu('home')}"></div>
 
-<main class="container">
-  <div class="page-header">
-    <h1>게시글 등록</h1>
-  </div>
-  <div class="starter-template">
-    <form class="form-horizontal" th:action="@{/match/post}" method="post">
-      <div class="form-group">
-        <label style="float: left" for="mapId" class="col-sm-2 control-label">장소</label>
-        <div class="col-sm-10" style="margin-top: 10px;">
-          <input type="mapId" class="form-control" id="mapId" name="mapId" placeholder="장소"/>
-        </div>
-      </div>
+        <main class="container">
+            <div class="page-header">
+                <h1>게시글 등록</h1>
+            </div>
+            <div class="starter-template">
+                <form class="form-horizontal" th:action="@{/match/post2}" method="post">
+                    <div class="form-group">
+                        <label style="float: left" for="mapId" class="col-sm-2 control-label">장소</label>
+                        <div class="col-sm-10" style="margin-top: 10px;">
+                            <input type="mapId" class="form-control" id="mapId" name="mapId" placeholder="장소"/>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="sportsId" style="float: left">종목</label>
                         <div class="col-sm-10" style="margin-top: 10px;">
-                            <input class="form-control" id="sportsId" name="sportsId" placeholder="종목" type="sportsId" />
+                            <input class="form-control" id="sportsId" name="sportsId" placeholder="종목" type="text" />
                         </div>
                     </div>
 
                     <!--  <div class="form-group">
-                        <label style="float: left" for="content" class="col-sm-2 control-label">내용</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
-                        </div>
-                      </div>-->
+                      <label style="float: left" for="content" class="col-sm-2 control-label">내용</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control" id="content" name="content" placeholder="내용을 입력해 주세요."></textarea>
+                      </div>
+                    </div>-->
 
                     <div class="btn_wrap text-center">
                         <a class="btn btn-secondary" th:href="@{/match/list}">뒤로 가기</a>
