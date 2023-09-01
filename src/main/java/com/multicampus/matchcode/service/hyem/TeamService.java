@@ -26,7 +26,7 @@ public class TeamService {
     private TeamMemberRepository teamMemberRepository;
 
     // 팀 생성
-    public void createTeam(TeamCreateRequest request) {
+    public long createTeam(TeamCreateRequest request) {
         TeamDTO dto = TeamDTO.builder()
                              .sportsId(request.getSportsId())
                              .teamName(request.getTeamName())
@@ -38,15 +38,7 @@ public class TeamService {
                              .build();
 
         teamRepository.save(dto);
-
-/*        TeamMemberDTO memberDTO = TeamMemberDTO
-                .builder()
-                .userId(userid)
-                .teamId(dto.getId())
-                .privilege(1) // 0 : 관리자, 1 : 팀장, 2 : 팀원
-                .build();
-
-        teamMemberRepository.save(memberDTO);*/
+        return dto.getId();
     }
 
     // 팀 리스트 처리

@@ -49,7 +49,8 @@ public class TeamController {
             @ModelAttribute("team") TeamCreateRequest request_team,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model) throws Exception {
-        teamService.createTeam(request_team);
+        long teamId = teamService.createTeam(request_team);
+        teamMemService.addTeamLeader(teamId, memberDTO.getId());
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
         return "hyem/message";
