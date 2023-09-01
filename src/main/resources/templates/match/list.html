@@ -49,38 +49,38 @@
                     <table class="table table-bordered">
                         <!-- CONTENTS !-->
                         <thead>
-                        <tr>
-                            <th class="col-md-1">번호</th>
-                            <th class="col-md-4">장소</th>
-                            <th class="col-md-3">종목</th>
-                            <th class="col-md-2">작성일</th>
-                            <!--        <th class="col-md-2">매치일</th>-->
-                        </tr>
+                            <tr>
+                                <th class="col-md-1">번호</th>
+                                <th class="col-md-4">장소</th>
+                                <th class="col-md-3">종목</th>
+                                <th class="col-md-2">작성일</th>
+                                <!--        <th class="col-md-2">매치일</th>-->
+                            </tr>
                         </thead>
 
                         <tbody>
-                        <!-- Existing data -->
+                            <!-- Existing data -->
                         </tbody>
 
                         <!-- New tbody for infinite scroll -->
                         <tbody id="matchesTable">
-                        <!-- ... -->
-                        <!-- Existing data -->
-                        <tr th:each="match : ${matchList}">
-                            <td th:text="${match.id}"></td>
-                            <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId}"></a></td>
-                            <td th:text="${match.sportsId}"></td>
-                            <td th:text="${match.createdDate}"></td>
                             <!-- ... -->
-                        </tr>
-                        <!-- ... -->
+                            <!-- Existing data -->
+                            <tr th:each="match : ${matchList}">
+                                <td th:text="${match.id}"></td>
+                                <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId}"></a></td>
+                                <td th:text="${match.sportsId}"></td>
+                                <td th:text="${match.createdDate}"></td>
+                                <!-- ... -->
+                            </tr>
+                            <!-- ... -->
 
-                        <!-- Loading indicator -->
-                        <tr>
-                            <td colspan="4" style="text-align: center;">
-                                <div id="loading" style="display: none;">Loading...</div>
-                            </td>
-                        </tr>
+                            <!-- Loading indicator -->
+                            <tr>
+                                <td colspan="4" style="text-align: center;">
+                                    <div id="loading" style="display: none;">Loading...</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

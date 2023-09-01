@@ -24,14 +24,14 @@ $(document).ready(function() {
                 if (matches.length === 0) {
                     $("#loading").text("No more matches");
                 } else {
-                    var tableHtml = '';
+                    var tableHtml = "";
                     for (var i = 0; i < matches.length; i++) {
-                        tableHtml += '<tr>';
-                        tableHtml += '<td>' + matches[i].id + '</td>';
-                        tableHtml += '<td><a href="/match/post/' + matches[i].id + '">' + matches[i].mapId + '</a></td>';
-                        tableHtml += '<td>' + matches[i].sportsId + '</td>';
-                        tableHtml += '<td>' + matches[i].createdDate + '</td>';
-                        tableHtml += '</tr>';
+                        tableHtml += "<tr>";
+                        tableHtml += "<td>" + matches[i].id + "</td>";
+                        tableHtml += "<td><a href=\"/match/post/" + matches[i].id + "\">" + matches[i].mapId + "</a></td>";
+                        tableHtml += "<td>" + matches[i].sportsId + "</td>";
+                        tableHtml += "<td>" + matches[i].createdDate + "</td>";
+                        tableHtml += "</tr>";
                     }
                     $("#matchesTable").append(tableHtml);
                     pageNum++;
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
                 isLoading = false;
                 $("#loading").hide();
-            },
+            }
         });
     }
 

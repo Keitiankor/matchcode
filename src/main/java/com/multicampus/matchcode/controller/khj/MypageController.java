@@ -61,7 +61,9 @@ public class MypageController {
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model, @ModelAttribute("memberId") long memberId) {
         RatingRequest ratingRequest = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
-        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId, memberId);
+        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
+                                                                                                      memberId
+        );
 
         model.addAttribute("rating", ratingRequest);
         model.addAttribute("matchResults", matchResults);

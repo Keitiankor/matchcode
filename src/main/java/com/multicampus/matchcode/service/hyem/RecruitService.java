@@ -29,11 +29,12 @@ public class RecruitService {
 
     // 모집글 작성
     public Long save(RecruitPostRequest request) {
-        RecruitDTO dto = RecruitDTO.builder()
-                                   .teamId(request.getTeamId())
-                                   .content(request.getContent())
-                                   .status(1)
-                                   .build();
+        RecruitDTO dto = RecruitDTO
+                .builder()
+                .teamId(request.getTeamId())
+                .content(request.getContent())
+                .status(1)
+                .build();
 
         recruitRepository.save(dto);
         return request.getId();
@@ -48,11 +49,13 @@ public class RecruitService {
         for (RecruitDTO recruitDTO : recruitDTOS) {
             long teamId = recruitDTO.getTeamId();
             Optional<TeamDTO> oTeamDTO = teamRepository.findById(teamId);
-            recruitList.add(RecruitListRequest.builder()
-                                              .teamName(oTeamDTO.map(TeamDTO::getTeamName)
-                                                                .orElse(null))
-                                              .recruitId(recruitDTO.getId())
-                                              .build());
+            recruitList.add(RecruitListRequest
+                                    .builder()
+                                    .teamName(oTeamDTO
+                                                      .map(TeamDTO::getTeamName)
+                                                      .orElse(null))
+                                    .recruitId(recruitDTO.getId())
+                                    .build());
         }
 
         int page = 0;
@@ -62,34 +65,41 @@ public class RecruitService {
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), recruitList.size());
 
-        Page<RecruitListRequest> recruitPage = new PageImpl<>(recruitList.subList(start, end), pageRequest, recruitList.size());
+        Page<RecruitListRequest> recruitPage = new PageImpl<>(recruitList.subList(start, end),
+                                                              pageRequest,
+                                                              recruitList.size()
+        );
 
         return recruitPage;
     }
 
     public RecruitDTO recruitView(long id) {
-        return recruitRepository.findById(id)
-                                .get();
+        return recruitRepository
+                .findById(id)
+                .get();
     }
 
     // 팀 아이디와 매칭되는 모집글 조회
     public RecruitDTO recruitViewByTeamId(long teamId) {
-        return recruitRepository.findByTeamId(teamId)
-                                .get();
+        return recruitRepository
+                .findByTeamId(teamId)
+                .get();
     }
 
     // 모집글 내용 수정
     public RecruitDTO recruitUpdate(long id, RecruitPostRequest request) {
-        RecruitDTO existingRecruit = recruitRepository.findById(id)
-                                                      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recruit not found"));
+        RecruitDTO existingRecruit = recruitRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recruit not found"));
 
-        RecruitDTO updatedRecruit = RecruitDTO.builder()
-                                              .id(id)
-                                              .createdDate(request.getCreatedDate())
-                                              .teamId(existingRecruit.getTeamId())
-                                              .content(request.getContent())
-                                              .status(1)
-                                              .build();
+        RecruitDTO updatedRecruit = RecruitDTO
+                .builder()
+                .id(id)
+                .createdDate(request.getCreatedDate())
+                .teamId(existingRecruit.getTeamId())
+                .content(request.getContent())
+                .status(1)
+                .build();
 
         return recruitRepository.save(updatedRecruit);
     }

@@ -16,8 +16,9 @@ public enum Sport {
 
     public static String getDescriptionFromCount(Integer count) {
         for (Sport sport : Sport.values()) {
-            if (sport.getCount()
-                     .equals(count)) {
+            if (sport
+                    .getCount()
+                    .equals(count)) {
                 return sport.getDescription();
             }
         }

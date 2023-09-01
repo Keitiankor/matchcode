@@ -21,7 +21,8 @@ public class MatchController {
     public String listByRegion(
             Model model,
             @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "region", defaultValue = "0") long regionId) {
+            @RequestParam(value = "region", defaultValue = "0") long regionId
+    ) {
         List<MatchDTO> matchList;
         Integer[] pageList;
 
@@ -143,7 +144,8 @@ public class MatchController {
     public List<MatchDTO> getMatchesByRegionAndSports(
             @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "region", defaultValue = "0") long regionId,
-            @RequestParam(value = "sports", defaultValue = "0") long sportsId) {
+            @RequestParam(value = "sports", defaultValue = "0") long sportsId
+    ) {
         // 이 부분에서 필요한 데이터를 조회하여 List<MatchDTO> 형태로 반환
         List<MatchDTO> matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
         return matchList;
