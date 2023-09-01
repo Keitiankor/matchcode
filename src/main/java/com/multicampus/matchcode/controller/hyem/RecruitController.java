@@ -6,6 +6,7 @@ import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.request.hyem.RecruitListRequest;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
+import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class RecruitController {
 
     @Autowired
     private TeamService teamService;
+
+    @Autowired
+    private TeamMemberService teamMemberService;
 
     // 모집글 작성 매핑
     @GetMapping("/write/{teamid}")
@@ -94,9 +98,17 @@ public class RecruitController {
 
     // 모집글 수정 페이지
     @GetMapping("/modify/{id}")
-    public String recruitModify(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("recruit", recruitService.recruitView(id));
-        return "hyem/recruit/modifyrecruit";
+    public String recruitModify(@PathVariable("id") Long id, Model model,
+                                @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+        RecruitDTO recruitDTO = recruitService.recruitView(id);
+        model.addAttribute("recruit", recruitDTO);
+        if(teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
+            return "hyem/recruit/modifyrecruit";
+        } else {
+            model.addAttribute("message", "수정 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/recruit/list");
+            return "hyem/message";
+        }
     }
 
     // 모집글 내용 수정
@@ -113,11 +125,20 @@ public class RecruitController {
 
     // 모집글 삭제
     @DeleteMapping("/delete/{id}")
-    public String recruitDelete(@PathVariable("id") long id, Model model) throws Exception {
-        model.addAttribute("message", "정말로 모집글을 삭제하시겠습니까?");
-        model.addAttribute("confirmUrl", "/recruit/deleteconfirmed/" + id);
-        model.addAttribute("cancelUrl", "/recruit/list");
-        return "hyem/confirmmessage";
+    public String recruitDelete(@PathVariable("id") long id, Model model,
+                                @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) throws Exception {
+        RecruitDTO recruitDTO = recruitService.recruitView(id);
+        if(teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
+            model.addAttribute("message", "정말로 모집글을 삭제하시겠습니까?");
+            model.addAttribute("confirmUrl", "/recruit/deleteconfirmed/" + id);
+            model.addAttribute("cancelUrl", "/recruit/list");
+            return "hyem/confirmmessage";
+        } else {
+            model.addAttribute("message", "권한이 없습니다.");
+            model.addAttribute("searchUrl", "/recruit/list");
+            return "hyem/message";
+        }
+
     }
 
     // 모집글 삭제 처리
