@@ -8,5 +8,5 @@ import lombok.Data;
 public class TeamMemberRequest {
 
     private long teamId;
-    private long userId;
+    private long memberId;
 }

@@ -32,9 +32,8 @@ public class TeamMemberService {
     }
 
     // 팀원 확인
-    public boolean isTeamMember(long memberid) {
-        //return teamMemberRepository.findTeamMember(memberid);
-        return teamMemberRepository.existsByMemberId(memberid);
+    public boolean isTeamMember(long memberId) {
+        return teamMemberRepository.existsByMemberId(memberId);
     }
 
     /*// 팀 리스트 처리

@@ -36,7 +36,7 @@ public class TeamController {
             Model model
     ) {
         if (memberDTO != null) {
-            model.addAttribute("userid", memberDTO.getId());
+            model.addAttribute("memberId", memberDTO.getId());
             return "hyem/team/createteam";
         } else {
             model.addAttribute("message", "로그인 후 팀 생성이 가능합니다.");
