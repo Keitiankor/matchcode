@@ -19,9 +19,9 @@
             <div class="nav-item"><a class="nav-link" th:href="@{/point}">포인트</a></div>
         </div>
         <div class="me-lg-3 position-absolute end-0 navbar-nav">
-            <div class="nav-item" th:if="${session.containsKey('memberId') == false}"><a class="nav-link" th:href="@{/login}">로그인</a></div>
-            <div class="nav-item" th:if="${session.containsKey('memberId') == true}"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></div>
-            <div class="nav-item" th:if="${session.containsKey('memberId') == true}"><a class="nav-link" th:href="@{/logout}">로그아웃</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') == null}"><a class="nav-link" th:href="@{/login}">로그인</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/logout}">로그아웃</a></div>
         </div>
     </header>
 </html>
