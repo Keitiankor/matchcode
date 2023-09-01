@@ -36,6 +36,9 @@
                 <a th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
                 <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
             </th:block>
+            <div class="layout">
+                <button><a th:href="@{/team/create}">팀 생성하기</a></button>
+            </div>
         </div>
     </body>
 </html>
