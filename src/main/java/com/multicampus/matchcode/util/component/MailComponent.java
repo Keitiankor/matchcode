@@ -24,8 +24,11 @@ public class MailComponent extends Thread {
 
     protected void sendMailThread(String... params) {
         Runnable runnable = () -> {
-            log.info("Thread Name : {}", Thread.currentThread()
-                                               .getName());
+            log.info("Thread Name : {}",
+                     Thread
+                             .currentThread()
+                             .getName()
+            );
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             if (params == null) {
                 return;
@@ -38,8 +41,11 @@ public class MailComponent extends Thread {
             } catch (MailException ex) {
                 log.error("Mail Error ! {}", ex.getMessage());
             }
-            log.info("Thread Name : {} Done!", Thread.currentThread()
-                                                     .getName());
+            log.info("Thread Name : {} Done!",
+                     Thread
+                             .currentThread()
+                             .getName()
+            );
         };
         executor.execute(runnable);
     }
@@ -58,9 +64,16 @@ public class MailComponent extends Thread {
         sb.append("<Match Code 인증 번호는 \"");
         sb.append(verifyCode);
         sb.append("\" 입니다.>");
-        String subject = "<Match Code 인증 메일입니다>";
+        String subject = "<Match Code 인증 메일 입니다>";
 
         sendMailThread(mailAddress, subject, sb.toString());
         return verifyCode;
+    }
+
+    public void sendTempPassword(String mailAddress, String tempPassword) {
+
+        String subject = "<Match Code 임시 비밀번호 입니다.>";
+        String sb = "<임시 비밀번호는 [" + tempPassword + "] 입니다>";
+        sendMailThread(mailAddress, subject, sb);
     }
 }

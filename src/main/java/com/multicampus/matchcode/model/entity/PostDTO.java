@@ -28,13 +28,10 @@ public class PostDTO {
     private String title;
     private String content;
     private String writer;
-
     @CreationTimestamp
     private Timestamp createdDate;
-
     @UpdateTimestamp
     private Timestamp editedDate;
-
     private int views;
     private int likes;
     private boolean privates;

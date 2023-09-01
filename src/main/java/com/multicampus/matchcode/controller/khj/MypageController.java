@@ -112,7 +112,7 @@ public class MypageController {
 
         List<PostDTO> fivePosts = myPosts.subList(0, Math.min(myPosts.size(), 5));
         //게시물 최근 5개까지만 보여주기
-        List<ReplyDTO> fiveReplies = myReplies.subList(0, Math.min(myPosts.size(), 5));
+        List<ReplyDTO> fiveReplies = myReplies.subList(0, Math.min(myReplies.size(), 5));
         //게시물 최근 5개까지만 보여주기
 
         model.addAttribute("myPosts", fivePosts);

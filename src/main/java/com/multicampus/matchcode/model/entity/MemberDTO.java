@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -28,6 +29,7 @@ public class MemberDTO {
     private String phone; //수정가능
     private String mailAddress;
     private Timestamp birthday;
+    @CreationTimestamp
     private Timestamp createdDate;
     private Timestamp deletedDate;
     private Timestamp lastLogin;

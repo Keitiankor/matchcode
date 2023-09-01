@@ -114,18 +114,13 @@ public class PostController {
 
     //게시글 열람
     @GetMapping("/view")
-    public String view(
-            Model model,
-            Long id,
-            PostLikeDTO likeDTO,
-            DeclationDTO declationDTO,
-            @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
 
         model.addAttribute("post", postService.view(id));
         model.addAttribute("likeDTO", likeDTO);
         model.addAttribute("list", replyService.list(id));
-        model.addAttribute("declation", declationDTO);
+        model.addAttribute("declation",declationDTO);
         if (memberDTO != null) {
             if (post.isPrivates()) { //비공개 여부 확인
                 if (post.getMemberId() == memberDTO.getId()) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -151,10 +146,7 @@ public class PostController {
 
     //게시글 수정 페이지 이동
     @GetMapping("/correction/{id}")
-    public String correction(
-            @PathVariable("id") Long id,
-            Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String correction(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
 
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -187,18 +179,4 @@ public class PostController {
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
         return "hgdd/message";
     }
-
-    //신고
-    /*@PostMapping("/declation/{postId}")
-    public String reportPost(@PathVariable Long postId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
-        if (memberDTO != null) {
-            System.out.println(memberDTO.getId());
-            postService.declations(postId);
-            return "redirect:/post/view?id=" + postId;
-        } else {
-            model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
-            model.addAttribute("searchUrl", "/login"); //이동하는 경로
-            return "hgdd/message";
-        }
-    }*/
 }
