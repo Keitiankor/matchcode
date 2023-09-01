@@ -21,10 +21,7 @@ public class RecruitDTO {
     @Column(name = "recruit_id")
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "team_id")
-    private TeamDTO teamId;
-
+    private long teamId;
     private String content;
 
     @CreationTimestamp
