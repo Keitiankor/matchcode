@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.Match;
+import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.service.hyuk.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,8 @@ public class MatchController {
     public String listByRegion(
             Model model,
             @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "region", defaultValue = "0") long regionId
+            @RequestParam(value = "region", defaultValue = "0") long regionId,
+            @RequestParam(value = "sports", defaultValue = "0") long sportsId
     ) {
         List<MatchDTO> matchList;
         Integer[] pageList;
@@ -78,7 +80,7 @@ public class MatchController {
     // 그 후에는 /list 경로로 리디렉션해준다.
 
     @PostMapping("/post2")
-    public String write(Match match) {
+    public String write(MatchData match) {
         System.out.println(match);
         matchService.savePost(match);
         return "redirect:/match/list";
