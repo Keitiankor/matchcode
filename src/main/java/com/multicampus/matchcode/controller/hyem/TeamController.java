@@ -81,9 +81,17 @@ public class TeamController {
 
     // 팀 상세 정보 열람
     @GetMapping("/view/{uri}/{id}")
-    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model) {
-        model.addAttribute("team", teamService.teamView(id));
-        return "hyem/team/teamview";
+    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
+                           @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+        if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
+            model.addAttribute("team", teamService.teamView(id));
+            return  "hyem/team/teaminformation";
+        }
+        else {
+            model.addAttribute("message", "접근 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/team/list"); // 임시 경로이므로 추후에 수정
+            return "hyem/message";
+        }
     }
 
     // 팀 정보 수정 페이지

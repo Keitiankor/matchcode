@@ -36,6 +36,15 @@ public class TeamMemberService {
         return teamMemberRepository.existsByMemberId(memberId);
     }
 
+    // 팀장 권한 확인
+    public Integer isTeamLeader(long teamId, long memberId) {
+        Integer privilege = teamMemberRepository.findPrivilegeByTeamIdAndMemberId(teamId, memberId);
+        if (privilege == null) {
+           return 0;
+        }
+        return privilege;
+    }
+
     /*// 팀 리스트 처리
     public Page<TeamDTO> teamList(Pageable pageable) {
         return teamRepository.findAll(pageable);
