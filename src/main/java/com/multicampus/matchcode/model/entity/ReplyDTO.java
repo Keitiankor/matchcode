@@ -1,14 +1,18 @@
 package com.multicampus.matchcode.model.entity;
 
-import jakarta.persistence.*;
-import java.sql.Timestamp;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-@Entity(name = "reply")
+import java.sql.Timestamp;
+
+@Entity(name = "Reply")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,11 +23,9 @@ public class ReplyDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "posts_id")
-    private PostDTO post;
+    private long postId;
 
-    private long userId;
+    private long memberId;
     private String comment;
 
     @CreationTimestamp

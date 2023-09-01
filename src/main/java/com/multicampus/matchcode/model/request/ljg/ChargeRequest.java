@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ChargeRequest {
 
-    private long userId;
+    private long memberId;
     private int point;
     // getters, setters...
 }

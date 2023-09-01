@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RegistserRequest {
+public class RegisterRequest {
 
     String account;
     String password;

@@ -4,20 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.sql.Timestamp;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "UsePoint")
-@Data
+@Entity(name = "post_like")
+@Getter
 @NoArgsConstructor
-public class PointUseHistoryDTO {
+@AllArgsConstructor
+@Builder
+public class PostLikeDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long userId;
-    private Timestamp paydate;
-    private int price;
+    private long memberId;
+    private long postId;
 }

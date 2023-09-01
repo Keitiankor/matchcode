@@ -1,62 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 수정</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/hgdd/post.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>게시글 수정</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="/css/hgdd/post.css" rel="stylesheet">
+    </head>
 
-<body>
-<div class="layout">
-    <h2>게시글 수정 및 삭제</h2>
-    <form th:action="@{/post/update/{id}(id = ${post.id})}" th:object="${post}" method="post">
+    <body>
+        <div class="layout">
+            <h2>게시글 수정 및 삭제</h2>
+            <form method="post" th:action="@{/post/update/{id}(id = ${post.id})}" th:object="${post}">
 
-        <!--제목수정-->
-        <div class="mb-3">
-            <label for="exampleFormControlInput1"  class="form-label">제목</label>
-            <input name="title"  type="text" class="form-control" id="exampleFormControlInput1" th:value="${post.title}">
-        </div>
-
-
-        <!-- 내용 수정-->
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">내용입력</label>
-            <textarea name="content" th:text ="${post.content}" class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
-        </div>
-
-
-
-        <!--
-              <div class="mb-3">
-                    <label for="exampleFormControlInput1"  class="form-label">제목</label>
-                    <input name="title"  type="text" class="form-control" id="exampleFormControlInput1" th:value="${post.title}">
-                </div>
-
-
-                &lt;!&ndash; 내용 수정&ndash;&gt;
+                <!--제목수정-->
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">내용입력</label>
-                    <textarea name="content" th:text ="${post.content}" class="form-control" id="exampleFormControlTextarea1"  rows="3"></textarea>
+                    <label class="form-label" for="exampleFormControlInput1">제목</label>
+                    <input class="form-control" id="exampleFormControlInput1" name="title" th:value="${post.title}" type="text">
                 </div>
-        -->
+
+                <!-- 내용 수정-->
+                <div class="mb-3">
+                    <label class="form-label" for="exampleFormControlTextarea1">내용입력</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3" th:text="${post.content}"></textarea>
+                </div>
+
+                <!--비공개 체크박스(아직 db구현 안함-->
+                <input th:field="*{privates}" type="checkbox">비공개<br>
 
 
+                <!--수정버튼과 삭제 버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
+                <th>
+                    <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|" type="button">목록으로</button>
+                    <button class="btn btn-outline-secondary" id="button.correction" type="submit">수정</button>
+                    <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/delete?(id=${post.id})}'|">삭제</button>
+                    <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
+                </th>
+            </form>
 
-        <!--비공개 체크박스(아직 db구현 안함-->
-        <input type="checkbox" th:field="*{privates}">비공개<br>
-
-
-        <!--수정버튼과 삭제 버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
-        <th>
-            <button type="button" th:onclick="|location.href='@{/post/list}'|">목록으로</button>
-            <button type="submit" id="button.correction">수정</button>
-            <button th:onclick="|location.href='@{/post/delete?(id=${post.id})}'|">삭제</button>
-            <input type="hidden" th:name="_csrf" th:value="${_csrf.token}"/>
-        </th>
-    </form>
-
-</div>
-</body>
+        </div>
+    </body>
 </html>

@@ -3,13 +3,13 @@ package com.multicampus.matchcode.controller.hyuk;
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
-import com.multicampus.matchcode.model.request.khj.MatchResult;
 import com.multicampus.matchcode.service.hyuk.MatchService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/match")
@@ -135,6 +135,9 @@ public class MatchController {
         model.addAttribute("matchList", matchDtoList);
 
         return "match/list";
+    }
+
+    @GetMapping("/getmatchesbyregion")
     }*/
     @GetMapping("/getmatchesbyregionandsports")
     @ResponseBody
@@ -144,8 +147,6 @@ public class MatchController {
             @RequestParam("sports") long sports) {
         return matchService.getMatchlistByRegionAndSports(pageNum, region, sports);
     }
-
-
 /*    @GetMapping("/loadsportsdata")
     public String loadmapdata(long mapId, Model model) {
         List<MatchResult> matchResults = MatchService.getMatchlistByRegion(mapId);

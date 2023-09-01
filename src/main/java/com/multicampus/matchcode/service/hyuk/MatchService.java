@@ -43,9 +43,7 @@ public class MatchService {
 
     @Transactional
     public ArrayList<MatchDTO> getMatchlist(Integer pageNum) {
-        Page<MatchDTO> page = matchRepository.findAll(
-            PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate"))
-        );
+        Page<MatchDTO> page = matchRepository.findAll(PageRequest.of(pageNum - 1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createdDate")));
 
         List<MatchDTO> matchEntities = page.getContent();
         ArrayList<MatchDTO> matchDTOs = new ArrayList<>();
@@ -74,13 +72,7 @@ public class MatchService {
     }
 
     public Long updatePost(long id, MatchData data) {
-        MatchDTO matchDTO = MatchDTO
-            .builder()
-            .id(id)
-            .mapId(data.getMapId())
-            .sportsId(data.getSportsId())
-            .createdDate(new Timestamp(System.currentTimeMillis()))
-            .build();
+        MatchDTO matchDTO = MatchDTO.builder().id(id).mapId(data.getMapId()).sportsId(data.getSportsId()).createdDate(new Timestamp(System.currentTimeMillis())).build();
         return matchRepository.save(matchDTO).getId();
     }
 
@@ -120,9 +112,7 @@ public class MatchService {
         Integer totalLastPageNum = (int) (Math.ceil((matchTotalCount / PAGE_POST_COUNT)));
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
-            ? curPageNum + BLOCK_PAGE_NUM_COUNT
-            : totalLastPageNum;
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT) ? curPageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
 
         // 페이지 시작 번호 조정
         curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
@@ -134,6 +124,7 @@ public class MatchService {
 
         return pageList;
     }
+
     @Transactional
     public List<MatchDTO> getMatchlistByRegionAndSports(Integer pageNum, long region, long sports) {
         Page<MatchDTO> page = matchRepository.findByMapIdAndSportsId(region, sports,
@@ -147,11 +138,10 @@ public class MatchService {
         Double matchTotalCount = Double.valueOf(matchRepository.countByMapIdAndSportsId(region, sports));
         return calculatePageList(pageNum, matchTotalCount);
     }
+
     private Integer[] calculatePageList(Integer pageNum, Double totalCount) {
         int totalLastPageNum = (int) (Math.ceil(totalCount / PAGE_POST_COUNT));
-        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT)
-                ? pageNum + BLOCK_PAGE_NUM_COUNT
-                : totalLastPageNum;
+        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT) ? pageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
 
         int curPageNum = (pageNum <= 3) ? 1 : pageNum - 2;
 
