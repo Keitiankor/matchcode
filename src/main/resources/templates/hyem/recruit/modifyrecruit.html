@@ -9,7 +9,7 @@
 <form th:action="@{/recruit/modify/complete/{id}(id = ${recruit.id})}" method="post">
     <p>글 내용</p>
 <!--    <input type="hidden" name="_method" value="put">-->
-    <input type="hidden" name="teamId" th:value="${recruit.teamId.id}">
+    <input type="hidden" name="teamId" th:value="${recruit.teamId}">
     <input type="hidden" name="id" th:value="${recruit.id}">
     <textarea name="content" cols="60" rows="5" th:text="${recruit.content}"></textarea>
     <button type="submit">수정</button>
