@@ -83,11 +83,12 @@ public class TeamController {
     @GetMapping("/view/{uri}/{id}")
     public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+        model.addAttribute("team", teamService.teamView(id));
         if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
-            model.addAttribute("team", teamService.teamView(id));
             return  "hyem/team/teaminformation";
-        }
-        else {
+        } else if (teamMemberService.isTeamLeader(id, memberDTO.getId()) == 2) {
+            return  "hyem/team/teamview";
+        } else {
             model.addAttribute("message", "접근 권한이 없습니다.");
             model.addAttribute("searchUrl", "/team/list"); // 임시 경로이므로 추후에 수정
             return "hyem/message";

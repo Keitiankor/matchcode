@@ -55,16 +55,6 @@
                     <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-
-            <button class="btn btn-primary">
-                <a style="color: white; text-decoration: none;" th:href="@{/team/modify/{id}(id = ${team.id})}">팀 정보 수정</a>
-                <form th:action="@{/team/delete/{id}(id = ${team.id})}" th:method="delete">
-                    <button class="btn btn-danger" onclick="teamDelete();">삭제</button>
-                </form>
-            </button>
-            <button class="btn btn-info">
-                <a style="color: white; text-decoration: none;" th:href="@{/recruit/write/{id}(id = ${team.id})}">모집글 올리기</a>
-            </button>
             <button class="btn btn-warning">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/list}">이전 화면으로</a>
             </button>
