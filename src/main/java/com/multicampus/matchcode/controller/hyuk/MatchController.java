@@ -25,7 +25,7 @@ public class MatchController {
     ) {
         List<MatchDTO> matchList;
         Integer[] pageList;
-
+/*--*/
         if (regionId != 0 && sportsId != 0) {
             // regionId와 sportsId가 0이 아닌 경우, 해당 지역과 종목 데이터만 조회
             matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
