@@ -32,13 +32,13 @@ public class ApplicationController {
             @ModelAttribute("join") ApplicationDTO applicationDTO,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model) {
-        if(teamMemberService.isTeamMember(memberDTO.getId())) {
-            model.addAttribute("memberid", memberDTO.getId());
-            return "hyem/application/joinapplication";
-        } else {
+        if (teamMemberService.isTeamMember(memberDTO.getId())) {
             model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
             model.addAttribute("searchUrl", "/recruit/list");
             return "hyem/message";
+        } else {
+            model.addAttribute("memberid", memberDTO.getId());
+            return "hyem/application/joinapplication";
         }
     }
 
@@ -48,11 +48,9 @@ public class ApplicationController {
             @ModelAttribute("join") ApplicationRequest request,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model) throws Exception {
-        //model.addAttribute("memberId", memberDTO.getId());
         applicationService.save(request, memberDTO.getId());
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/application/list");
-        System.out.println("가입신청한 user name : " + memberDTO.getName());
+        model.addAttribute("searchUrl", "/recruit/list");
         return "hyem/message";
     }
 
