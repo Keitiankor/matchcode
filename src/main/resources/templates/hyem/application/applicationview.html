@@ -23,10 +23,10 @@
             </div>
 
             <button class="btn btn-info">
-                <a style="color: white; text-decoration: none;" th:href="@{/application/modify/{id}(id = ${join.id})}">모집글 내용 수정</a>
+                <a style="color: white; text-decoration: none;" th:href="@{/application/modify/{id}(id = ${join.id})}">가입신청 내용 수정</a>
             </button>
             <form th:action="@{/application/cancel/{id}(id = ${join.id})}" th:method="delete">
-                <button class="btn btn-danger" onclick="applicationCancel();">모집글 삭제</button>
+                <button class="btn btn-danger" onclick="applicationCancel();">신청취소</button>
             </form>
             <button class="btn btn-warning">
                 <a style="color: white; text-decoration: none;" th:href="@{/application/list}">이전 화면으로</a>
