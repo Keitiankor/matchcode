@@ -27,7 +27,17 @@ public class MatchService {
 
     // Entity -> DTO로 변환
     private MatchDTO convertEntityToDTO(Match match) {
-        return MatchDTO.builder().id(match.getId()).mapId(match.getMapId()).sportsId(match.getSportsId()).matchDate(match.getMatchDate()).createdDate(match.getCreatedDate()).expireDate(match.getExpireDate()).restrictionMinRate(match.getRestrictionMinRate()).restrictionMaxRate(match.getRestrictionMaxRate()).status(match.getStatus()).build();
+        return MatchDTO.builder()
+                       .id(match.getId())
+                       .mapId(match.getMapId())
+                       .sportsId(match.getSportsId())
+                       .matchDate(match.getMatchDate())
+                       .createdDate(match.getCreatedDate())
+                       .expireDate(match.getExpireDate())
+                       .restrictionMinRate(match.getRestrictionMinRate())
+                       .restrictionMaxRate(match.getRestrictionMaxRate())
+                       .status(match.getStatus())
+                       .build();
     }
 
     @Transactional
@@ -51,13 +61,24 @@ public class MatchService {
 
     @Transactional
     public Long savePost(MatchData data) {
-        MatchDTO matchDTO = MatchDTO.builder().mapId(data.getMapId()).sportsId(data.getSportsId()).createdDate(new Timestamp(System.currentTimeMillis())).build();
-        return matchRepository.save(matchDTO).getId();
+        MatchDTO matchDTO = MatchDTO.builder()
+                                    .mapId(data.getMapId())
+                                    .sportsId(data.getSportsId())
+                                    .createdDate(new Timestamp(System.currentTimeMillis()))
+                                    .build();
+        return matchRepository.save(matchDTO)
+                              .getId();
     }
 
     public Long updatePost(long id, MatchData data) {
-        MatchDTO matchDTO = MatchDTO.builder().id(id).mapId(data.getMapId()).sportsId(data.getSportsId()).createdDate(new Timestamp(System.currentTimeMillis())).build();
-        return matchRepository.save(matchDTO).getId();
+        MatchDTO matchDTO = MatchDTO.builder()
+                                    .id(id)
+                                    .mapId(data.getMapId())
+                                    .sportsId(data.getSportsId())
+                                    .createdDate(new Timestamp(System.currentTimeMillis()))
+                                    .build();
+        return matchRepository.save(matchDTO)
+                              .getId();
     }
 
     @Transactional
@@ -96,10 +117,14 @@ public class MatchService {
         Integer totalLastPageNum = (int) (Math.ceil((matchTotalCount / PAGE_POST_COUNT)));
 
         // 현재 페이지를 기준으로 블럭의 마지막 페이지 번호 계산
-        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT) ? curPageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
+        Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
+                                   ? curPageNum + BLOCK_PAGE_NUM_COUNT
+                                   : totalLastPageNum;
 
         // 페이지 시작 번호 조정
-        curPageNum = (curPageNum <= 3) ? 1 : curPageNum - 2;
+        curPageNum = (curPageNum <= 3)
+                     ? 1
+                     : curPageNum - 2;
 
         // 페이지 번호 할당
         for (int val = curPageNum, idx = 0; val <= blockLastPageNum; val++, idx++) {
@@ -123,9 +148,13 @@ public class MatchService {
 
     private Integer[] calculatePageList(Integer pageNum, Double totalCount) {
         int totalLastPageNum = (int) (Math.ceil(totalCount / PAGE_POST_COUNT));
-        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT) ? pageNum + BLOCK_PAGE_NUM_COUNT : totalLastPageNum;
+        int blockLastPageNum = (totalLastPageNum > pageNum + BLOCK_PAGE_NUM_COUNT)
+                               ? pageNum + BLOCK_PAGE_NUM_COUNT
+                               : totalLastPageNum;
 
-        int curPageNum = (pageNum <= 3) ? 1 : pageNum - 2;
+        int curPageNum = (pageNum <= 3)
+                         ? 1
+                         : pageNum - 2;
 
         Integer[] pageList = new Integer[blockLastPageNum - curPageNum + 1];
         for (int i = curPageNum, idx = 0; i <= blockLastPageNum; i++, idx++) {

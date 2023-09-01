@@ -16,7 +16,12 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     public void save(ReviewRequest request, long memberId) {
-        ReviewDTO reviewdto = ReviewDTO.builder().memberId(memberId).mapId(34).rate(request.getRate()).comment(request.getComment()).build();
+        ReviewDTO reviewdto = ReviewDTO.builder()
+                                       .memberId(memberId)
+                                       .mapId(34)
+                                       .rate(request.getRate())
+                                       .comment(request.getComment())
+                                       .build();
         System.out.println("Review.insert : " + reviewdto);
         reviewRepository.save(reviewdto);
     }
@@ -28,7 +33,15 @@ public class ReviewService {
 
     // 리뷰 수정 처리 메서드
     public void update(UpdateReviewRequest updateReviewRequest) {
-        ReviewDTO review = ReviewDTO.builder().id(updateReviewRequest.getId()).memberId(updateReviewRequest.getDto().getMemberId()).mapId(updateReviewRequest.getDto().getMapId()).rate(updateReviewRequest.getRate()).comment(updateReviewRequest.getComment()).build();
+        ReviewDTO review = ReviewDTO.builder()
+                                    .id(updateReviewRequest.getId())
+                                    .memberId(updateReviewRequest.getDto()
+                                                                 .getMemberId())
+                                    .mapId(updateReviewRequest.getDto()
+                                                              .getMapId())
+                                    .rate(updateReviewRequest.getRate())
+                                    .comment(updateReviewRequest.getComment())
+                                    .build();
         reviewRepository.save(review);
     }
 
@@ -40,6 +53,7 @@ public class ReviewService {
 
     // 해당 id에 해당하는 리뷰 정보를 가져오는 메서드
     public ReviewDTO findById(Long id) {
-        return reviewRepository.findById(id).orElse(null);
+        return reviewRepository.findById(id)
+                               .orElse(null);
     }
 }

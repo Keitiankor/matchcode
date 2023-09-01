@@ -19,7 +19,10 @@ public class DeclationService {
         DeclationDTO declaration = declationRepository.findByPostIdAndMemberId(postId, memberId);
 
         if (declaration == null) {
-            DeclationDTO declarations = DeclationDTO.builder().postId(postId).memberId(memberId).build();
+            DeclationDTO declarations = DeclationDTO.builder()
+                                                    .postId(postId)
+                                                    .memberId(memberId)
+                                                    .build();
             declationRepository.save(declarations); //새로운 신고 추가
             return postRepository.declarationup(postId); //post 신고 증가
         } else {

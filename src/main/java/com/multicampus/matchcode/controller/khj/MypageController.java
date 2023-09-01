@@ -1,6 +1,8 @@
 package com.multicampus.matchcode.controller.khj;
 
-import com.multicampus.matchcode.model.entity.*;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.PostDTO;
+import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
