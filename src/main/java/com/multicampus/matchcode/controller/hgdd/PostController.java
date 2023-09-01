@@ -135,7 +135,7 @@ public class PostController {
 
     //게시글 수정 페이지 이동
     @GetMapping("/correction/{id}")
-    public String correction(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String correction(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
 
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -170,8 +170,8 @@ public class PostController {
     }
 
     //신고
-    /*@PostMapping("/declation/{postId}")
-    public String reportPost(@PathVariable Long postId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    @PostMapping("/declation/{postId}")
+    public String reportPost(@PathVariable Long postId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         if (memberDTO != null) {
             System.out.println(memberDTO.getId());
             postService.declations(postId);

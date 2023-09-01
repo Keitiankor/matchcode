@@ -28,7 +28,7 @@ public class PointController {
 
     //포인트표시
     @GetMapping("/point")
-    public String viewPointPage(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, Model model) {
+    public String viewPointPage(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, Model model) {
         if (member != null) {
             List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId()); //(1/*member.getId()*/);//memberId추가
             chargeHistories.sort(Comparator.comparing(PointDTO::getDate).reversed());
@@ -54,7 +54,7 @@ public class PointController {
 
     @GetMapping("/chargePoint")
     @ResponseBody
-    public String chargePoint(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, @RequestParam("point") int point) {
+    public String chargePoint(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, @RequestParam("point") int point) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder().date(date).details("충전").memberId(member.getId()).point(point).build();
         System.out.println(pointDTO);
@@ -70,7 +70,7 @@ public class PointController {
 
     @GetMapping("/chargePoint2")
     @ResponseBody
-    public String chargePoint2(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, @RequestParam("point") int point) {
+    public String chargePoint2(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, @RequestParam("point") int point) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder().date(date).details("충전").memberId(member.getId()).point(point).build();
         pointService.pointCharge(pointDTO); // Call the pointCharge method to save the point
@@ -81,7 +81,7 @@ public class PointController {
     //포인트 사용 내역
     //결제페이지//////////////////////////////////
     @GetMapping("/paypage")
-    public String payPage(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, Model model) {
+    public String payPage(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, Model model) {
         //long memberId = 1;
         // Long memberId = member.getId();
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
@@ -92,7 +92,7 @@ public class PointController {
 
     ////////////////환불페이지//////////////
     @GetMapping("/refund")
-    public String refundPoint(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, Model model) {
+    public String refundPoint(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, Model model) {
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
         model.addAttribute("totalPoints", totalPoints);
@@ -101,7 +101,7 @@ public class PointController {
 
     @GetMapping("/refundPoint")
     @ResponseBody
-    public String refundPoints(@SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member, @RequestParam("point") int refundAmount) {
+    public String refundPoints(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member, @RequestParam("point") int refundAmount) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder().date(date).details("환불").memberId(member.getId()) // Set refundAmount here
                 .point(-refundAmount).build();
@@ -117,7 +117,7 @@ public class PointController {
     @GetMapping("/payPoint")
     public String payPoints(HttpServletRequest request, ReserveRequest reserveRequest) {
         pointService.payPoints(reserveRequest);
-        request.getSession().setAttribute(SessionConstant.MEMBER_ID, reserveRequest.getMemberId());
+        request.getSession().setAttribute(SessionConstant.MEMBER_DTO, reserveRequest.getMemberId());
         return "";
     }
 }
