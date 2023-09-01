@@ -1,9 +1,7 @@
 package com.multicampus.matchcode.controller.khj;
 
-import com.multicampus.matchcode.model.entity.EmblemDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
-import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
@@ -11,11 +9,12 @@ import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MyPostService;
 import com.multicampus.matchcode.service.khj.MypageService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class MypageController {
@@ -53,10 +52,7 @@ public class MypageController {
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model, @ModelAttribute("memberId") long memberId) {
         RatingRequest ratingRequest = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
-        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(
-            sportsId,
-            memberId
-        );
+        List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId, memberId);
 
         model.addAttribute("rating", ratingRequest);
         model.addAttribute("matchResults", matchResults);

@@ -1,8 +1,9 @@
 package com.multicampus.matchcode.model.request.hgdd;
 
-import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.Data;
+
+import java.sql.Timestamp;
 
 @Builder
 @Data

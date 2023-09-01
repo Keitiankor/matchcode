@@ -21,7 +21,7 @@ public class PostLikeController {
     private  final PostService postService;
 
     @PostMapping("/{postId}")
-    public String toggleLike(@PathVariable("postId") long postId, Model model,
+    public String toggleLike(@PathVariable("postId") Long postId, Model model,
                              @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(postId);
 

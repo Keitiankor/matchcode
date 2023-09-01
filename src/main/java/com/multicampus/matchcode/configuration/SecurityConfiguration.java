@@ -1,4 +1,4 @@
-package com.multicampus.matchcode.security;
+package com.multicampus.matchcode.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

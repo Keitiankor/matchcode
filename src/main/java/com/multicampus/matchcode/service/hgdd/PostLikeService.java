@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.service.hgdd;
 
 import com.multicampus.matchcode.model.entity.PostLikeDTO;
-import com.multicampus.matchcode.repository.MemberRepository;
 import com.multicampus.matchcode.repository.PostLikeRepository;
 import com.multicampus.matchcode.repository.PostRepository;
 import lombok.RequiredArgsConstructor;

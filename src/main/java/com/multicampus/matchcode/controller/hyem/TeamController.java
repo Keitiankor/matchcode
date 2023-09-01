@@ -46,10 +46,7 @@ public class TeamController {
 
     // 팀 리스트
     @GetMapping("/list")
-    public String teamList(
-        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-        Model model
-    ) {
+    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<TeamDTO> list = teamService.teamList(pageable);
         int nowPage = list.getPageable().getPageNumber() + 1;
 
