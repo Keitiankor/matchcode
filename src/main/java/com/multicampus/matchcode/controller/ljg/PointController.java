@@ -1,5 +1,6 @@
 package com.multicampus.matchcode.controller.ljg;
 
+import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
@@ -27,11 +28,10 @@ public class PointController {
     public String viewPointPage(
         @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
         Long memberId,
-        Model model
-    ) {
+        Model model) {
         System.out.println(member.getId());
         if (member != null) {
-            List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId()); //(1/*member.getId()*/);//memberId추가
+            List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
             chargeHistories.sort(Comparator.comparing(PointDTO::getDate).reversed());
             int totalPoints = pointService.calculateTotalPoints(chargeHistories); // 수정: 총 포인트 계산
             List<PointDTO> pointUseHistories = pointService.findAllByMemberId(member.getId()); //포인트 사용내역
@@ -62,11 +62,11 @@ public class PointController {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         PointDTO pointDTO = PointDTO.builder().date(date).details("충전").memberId(member.getId()).point(point).build();
         System.out.println(pointDTO);
-        pointService.pointCharge(pointDTO); // Call the pointCharge method to save the point
-        return "success"; // Return a success message
+        pointService.pointCharge(pointDTO);
+        return "success";
     }
 
-    /////////////////
+
     @GetMapping("/test3")
     public String pointCharge2() {
         return "/ljg/pointCharge2";
@@ -84,23 +84,26 @@ public class PointController {
         return "success"; // Return a success message
     }
 
-    /////////////////////////
-    //포인트 사용 내역
-    //결제페이지//////////////////////////////////
+
+
+    //결제페이지
     @GetMapping("/payPage")
     public String payPage(
         @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
         Model model
     ) {
-        //long memberId = 1;
-        // Long memberId = member.getId();
+        MatchDTO matchDTO = new MatchDTO();
+
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
+
         model.addAttribute("totalPoints", totalPoints);
+        model.addAttribute("mapId", matchDTO.getMapId());
+        System.out.println(matchDTO);
         return "/ljg/payPage"; // PayPage 템플릿의 이름
     }
 
-    ////////////////환불페이지//////////////
+    //환불페이지
     @GetMapping("/refund")
     public String refundPoint(
         @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO member,
@@ -123,7 +126,7 @@ public class PointController {
             .builder()
             .date(date)
             .details("환불")
-            .memberId(member.getId()) // Set refundAmount here
+            .memberId(member.getId())
             .point(-refundAmount)
             .build();
         pointService.refundPoints(pointDTO);
@@ -134,13 +137,14 @@ public class PointController {
         }
     }
 
-    ////////결제처리///////
+    //결제처리
     @GetMapping("/payPoint")
     public String payPoints(HttpServletRequest request, ReserveRequest reserveRequest) {
         pointService.payPoints(reserveRequest);
         request.getSession().setAttribute(SessionConstant.MEMBER_ID, reserveRequest.getMemberId());
         return "";
     }
+
 }
 //포인트환불
 //    @GetMapping("/refundPoint")

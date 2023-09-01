@@ -6,12 +6,47 @@
     <title>결제하기 버튼</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    <link rel="stylesheet" href="/css/ljg/pointCharge.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .card-body {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .box-radio-input {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
 
 </head>
 <body>
 <div class="card-body bg-white mt-0 shadow">
-    <p style="font-weight: bold">카카오페이 현재 사용가능</p>
+    <p style="font-weight: bold">카카오페이 충전</p>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="1000"><span>1,000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>10,000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="15000"><span>15,000원</span></label>
@@ -24,7 +59,8 @@
     <p  style="color: #ac2925; margin-top: 30px">카카오페이의 최소 충전금액은 1,000원이며 <br/>최대 충전금액은 50,000원 입니다.</p>
     <button type="button" class="btn btn-lg btn-block  btn-custom" id="charge_kakao">충 전 하 기</button>
 </div>
-<script src="/js/ljg/pointCharge.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
