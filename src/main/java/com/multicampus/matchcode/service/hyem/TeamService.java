@@ -1,9 +1,7 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamDTO;
-import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
-import com.multicampus.matchcode.model.request.hyem.TeamMemberRequest;
 import com.multicampus.matchcode.repository.RecruitRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import com.multicampus.matchcode.repository.TeamRepository;
@@ -29,16 +27,15 @@ public class TeamService {
 
     // 팀 생성
     public void createTeam(TeamCreateRequest request) {
-        TeamDTO dto = TeamDTO
-                .builder()
-                .sportsId(request.getSportsId())
-                .teamName(request.getTeamName())
-                .uri(request.getUri())
-                .useWeek(request.getUseWeek())
-                .useTime(request.getUseTime())
-                .averageAge(request.getAverageAge())
-                .averageGender(request.getAverageGender())
-                .build();
+        TeamDTO dto = TeamDTO.builder()
+                             .sportsId(request.getSportsId())
+                             .teamName(request.getTeamName())
+                             .uri(request.getUri())
+                             .useWeek(request.getUseWeek())
+                             .useTime(request.getUseTime())
+                             .averageAge(request.getAverageAge())
+                             .averageGender(request.getAverageGender())
+                             .build();
 
         teamRepository.save(dto);
 
@@ -59,26 +56,25 @@ public class TeamService {
 
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {
-        return teamRepository.findById(id).get();
+        return teamRepository.findById(id)
+                             .get();
     }
 
     // 팀 정보 수정
     public TeamDTO teamUpdate(long id, TeamCreateRequest request) {
-        TeamDTO existingTeam = teamRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
+        TeamDTO existingTeam = teamRepository.findById(id)
+                                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
 
-        TeamDTO updatedTeam = TeamDTO
-                .builder()
-                .id(existingTeam.getId())
-                .sportsId(request.getSportsId())
-                .teamName(request.getTeamName())
-                .uri(request.getUri())
-                .useWeek(request.getUseWeek())
-                .useTime(request.getUseTime())
-                .averageAge(request.getAverageAge())
-                .averageGender(request.getAverageGender())
-                .build();
+        TeamDTO updatedTeam = TeamDTO.builder()
+                                     .id(existingTeam.getId())
+                                     .sportsId(request.getSportsId())
+                                     .teamName(request.getTeamName())
+                                     .uri(request.getUri())
+                                     .useWeek(request.getUseWeek())
+                                     .useTime(request.getUseTime())
+                                     .averageAge(request.getAverageAge())
+                                     .averageGender(request.getAverageGender())
+                                     .build();
 
         return teamRepository.save(updatedTeam);
     }
@@ -86,14 +82,15 @@ public class TeamService {
     // 팀 삭제
     @Transactional
     public void teamDelete(long id) {
-        if(recruitRepository.findByTeamId(id) != null) {
+        if (recruitRepository.findByTeamId(id)
+                             .isPresent()) {
             recruitRepository.deleteRecruitsByTeamId(id);
         }
         teamRepository.deleteById(id);
     }
 
     // 모집글이 있는 팀 정보
-    public Page<TeamDTO> teamViewWithRecruit(Pageable pageable){
+    public Page<TeamDTO> teamViewWithRecruit(Pageable pageable) {
         return teamRepository.findAllWithRecruit(pageable);
     }
 }

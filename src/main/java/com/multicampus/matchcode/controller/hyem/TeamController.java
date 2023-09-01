@@ -3,7 +3,6 @@ package com.multicampus.matchcode.controller.hyem;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
-import com.multicampus.matchcode.model.request.hyem.TeamMemberRequest;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.TeamMemService;
 import com.multicampus.matchcode.service.hyem.TeamService;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +29,11 @@ public class TeamController {
 
     // 팀 생성하기
     @GetMapping("/create")
-    public String createTeam(@ModelAttribute("team") TeamDTO teamDTO,
-                          @ModelAttribute("member") TeamMemberDTO teamMemberDTO,
-                          @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-                          Model model) {
+    public String createTeam(
+            @ModelAttribute("team") TeamDTO teamDTO,
+            @ModelAttribute("member") TeamMemberDTO teamMemberDTO,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+            Model model) {
         if (memberDTO != null) {
             model.addAttribute("userid", memberDTO.getId());
             return "hyem/team/createteam";
@@ -46,9 +45,10 @@ public class TeamController {
     }
 
     @PostMapping("/create")
-    public String createTeamPro(@ModelAttribute("team") TeamCreateRequest request_team,
-                                   @SessionAttribute(name= SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
-                                   Model model) throws Exception {
+    public String createTeamPro(
+            @ModelAttribute("team") TeamCreateRequest request_team,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+            Model model) throws Exception {
         teamService.createTeam(request_team);
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
@@ -57,9 +57,12 @@ public class TeamController {
 
     // 팀 리스트
     @GetMapping("/list")
-    public String teamList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String teamList(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model) {
         Page<TeamDTO> list = teamService.teamList(pageable);
-        int nowPage = list.getPageable().getPageNumber() + 1;
+        int nowPage = list.getPageable()
+                          .getPageNumber() + 1;
 
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
