@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 public class PostUpdateRequest {
 
-    private Timestamp createdDate;
+    /*private Timestamp createdDate;*/
     private String title;
     private String content;
     private boolean privates;
