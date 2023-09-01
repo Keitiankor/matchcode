@@ -103,7 +103,7 @@ public class PostController {
 
     //게시글 열람
     @GetMapping("/view")
-    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_ID, required = false) MemberDTO memberDTO) {
+    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
 
         model.addAttribute("post", postService.view(id));
@@ -169,17 +169,4 @@ public class PostController {
         return "hgdd/message";
     }
 
-    //신고
-    @PostMapping("/declation/{postId}")
-    public String reportPost(@PathVariable Long postId, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        if (memberDTO != null) {
-            System.out.println(memberDTO.getId());
-            postService.declations(postId);
-            return "redirect:/post/view?id=" + postId;
-        } else {
-            model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
-            model.addAttribute("searchUrl", "/login"); //이동하는 경로
-            return "hgdd/message";
-        }
-    }*/
 }
