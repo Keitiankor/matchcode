@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -21,10 +22,10 @@ public class MatchDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private long mapId;
     private long sportsId;
     private Timestamp matchDate;
+    @CreationTimestamp
     private Timestamp createdDate;
     private Timestamp expireDate;
     private int restrictionMinRate;

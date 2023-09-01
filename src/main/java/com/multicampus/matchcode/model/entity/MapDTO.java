@@ -19,7 +19,6 @@ public class MapDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private long areaId;
     private long sportsId;
     private double latitude;

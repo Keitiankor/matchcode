@@ -16,7 +16,8 @@ public enum Age {
 
     public static String getDescriptionFromCount(Integer count) {
         for (Age age : Age.values()) {
-            if (age.getCount().equals(count)) {
+            if (age.getCount()
+                   .equals(count)) {
                 return age.getDescription();
             }
         }

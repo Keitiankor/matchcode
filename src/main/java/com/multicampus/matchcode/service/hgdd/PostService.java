@@ -30,7 +30,13 @@ public class PostService {
 
     //게시글 작성
     public void insert(PostInsertRequest request, MemberDTO member) {
-        PostDTO dto = PostDTO.builder().title(request.getTitle()).content(request.getContent()).memberId(member.getId()).writer(member.getName()).privates(request.isPrivates()).build();
+        PostDTO dto = PostDTO.builder()
+                             .title(request.getTitle())
+                             .content(request.getContent())
+                             .memberId(member.getId())
+                             .writer(member.getName())
+                             .privates(request.isPrivates())
+                             .build();
         postRepository.save(dto);
     }
 
@@ -66,21 +72,32 @@ public class PostService {
 
     // 게시글 열람
     public PostDTO view(long id) {
-        return postRepository.findById(id).get();
+        return postRepository.findById(id)
+                             .get();
     }
 
     //게시글 업데이트
     public PostDTO update(long id, PostUpdateRequest request) {
-        PostDTO post = postRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
+        PostDTO post = postRepository.findById(id)
+                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
 
-        PostDTO update = PostDTO.builder().id(post.getId()).memberId(post.getMemberId()).content(request.getContent()).title(request.getTitle()).views(post.getViews()).createdDate(post.getCreatedDate()).privates(request.isPrivates()).writer(post.getWriter()).build();
+        PostDTO update = PostDTO.builder()
+                                .id(post.getId())
+                                .memberId(post.getMemberId())
+                                .content(request.getContent())
+                                .title(request.getTitle())
+                                .views(post.getViews())
+                                .createdDate(post.getCreatedDate())
+                                .privates(request.isPrivates())
+                                .writer(post.getWriter())
+                                .build();
 
         return postRepository.save(update);
     }
 
     //조회수 증가
     @Transactional
-    public int views(Long id) {
+    public int views(long id) {
         return postRepository.updateView(id);
     }
 
@@ -89,10 +106,10 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    @Transactional
-    public int declations(Long id) {
+/*    @Transactional
+    public int declations(long id) {
         return postRepository.updatedeclation(id);
-    }
+    }*/
 
     public List<PostDTO> listTop3ByLikes() {
         return postRepository.findTop3ByOrderByLikesDesc(); // 좋아요가 제일 많은 순서로 상위 3개 검색

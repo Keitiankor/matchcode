@@ -22,19 +22,16 @@ public class PostDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private long memberId;
     private String title;
     private String content;
     private String writer;
-
     @CreationTimestamp
     private Timestamp createdDate;
-
     @UpdateTimestamp
     private Timestamp editedDate;
-
     private int views;
     private int likes;
     private boolean privates;

@@ -6,10 +6,13 @@ import com.multicampus.matchcode.model.request.keitian.RegisterRequest;
 import com.multicampus.matchcode.service.keitian.MemberService;
 import com.multicampus.matchcode.util.component.MailComponent;
 import com.multicampus.matchcode.util.constants.SessionConstant;
+import com.multicampus.matchcode.util.constants.StringConstant;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -19,7 +22,7 @@ public class MemberController {
     MemberService service;
 
     @Autowired
-    MailComponent mailSender;
+    MailComponent mailComponent;
 
     @GetMapping("login")
     public String gMemberLogin(@SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO dto) {
@@ -63,15 +66,19 @@ public class MemberController {
     @PostMapping("register/accountduplicationcheck")
     @ResponseBody
     public boolean pAccountNotDupe(@RequestParam String account) {
-        return service.isAccountDup(account);
+        return service
+                .isAccountDup(account)
+                .isEmpty();
     }
 
     @PostMapping("register/emailverifying")
     @ResponseBody
     public String pMemberRegisterEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
-        String verifyString = mailSender.sendVerifyingMail(mailAddress);
+        String verifyString = mailComponent.sendVerifyingMail(mailAddress);
         if (verifyString != null) {
-            hRequest.getSession(false).setAttribute(SessionConstant.VERIFY_STRING, verifyString);
+            hRequest
+                    .getSession(false)
+                    .setAttribute(SessionConstant.VERIFY_STRING, verifyString);
             return "메일이 정상 발송되었습니다.";
         }
         return "메일 발송중 오류가 발생했습니다.";
@@ -79,18 +86,34 @@ public class MemberController {
 
     @PostMapping("register/verifyingcheck")
     @ResponseBody
-    public Boolean pMemberVerifyingCheck(@SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString, @RequestParam String inputString) {
+    public Boolean pMemberVerifyingCheck(
+            @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
+            @RequestParam String inputString
+    ) {
         return verifyString.equals(inputString);
     }
 
-    @GetMapping("login/findpw")
+    @GetMapping("findpassword")
     public String gFindpw() {
         return "keitian/findpw";
     }
 
-    @PostMapping("login/findpw")
+    @PostMapping("findpassword/requestpassword")
     @ResponseBody
-    public String pFindpw(String email) {
-        return "";
+    public String pFindpw(String account, String mailAddress) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("noAccount", StringConstant.NO_ACCOUNT);
+        jsonObject.addProperty("noMatchEmail", StringConstant.NO_MATCH_EMAIL);
+        jsonObject.addProperty("tempPassword", service.findPassword(account, mailAddress));
+        return jsonObject.toString();
+    }
+
+    @GetMapping("login/changepassword")
+    public String gChangePassword() {
+        return "keitian/changepassword";
+    }
+
+    @PostMapping("changepassword")
+    public void pChangePassword() {
     }
 }

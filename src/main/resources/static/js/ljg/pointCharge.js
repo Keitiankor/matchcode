@@ -1,5 +1,6 @@
 $(function() {
-    $("#charge_kakao").click(function() {
+    $("#charge_kakao").on("click",function() {
+        alert("???");
         // getter
         var IMP = window.IMP;
         IMP.init("imp22284462");
@@ -28,12 +29,11 @@ $(function() {
                     msg += "결제 금액 : " + rsp.paid_amount;
                     msg += "카드 승인번호 : " + rsp.apply_num;
 
-                    //location.href = "/point?memberId=" + 1 + "&point=" + money
                     $.ajax({
-                        type: "GET",
+                        method: "GET",
                         url: "/chargePoint", //충전 금액값을 보낼 url 설정
                         data: {
-                            memberId: 1,
+                            memberId: $("#memberId").val(),
                             point: money
                         },
                         success: function() {

@@ -21,6 +21,5 @@ public class MatchMemberDTO {
     private long id;
 
     private long matchId;
-    //@OneToOne(mappedBy = "matchmember")
     private long memberId;
 }
