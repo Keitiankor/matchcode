@@ -6,6 +6,8 @@ import com.multicampus.matchcode.model.request.keitian.RegisterRequest;
 import com.multicampus.matchcode.service.keitian.MemberService;
 import com.multicampus.matchcode.util.component.MailComponent;
 import com.multicampus.matchcode.util.constants.SessionConstant;
+import com.multicampus.matchcode.util.constants.StringConstant;
+import com.nimbusds.jose.shaded.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,9 @@ public class MemberController {
     @PostMapping("register/accountduplicationcheck")
     @ResponseBody
     public boolean pAccountNotDupe(@RequestParam String account) {
-        return service.isAccountDup(account)
-                      .isEmpty();
+        return service
+                .isAccountDup(account)
+                .isEmpty();
     }
 
     @PostMapping("register/emailverifying")
@@ -72,7 +75,8 @@ public class MemberController {
     public String pMemberRegisterEmailVerify(HttpServletRequest hRequest, @RequestParam String mailAddress) {
         String verifyString = mailComponent.sendVerifyingMail(mailAddress);
         if (verifyString != null) {
-            hRequest.getSession(false)
+            hRequest
+                    .getSession(false)
                     .setAttribute(SessionConstant.VERIFY_STRING, verifyString);
             return "메일이 정상 발송되었습니다.";
         }
@@ -83,18 +87,37 @@ public class MemberController {
     @ResponseBody
     public Boolean pMemberVerifyingCheck(
             @SessionAttribute(name = SessionConstant.VERIFY_STRING, required = true) String verifyString,
-            @RequestParam String inputString) {
+            @RequestParam String inputString
+    ) {
         return verifyString.equals(inputString);
     }
 
-    @GetMapping("login/findpw")
+    @GetMapping("findpassword")
     public String gFindpw() {
         return "keitian/findpw";
     }
 
-    @PostMapping("login/findpw")
+    @PostMapping("findpassword/requestpassword")
     @ResponseBody
     public String pFindpw(String account, String mailAddress) {
-        return service.findPassword(account, mailAddress);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("noAccount", StringConstant.NO_ACCOUNT);
+        jsonObject.addProperty("noMatchEmail", StringConstant.NO_MATCH_EMAIL);
+        jsonObject.addProperty("tempPassword", service.findPassword(account, mailAddress));
+        return jsonObject.toString();
+    }
+
+    @GetMapping("changepassword")
+    public String gChangePassword() {
+        return "keitian/changepassword";
+    }
+
+    @PostMapping("changepassword/requestchange")
+    @ResponseBody
+    public boolean pChangePassword(
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO dto, String oldPassword, String newPassword
+    ) {
+        return service.changePassword(dto, oldPassword, newPassword);
+
     }
 }

@@ -20,18 +20,20 @@ public class ReplyService {
 
     //댓글 저장
     public Long save(ReplyRequest requst, long memberId, long postId) {
-        ReplyDTO replyDTO = ReplyDTO.builder()
-                                    .postId(postId)
-                                    .memberId(memberId)
-                                    .comment(requst.getComment())
-                                    .build();
+        ReplyDTO replyDTO = ReplyDTO
+                .builder()
+                .postId(postId)
+                .memberId(memberId)
+                .comment(requst.getComment())
+                .build();
         replyRepository.save(replyDTO);
         return null;
     }
 
     public ReplyDTO view(long id) {
-        return replyRepository.findById(id)
-                              .get();
+        return replyRepository
+                .findById(id)
+                .get();
     }
 
     //댓글 리스트

@@ -1,5 +1,5 @@
 $(function() {
-    $("#charge_kakao").on("click",function() {
+    $("#charge_kakao").on("click", function() {
         alert("???");
         // getter
         var IMP = window.IMP;

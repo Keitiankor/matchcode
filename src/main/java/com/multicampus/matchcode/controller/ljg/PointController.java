@@ -98,8 +98,7 @@ public class PointController {
         return "success";
     }
 
-
-    //결제페이지
+  //결제페이지
     @GetMapping("/payPage")
     public String payPage(
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
@@ -158,8 +157,4 @@ public class PointController {
             return "failure";
         }
     }
-
-
-
-
 }

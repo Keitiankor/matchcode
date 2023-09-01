@@ -4,7 +4,6 @@ package com.multicampus.matchcode.controller.hgdd;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.service.hgdd.DeclationService;
-import com.multicampus.matchcode.service.hgdd.PostLikeService;
 import com.multicampus.matchcode.service.hgdd.PostService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @RequiredArgsConstructor
 public class DeclationController {
 
-    private final  DeclationService declationService ;
-    private  final PostService postService;
+    private final DeclationService declationService;
+    private final PostService postService;
 
     @PostMapping("/{postId}")
-    public String toggleDeclation(@PathVariable("postId") Long postId, Model model,
-                             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String toggleDeclation(
+            @PathVariable("postId") Long postId,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         PostDTO post = postService.view(postId);
 
         if (memberDTO != null) {
@@ -34,8 +36,7 @@ public class DeclationController {
             System.out.println(postId);
             declationService.toggleDeclaration(postId, memberDTO.getId()); // 게시글 좋아요 토글 서비스 호출
             return "redirect:/post/view?id=" + postId; // 게시글 상세 페이지로 이동
-        }
-        else {
+        } else {
             model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
             model.addAttribute("searchUrl", "/login"); //이동하는 경로
 

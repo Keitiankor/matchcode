@@ -15,14 +15,14 @@
             <table class="table">
                 <tr>
                     <th>팀명</th>
-                    <td th:text="${recruit.teamId.teamName}"></td>
+                    <td th:text="${team.teamName}"></td>
                 </tr>
                 <tr>
                     <th>선호 스포츠</th>
                     <td>
-                <span th:each="num : ${#numbers.sequence(0, recruit.teamId.sportsId.size() - 1)}">
+                <span th:each="num : ${#numbers.sequence(0, team.sportsId.size() - 1)}">
                     <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(recruit.teamId.sportsId[num])}">
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(team.sportsId[num])}">
                     </span>
                 </span>
                     </td>
@@ -30,43 +30,32 @@
                 <tr>
                     <th>이용 요일</th>
                     <td>
-                <span th:each="num : ${#numbers.sequence(0, recruit.teamId.useWeek.size() - 1)}">
+                <span th:each="num : ${#numbers.sequence(0, team.useWeek.size() - 1)}">
                     <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(recruit.teamId.useWeek[num])}">
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(team.useWeek[num])}">
                     </span>
                 </span>
                     </td>
                 </tr>
                 <tr>
                     <th>이용 시간</th>
-                    <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Time).getDescriptionFromCount(recruit.teamId.useTime)}"></td>
+                    <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Time).getDescriptionFromCount(team.useTime)}"></td>
                 </tr>
                 <tr>
                     <th>평균 연령</th>
                     <td>
-                <span th:each="num : ${#numbers.sequence(0, recruit.teamId.averageAge.size() - 1)}">
+                <span th:each="num : ${#numbers.sequence(0, team.averageAge.size() - 1)}">
                     <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Age).getDescriptionFromCount(recruit.teamId.averageAge[num])}">
+                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Age).getDescriptionFromCount(team.averageAge[num])}">
                     </span>
                 </span>
                     </td>
                 </tr>
                 <tr>
                     <th>평균 성별</th>
-                    <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(recruit.teamId.averageGender)}"></td>
+                    <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-            <!--    <script>
-                    async function fetchHtmlAsText(url) {
-                        return await (await fetch(url)).text();
-                    }
-
-                    async function importPage(target) {
-                        document.querySelector('#' + target).innerHTML = await fetchHtmlAsText(target + '.html');
-                    }
-
-                    importPage('hyem/team/teamlist')
-                </script>-->
         </div>
         <div class="container mt-3">
             <div>
@@ -74,7 +63,7 @@
             </div>
 
             <button class="btn btn-primary">
-                <a style="color: white; text-decoration: none;" th:href="@{/application/join/{id}(id = ${recruit.teamId.id})}">가입신청하기</a>
+                <a style="color: white; text-decoration: none;" th:href="@{/application/join/{id}(id = ${recruit.teamId})}">가입신청하기</a>
             </button>
             <button class="btn btn-info">
                 <a style="color: white; text-decoration: none;" th:href="@{/recruit/modify/{id}(id = ${recruit.id})}">모집글 내용 수정</a>

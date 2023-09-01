@@ -33,7 +33,7 @@
                         <div class="form-check" th:each="sport : ${sports}">
                             <input class="form-check-input" id="sport"
                                    name="sportsId" th:field="*{sportsId}" th:value="${sport.count}" type="checkbox">
-                            <label class="form-check-label" th:text="${sport.name()}"></label>
+                            <label class="form-check-label" th:text="${sport.description}"></label>
                         </div>
                     </div>
                     <p>성별</p>
@@ -41,7 +41,7 @@
                         <div class="form-check" th:each="gender : ${genders}">
                             <input class="form-check-input" id="gender"
                                    name="averageGender" th:field="*{averageGender}" th:value="${gender.count}" type="radio">
-                            <label class="form-check-label" th:text="${gender.name()}"></label>
+                            <label class="form-check-label" th:text="${gender.description}"></label>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                         <div class="form-check" th:each="week : ${weeks}">
                             <input class="form-check-input" id="week"
                                    name="useWeek" th:field="*{useWeek}" th:value="${week.count}" type="checkbox">
-                            <label class="form-check-label" th:text="${week.name()}"></label>
+                            <label class="form-check-label" th:text="${week.description}"></label>
                         </div>
                     </div>
 
@@ -68,7 +68,7 @@
                         <div class="form-check" th:each="time : ${times}">
                             <input class="form-check-input" id="time"
                                    name="useTime" th:field="*{useTime}" th:value="${time.count}" type="radio">
-                            <label class="form-check-label" th:text="${time.name()}"></label>
+                            <label class="form-check-label" th:text="${time.description}"></label>
                         </div>
                     </div>
 
