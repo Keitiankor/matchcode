@@ -44,14 +44,16 @@
                     </button>
                 </form>
             <td><a th:text="${post.likes}"></a></td>
-            <!--신고 버튼-->
-            <td>
-                <form method="post" th:action="@{/post/declation/{postId}(postId=${post.id})}">
-                    <button class="btn-outline-danger" type="submit">신고</button>
-                </form>
-            </td>
-            </th>
 
+            <!--신고 버튼-->
+            <th>
+                <form method="post" th:action="@{/declation/{postId}(postId=${post.id})}">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <span th:if="${declation}">신고 </span>
+                        <span th:unless="${declation}">신고 취소</span>
+                    </button>
+                </form>
+            <td><a th:text="${post.declation}"></a></td>
 
             <!--댓글 입력-->
             <div class="card">

@@ -89,10 +89,10 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    @Transactional
+/*    @Transactional
     public int declations(long id) {
         return postRepository.updatedeclation(id);
-    }
+    }*/
 
     public List<PostDTO> listTop3ByLikes() {
         return postRepository.findTop3ByOrderByLikesDesc(); // 좋아요가 제일 많은 순서로 상위 3개 검색
