@@ -10,18 +10,20 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" type="text/javascript"></script>
         <title th:replace="${title}"></title>
     </head>
-    <header class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" th:fragment="topper">
-        <a class="navbar-brand" th:href="@{/}">Match Code</a>
+    <header style="align-content: center" class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" th:fragment="topper">
+        <a style="margin-left: 20px" class="navbar-brand" th:href="@{/}">Match Code</a>
         <div class="ms-3 navbar-nav">
             <div class="nav-item"><a class="nav-link" th:href="@{/post/list}">게시판</a></div>
-            <div class="nav-item"><a class="nav-link" th:href="@{/team/list}">팀 목록</a></div>
+            <div class="nav-item"><a class="nav-link" th:href="@{/recruit/list}">팀 목록</a></div>
             <div class="nav-item"><a class="nav-link" th:href="@{/match/list}">매칭 목록</a></div>
-            <div class="nav-item"><a class="nav-link" th:href="@{/point}">포인트</a></div>
+            <div class="nav-item"><a class="nav-link" th:href="@{/sportCenter/listSportCenter}">경기장 목록</a></div>
+            <div class="nav-item"><a class="nav-link" th:href="@{/review/listReview}">리뷰</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/point}">포인트</a></div>
         </div>
         <div class="me-lg-3 position-absolute end-0 navbar-nav">
-            <div class="nav-item" th:if="${session.containsKey('memberId') == false}"><a class="nav-link" th:href="@{/login}">로그인</a></div>
-            <div class="nav-item" th:if="${session.containsKey('memberId') == true}"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></div>
-            <div class="nav-item" th:if="${session.containsKey('memberId') == true}"><a class="nav-link" th:href="@{/logout}">로그아웃</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') == null}"><a class="nav-link" th:href="@{/login}">로그인</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/logout}">로그아웃</a></div>
         </div>
     </header>
 </html>

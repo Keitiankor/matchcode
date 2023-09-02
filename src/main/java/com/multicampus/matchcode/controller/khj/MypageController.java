@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MypageController {
@@ -120,10 +122,13 @@ public class MypageController {
         List<PostDTO> myPosts = MyPost.getMyPostsByMemberId(memberId);
         List<ReplyDTO> myReplies = MyPost.getMyRepliesByMemberId(memberId);
 
-        List<PostDTO> fivePosts = myPosts.subList(0, Math.min(myPosts.size(), 5));
-        //게시물 최근 5개까지만 보여주기
-        List<ReplyDTO> fiveReplies = myReplies.subList(0, Math.min(myReplies.size(), 5));
-        //게시물 최근 5개까지만 보여주기
+        // 게시글을 최신 날짜 기준으로 정렬 후 상위 5개 게시글만 추출
+        myPosts.sort(Comparator.comparing(PostDTO::getCreatedDate).reversed());
+        List<PostDTO> fivePosts = myPosts.stream().limit(5).collect(Collectors.toList());
+
+        // 댓글도 최신 날짜 기준, 상위 5개 정렬
+        myReplies.sort(Comparator.comparing(ReplyDTO::getCreatedDate).reversed());
+        List<ReplyDTO> fiveReplies = myReplies.stream().limit(5).collect(Collectors.toList());
 
         model.addAttribute("myPosts", fivePosts);
         model.addAttribute("myReplies", fiveReplies);

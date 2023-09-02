@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.repository.ApplicationRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,30 +12,48 @@ public class TeamMemberService {
     @Autowired
     private TeamMemberRepository teamMemberRepository;
 
+    @Autowired
+    private ApplicationRepository applicationRepository;
+
     // 팀장 추가
-    public void addTeamLeader(long teamid, long mamberid) {
+    public void addTeamLeader(long teamId, long memberId) {
         TeamMemberDTO dto = TeamMemberDTO
                 .builder()
-                .memberId(mamberid)
-                .teamId(teamid)
+                .memberId(memberId)
+                .teamId(teamId)
                 .privilege(1) // 0 : 관리자, 1 : 팀장, 2 : 팀원
                 .build();
         teamMemberRepository.save(dto);
     }
 
     // 팀원 추가
-    public void addTeamMember() {
+    public void addTeamMember(long teamId, long memberId) {
         TeamMemberDTO dto = TeamMemberDTO
                 .builder()
+                .teamId(teamId)
+                .memberId(memberId)
                 .privilege(2) // 0 : 관리자, 1 : 팀장, 2 : 팀원
                 .build();
         teamMemberRepository.save(dto);
     }
 
     // 팀원 확인
-    public boolean isTeamMember(long memberid) {
-        //return teamMemberRepository.findTeamMember(memberid);
-        return teamMemberRepository.existsByMemberId(memberid);
+    public boolean isTeamMember(long memberId) {
+        return teamMemberRepository.existsByMemberId(memberId);
+    }
+
+    // 팀장 권한 확인
+    public Integer isTeamLeader(long teamId, long memberId) {
+        Integer privilege = teamMemberRepository.findPrivilegeByTeamIdAndMemberId(teamId, memberId);
+        if (privilege == null) {
+           return 0;
+        }
+        return privilege;
+    }
+
+    // 신청자 확인
+    public boolean isApplicatedMember(long teamId, long memberId) {
+        return applicationRepository.findByMemberIdAndTeamId(teamId, memberId);
     }
 
     /*// 팀 리스트 처리

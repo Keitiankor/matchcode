@@ -71,9 +71,6 @@ public class MypageService {
                               .get()
                               .getName())
                 .point(sum)
-                .communityLevel(memberDTO
-                                        .get()
-                                        .getCommunityLevel())
                 .teamName(teamName)
                 .build();
     }

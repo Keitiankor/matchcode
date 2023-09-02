@@ -67,22 +67,20 @@ public class PointService {
     public long payPoints(ReserveRequest request) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
 
-        PointDTO pointDTO = PointDTO
-                .builder()
-                .date(date)
-                .memberId(request.getMemberId())
-                .point(-request.getPricePoints()) // Deducted points as a negative value
-                .build();
+        PointDTO pointDTO = PointDTO.builder()
+                                    .date(date)
+                                    .details("결제")
+                                    .memberId(request.getMemberId())
+                                    .point(-request.getPrice()) // Deducted points as a negative value
+                                    .build();
 
-        MatchDTO matchDTO = MatchDTO
-                .builder()
-                .mapId(request.getMapId())
-                .matchDate(request.getMatchDate())
-                .build();
+        MatchDTO matchDTO = MatchDTO.builder()
+                                    .mapId(request.getMapId())
+                                    .matchDate(request.getMatchDate())
+                                    .build();
 
-        return matchRepository
-                .save(matchDTO)
-                .getId();
+        return matchRepository.save(matchDTO)
+                              .getId();
     }
 
     public PointDTO refundPoints(PointDTO dto) {
