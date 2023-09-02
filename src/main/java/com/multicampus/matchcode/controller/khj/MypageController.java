@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MypageController {
@@ -44,12 +46,10 @@ public class MypageController {
             // 로그인하지 않은 경우, 알림 메시지 화면으로 이동
             return "khj/message";
         }
-
         MemberInfoRequest memberInfo = service.getMemberInfo(memberId);
         model.addAttribute("memberInfo", memberInfo);
         return "khj/mypage";
     }
-
     //매치히스토리
 
     @GetMapping("matchhistory")
@@ -64,7 +64,6 @@ public class MypageController {
         List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
                                                                                                       memberId
         );
-
         model.addAttribute("rating", ratingRequest);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
@@ -77,9 +76,7 @@ public class MypageController {
         System.out.println(matchId);
         return myHistoryService.getMembersByMatchId(Long.parseLong(matchId));
     }
-
     //매너온도 증감은 지금은 잘 몰라서 보류.
-
     //    //매치 멤버 id로 매치 멤버의 매너온도 조작
     //    //매너온도 증가시
     //    @PostMapping
@@ -102,39 +99,44 @@ public class MypageController {
     //            return ResponseEntity.badRequest().body("Failed to decrease manner");
     //        }
     //    }
-
     //개인정보
 
     @GetMapping("personal")
     public String personal(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
-
         model.addAttribute("member", member);
         return "khj/personal";
     }
-
     //내 게시물
 
     @GetMapping("mypost")
     public String mypost(Model model, @ModelAttribute("memberId") long memberId) {
         List<PostDTO> myPosts = MyPost.getMyPostsByMemberId(memberId);
         List<ReplyDTO> myReplies = MyPost.getMyRepliesByMemberId(memberId);
-
-        List<PostDTO> fivePosts = myPosts.subList(0, Math.min(myPosts.size(), 5));
-        //게시물 최근 5개까지만 보여주기
-        List<ReplyDTO> fiveReplies = myReplies.subList(0, Math.min(myReplies.size(), 5));
-        //게시물 최근 5개까지만 보여주기
-
+        // 게시글을 최신 날짜 기준으로 정렬 후 상위 5개 게시글만 추출
+        myPosts.sort(Comparator
+                             .comparing(PostDTO::getCreatedDate)
+                             .reversed());
+        List<PostDTO> fivePosts = myPosts
+                .stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        // 댓글도 최신 날짜 기준, 상위 5개 정렬
+        myReplies.sort(Comparator
+                               .comparing(ReplyDTO::getCreatedDate)
+                               .reversed());
+        List<ReplyDTO> fiveReplies = myReplies
+                .stream()
+                .limit(5)
+                .collect(Collectors.toList());
         model.addAttribute("myPosts", fivePosts);
         model.addAttribute("myReplies", fiveReplies);
-
         return "khj/mypost";
     }
 
     @GetMapping("personalupdate")
     public String personalupdate(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
-
         model.addAttribute("member", member);
         return "khj/personalupdate";
     }

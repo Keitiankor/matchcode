@@ -52,7 +52,6 @@ public class MypageService {
                                                             .get()
                                                             .getTeamId())
                                     : Optional.empty();
-
         String teamName = teamDTO.isPresent()
                           ? teamDTO
                                   .get()
@@ -64,16 +63,12 @@ public class MypageService {
                 sum += dto.getPoint();
             }
         }
-
         return MemberInfoRequest
                 .builder()
                 .name(memberDTO
                               .get()
                               .getName())
                 .point(sum)
-                .communityLevel(memberDTO
-                                        .get()
-                                        .getCommunityLevel())
                 .teamName(teamName)
                 .build();
     }

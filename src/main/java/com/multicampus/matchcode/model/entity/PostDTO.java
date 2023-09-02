@@ -37,4 +37,5 @@ public class PostDTO {
     private boolean privates;
     private int status;
     private int declation;
+    private int sports;
 }

@@ -50,7 +50,6 @@ public class MyHistoryService {
     public List<MatchResultRequest> getMatchResultsBySportsIdAndMemberId(long sportsId, long memberId) {
         List<MatchDTO> matches = getMatchesBySportsId(sportsId);
         List<MatchResultRequest> matchResults = new ArrayList<>();
-
         for (MatchDTO match : matches) {
             ResultDTO result = getResultByMatchId(match.getId(), memberId);
             if (result == null) {
@@ -67,13 +66,11 @@ public class MyHistoryService {
                     .build();
             matchResults.add(matchResult);
         }
-
         return matchResults;
     }
 
     public RatingRequest getRatingBySportsIdAndMemberId(long sportsId, long memberId) {
         Optional<RatingDTO> ratingDTO = rating.findBySportsIdAndMemberId(sportsId, memberId);
-
         if (ratingDTO.isPresent()) {
             Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO
                                                                     .get()
@@ -123,7 +120,6 @@ public class MyHistoryService {
     public List<String> getMembersByMatchId(long matchId) {
         List<MatchMemberDTO> matchMembers = matchmember.findAllByMatchId(matchId);
         List<String> memberNames = new ArrayList<>();
-
         for (MatchMemberDTO matchMember : matchMembers) {
             Optional<MemberDTO> members = member.findById(matchMember.getMemberId());
             if (members.isPresent()) {
@@ -132,11 +128,9 @@ public class MyHistoryService {
                                         .getName());
             }
         }
-
         return memberNames;
     }
     // 매너 점수증감 서비스는 지금은 무리인 것 같다.
-
     //    public boolean increaseManner(long memberId) {
     //        Optional<MemberDTO> memberOptional = member.findById(memberId);
     //        if (memberOptional.isPresent()) {

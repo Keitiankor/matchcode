@@ -66,7 +66,6 @@
                 <input id="rate" max="5" min="1" name="rate" required step="1" type="number" value="1">
                 <label for="content">Content</label>
                 <textarea id="content" name="comment" required rows="10"></textarea>
-
                 <button type="submit">Submit Review</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden"> <!-- Post 방식 이용할때 -->
             </form>

@@ -57,7 +57,6 @@
                     <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-
             <button class="btn btn-primary">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/modify/{uri}/{id}(uri = ${team.uri}, id = ${team.id})}">팀 정보 수정</a>
             </button>

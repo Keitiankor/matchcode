@@ -94,7 +94,6 @@ public class TeamService {
         TeamDTO existingTeam = teamRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found"));
-
         TeamDTO updatedTeam = TeamDTO
                 .builder()
                 .id(existingTeam.getId())
@@ -106,7 +105,6 @@ public class TeamService {
                 .averageAge(request.getAverageAge())
                 .averageGender(request.getAverageGender())
                 .build();
-
         return teamRepository.save(updatedTeam);
     }
 

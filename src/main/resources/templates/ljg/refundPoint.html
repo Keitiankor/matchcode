@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
     </head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <input type="text"  id="memberId" th:value="${memberId}" hidden="hidden">
     <body>
-        <table>
-            <thead>
-                <tr>
-                    <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
-                    <p>얼마를 환불하시겠습니까?
-                        <input id="refundAmount" min="0" type="number">
-                        <button onclick="check2()">환불</button>
-                </tr>
-            </thead>
-        </table>
+        <div th:replace="~{commons :: topper}"></div>
+        <input hidden="hidden" id="memberId" th:value="${memberId}" type="text">
+        <div style="margin-top: 70px">
+            <table>
+                <thead>
+                    <tr>
+                        <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
+                        <p>얼마를 환불하시겠습니까?
+                            <input id="refundAmount" min="0" type="number">
+                            <button onclick="check2()">환불</button>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         <script>
             window.onload = function() {
                 var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
@@ -34,13 +34,14 @@
                     performRefund(refundAmount);
                 }
             }
-            function performRefund(refundAmount){
+
+            function performRefund(refundAmount) {
                 $.ajax({
                     url: "/refundPoint",
                     type: "GET",
                     data: {
                         memberId: $("#memberId").val(),
-                        point: refundAmount,
+                        point: refundAmount
                     },
                     success: function(response) {
                         if (response === "success") {
@@ -59,7 +60,5 @@
                 });
             }
         </script>
-
-
     </body>
 </html>

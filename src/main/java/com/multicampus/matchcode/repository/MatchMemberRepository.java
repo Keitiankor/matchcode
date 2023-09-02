@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface MatchMemberRepository extends JpaRepository<MatchMemberDTO, Long> {
     List<MatchMemberDTO> findAllByMatchId(long matchId);
-
 }
