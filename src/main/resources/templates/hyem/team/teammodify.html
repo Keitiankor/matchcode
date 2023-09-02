@@ -4,9 +4,7 @@
         <meta charset="UTF-8">
         <title>게시물 작성폼</title>
     </head>
-
     <style>
-
         .layout {
             width: 500px;
             margin: 0 auto;
@@ -18,16 +16,13 @@
             box-sizing: border-box;
             margin-top: 10px;
         }
-
     </style>
-
     <body>
         <div class="layout">
             <form method="post" th:action="@{/team/modify/complete/{id}(id = ${team.id})}" th:object="${team}">
                 <fieldset>
                     팀명 <input name="teamName" th:field="*{teamName}" type="text">
                     팀 코드 <input name="uri" th:field="*{uri}" type="text">
-
                     <p>선호 스포츠(중복 선택 가능)</p>
                     <div class="input-group mb-3">
                         <div class="form-check" th:each="sport : ${sports}">
@@ -44,7 +39,6 @@
                             <label class="form-check-label" th:text="${gender.description}"></label>
                         </div>
                     </div>
-
                     <p>주요 나이대(중복 선택 가능)</p>
                     <div class="input-group mb-3">
                         <div class="form-check" th:each="age : ${ages}">
@@ -53,7 +47,6 @@
                             <label class="form-check-label" th:text="${age.description}"></label>
                         </div>
                     </div>
-
                     <p>활동 요일(중복 선택 가능)</p>
                     <div class="input-group mb-3">
                         <div class="form-check" th:each="week : ${weeks}">
@@ -62,7 +55,6 @@
                             <label class="form-check-label" th:text="${week.description}"></label>
                         </div>
                     </div>
-
                     <p>활동 시간</p>
                     <div class="input-group mb-3">
                         <div class="form-check" th:each="time : ${times}">
@@ -71,7 +63,6 @@
                             <label class="form-check-label" th:text="${time.description}"></label>
                         </div>
                     </div>
-
                     <button type="submit">수정</button>
                     <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
                 </fieldset>

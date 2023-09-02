@@ -68,11 +68,9 @@ public class TeamController {
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
-
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
         model.addAttribute("list", list);
-
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
@@ -81,13 +79,17 @@ public class TeamController {
 
     // 팀 상세 정보 열람
     @GetMapping("/view/{uri}/{id}")
-    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
-                           @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String teamView(
+            @PathVariable("uri") String uri,
+            @PathVariable("id") Long id,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         model.addAttribute("team", teamService.teamView(id));
-        if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
-            return  "hyem/team/teaminformation";
+        if (teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
+            return "hyem/team/teaminformation";
         } else if (teamMemberService.isTeamLeader(id, memberDTO.getId()) == 2) {
-            return  "hyem/team/teamview";
+            return "hyem/team/teamview";
         } else {
             model.addAttribute("message", "접근 권한이 없습니다.");
             model.addAttribute("searchUrl", "/team/list"); // 임시 경로이므로 추후에 수정
@@ -124,7 +126,6 @@ public class TeamController {
     @PostMapping("/deleteconfirmed/{id}")
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         teamService.teamDelete(id);
-
         model.addAttribute("message", "팀 삭제가 완료되었습니다.");
         model.addAttribute("searchUrl", "/team/list");
         return "hyem/message";

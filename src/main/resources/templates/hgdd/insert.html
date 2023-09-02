@@ -3,62 +3,49 @@
     <head th:replace="~{commons :: head(~{::title})}">
         <title>Match Code</title>
     </head>
-
     <body>
         <div th:replace="~{commons :: topper}"></div>
         <link href="/css/hgdd/post.css" rel="stylesheet">
         <div style="margin-top: 70px">
-
-
-        <div class="layout">
-            <h1>게시글 작성</h1>
-            <form method="post" th:action="@{/post/insert2}" th:object="${postDTO}">
-
-                <!--제목 입력-->
-                <div class="mb-3">
-                    <label class="form-label" for="exampleFormControlInput1">제목</label>
-                    <input class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하십시오" th:field="*{title}" type="text">
-                </div>
-
-                <!--내용 입력-->
-                <div class="mb-3">
-                    <label class="form-label" for="exampleFormControlTextarea1">내용입력</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="내용을 입력하십시오" rows="3" th:field="*{content}"></textarea>
-                </div>
-
-
-                <!--비공개 -->
-                <input th:field="*{privates}" type="checkbox">비공개<br>
-
-                <br>
-                <div class="form-group">
-                    <label>스포츠 선택:</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sports" id="basketball" value="1">
-                        <label class="form-check-label" for="basketball">농구</label>
+            <div class="layout">
+                <h1>게시글 작성</h1>
+                <form method="post" th:action="@{/post/insert2}" th:object="${postDTO}">
+                    <!--제목 입력-->
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">제목</label>
+                        <input class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하십시오" th:field="*{title}" type="text">
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sports" id="futsal" value="2">
-                        <label class="form-check-label" for="futsal">풋살</label>
+                    <!--내용 입력-->
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlTextarea1">내용입력</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="내용을 입력하십시오" rows="3" th:field="*{content}"></textarea>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sports" id="badminton" value="3">
-                        <label class="form-check-label" for="badminton">배드민턴</label>
+                    <!--비공개 -->
+                    <input th:field="*{privates}" type="checkbox">비공개<br>
+                    <br>
+                    <div class="form-group">
+                        <label>스포츠 선택:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" id="basketball" name="sports" type="radio" value="1">
+                            <label class="form-check-label" for="basketball">농구</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="futsal" name="sports" type="radio" value="2">
+                            <label class="form-check-label" for="futsal">풋살</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="badminton" name="sports" type="radio" value="3">
+                            <label class="form-check-label" for="badminton">배드민턴</label>
+                        </div>
                     </div>
-                </div>
-
-                <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
-                <th>
-                    <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|" type="button">목록으로</button>
-                    <button class="btn btn-outline-secondary" id="button.insert" type="submit">등록</button>
-                    <!-- <input type="text"  th:field="*{memberId}" disabled>-->
-                    <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
-
-                </th>
-
-
-            </form>
-
-        </div>
+                    <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
+                    <th>
+                        <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|" type="button">목록으로</button>
+                        <button class="btn btn-outline-secondary" id="button.insert" type="submit">등록</button>
+                        <!-- <input type="text"  th:field="*{memberId}" disabled>-->
+                        <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
+                    </th>
+                </form>
+            </div>
     </body>
 </html>

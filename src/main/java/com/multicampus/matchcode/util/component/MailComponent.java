@@ -13,7 +13,6 @@ import java.util.concurrent.Executor;
 @Slf4j
 public class MailComponent extends Thread {
 
-
     private final JavaMailSender javaMailSender;
     private final Executor executor;
 
@@ -65,13 +64,11 @@ public class MailComponent extends Thread {
         sb.append(verifyCode);
         sb.append("\" 입니다.>");
         String subject = "<Match Code 인증 메일 입니다>";
-
         sendMailThread(mailAddress, subject, sb.toString());
         return verifyCode;
     }
 
     public void sendTempPassword(String mailAddress, String tempPassword) {
-
         String subject = "<Match Code 임시 비밀번호 입니다.>";
         String sb = "<임시 비밀번호는 [" + tempPassword + "] 입니다>";
         sendMailThread(mailAddress, subject, sb);

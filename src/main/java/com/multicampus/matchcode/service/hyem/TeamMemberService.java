@@ -46,7 +46,7 @@ public class TeamMemberService {
     public Integer isTeamLeader(long teamId, long memberId) {
         Integer privilege = teamMemberRepository.findPrivilegeByTeamIdAndMemberId(teamId, memberId);
         if (privilege == null) {
-           return 0;
+            return 0;
         }
         return privilege;
     }

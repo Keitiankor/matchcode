@@ -13,5 +13,4 @@ public interface MemberRepository extends JpaRepository<MemberDTO, Long> {
     @Modifying
     @Query(value = "update Member m set m.password = ?2 where m.id = ?1")
     void updatePasswordById(long id, String password);
-
 }

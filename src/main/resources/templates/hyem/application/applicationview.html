@@ -21,7 +21,6 @@
             <div>
                 <textarea cols="60" readonly rows="5" th:text="${join.introduction}"></textarea>
             </div>
-
             <button class="btn btn-info">
                 <a style="color: white; text-decoration: none;" th:href="@{/application/modify/{id}(id = ${join.id})}">가입신청 내용 수정</a>
             </button>
@@ -35,7 +34,7 @@
             <div>
                 <p>팀장 권한</p>
                 <form th:action="@{/addteammember}" th:method="post">
-                    <input name="id" type="hidden" th:value="${join.id}">
+                    <input name="id" th:value="${join.id}" type="hidden">
                     <button class="btn btn-primary" onclick="addTeamMember();">수락</button>
                 </form>
                 <button class="btn btn-warning">

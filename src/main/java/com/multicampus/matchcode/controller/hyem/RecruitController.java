@@ -48,7 +48,8 @@ public class RecruitController {
     // 모집글 작성 처리
     @PostMapping("/write/{id}")
     public String addRecruit(
-            @ModelAttribute("recruit") RecruitPostRequest request, Long teamId, Model model) {
+            @ModelAttribute("recruit") RecruitPostRequest request, Long teamId, Model model
+    ) {
         model.addAttribute("teamid", teamId);
         recruitService.save(request);
         System.out.println("content : " + request.getContent());
@@ -59,20 +60,18 @@ public class RecruitController {
     @GetMapping("/list")
     public String recruitList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model) {
+            Model model
+    ) {
         Page<RecruitListRequest> list = recruitService.getRecruitsWithTeamNames();
-
         model.addAttribute("list", list);
-
-        int nowPage = list.getPageable()
-                          .getPageNumber() + 1;
+        int nowPage = list
+                .getPageable()
+                .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
-
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
         return "hyem/recruit/recruitlist";
     }
 
@@ -81,8 +80,8 @@ public class RecruitController {
     public String recruitView(
             @PathVariable("id") Long id,
             Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         if (memberDTO != null) {
             RecruitDTO recruitDTO = recruitService.recruitView(id);
             TeamDTO teamDTO = teamService.teamView(recruitDTO.getTeamId());
@@ -98,11 +97,14 @@ public class RecruitController {
 
     // 모집글 수정 페이지
     @GetMapping("/modify/{id}")
-    public String recruitModify(@PathVariable("id") Long id, Model model,
-                                @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String recruitModify(
+            @PathVariable("id") Long id,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         RecruitDTO recruitDTO = recruitService.recruitView(id);
         model.addAttribute("recruit", recruitDTO);
-        if(teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
+        if (teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
             return "hyem/recruit/modifyrecruit";
         } else {
             model.addAttribute("message", "수정 권한이 없습니다.");
@@ -114,9 +116,8 @@ public class RecruitController {
     // 모집글 내용 수정
     @PostMapping("/modify/complete/{id}")
     public String recruitUpdate(
-            @RequestParam("id") Long id,
-            @ModelAttribute("recruit") RecruitPostRequest request,
-            Model model) throws Exception {
+            @RequestParam("id") Long id, @ModelAttribute("recruit") RecruitPostRequest request, Model model
+    ) throws Exception {
         recruitService.recruitUpdate(id, request);
         model.addAttribute("message", "모집글 수정이 완료되었습니다.");
         model.addAttribute("searchUrl", "/recruit/list");
@@ -125,10 +126,13 @@ public class RecruitController {
 
     // 모집글 삭제
     @DeleteMapping("/delete/{id}")
-    public String recruitDelete(@PathVariable("id") long id, Model model,
-                                @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) throws Exception {
+    public String recruitDelete(
+            @PathVariable("id") long id,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) throws Exception {
         RecruitDTO recruitDTO = recruitService.recruitView(id);
-        if(teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
+        if (teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
             model.addAttribute("message", "정말로 모집글을 삭제하시겠습니까?");
             model.addAttribute("confirmUrl", "/recruit/deleteconfirmed/" + id);
             model.addAttribute("cancelUrl", "/recruit/list");
@@ -138,14 +142,12 @@ public class RecruitController {
             model.addAttribute("searchUrl", "/recruit/list");
             return "hyem/message";
         }
-
     }
 
     // 모집글 삭제 처리
     @PostMapping("/deleteconfirmed/{id}")
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         recruitService.recruitDelete(id);
-
         model.addAttribute("message", "모집글 삭제가 완료되었습니다.");
         model.addAttribute("searchUrl", "/recruit/list");
         return "hyem/message";

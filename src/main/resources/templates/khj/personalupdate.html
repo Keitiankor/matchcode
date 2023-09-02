@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <h2 style="display:inline">개인정보 수정 페이지입니다.</h2>
-
 <p>이름: <span th:text="${member.name}"></span></p>
 <p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
 <p>핸드폰: <input th:text="${member.phone}" /></p>

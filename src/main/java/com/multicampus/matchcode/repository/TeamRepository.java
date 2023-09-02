@@ -9,6 +9,4 @@ import org.springframework.data.jpa.repository.Query;
 public interface TeamRepository extends JpaRepository<TeamDTO, Long> {
     @Query("select t from Recruit r Left outer join TeamTest t on t.id = r.teamId")
     Page<TeamDTO> findAllWithRecruit(Pageable pageable);
-
-
 }

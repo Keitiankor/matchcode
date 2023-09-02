@@ -5,7 +5,7 @@
     </head>
     <body>
         <div th:replace="~{commons :: topper}"></div>
-        <main style="margin-top: 70px" class="container" role="main">
+        <main class="container" role="main" style="margin-top: 70px">
             <div class="starter-template">
                 <!-- HTML 코드 -->
                 <select id="regionSelect">
@@ -14,16 +14,13 @@
                     <option value="2">경기</option>
                     <option value="3">인천</option>
                 </select>
-
                 <select id="sportsSelect">
                     <option value="0">전체</option>
                     <option value="1">축구</option>
                     <option value="2">농구</option>
                     <option value="3">배드민턴</option>
                 </select>
-
                 <div id="result">
-
                     <table class="table table-bordered">
                         <!-- CONTENTS !-->
                         <thead>
@@ -35,11 +32,9 @@
                                 <!--        <th class="col-md-2">매치일</th>-->
                             </tr>
                         </thead>
-
                         <tbody>
                             <!-- Existing data -->
                         </tbody>
-
                         <!-- New tbody for infinite scroll -->
                         <tbody id="matchesTable">
                             <!-- ... -->
@@ -52,7 +47,6 @@
                                 <!-- ... -->
                             </tr>
                             <!-- ... -->
-
                             <!-- Loading indicator -->
                             <tr>
                                 <td colspan="4" style="text-align: center;">
@@ -75,20 +69,16 @@
                         <!-- 글쓰기 버튼 -->
                         <a class="btn btn-primary" style="float: right" th:href="@{/match/post}">글쓰기</a>
                     </div>
-
                     <!-- 검색 form -->
                     <form action="/board/search" method="GET">
                         <div>
                             <input name="keyword" placeholder="검색어를 입력해주세요." type="text">
                             <button class="btn btn-primary">검색하기</button>
                         </div>
-
                     </form>
-
                 </div>
             </div>
         </main>
-
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     </body>

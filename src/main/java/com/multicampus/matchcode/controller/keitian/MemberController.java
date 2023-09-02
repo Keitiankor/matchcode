@@ -126,6 +126,5 @@ public class MemberController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO dto, String oldPassword, String newPassword
     ) {
         return service.changePassword(dto, oldPassword, newPassword);
-
     }
 }
