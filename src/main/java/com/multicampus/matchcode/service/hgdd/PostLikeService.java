@@ -17,7 +17,6 @@ public class PostLikeService {
     @Transactional
     public int toggleLike(long postId, long memberId) {
         PostLikeDTO like = likeRepository.findByPostIdAndMemberId(postId, memberId);
-
         if (like == null) {
             PostLikeDTO like2 = PostLikeDTO
                     .builder()

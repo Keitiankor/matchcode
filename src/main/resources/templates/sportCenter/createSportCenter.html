@@ -63,22 +63,16 @@
             <form action="/sportCenter/createSportCenter" method="post">
                 <label for="managerName">관리자 이름</label>
                 <input id="managerName" name="managerName" required type="text">
-
                 <label for="phone">관리자 번호</label>
                 <input id="phone" name="phone" required type="text">
-
                 <label for="SportCenterName">시설 이름</label>
                 <input id="SportCenterName" name="SportCenterName" required type="text">
-
                 <label for="resistrationCode">사업자 번호</label>
                 <input id="resistrationCode" name="resistrationCode" required type="text">
-
                 <label for="longitude">경도</label>
                 <input id="longitude" name="longitude" required type="text">
-
                 <label for="latitude">위도</label>
                 <input id="latitude" name="latitude" required type="text">
-
                 <button type="submit">시설 정보 등록</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden">
             </form>

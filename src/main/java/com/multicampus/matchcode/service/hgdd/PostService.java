@@ -37,6 +37,7 @@ public class PostService {
                 .memberId(member.getId())
                 .writer(member.getName())
                 .privates(request.isPrivates())
+                .sports(request.getSports())
                 .build();
         postRepository.save(dto);
     }
@@ -83,7 +84,6 @@ public class PostService {
         PostDTO post = postRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
-
         PostDTO update = PostDTO
                 .builder()
                 .id(post.getId())
@@ -94,8 +94,8 @@ public class PostService {
                 .createdDate(post.getCreatedDate())
                 .privates(request.isPrivates())
                 .writer(post.getWriter())
+                .sports(request.getSports())
                 .build();
-
         return postRepository.save(update);
     }
 

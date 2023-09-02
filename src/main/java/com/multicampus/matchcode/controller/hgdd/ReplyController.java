@@ -33,12 +33,10 @@ public class ReplyController {
             service.save(request, memberDTO.getId(), id);
             System.out.println("제목: " + request.getComment());
             System.out.println("게시글 번호: " + id);
-
             return "redirect:/post/view?id=" + id;
         } else {
             model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
             model.addAttribute("searchUrl", "/login"); //이동하는 경로
-
             return "hgdd/message";
         }
     }
@@ -59,7 +57,6 @@ public class ReplyController {
         System.out.println("id: " + id);
         System.out.println("postid: " + postId);
         ReplyDTO reply = service.view(id);
-
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
             if (reply.getMemberId() == memberDTO.getId()) {
                 service.deleteReply(id);

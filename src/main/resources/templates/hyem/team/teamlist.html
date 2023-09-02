@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <title>팀 리스트</title>
     </head>
-
     <style>
         .layout {
             width: 500px;
@@ -31,7 +30,6 @@
                     </tr>
                 </tbody>
             </table>
-
             <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                 <a th:href="@{/team/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
                 <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>

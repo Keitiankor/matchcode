@@ -1,6 +1,5 @@
 package com.multicampus.matchcode.service.ljg;
 
-
 import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
@@ -13,7 +12,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class PointService {
@@ -36,15 +34,12 @@ public class PointService {
 
     public List<PointDTO> findAllByMemberId(long memberId) {
         Optional<List<PointDTO>> odto = pointRepository.findAllByMemberId(memberId);
-
         if (odto.isPresent()) {
             return odto.get();
         }
         return null;
         //return (List<PointDTO>) pointRepository.findAllByUserId(memberId).get();
-
     }
-
     //    @PostMapping("/refundPoint")
     //    public PointDTO pointRefund(@RequestParam("memberId") Long memberId,
     //                                @RequestParam("refundAmount") int refundAmount){
@@ -66,21 +61,21 @@ public class PointService {
     // 포인트 사용 내역 추가
     public long payPoints(ReserveRequest request) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
-
-        PointDTO pointDTO = PointDTO.builder()
-                                    .date(date)
-                                    .details("결제")
-                                    .memberId(request.getMemberId())
-                                    .point(-request.getPrice()) // Deducted points as a negative value
-                                    .build();
-
-        MatchDTO matchDTO = MatchDTO.builder()
-                                    .mapId(request.getMapId())
-                                    .matchDate(request.getMatchDate())
-                                    .build();
-
-        return matchRepository.save(matchDTO)
-                              .getId();
+        PointDTO pointDTO = PointDTO
+                .builder()
+                .date(date)
+                .details("결제")
+                .memberId(request.getMemberId())
+                .point(-request.getPrice()) // Deducted points as a negative value
+                .build();
+        MatchDTO matchDTO = MatchDTO
+                .builder()
+                .mapId(request.getMapId())
+                .matchDate(request.getMatchDate())
+                .build();
+        return matchRepository
+                .save(matchDTO)
+                .getId();
     }
 
     public PointDTO refundPoints(PointDTO dto) {

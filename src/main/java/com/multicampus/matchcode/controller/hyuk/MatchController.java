@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
-import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.model.request.hyuk.MatchData;
 import com.multicampus.matchcode.service.hyuk.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class MatchController {
     ) {
         List<MatchDTO> matchList;
         Integer[] pageList;
-/*--*/
         if (regionId != 0 && sportsId != 0) {
             // regionId와 sportsId가 0이 아닌 경우, 해당 지역과 종목 데이터만 조회
             matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
@@ -37,12 +35,10 @@ public class MatchController {
             matchList = matchService.getMatchlist(pageNum);
             pageList = matchService.getPageList(pageNum);
         }
-
         model.addAttribute("matchList", matchList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("selectedRegion", regionId); // 선택된 지역을 뷰로 전달
         model.addAttribute("selectedSports", sportsId); // 선택된 종목을 뷰로 전달
-
         return "match/list";
     }
 
@@ -63,7 +59,6 @@ public class MatchController {
 
         return "match/list";
     }*/
-
     // 글쓰는 페이지
 
     @GetMapping("/post")
@@ -75,7 +70,6 @@ public class MatchController {
     public String test() {
         return "match/test";
     }*/
-
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
@@ -85,19 +79,15 @@ public class MatchController {
         matchService.savePost(match);
         return "redirect:/match/list";
     }
-
     // 게시물 상세 페이지이며, {no}로 페이지 넘버를 받는다.
     // PathVariable 애노테이션을 통해 no를 받음
 
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         MatchDTO matchDTO = matchService.getPost(no);
-
         model.addAttribute("matchDto", matchDTO);
         return "match/detail";
     }
-
-
     // 게시물 수정 페이지이며, {no}로 페이지 넘버를 받는다.
 
     /*    @GetMapping("/post/edit/{no}")
@@ -116,16 +106,13 @@ public class MatchController {
 
         return "redirect:/match/list";
     }*/
-
     // 게시물 삭제는 deletePost 메서드를 사용하여 간단하게 삭제할 수 있다.
 
     @PostMapping("/post/{no}")
     public String delete(@PathVariable("no") Long no) {
         matchService.deletePost(no);
-
         return "redirect:/match/list";
     }
-
     // 검색
     // keyword를 view로부터 전달 받고
     // Service로부터 받은 matchDtoList를 model의 attribute로 전달해준다.
