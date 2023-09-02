@@ -71,23 +71,11 @@ public class MyHistoryService {
         return matchResults;
     }
 
-    public RatingRequest getRatingBySportsIdAndMemberId(long sportsId, long memberId) {
+    public RatingDTO getRatingBySportsIdAndMemberId(long sportsId, long memberId) {
         Optional<RatingDTO> ratingDTO = rating.findBySportsIdAndMemberId(sportsId, memberId);
 
         if (ratingDTO.isPresent()) {
-            Optional<EmblemDTO> emblemDTO = emblem.findById(ratingDTO
-                                                                    .get()
-                                                                    .getEmblemId());
-            RatingRequest ratingRequest = RatingRequest
-                    .builder()
-                    .mmr(ratingDTO
-                                 .get()
-                                 .getMmr())
-                    .uri(emblemDTO
-                                 .get()
-                                 .getUri())
-                    .build();
-            return ratingRequest;
+            return ratingDTO.get();
         }
         return null;
     }

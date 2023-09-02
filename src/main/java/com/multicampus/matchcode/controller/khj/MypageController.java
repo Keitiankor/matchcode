@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
+import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -62,12 +64,12 @@ public class MypageController {
     //매치 히스토리 내에서 종목별 페이지
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model, @ModelAttribute("memberId") long memberId) {
-        RatingRequest ratingRequest = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
+        RatingDTO ratingDTO = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
         List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
                                                                                                       memberId
         );
 
-        model.addAttribute("rating", ratingRequest);
+        model.addAttribute("rating", ratingDTO);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
     }
