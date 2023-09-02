@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>팀원 모집글 작성하기</title>
     </head>
     <body>
-        <h2>모집글 작성하기</h2>
-        <form method="post" th:action="@{/recruit/write/{id}(id = ${recruit.id})}">
-            <p>글 내용</p>
-            <input hidden name="teamId" th:value="${teamid}" type="text">
-            <textarea cols="60" name="content" placeholder="모집글 내용을 입력하세요." rows="5"></textarea>
-            <button type="submit">등록</button>
-            <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
-        </form>
+        <header th:replace="~{commons :: topper}"></header>
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <div class="frame">
+            <h2>모집글 작성하기</h2>
+            <form class="table" method="post" th:action="@{/recruit/write/{id}(id = ${recruit.id})}">
+                <p>글 내용</p>
+                <input hidden name="teamId" th:value="${teamid}" type="text">
+                <textarea cols="60" name="content" placeholder="모집글 내용을 입력하세요." rows="5"></textarea>
+                <button type="submit">등록</button>
+                <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
+            </form>
+        </div>
     </body>
 </html>

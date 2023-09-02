@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class ApplicationService {
 
@@ -65,4 +67,10 @@ public class ApplicationService {
     public void applicationCancel(long id) {
         applicationRepository.deleteById(id);
     }
+
+    // 가입신청 여부
+    /*public long memberApplicated(long memberId) {
+        long applicationId = applicationRepository.findIdByMemberId(memberId).orElse(0L);
+        return applicationId;
+    }*/
 }

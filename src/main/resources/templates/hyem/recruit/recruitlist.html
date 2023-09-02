@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>모집글 리스트</title>
     </head>
-    <style>
-        .layout {
-            width: 500px;
-            margin: 0 auto;
-            margin-top: 40px;
-        }
-    </style>
     <body>
-        <div class="layout">
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <header th:replace="~{commons :: topper}"></header>
+        <div class="frame">
             <h2>모집글 리스트</h2>
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>번호</th>
@@ -30,11 +25,12 @@
                     </tr>
                 </tbody>
             </table>
+
             <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                 <a th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
                 <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
             </th:block>
-            <div class="layout">
+            <div class="addbutton">
                 <button><a th:href="@{/team/create}">팀 생성하기</a></button>
             </div>
         </div>

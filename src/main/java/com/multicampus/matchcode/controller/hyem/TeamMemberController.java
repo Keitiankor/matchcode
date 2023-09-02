@@ -1,12 +1,24 @@
 package com.multicampus.matchcode.controller.hyem;
 
 import com.multicampus.matchcode.model.entity.ApplicationDTO;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
+import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
+import com.multicampus.matchcode.service.hyem.TeamService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
+import com.multicampus.matchcode.util.enums.hyem.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TeamMemberController {
@@ -19,13 +31,18 @@ public class TeamMemberController {
 
     // 팀원 추가하기
     @PostMapping("/addteammember")
-    public String addTeamMember(
-            Long id, Model model
+    public String addTeamMember(Long id,
+            ApplicationRequest request,
+            Model model
     ) throws Exception {
         ApplicationDTO applicationDTO = applicationService.applicationView(id);
         long teamId = applicationDTO.getTeamId();
         long memberId = applicationDTO.getMemberId();
+        System.out.println("team id : " + teamId + " , member id : " + memberId);
         teamMemberService.addTeamMember(teamId, memberId);
+
+        // 가입 승인 변경 로직 추가...
+        applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입을 수락하였습니다.");
         model.addAttribute("searchUrl", "/team/list");
         return "hyem/message";

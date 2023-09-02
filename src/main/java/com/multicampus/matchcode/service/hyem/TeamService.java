@@ -1,6 +1,7 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.repository.RecruitRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
+
 @Service
 public class TeamService {
 
@@ -24,6 +27,39 @@ public class TeamService {
 
     @Autowired
     private TeamMemberRepository teamMemberRepository;
+
+    // 팀 정보 불러오기
+    public TeamCreateRequest getMemberInfo(long memberId) {
+        Optional<TeamMemberDTO> teamMemberDTO = teamMemberRepository.findByMemberId(memberId);
+
+        System.out.println(teamRepository
+                                   .findById((long) 1)
+                                   .toString());
+        Optional<TeamDTO> teamDTO = teamMemberDTO.isPresent()
+                                    ? teamRepository.findById(teamMemberDTO
+                                                            .get()
+                                                            .getTeamId())
+                                    : Optional.empty();
+
+        String teamName = teamDTO.isPresent()
+                          ? teamDTO
+                                  .get()
+                                  .getTeamName()
+                          : "현재 소속된 팀이 없습니다";
+
+        return TeamCreateRequest
+                .builder()
+                .sportsId(teamDTO
+                              .get()
+                              .getSportsId())
+                .teamName(teamName)
+                .uri(teamDTO.get().getUri())
+                .useWeek(teamDTO.get().getUseWeek())
+                .useTime(teamDTO.get().getUseTime())
+                .averageAge(teamDTO.get().getAverageAge())
+                .averageGender(teamDTO.get().getAverageGender())
+                .build();
+    }
 
     // 팀 생성
     public long createTeam(TeamCreateRequest request) {
@@ -81,10 +117,16 @@ public class TeamService {
             recruitRepository.deleteRecruitsByTeamId(id);
         }
         teamRepository.deleteById(id);
+        // 팀원에서도 삭제하는 쿼리 추가
     }
 
     // 모집글이 있는 팀 정보
     public Page<TeamDTO> teamViewWithRecruit(Pageable pageable) {
         return teamRepository.findAllWithRecruit(pageable);
+    }
+
+    // 팀 uri 가져오기
+    public String getTeamUri(long teamId) {
+        return teamRepository.findUriById(teamId);
     }
 }

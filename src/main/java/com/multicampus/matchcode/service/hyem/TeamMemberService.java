@@ -56,6 +56,10 @@ public class TeamMemberService {
         return applicationRepository.findByMemberIdAndTeamId(teamId, memberId);
     }
 
+    public TeamMemberDTO teamMemberInfo(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).orElse(null);
+    }
+
     /*// 팀 리스트 처리
     public Page<TeamDTO> teamList(Pageable pageable) {
         return teamRepository.findAll(pageable);
