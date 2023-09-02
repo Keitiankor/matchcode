@@ -20,7 +20,6 @@ public class SportCenterService {
                 .managerName(request.getManagerName())
                 .phone(request.getPhone())
                 .SportCenterName(request.getSportCenterName())
-                .areaId(request.getAreaId())
                 .resistrationCode(request.getResistrationCode())
                 .longitude(request.getLongitude())
                 .latitude(request.getLatitude())
@@ -33,7 +32,6 @@ public class SportCenterService {
         MapDTO dto = MapDTO
                 .builder()
                 .id(mapDTO.getId())
-                .areaId(request.getAreaId())
                 .sportsId(mapDTO.getSportsId())
                 .latitude(request.getLatitude())
                 .longitude(request.getLongitude())
