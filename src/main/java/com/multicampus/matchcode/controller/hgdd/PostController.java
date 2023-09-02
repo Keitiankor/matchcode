@@ -12,6 +12,7 @@ import com.multicampus.matchcode.util.constants.SessionConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +81,8 @@ public class PostController {
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
             // 드롭다운 값 받아옴
-            String searchKeyword
+            String searchKeyword,
+            @RequestParam(name = "sports", required = false) Integer selectedSports
     ) {
         Page<PostDTO> list = null;
 
@@ -108,6 +111,17 @@ public class PostController {
             }
         }
 
+        // 선택한 스포츠에 따라 게시글 필터링
+        if (selectedSports != null) {
+            List<PostDTO> filteredPosts = new ArrayList<>();
+            for (PostDTO post : list.getContent()) {
+                if (post.getSports() == selectedSports) {
+                    filteredPosts.add(post);
+                }
+            }
+            list = new PageImpl<>(filteredPosts, pageable, filteredPosts.size());
+        }
+
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
@@ -115,6 +129,8 @@ public class PostController {
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
         List<PostDTO> top3ByLikes = postService.listTop3ByLikes(); //좋아요 많은 3개
+        model.addAttribute("sport",selectedSports);
+        model.addAttribute("sort", sortBy);
         model.addAttribute("sports",sports);
         model.addAttribute("top3ByLikes", top3ByLikes);
         model.addAttribute("list", list);
