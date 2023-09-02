@@ -1,28 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>게시물 작성폼</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
-
-    <style>
-
-        .layout {
-            width: 500px;
-            margin: 0 auto;
-            margin-top: 40px;
-        }
-
-        inputtext {
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: 10px;
-        }
-
-    </style>
-
     <body>
-        <div class="layout">
+        <link href="/css/hyem/basic.css" rel="stylesheet">
+        <header th:replace="~{commons :: topper}"></header>
+        <div class="frame">
             <form method="post" th:action="@{/team/modify/complete/{id}(id = ${team.id})}" th:object="${team}">
                 <fieldset>
                     팀명 <input name="teamName" th:field="*{teamName}" type="text">
