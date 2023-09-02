@@ -28,7 +28,7 @@
                 <tbody>
                     <tr th:each="joinapplication : ${list}">
                         <td th:text="${joinapplication.id}">1</td>
-                        <td th:text="${joinapplication.teamId.teamName}"></td>
+                        <td th:text="${joinapplication.teamId}"></td>
                         <!--        <td th:text="${joinapplication.memberId.userName}"></td>-->
                         <td>
                             <a th:href="@{/application/view/{id}(id=${joinapplication.id})}" th:text="${joinapplication.introduction}"></a>
