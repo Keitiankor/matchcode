@@ -48,12 +48,10 @@ public class MypageController {
             // 로그인하지 않은 경우, 알림 메시지 화면으로 이동
             return "khj/message";
         }
-
         MemberInfoRequest memberInfo = service.getMemberInfo(memberId);
         model.addAttribute("memberInfo", memberInfo);
         return "khj/mypage";
     }
-
     //매치히스토리
 
     @GetMapping("matchhistory")
@@ -68,7 +66,6 @@ public class MypageController {
         List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
                                                                                                       memberId
         );
-
         model.addAttribute("rating", ratingDTO);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
@@ -81,9 +78,7 @@ public class MypageController {
         System.out.println(matchId);
         return myHistoryService.getMembersByMatchId(Long.parseLong(matchId));
     }
-
     //매너온도 증감은 지금은 잘 몰라서 보류.
-
     //    //매치 멤버 id로 매치 멤버의 매너온도 조작
     //    //매너온도 증가시
     //    @PostMapping
@@ -106,17 +101,14 @@ public class MypageController {
     //            return ResponseEntity.badRequest().body("Failed to decrease manner");
     //        }
     //    }
-
     //개인정보
 
     @GetMapping("personal")
     public String personal(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
-
         model.addAttribute("member", member);
         return "khj/personal";
     }
-
     //내 게시물
 
     @GetMapping("mypost")
@@ -134,14 +126,12 @@ public class MypageController {
 
         model.addAttribute("myPosts", fivePosts);
         model.addAttribute("myReplies", fiveReplies);
-
         return "khj/mypost";
     }
 
     @GetMapping("personalupdate")
     public String personalupdate(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
-
         model.addAttribute("member", member);
         return "khj/personalupdate";
     }

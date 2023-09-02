@@ -3,12 +3,10 @@
     <head th:replace="~{commons :: head(~{::title})}">
         <title>Match Code</title>
     </head>
-
     <body>
         <div th:replace="~{commons :: topper}"></div>
         <div style="margin-top: 70px">
             <link href="/css/hgdd/post.css" rel="stylesheet">
-
             <!--메뉴 내비게이션-->
             <div>
                 <div id="header">
@@ -16,15 +14,11 @@
                 </div>
                 <div class="jb-division-line"></div>
             </div>
-
             <div class="layout">
                 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
                 <script src="/js/hgdd/like.js"></script>
-
-
                 <!--제목-->
                 <h2 th:text="${post.title}">제목 입니다.</h2>
-
                 <th>
                 <td>
                     <a id="writer.view">작성자:</a>
@@ -41,7 +35,6 @@
                 <div class="card2">
                     <p th:text="${post.content}">.</p>
                 </div>
-
                 <!--좋아요-->
                 <th>
                     <form method="post" th:action="@{/like/{postId}(postId=${post.id})}">
@@ -51,7 +44,6 @@
                         </button>
                     </form>
                 <td><a th:text="${post.likes}"></a></td>
-
                 <!--신고 버튼-->
                 <th>
                     <form method="post" th:action="@{/declation/{postId}(postId=${post.id})}">
@@ -61,7 +53,6 @@
                         </button>
                     </form>
                 <td><a th:text="${post.declation}"></a></td>
-
                 <!--댓글 입력-->
                 <div class="card">
                     <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
@@ -76,19 +67,16 @@
                         </div>
                     </form>
                 </div>
-
                 <!--댓글 출력-->
                 <div class="card" style="overflow:scroll;">
                     <div class="card-header">댓글</div>
                     <table>
                         <tr th:each="replyDTO : ${list}">
-
                             <!--댓글 리스트  -->
                             <div class="reply-item" th:id="'reply-' + ${replyDTO.id}">
                                 <td>
                                     <a th:text="${replyDTO.comment}"></a>
                                 <td th:text="${#dates.format(replyDTO.createdDate,'yyyy/MM/dd')}"></td>
-
                                 <!--댓글 삭제-->
                                 <td>
                                     <button
@@ -101,7 +89,6 @@
                         </tr>
                     </table>
                 </div>
-
                 <!-- 이동버튼(목록,수정 페이지)-->
                 <th>
                     <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|" type="button">목록으로
@@ -111,7 +98,6 @@
                         수정페이지로
                     </button>
                 </th>
-
             </div>
         </div>
     </body>

@@ -35,16 +35,13 @@ public class RecruitService {
                 .content(request.getContent())
                 .status(1)
                 .build();
-
         recruitRepository.save(dto);
         return request.getId();
     }
 
     // 모집글 리스트 처리
     public Page<RecruitListRequest> getRecruitsWithTeamNames() {
-
         List<RecruitDTO> recruitDTOS = recruitRepository.findAll();
-
         List<RecruitListRequest> recruitList = new ArrayList<>();
         for (RecruitDTO recruitDTO : recruitDTOS) {
             long teamId = recruitDTO.getTeamId();
@@ -57,19 +54,15 @@ public class RecruitService {
                                     .recruitId(recruitDTO.getId())
                                     .build());
         }
-
         int page = 0;
         int size = 10;
         PageRequest pageRequest = PageRequest.of(page, size);
-
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), recruitList.size());
-
         Page<RecruitListRequest> recruitPage = new PageImpl<>(recruitList.subList(start, end),
                                                               pageRequest,
                                                               recruitList.size()
         );
-
         return recruitPage;
     }
 
@@ -88,8 +81,9 @@ public class RecruitService {
 
     // 모집중 여부 조회 -> 아래
     public boolean isRecruitExist(long teamId) {
-        return recruitRepository.findByTeamId(teamId)
-                                .isPresent();
+        return recruitRepository
+                .findByTeamId(teamId)
+                .isPresent();
     }
 
     // 모집글 내용 수정
@@ -97,7 +91,6 @@ public class RecruitService {
         RecruitDTO existingRecruit = recruitRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recruit not found"));
-
         RecruitDTO updatedRecruit = RecruitDTO
                 .builder()
                 .id(id)
@@ -106,7 +99,6 @@ public class RecruitService {
                 .content(request.getContent())
                 .status(1)
                 .build();
-
         return recruitRepository.save(updatedRecruit);
     }
 

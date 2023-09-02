@@ -4,7 +4,6 @@
         <title>Match Code</title>
     </head>
     <body>
-
         <style>
             body {
                 background-color: #f0f0f0;
@@ -34,16 +33,15 @@
         </style>
         <div style="margin-top: 70px">
             <div class="container mt-4">
-                <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
-
+                <input hidden="hidden" id="memberId" th:value="${memberId}" type="text">
                 <div class="card-body bg-white mt-0 shadow">
                     <h1 class="mb-4"><small class="small-text"><b>결제 페이지</b></small></h1>
                     <form>
                         <div class="mb-3">
-                            <p><b>날짜: <span id="matchDate" th:text="${matchDate}" class="float-end"></span></b></p>
+                            <p><b>날짜: <span class="float-end" id="matchDate" th:text="${matchDate}"></span></b></p>
                         </div>
                         <div class="mb-3">
-                            <p><b>장소: <span id="mapId" th:text="${mapId}" class="float-end"></span></b></p>
+                            <p><b>장소: <span class="float-end" id="mapId" th:text="${mapId}"></span></b></p>
                             <div class="separator"></div>
                         </div>
                         <h2 class="mb-4"><small class="small-text"><b>포인트</b></small></h2>
@@ -51,11 +49,10 @@
                             <p><b>보유 포인트 <span class="float-end" id="totalPointsValue" th:text="${totalPoints}"></span></b></p>
                         </div>
                         <div class="separator"></div>
-
                         <h3 class="mb-4"><small class="small-text"><b>결제</b></small></h3>
                         <div class="mb-3">
-                            <p><b>가격: <span id="price" th:text="${price}" class="float-end"></span></b></p>
-                            <p><b>결제 포인트: <span id="payPointsValue" class="float-end"></span> <a href="#" class="btn btn-primary" onclick="location.href='test3'">추가충전</a></b></p>
+                            <p><b>가격: <span class="float-end" id="price" th:text="${price}"></span></b></p>
+                            <p><b>결제 포인트: <span class="float-end" id="payPointsValue"></span> <a class="btn btn-primary" href="#" onclick="location.href='test3'">추가충전</a></b></p>
                         </div>
                         <button class="btn btn-success float-end" onclick="handlePayment()" type="button">결제</button>
                     </form>
