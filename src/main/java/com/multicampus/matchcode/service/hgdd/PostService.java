@@ -37,6 +37,7 @@ public class PostService {
                 .memberId(member.getId())
                 .writer(member.getName())
                 .privates(request.isPrivates())
+                .sports(request.getSports())
                 .build();
         postRepository.save(dto);
     }
@@ -73,16 +74,14 @@ public class PostService {
 
     // 게시글 열람
     public PostDTO view(long id) {
-        return postRepository
-                .findById(id)
-                .get();
+        return postRepository.findById(id)
+                             .get();
     }
 
     //게시글 업데이트
     public PostDTO update(long id, PostUpdateRequest request) {
-        PostDTO post = postRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
+        PostDTO post = postRepository.findById(id)
+                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
 
         PostDTO update = PostDTO
                 .builder()
@@ -94,6 +93,7 @@ public class PostService {
                 .createdDate(post.getCreatedDate())
                 .privates(request.isPrivates())
                 .writer(post.getWriter())
+                .sports(request.getSports())
                 .build();
 
         return postRepository.save(update);
