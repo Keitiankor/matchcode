@@ -27,8 +27,16 @@ public class MakeMockup {
                                                       )
                                                       .toString())
                                        .sportsId(random.nextInt(1, 4))
-                                       .latitude(random.nextDouble(126.9779692 - 0.5, 126.9779692 + 0.5))
-                                       .longitude(random.nextDouble(37.566535 - 0.5, 37.566535 + 0.5))
+                                       .latitude(Double.parseDouble(String.format("%.7f",
+                                                                                  random.nextDouble(126.9779692 - 0.5,
+                                                                                                    126.9779692 + 0.5
+                                                                                  )
+                                       )))
+                                       .longitude(Double.parseDouble(String.format("%.7f",
+                                                                                   random.nextDouble(37.566535 - 0.5,
+                                                                                                     37.566535 + 0.5
+                                                                                   )
+                                       )))
                                        .managerName(random
                                                             .ints(97, 122)
                                                             .limit(12)
