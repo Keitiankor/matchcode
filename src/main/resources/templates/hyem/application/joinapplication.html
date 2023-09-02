@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>가입 신청하기</title>
     </head>
     <body>
+        <header th:replace="~{commons :: topper}"></header>
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <div class="frame">
         <h2>가입신청</h2>
-        <form method="post" th:action="@{/application/join/{teamid}/{id}(teamid=${teamid}, id=${join.id})}">
-            <p>자기소개</p>
-            <input name="teamId" th:value="${teamid}" type="hidden">
-            <input name="memberId" th:value="${memberid}" type="hidden">
-            <textarea cols="60" name="introduction" placeholder="팁 가입 신청합니다." rows="5"></textarea>
-            <button type="submit">등록</button>
-            <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
-        </form>
+            <form class="table" method="post" th:action="@{/application/join/{teamid}/{id}(teamid=${teamid}, id=${join.id})}">
+                <p>자기소개</p>
+                <input name="teamId" th:value="${teamid}" type="hidden">
+                <input name="memberId" th:value="${memberid}" type="hidden">
+                <input name="status" th:value="2" type="hidden">
+                <textarea cols="60" name="introduction" placeholder="팁 가입 신청합니다." rows="5"></textarea>
+                <button type="submit">등록</button>
+                <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
+            </form>
+        </div>
     </body>
 </html>
