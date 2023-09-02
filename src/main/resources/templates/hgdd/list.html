@@ -1,87 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- 위에 xmlns 하면 타임리프 문법을 쓸수 있다.-->
 
-    <head th:replace="~{commons :: head(~{::title})}">
-        <title>Match Code</title>
-    </head>
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title>게시물 리스트 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 
-    <body>
-        <div>
-            <div id="header">
-                <div th:replace="~{commons :: topper}"></div>
-            </div>
-            <div class="jb-division-line"></div>
-        </div>
-        <link href="/css/hgdd/post.css" rel="stylesheet">
 
-        <div class="layout">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>제목</th>
-                        <th>작성일</th>
-                        <th>작성자</th>
-                        <th>조회수</th>
-                        <th>좋아요</th>
-                        <th>종목</th>
-                        <th>
-                            <!--게시글 작성 이동 버튼 (insert.html)-->
-                            <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/insert}'|" type="button">글 작성
-                            </button>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="postDTO : ${top3ByLikes}">
-                        <td>
-                            <a>인기글</a>
-                        </td>
-                        <td>
-                            <a style="color: #0056b3" th:href="@{/post/view(id=${postDTO.id})}" th:text="${postDTO.title}"></a>
-                        </td>
-                        <td>
-                            <a style="color: #0056b3" th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
-                        </td>
-                        <td>
-                            <a style="color: #0056b3" th:text="${postDTO.writer}"></a>
-                        </td>
-                        <td>
-                            <a style="color: #0056b3" th:text="${postDTO.views}"></a>
-                        </td>
-                        <td>
-                            <a style="color: #0056b3" th:text="${postDTO.likes}"></a>
-                        </td>
-                        <td>
-                            <a  th:text="${#strings.replace(#strings.capitalize(sports[postDTO.sports]), '_', ' ')}"></a>
-                        </td>
-                    </tr>
-                    <!--th:each는 조건부 반복문으로 postDTO list 하나씩 꺼내 반복 출력 -->
-                    <tr th:each="postDTO : ${list}">
-                        <!--게시글 번호 (PostDTO id) -->
-                        <td th:text="${postDTO.id}"></td>
-                        <td>
-                            <!--게시글 제목(PostDTO title)표시 그리고 제목을 누르면 그 해당한 게시글 상세페이지 이동 -->
-                            <a th:href="@{/post/view(id=${postDTO.id})}" th:text="${postDTO.title}"></a>
-                        </td>
-                        <td>
-                            <a th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
-                        </td>
-                        <td>
-                            <a th:text="${postDTO.writer}"></a>
-                        </td>
-                        <td>
-                            <a th:text="${postDTO.views}"></a>
-                        </td>
-                        <td>
-                            <a th:text="${postDTO.likes}"></a>
-                        </td>
-                        <td>
-                            <a  th:text="${#strings.replace(#strings.capitalize(sports[postDTO.sports]), '_', ' ')}"></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+
+<body>
+<div>
+    <div id="header">
+        <div th:replace="~{commons :: topper}"></div>
+    </div>
+    <div class="jb-division-line"></div>
+</div>
+<link href="/css/hgdd/post.css" rel="stylesheet">
+
+<div class="layout">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>좋아요</th>
+            <th>종목</th>
+            <th>
+                <!--게시글 작성 이동 버튼 (insert.html)-->
+                <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/insert}'|" type="button">글 작성
+                </button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="postDTO : ${top3ByLikes}">
+            <td>
+                <a>인기글</a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:href="@{/post/view(id=${postDTO.id})}" th:text="${postDTO.title}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.writer}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.views}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3" th:text="${postDTO.likes}"></a>
+            </td>
+            <td>
+                <a style="color: #0056b3"  th:text="${#strings.replace(#strings.capitalize(sports[postDTO.sports]), '_', ' ')}"></a>
+            </td>
+        </tr>
+        <!--th:each는 조건부 반복문으로 postDTO list 하나씩 꺼내 반복 출력 -->
+        <tr th:each="postDTO : ${list}">
+            <!--게시글 번호 (PostDTO id) -->
+            <td th:text="${postDTO.id}"></td>
+            <td>
+                <!--게시글 제목(PostDTO title)표시 그리고 제목을 누르면 그 해당한 게시글 상세페이지 이동 -->
+                <a th:href="@{/post/view(id=${postDTO.id})}" th:text="${postDTO.title}"></a>
+            </td>
+            <td>
+                <a th:text="${#dates.format(postDTO.createdDate,'yyyy/MM/dd')}"></a>
+            </td>
+            <td>
+                <a th:text="${postDTO.writer}"></a>
+            </td>
+            <td>
+                <a th:text="${postDTO.views}"></a>
+            </td>
+            <td>
+                <a th:text="${postDTO.likes}"></a>
+            </td>
+            <td>
+                <a  th:text="${#strings.replace(#strings.capitalize(sports[postDTO.sports]), '_', ' ')}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
     <!--페이징 -->
     <div aria-label="Toolbar with button groups" class="btn-toolbar" role="toolbar">
@@ -95,28 +101,28 @@
         </th:block>
     </div>
 
-            <div class="dropdown">
-                <button aria-expanded="false" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="sortDropdown" type="button">
-                    정렬 및 스포츠 선택
-                </button>
-                <div aria-labelledby="sortDropdown" class="dropdown-menu">
-                    <a class="dropdown-item" th:href="@{/post/list(sortBy='latest',sports=${sport})}">최신순</a>
-                    <a class="dropdown-item" th:href="@{/post/list(sortBy='likes',sports=${sport})}">좋아요순</a>
-                    <a class="dropdown-item" th:href="@{/post/list(sortBy='views',sports=${sport})}">조회수순</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort})}">모든 종목 </a>
-                    <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${1})}">농구 </a>
-                    <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${2})}">풋살 </a>
-                    <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${3})}">배드민턴 </a>
-                    <!-- 이하 생략 -->
-                </div>
-            </div>
-
-            <!-- 검색 기능 -->
-            <form method="get" th:action="@{/post/list}">
-                <input class="form-control" name="searchKeyword" type="text">
-                <button type="submit">검색</button>
-            </form>
+    <div class="dropdown">
+        <button aria-expanded="false" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" id="sortDropdown" type="button">
+            정렬 및 스포츠 선택
+        </button>
+        <div aria-labelledby="sortDropdown" class="dropdown-menu">
+            <a class="dropdown-item" th:href="@{/post/list(sortBy='latest',sports=${sport})}">최신순</a>
+            <a class="dropdown-item" th:href="@{/post/list(sortBy='likes',sports=${sport})}">좋아요순</a>
+            <a class="dropdown-item" th:href="@{/post/list(sortBy='views',sports=${sport})}">조회수순</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort})}">모든 종목 </a>
+            <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${1})}">농구 </a>
+            <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${2})}">풋살 </a>
+            <a class="dropdown-item"  th:href="@{/post/list(sortBy=${sort},sports=${3})}">배드민턴 </a>
+            <!-- 이하 생략 -->
         </div>
-    </body>
+    </div>
+
+    <!-- 검색 기능 -->
+    <form method="get" th:action="@{/post/list}">
+        <input class="form-control" name="searchKeyword" type="text">
+        <button type="submit">검색</button>
+    </form>
+</div>
+</body>
 </html>
