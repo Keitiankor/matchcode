@@ -9,5 +9,5 @@ public class ReserveRequest {
     private Timestamp matchDate;
     private long mapId;
     private long memberId;
-    private int pricePoints;
+    private int price;
 }

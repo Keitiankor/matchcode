@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
     </head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <body>
-        <table>
-            <thead>
-                <tr>
-                    <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
-                    <p>얼마를 환불하시겠습니까?
-                        <input type="number" id="refundAmount" min="0">
-                        <button onclick="check2()">환불</button>
-                </tr>
-            </thead>
-        </table>
+        <div th:replace="~{commons :: topper}"></div>
+        <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
+        <div style="margin-top: 70px">
+            <table>
+                <thead>
+                    <tr>
+                        <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
+                        <p>얼마를 환불하시겠습니까?
+                            <input id="refundAmount" min="0" type="number">
+                            <button onclick="check2()">환불</button>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         <script>
             window.onload = function() {
                 var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
-            }
+            };
+
             function check2() {
                 var totalPoints = parseInt(document.getElementById("totalPointsValue").textContent);
                 var refundAmount = parseInt(document.getElementById("refundAmount").value);
@@ -33,21 +34,21 @@
                     performRefund(refundAmount);
                 }
             }
-            function performRefund(refundAmount){
-                var memberId;
+
+            function performRefund(refundAmount) {
                 $.ajax({
                     url: "/refundPoint",
                     type: "GET",
                     data: {
-                        memberId: memberId,
-                        point: refundAmount,
+                        memberId: $("#memberId").val(),
+                        point: refundAmount
                     },
                     success: function(response) {
                         if (response === "success") {
                             var totalPointsValueElement = document.getElementById("totalPointsValue");
                             var totalPointsValue = parseInt(totalPointsValueElement.textContent);
                             alert("환불 성공!");
-                            document.location.href="/point";
+                            document.location.href = "/point";
                             // UI를 업데이트하거나 필요한 다른 작업 수행
                         } else {
                             alert("An error occurred while processing the payment.");
@@ -59,8 +60,5 @@
                 });
             }
         </script>
-
-
-
     </body>
 </html>

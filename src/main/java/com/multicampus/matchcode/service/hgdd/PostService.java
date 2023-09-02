@@ -74,16 +74,14 @@ public class PostService {
 
     // 게시글 열람
     public PostDTO view(long id) {
-        return postRepository
-                .findById(id)
-                .get();
+        return postRepository.findById(id)
+                             .get();
     }
 
     //게시글 업데이트
     public PostDTO update(long id, PostUpdateRequest request) {
-        PostDTO post = postRepository
-                .findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
+        PostDTO post = postRepository.findById(id)
+                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다"));
 
         PostDTO update = PostDTO
                 .builder()

@@ -67,13 +67,13 @@ public class SportCenterController {
 
     //체육 시설 수정 폼 이동
     @GetMapping("updateSportCenter")
-    public String updateSportCenter(@RequestParam long mapId, SportCenterRequest sportCenterRequest, Model model) {
+    public String updateSportCenter(@RequestParam long id, SportCenterRequest sportCenterRequest, Model model) {
 
         System.out.println("managerName" + sportCenterRequest.getManagerName());
         System.out.println("phone" + sportCenterRequest.getPhone());
         System.out.println("SportCenterName" + sportCenterRequest.getSportCenterName());
         System.out.println("resistrationCode" + sportCenterRequest.getResistrationCode());
-        MapDTO mapDTO = sportCenterService.findById(mapId);
+        MapDTO mapDTO = sportCenterService.findById(id);
         model.addAttribute("mapDTO", mapDTO);
 
         //sportCenterService.save(sportCenterRequest);

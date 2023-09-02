@@ -1,10 +1,10 @@
 $(function() {
-    $("#futsal").click(function() {
-        loadSportsData(1); // 풋살에 해당하는 sportsId
+    $("#basketball").click(function() {
+        loadSportsData(1); // 농구에 해당하는 sportsId
     });
 
-    $("#basketball").click(function() {
-        loadSportsData(2); // 농구에 해당하는 sportsId
+    $("#futsal").click(function() {
+        loadSportsData(2); // 풋살에 해당하는 sportsId
     });
 
     $("#badminton").click(function() {

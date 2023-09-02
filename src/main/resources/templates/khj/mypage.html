@@ -8,17 +8,10 @@
         <script defer src="/js/khj/menubutton.js"></script>
         <script defer src="/js/keitian/changepassword.js"></script>
         <!-- 헤더 부분 -->
-        <div id="header">
-            <div th:replace="~{commons :: topper}"></div>
-        </div>
-        <div class="jb-division-line"></div>
+        <div th:replace="~{commons :: topper}"></div>
         <!-- 네비게이션 바 부분 -->
         <div id="nav">
             <h3>마이페이지</h3>
-            (이미지가 들어갈 부분)
-            <br>
-            level :
-            <p style="display: inline" th:text="${memberInfo.communityLevel}"></p>
             <br>
             이름 :
             <p style="display: inline" th:text="${memberInfo.name}"></p>

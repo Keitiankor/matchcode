@@ -1,129 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
+    <body>
 
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>Title</title>
-        </head>
-        <body>
+        <style>
+            body {
+                background-color: #f0f0f0;
+                padding: 20px;
+            }
 
-            <style>
-                body {
-                    background-color: #f0f0f0;
-                    padding: 20px;
-                }
+            .card-body {
+                max-width: 800px;
+                min-height: 550px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
 
-                .card-body {
-                    max-width: 800px;
-                    min-height: 550px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background-color: #fff;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                }
+            .small-text {
+                font-size: 25px; /* Adjust the font size as needed */
+            }
 
-                .small-text {
-                    font-size: 25px; /* Adjust the font size as needed */
-                }
-
-                .separator {
-                    width: 100%;
-                    border-top: 1px solid #ddd;
-                    margin-top: 15px;
-                    margin-bottom: 15px;
-                }
-            </style>
+            .separator {
+                width: 100%;
+                border-top: 1px solid #ddd;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        </style>
+        <div style="margin-top: 70px">
             <div class="container mt-4">
+                <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
+
                 <div class="card-body bg-white mt-0 shadow">
                     <h1 class="mb-4"><small class="small-text"><b>결제 페이지</b></small></h1>
                     <form>
                         <div class="mb-3">
-                            <p><b>날짜</b></p>
-                            <p><b>장소: <span id="matchDate" value="${matchDate}" th:text="${matchDate}"></span></b></p>
+                            <p><b>날짜: <span id="matchDate" th:text="${matchDate}" class="float-end"></span></b></p>
                         </div>
                         <div class="mb-3">
-                            <p><b>장소: <span id="mapId" value="${mapId}" th:text="${mapId}"></span></b></p>
+                            <p><b>장소: <span id="mapId" th:text="${mapId}" class="float-end"></span></b></p>
                             <div class="separator"></div>
                         </div>
                         <h2 class="mb-4"><small class="small-text"><b>포인트</b></small></h2>
                         <div class="mb-3">
-                            <p><b>보유 포인트 <span id="totalPointsValue" th:text="${totalPoints}" class="float-end"></span></b></p>
+                            <p><b>보유 포인트 <span class="float-end" id="totalPointsValue" th:text="${totalPoints}"></span></b></p>
                         </div>
                         <div class="separator"></div>
 
                         <h3 class="mb-4"><small class="small-text"><b>결제</b></small></h3>
                         <div class="mb-3">
-                            <p><b>가격: <span id="pricePoints" th:text="${price}"></span></b></p>
-                            <p><b>결제 포인트: <span id="payPointsValue"></span> <a href="#" class="btn btn-primary" onclick="location.href='test3'">추가충전</a></b></p>
+                            <p><b>가격: <span id="price" th:text="${price}" class="float-end"></span></b></p>
+                            <p><b>결제 포인트: <span id="payPointsValue" class="float-end"></span> <a href="#" class="btn btn-primary" onclick="location.href='test3'">추가충전</a></b></p>
                         </div>
-                        <button type="button" class="btn btn-success float-end" onclick="handlePayment()">결제</button>
+                        <button class="btn btn-success float-end" onclick="handlePayment()" type="button">결제</button>
                     </form>
                 </div>
             </div>
-            <script>
-                window.onload = function() {
-                    var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
-                    var pricePoints = parseInt(document.getElementById("pricePoints").textContent);
-                    var payPointsValueElement = document.getElementById("payPointsValue");
+        </div>
+        <script>
+            window.onload = function() {
+                var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
+                var price = parseInt(document.getElementById("price").textContent);
+                var payPointsValueElement = document.getElementById("payPointsValue");
 
-                    if (totalPointsValue < pricePoints) {
-                        payPointsValueElement.textContent = totalPointsValue;
-                        payPointsValueElement.style.color = "red";
-                    } else {
-                        payPointsValueElement.textContent = pricePoints;
-                    }
-                };
-
-                function handlePayment() {
-                    var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
-                    var pricePoints = parseInt(document.getElementById("pricePoints").textContent);
-                    var payPointsValueElement = document.getElementById("payPointsValue");
-                    //alert("1")
-                    if (totalPointsValue < pricePoints) {
-                        payPointsValueElement.textContent = totalPointsValue;
-                        alert("보유 포인트가 부족합니다.");
-                    } else {
-                        payPointsValueElement.textContent = pricePoints;
-                        performPayment(pricePoints);
-                    }
+                if (totalPointsValue < price) {
+                    payPointsValueElement.textContent = totalPointsValue;
+                    payPointsValueElement.style.color = "red";
+                } else {
+                    payPointsValueElement.textContent = price;
                 }
+            };
 
-                function performPayment(pricePoints) {
-                    alert(pricePoints + "결제를 진행합니다.");
-                    var memberId; // 실제 사용자 ID로 대체
-                    //var pointToCharge = parseInt(document.getElementById("pricePoints").textContent);
-                    // 결제 처리를 위해 컨트롤러로 AJAX 요청 전송
-                    $.ajax({
-                        url: "/payPoint",
-                        type: "GET",
-                        data: {
-                            memberId: 7,
-                            // memberId: ${MEMBER_DTO},
-                            price: pricePoints,
-                            matchDate: $('#calendar').val(),
-                            mapId: $('#mapId').attr('value')
-                        },
-                        success: function(response) {
-                            if (response === "success") {
-                                var totalPointsValueElement = document.getElementById("totalPointsValue");
-                                var totalPointsValue = parseInt(totalPointsValueElement.textContent);
-                                totalPointsValueElement.textContent = totalPointsValue - pointToCharge;
+            function handlePayment() {
+                var totalPointsValue = parseInt(document.getElementById("totalPointsValue").textContent);
+                var price = parseInt(document.getElementById("price").textContent);
+                var payPointsValueElement = document.getElementById("payPointsValue");
+                if (totalPointsValue < price) {
+                    payPointsValueElement.textContent = totalPointsValue;
+                    alert("보유 포인트가 부족합니다.");
+                } else {
+                    payPointsValueElement.textContent = price;
+                    performPayment(price);
+                }
+            }
 
-                                alert("Payment successful.");
-                                // UI를 업데이트하거나 필요한 다른 작업 수행
-                            } else {
-                                alert("An error occurred while processing the payment.");
-                            }
-                        },
-                        error: function() {
-                            alert("An error occurred while communicating with the server.");
+            function performPayment(pricePoints) {
+                var memberId = $("#memberId").val();
+                var mapId = $("#mapId").val();
+                var price = $("#price").val();
+                var matchDate = $("#matchDate").val();
+                alert(pricePoints + "결제를 진행합니다.");
+                // 실제 사용자 ID로 대체
+                //var pointToCharge = parseInt(document.getElementById("pricePoints").textContent);
+                // 결제 처리를 위해 컨트롤러로 AJAX 요청 전송
+                $.ajax({
+                    url: "/payPoint",
+                    type: "GET",
+                    data: {
+                        memberId: memberId,
+                        price: price,
+                        matchDate: matchDate,
+                        mapId: mapId
+                    },
+                    success: function(response) {
+                        if (response === "success") {
+                            var totalPointsValueElement = document.getElementById("totalPointsValue");
+                            var totalPointsValue = parseInt(totalPointsValueElement.textContent);
+                            totalPointsValueElement.textContent = totalPointsValue - price;
+
+                            alert("Payment successful.");
+                            // UI를 업데이트하거나 필요한 다른 작업 수행
+                        } else {
+                            alert("An error occurred while processing the payment.");
                         }
-                    });
-                }
-            </script>
-        </body>
-    </html>
+                    },
+                    error: function() {
+                        alert("An error occurred while communicating with the server.");
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

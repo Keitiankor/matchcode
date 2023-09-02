@@ -16,7 +16,8 @@ public enum Week {
 
     public static String getDescriptionFromCount(Integer count) {
         for (Week week : Week.values()) {
-            if (week.getCount()
+            if (week
+                    .getCount()
                     .equals(count)) {
                 return week.getDescription();
             }

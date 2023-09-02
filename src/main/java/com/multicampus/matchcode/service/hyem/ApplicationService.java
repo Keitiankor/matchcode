@@ -34,9 +34,9 @@ public class ApplicationService {
     }
 
     // 팀별 가입신청 리스트
-    /*    public Page<ApplicationDTO> teamApplicationList(long id) {
-        return applicationRepository.findByRecruit0Id(id);
-    }*/
+    public Page<ApplicationDTO> teamApplicationList(long id, Pageable pageable) {
+        return applicationRepository.findByTeamId(id, pageable);
+    }
 
     // 가입신청 정보
     public ApplicationDTO applicationView(long id) {
@@ -51,6 +51,7 @@ public class ApplicationService {
 
         ApplicationDTO applicationUpdate = ApplicationDTO.builder()
                                                          .id(id)
+                                                         .memberId(request.getMemberId())
                                                          .teamId(existingApplication.getTeamId())
                                                          .introduction(request.getIntroduction())
                                                          .status(1)
