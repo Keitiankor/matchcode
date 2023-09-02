@@ -86,6 +86,12 @@ public class RecruitService {
                 .get();
     }
 
+    // 모집중 여부 조회 -> 아래
+    public boolean isRecruitExist(long teamId) {
+        return recruitRepository.findByTeamId(teamId)
+                                .isPresent();
+    }
+
     // 모집글 내용 수정
     public RecruitDTO recruitUpdate(long id, RecruitPostRequest request) {
         RecruitDTO existingRecruit = recruitRepository

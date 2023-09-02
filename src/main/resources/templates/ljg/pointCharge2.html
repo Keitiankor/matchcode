@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
 
     <head>
         <meta charset="UTF-8">
         <title>결제하기 버튼</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
         <style>
             body {
@@ -96,8 +98,9 @@
         </script>
     </head>
     <body>
-        <input type="text"  id="memberId" th:value="${memberId}" hidden="hidden">
-        <div class="card-body bg-white mt-0 shadow">
+        <div th:replace="~{commons :: topper}"></div>
+        <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
+        <div style="margin-top: 70px" class="card-body bg-white mt-0 shadow">
             <p style="font-weight: bold">카카오페이 충전</p>
             <label class="box-radio-input"><input name="cp_item" type="radio" value="1000"><span>1,000원</span></label>
             <label class="box-radio-input"><input name="cp_item" type="radio" value="10000"><span>10,000원</span></label>
@@ -112,5 +115,4 @@
             <button class="btn btn-lg btn-block  btn-custom" id="charge_kakao" type="button">충 전 하 기</button>
         </div>
     </body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </html>

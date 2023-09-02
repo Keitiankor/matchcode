@@ -8,7 +8,7 @@
     <body>
         <h2>팀 생성하기</h2>
         <form method="post" th:action="@{/team/create}">
-            <input hidden name="userId" th:value="${userid}" type="text">
+            <input hidden name="memberId" th:value="${memberId}" type="text">
             팀명 <input name="teamName" placeholder="팀명을 입력해주세요" type="text">
             팀 코드 <input name="uri" placeholder="팀 코드를 입력해주세요" type="text">
             <p>선호 스포츠(중복 선택 가능)</p>
