@@ -38,6 +38,22 @@
                 <!--비공개 -->
                 <input th:field="*{privates}" type="checkbox">비공개<br>
 
+                <br>
+                <div class="form-group">
+                    <label>스포츠 선택:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sports" id="basketball" value="1">
+                        <label class="form-check-label" for="basketball">농구</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sports" id="futsal" value="2">
+                        <label class="form-check-label" for="futsal">풋살</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sports" id="badminton" value="3">
+                        <label class="form-check-label" for="badminton">배드민턴</label>
+                    </div>
+                </div>
 
                 <!--등록버튼(message와 함께 게시글 리스트로 이동)과 취소버튼(게시글 리스트로이동)-->
                 <th>

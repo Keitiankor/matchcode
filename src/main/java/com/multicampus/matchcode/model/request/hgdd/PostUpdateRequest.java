@@ -11,5 +11,6 @@ public class PostUpdateRequest {
     private String title;
     private String content;
     private boolean privates;
+    private int sports;
 
 }

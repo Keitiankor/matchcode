@@ -19,7 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -37,7 +39,8 @@ public class PostController {
     public String insert(
             Model model,
             PostDTO postDTO,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         model.addAttribute("postDTO", postDTO);
 
         if (memberDTO != null) {
@@ -56,7 +59,8 @@ public class PostController {
     public String insert2(
             @ModelAttribute("postDTO") PostInsertRequest request,
             Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         postService.insert(request, memberDTO); //db저장
 
         System.out.println("제목: " + request.getTitle());
@@ -75,8 +79,14 @@ public class PostController {
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
             // 드롭다운 값 받아옴
-            String searchKeyword) {
+            String searchKeyword
+    ) {
         Page<PostDTO> list = null;
+
+        Map<Integer,String> sports=new HashMap<>();
+        sports.put(1, "농구");
+        sports.put(2, "풋살");
+        sports.put(3, "배드민턴");
 
         if ("likes".equals(sortBy)) {
             if (searchKeyword == null) { //최신순
@@ -98,12 +108,14 @@ public class PostController {
             }
         }
 
-        int nowPage = list.getPageable()
-                          .getPageNumber() + 1;
+        int nowPage = list
+                .getPageable()
+                .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
 
         List<PostDTO> top3ByLikes = postService.listTop3ByLikes(); //좋아요 많은 3개
+        model.addAttribute("sports",sports);
         model.addAttribute("top3ByLikes", top3ByLikes);
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
@@ -114,13 +126,19 @@ public class PostController {
 
     //게시글 열람
     @GetMapping("/view")
-    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String view(
+            Model model,
+            Long id,
+            PostLikeDTO likeDTO,
+            DeclationDTO declationDTO,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         PostDTO post = postService.view(id);
 
         model.addAttribute("post", postService.view(id));
         model.addAttribute("likeDTO", likeDTO);
         model.addAttribute("list", replyService.list(id));
-        model.addAttribute("declation",declationDTO);
+        model.addAttribute("declation", declationDTO);
         if (memberDTO != null) {
             if (post.isPrivates()) { //비공개 여부 확인
                 if (post.getMemberId() == memberDTO.getId()) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -146,7 +164,11 @@ public class PostController {
 
     //게시글 수정 페이지 이동
     @GetMapping("/correction/{id}")
-    public String correction(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+    public String correction(
+            @PathVariable("id") Long id,
+            Model model,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
+    ) {
         PostDTO post = postService.view(id);
 
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인

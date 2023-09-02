@@ -12,5 +12,5 @@ public class PostInsertRequest {
     private String title;
     private String content;
     private boolean privates;
-
+    private int sports;
 }
