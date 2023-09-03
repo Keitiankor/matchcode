@@ -24,11 +24,12 @@ public class MatchDTO {
     private long id;
     private long mapId;
     private long sportsId;
+    private String content;
     private Timestamp matchDate;
     @CreationTimestamp
     private Timestamp createdDate;
     private Timestamp expireDate;
     private int restrictionMinRate;
     private int restrictionMaxRate;
-    private int status;
+    private long status;
 }

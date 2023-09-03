@@ -16,6 +16,23 @@ $(document).ready(function() {
             sports = "";
         }
 
+        // 서버에 전달되는 값 수정
+        if (region === "서울") {
+            region = "1";
+        } else if (region === "경기") {
+            region = "2";
+        } else if (region === "인천") {
+            region = "3";
+        }
+
+        if (sports === "축구") {
+            sports = "1";
+        } else if (sports === "농구") {
+            sports = "2";
+        } else if (sports === "배드민턴") {
+            sports = "3";
+        }
+
         $.ajax({
             url: "/match/getmatchesbyregionandsports",
             data: { page: pageNum, region: region, sports: sports },
