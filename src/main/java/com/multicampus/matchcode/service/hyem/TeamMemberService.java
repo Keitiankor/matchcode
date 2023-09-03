@@ -4,6 +4,8 @@ import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.repository.ApplicationRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,6 +58,11 @@ public class TeamMemberService {
         return teamMemberRepository.findByMemberId(memberId).get().getPrivilege();
     }
 
+    // 가입된 팀 id 확인
+    public long getTeamId(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).get().getTeamId();
+    }
+
     // 신청자 확인
     public boolean isApplicatedMember(long teamId, long memberId) {
         return applicationRepository.findByMemberIdAndTeamId(teamId, memberId);
@@ -65,11 +72,17 @@ public class TeamMemberService {
         return teamMemberRepository.findByMemberId(memberId).orElse(null);
     }
 
-    /*// 팀 리스트 처리
-    public Page<TeamDTO> teamList(Pageable pageable) {
-        return teamRepository.findAll(pageable);
+    // 팀원 리스트
+    public Page<TeamMemberDTO> teamMemberList(Pageable pageable) {
+        return teamMemberRepository.findAll(pageable);
     }
 
+    // 팀별 팀원 리스트
+    public Page<TeamMemberDTO> teamMemberList2(Pageable pageable, long teamId) {
+        return teamMemberRepository.findAllByTeamId(pageable, teamId);
+    }
+
+     /*
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {
         return teamRepository.findById(id).get();

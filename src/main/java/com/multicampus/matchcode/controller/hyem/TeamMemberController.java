@@ -29,6 +29,9 @@ public class TeamMemberController {
     @Autowired
     private ApplicationService applicationService;
 
+    @Autowired
+    private TeamService teamService;
+
     // 팀원 추가하기
     @PostMapping("/addteammember")
     public String addTeamMember(Long id,
@@ -49,12 +52,14 @@ public class TeamMemberController {
     }
 
     // 팀별 팀멤버 리스트
-    @GetMapping("/list/{teamId}")
+    @GetMapping("/team/page/{uri}/memberlist")
     public String teamList(
+            @PathVariable("uri") String uri,
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        Page<TeamDTO> list = teamService.teamList(pageable);
+        Page<TeamMemberDTO> list = teamMemberService.teamMemberList2(pageable, teamMemberService.getTeamId(memberDTO.getId()));
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
@@ -66,7 +71,7 @@ public class TeamMemberController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "hyem/team/teamlist";
+        return "hyem/teammember/teammemberlist";
     }
 
     /*
