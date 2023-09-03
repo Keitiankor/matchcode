@@ -32,24 +32,24 @@ public class TeamMemberController {
     // 팀원 추가하기
     @PostMapping("/addteammember")
     public String addTeamMember(Long id,
-            ApplicationRequest request,
+            //ApplicationRequest request,
             Model model
     ) throws Exception {
         ApplicationDTO applicationDTO = applicationService.applicationView(id);
+
         long teamId = applicationDTO.getTeamId();
         long memberId = applicationDTO.getMemberId();
-        System.out.println("team id : " + teamId + " , member id : " + memberId);
-        teamMemberService.addTeamMember(teamId, memberId);
 
-        // 가입 승인 변경 로직 추가...
-        applicationService.applicationUpdate(id, request);
+        teamMemberService.addTeamMember(teamId, memberId);
+        applicationService.applicationCancel(id);
+
         model.addAttribute("message", "가입을 수락하였습니다.");
-        model.addAttribute("searchUrl", "/team/list");
+        model.addAttribute("searchUrl", "/application/" + teamId);
         return "hyem/message";
     }
 
-    /*// 팀 리스트
-    @GetMapping("/list")
+    // 팀별 팀멤버 리스트
+    @GetMapping("/list/{teamId}")
     public String teamList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
@@ -69,6 +69,7 @@ public class TeamMemberController {
         return "hyem/team/teamlist";
     }
 
+    /*
     // 팀 상세 정보 열람
     @GetMapping("/view/{uri}/{id}")
     public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
