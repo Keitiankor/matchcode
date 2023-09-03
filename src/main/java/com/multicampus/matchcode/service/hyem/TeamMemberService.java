@@ -51,6 +51,11 @@ public class TeamMemberService {
         return privilege;
     }
 
+    // 권한 확인
+    public Integer getPrivilege(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).get().getPrivilege();
+    }
+
     // 신청자 확인
     public boolean isApplicatedMember(long teamId, long memberId) {
         return applicationRepository.findByMemberIdAndTeamId(teamId, memberId);
