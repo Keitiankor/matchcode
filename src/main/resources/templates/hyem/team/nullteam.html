@@ -20,7 +20,7 @@
             <br>
             <span>가입신청을 하셨나요?</span>
             <button class="btn btn-info">
-                <a style="color: white; text-decoration: none;" th:href="@{/application/list}">가입신청 상세 정보 열람</a>
+                <a style="color: white; text-decoration: none;" th:href="@{/application/view/{id}(id = ${applicationId})}">가입신청 상세 정보 열람</a>
             </button>
             <br>
             <button class="btn btn-warning">
