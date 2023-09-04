@@ -37,7 +37,7 @@ public class MemberController {
         if (dto == null) {
             return "keitian/register";
         } else {
-            return "index";
+            return "redirect:";
         }
     }
 
@@ -46,7 +46,7 @@ public class MemberController {
         request
                 .getSession()
                 .setAttribute(SessionConstant.MEMBER_DTO, null);
-        return "index";
+        return "redirect:";
     }
 
     @PostMapping("login")

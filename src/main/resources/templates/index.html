@@ -9,12 +9,12 @@
             <section style="padding-top: 70px; width: 90%; height: 80%; margin: auto">
                 <div style="background-color: #eeeeee; float: left; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
                     <th:block th:each="post : ${posts}">
-                        <a th:href="@{post/view(id=${post.id})}"><p th:text="${post.title}"></p></a>
+                        <a th:href="@{post/view(id=${post.id})}"><p style="margin-left: 15px; margin-top: 15px" th:text="${post.title}"></p></a>
                     </th:block>
                 </div>
                 <div style="background-color: #eeeeee; float: right; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
                     <th:block th:each="match : ${matches}">
-                        <p th:text="|${match.createdDate} : ${match.sportsId}|"></p>
+                        <p style="margin-left: 15px; margin-top: 15px" th:text="|${match.createdDate} : ${match.sportsId}|"></p>
                     </th:block>
                 </div>
             </section>
