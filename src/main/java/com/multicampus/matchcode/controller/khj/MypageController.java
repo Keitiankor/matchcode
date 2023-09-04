@@ -2,6 +2,7 @@ package com.multicampus.matchcode.controller.khj;
 
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
+import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.entity.ReplyDTO;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -60,11 +62,11 @@ public class MypageController {
     //매치 히스토리 내에서 종목별 페이지
     @GetMapping("/loadsportsdata")
     public String loadSportsData(long sportsId, Model model, @ModelAttribute("memberId") long memberId) {
-        RatingRequest ratingRequest = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
+        RatingDTO ratingDTO = myHistoryService.getRatingBySportsIdAndMemberId(sportsId, memberId);
         List<MatchResultRequest> matchResults = myHistoryService.getMatchResultsBySportsIdAndMemberId(sportsId,
                                                                                                       memberId
         );
-        model.addAttribute("rating", ratingRequest);
+        model.addAttribute("rating", ratingDTO);
         model.addAttribute("matchResults", matchResults);
         return "khj/history";
     }
@@ -73,34 +75,10 @@ public class MypageController {
     @GetMapping("/loadmatchdata")
     @ResponseBody
     public List<String> loadMatchData(@RequestParam String matchId) {
-        System.out.println(matchId);
         return myHistoryService.getMembersByMatchId(Long.parseLong(matchId));
     }
-    //매너온도 증감은 지금은 잘 몰라서 보류.
-    //    //매치 멤버 id로 매치 멤버의 매너온도 조작
-    //    //매너온도 증가시
-    //    @PostMapping
-    //    public ResponseEntity<String> increaseManner(@RequestParam long memberId){
-    //        boolean success = myHistoryService.increaseManner(memberId);
-    //        if (success) {
-    //            return ResponseEntity.ok("매너 온도 증가!");
-    //        } else {
-    //            return ResponseEntity.badRequest().body("Failed to increase manner");
-    //        }
-    //    }
-    //
-    //    //매너온도 감소시
-    //    @PostMapping("/decreaseManner")
-    //    public ResponseEntity<String> decreaseManner(@RequestParam long memberId) {
-    //        boolean success = myHistoryService.decreaseManner(memberId);
-    //        if (success) {
-    //            return ResponseEntity.ok("매너 온도 감소!");
-    //        } else {
-    //            return ResponseEntity.badRequest().body("Failed to decrease manner");
-    //        }
-    //    }
-    //개인정보
 
+    //개인정보
     @GetMapping("personal")
     public String personal(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
@@ -113,22 +91,15 @@ public class MypageController {
     public String mypost(Model model, @ModelAttribute("memberId") long memberId) {
         List<PostDTO> myPosts = MyPost.getMyPostsByMemberId(memberId);
         List<ReplyDTO> myReplies = MyPost.getMyRepliesByMemberId(memberId);
+
         // 게시글을 최신 날짜 기준으로 정렬 후 상위 5개 게시글만 추출
-        myPosts.sort(Comparator
-                             .comparing(PostDTO::getCreatedDate)
-                             .reversed());
-        List<PostDTO> fivePosts = myPosts
-                .stream()
-                .limit(5)
-                .collect(Collectors.toList());
+        myPosts.sort(Comparator.comparing(PostDTO::getCreatedDate).reversed());
+        List<PostDTO> fivePosts = myPosts.stream().limit(5).collect(Collectors.toList());
+
         // 댓글도 최신 날짜 기준, 상위 5개 정렬
-        myReplies.sort(Comparator
-                               .comparing(ReplyDTO::getCreatedDate)
-                               .reversed());
-        List<ReplyDTO> fiveReplies = myReplies
-                .stream()
-                .limit(5)
-                .collect(Collectors.toList());
+        myReplies.sort(Comparator.comparing(ReplyDTO::getCreatedDate).reversed());
+        List<ReplyDTO> fiveReplies = myReplies.stream().limit(5).collect(Collectors.toList());
+
         model.addAttribute("myPosts", fivePosts);
         model.addAttribute("myReplies", fiveReplies);
         return "khj/mypost";

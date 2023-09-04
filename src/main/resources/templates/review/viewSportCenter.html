@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
     <head>
         <meta charset="utf-8">
         <title>카테고리별 장소 검색하기</title>
         <link href="/css/jun/viewSportCenterStyle.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <div class="map_wrap">
+        <div th:replace="~{commons :: topper}"></div>
+        <div style="margin-top: 70px" class="map_wrap">
             <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
             <div class="bg_white" id="menu_wrap">
                 <div class="option">
@@ -24,8 +28,9 @@
         </div>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c80a75ce9529c87ee1ee975834c095bf" type="text/javascript"></script>
         <a th:href="@{/sportCenter/createSportCenter}"><input type="button" value="시설 등록"></a>
-        <a th:href="@{/sportCenter/updateSportCenter}"><input type="button" value="시설 수정"></a>
+        <a th:href="@{/ljg/paypage}"><input type="button" value="시설 예약"></a>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" type="text/javascript"></script>
         <script src="/js/jun/viewSportCenter.js"></script>
     </body>
 </html>
+

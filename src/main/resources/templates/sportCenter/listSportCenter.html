@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
     <head>
         <meta charset="UTF-8">
         <title>Review SportCenter</title>
@@ -57,7 +60,8 @@
         </style>
     </head>
     <body>
-        <div class="container">
+        <div th:replace="~{commons :: topper}"></div>
+        <div style="margin-top: 70px" class="container">
             <h1>체육 시설 목록</h1>
             <table>
                 <tr>

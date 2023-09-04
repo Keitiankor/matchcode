@@ -1,0 +1,27 @@
+name: MatchCodeCIDC
+
+on:
+  push:
+    branches: 'deploy/**'
+
+env:
+  AWS_S3_BUCKET: matchcodebucket
+
+jobs:
+  build-with-gradle:
+    runs-on: ubunut-20.04
+    steps:
+    - name: move to deploy branch
+      uses: actions/checkout@v3
+      with:
+        ref: deploy
+    - name: install JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribute: 'temurin'
+    - name: Grant x permission for gradlew
+      run: chmod +x ./gradlew
+    - name: Build project
+      run: ./gradlew clean build -x test
+      
