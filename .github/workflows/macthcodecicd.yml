@@ -3,7 +3,7 @@ name: MatchCodeCIDC
 on:
   push:
     branches:
-      - deploy/**
+      - "deploy/**"
 
 jobs:
   build-with-gradle:
