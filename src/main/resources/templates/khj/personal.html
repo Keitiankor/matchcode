@@ -28,11 +28,11 @@
         <td><span th:text="${member.communityExp + '%'}"></span></td>
     </tr>
     <tr>
-        <td class="label">나의 매너온도:</td>
+        <td class="label">나의 매너온도</td>
         <td><span th:text="${member.mannerTemperture}"></span></td>
     </tr>
     <tr>
-        <td class="label">생성일:</td>
+        <td class="label">생성일</td>
         <td><span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></td>
     </tr>
 </table>
