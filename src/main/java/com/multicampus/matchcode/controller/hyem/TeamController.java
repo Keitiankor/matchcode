@@ -71,6 +71,15 @@ public class TeamController {
         }
     }
 
+    // 메인탭 매핑
+    @GetMapping("/")
+    public String mainTeamTap(@ModelAttribute("team") TeamDTO teamDTO,
+                              @ModelAttribute("recruit") RecruitDTO recruitDTO,
+                              @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+
+        return "hyem/teammain";
+    }
+
     // 팀 생성하기
     @GetMapping("/create")
     public String createTeam(
