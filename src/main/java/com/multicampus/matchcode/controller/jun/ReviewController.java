@@ -41,8 +41,6 @@ public class ReviewController {
         if (memberDTO == null) {
             return "redirect:/login";
         }
-        System.out.println("rate : " + reviewRequest.getRate());
-        System.out.println("comment : " + reviewRequest.getComment());
         reviewService.save(reviewRequest, memberDTO.getId());
         return "redirect:/review/listReview";
     }

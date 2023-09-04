@@ -51,13 +51,6 @@ public class SportCenterController {
     //체육 시설 등록
     @PostMapping("createSportCenter")
     public String createSportCenter2(SportCenterRequest sportCenterRequest) {
-        System.out.println("managerName : " + sportCenterRequest.getManagerName());
-        System.out.println("phone : " + sportCenterRequest.getPhone());
-        System.out.println("SportCenterName : " + sportCenterRequest.getSportCenterName());
-        System.out.println("areaId : " + sportCenterRequest.getAreaId());
-        System.out.println("resistrationCode : " + sportCenterRequest.getResistrationCode());
-        System.out.println("latitude : " + sportCenterRequest.getLatitude());
-        System.out.println("longitude : " + sportCenterRequest.getLongitude());
         sportCenterService.save(sportCenterRequest);
         return "redirect:/";
     }
@@ -65,10 +58,6 @@ public class SportCenterController {
     //체육 시설 수정 폼 이동
     @GetMapping("updateSportCenter")
     public String updateSportCenter(@RequestParam long id, SportCenterRequest sportCenterRequest, Model model) {
-        System.out.println("managerName" + sportCenterRequest.getManagerName());
-        System.out.println("phone" + sportCenterRequest.getPhone());
-        System.out.println("SportCenterName" + sportCenterRequest.getSportCenterName());
-        System.out.println("resistrationCode" + sportCenterRequest.getResistrationCode());
         MapDTO mapDTO = sportCenterService.findById(id);
         model.addAttribute("mapDTO", mapDTO);
         //sportCenterService.save(sportCenterRequest);
@@ -79,7 +68,7 @@ public class SportCenterController {
     @PostMapping("updateSportCenter")
     public String updateSportCenter2(SportCenterRequest sportCenterRequest) {
         sportCenterService.save(sportCenterRequest);
-        return ":/";
+        return "redirect:/";
     }
 
     //사업자명과 관리자 이름 대조

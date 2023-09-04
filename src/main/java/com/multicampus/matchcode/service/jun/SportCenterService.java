@@ -60,7 +60,6 @@ public class SportCenterService {
 
     public List<MapDTO> select(MapDTO mapDTO) {
         System.out.println("SportCenter.select : " + mapDTO);
-        List<MapDTO> mapList = mapRepository.findAll();
-        return mapList;
+        return mapRepository.findAll();
     }
 }

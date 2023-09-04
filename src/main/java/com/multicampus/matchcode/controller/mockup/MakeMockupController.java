@@ -12,6 +12,6 @@ public class MakeMockupController {
     @GetMapping("makemockupdata")
     public String makeMockup() {
         mockup.makeMockupMap(100);
-        return "index";
+        return "redirect:index";
     }
 }
