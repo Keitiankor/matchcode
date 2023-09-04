@@ -1,19 +1,16 @@
 package com.multicampus.matchcode.controller.ljg;
 
-import com.multicampus.matchcode.model.entity.MapDTO;
-import com.multicampus.matchcode.model.entity.MatchDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PointDTO;
 import com.multicampus.matchcode.model.request.ljg.ReserveRequest;
+import com.multicampus.matchcode.repository.MapRepository;
 import com.multicampus.matchcode.service.ljg.PointService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,18 +29,15 @@ public class PointController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
             Long memberId,
             Model model) {
-        System.out.println(member.getId());
+
         if (member != null) {
             List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
             chargeHistories.sort(Comparator.comparing(PointDTO::getDate)
                                            .reversed());
             int totalPoints = pointService.calculateTotalPoints(chargeHistories); // 수정: 총 포인트 계산
             List<PointDTO> pointUseHistories = pointService.findAllByMemberId(member.getId()); //포인트 사용내역
-
-            System.out.println(chargeHistories.size());
             model.addAttribute("chargeHistories", chargeHistories);
             model.addAttribute("totalPoints", totalPoints);
-            System.out.println(totalPoints);
             model.addAttribute("pointUseHistories", pointUseHistories); //포인트 사용내역
 
             return "/ljg/pointPage";
@@ -53,8 +47,10 @@ public class PointController {
     }
 
     @GetMapping("/test")
-    public String pointCharge( @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,Model model) {
-        model.addAttribute("memberId",member.getId());
+    public String pointCharge(
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
+            Model model) {
+        model.addAttribute("memberId", member.getId());
         return "/ljg/pointCharge";
     }
 
@@ -70,15 +66,16 @@ public class PointController {
                                     .memberId(member.getId())
                                     .point(point)
                                     .build();
-        System.out.println(pointDTO);
         pointService.pointCharge(pointDTO);
         return "success";
     }
 
 
     @GetMapping("/test3")
-    public String pointCharge2( @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,Model model) {
-        model.addAttribute("memberId",member.getId());
+    public String pointCharge2(
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
+            Model model) {
+        model.addAttribute("memberId", member.getId());
         return "/ljg/pointCharge2";
     }
 
@@ -98,35 +95,37 @@ public class PointController {
         return "success";
     }
 
-  //결제페이지
+    //결제페이지
     @GetMapping("/payPage")
     public String payPage(
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO member,
-            @RequestParam long mapId,
-            @RequestParam int price,
-            @RequestParam Timestamp matchDate,
-            Model model){
-// http://localhost:8765/payPage?mapId=1&price=1000
-
+            @RequestParam("price") int price,
+            @RequestParam("id") long id,
+            @RequestParam("sportCenterName") String sportCenterName
+            ,Model model) {
+        // 모든 MapDTO를 가져옵니다.
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
 
-        model.addAttribute("memberId",member.getId());
+        model.addAttribute("memberId", member.getId());
         model.addAttribute("totalPoints", totalPoints);
-        model.addAttribute("mapId", mapId);
+        model.addAttribute("id", id);
         model.addAttribute("price", price);
-        model.addAttribute("matchDate", matchDate);
+        model.addAttribute("sportCenterName", sportCenterName);
         return "/ljg/paypage";
     }
 
     //결제처리
     @GetMapping("/payPoint")
-    public String payPoints(HttpServletRequest request, ReserveRequest reserveRequest) {
+    public String payPoints(HttpServletRequest request,
+                            ReserveRequest reserveRequest
+    ) {
         pointService.payPoints(reserveRequest);
         request.getSession()
                .setAttribute(SessionConstant.MEMBER_DTO, reserveRequest.getMemberId());
         return "/ljg/paypage";
     }
+
     //환불페이지
     @GetMapping("/refund")
     public String refundPoint(
@@ -134,7 +133,7 @@ public class PointController {
         List<PointDTO> chargeHistories = pointService.findAllByMemberId(member.getId());
         int totalPoints = pointService.calculateTotalPoints(chargeHistories);
         model.addAttribute("totalPoints", totalPoints);
-        model.addAttribute("memberId",member.getId());
+        model.addAttribute("memberId", member.getId());
         return "/ljg/refundPoint";
     }
 
