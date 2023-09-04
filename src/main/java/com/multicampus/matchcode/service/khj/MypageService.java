@@ -44,15 +44,11 @@ public class MypageService {
         Optional<MemberDTO> memberDTO = member.findById(memberId);
         Optional<List<PointDTO>> pointDTO = point.findAllByMemberId(memberId);
         Optional<TeamMemberDTO> teamMemberDTO = teammember.findByMemberId(memberId);
-        System.out.println(team
-                                   .findById((long) 1)
-                                   .toString());
         Optional<TeamDTO> teamDTO = teamMemberDTO.isPresent()
                                     ? team.findById(teamMemberDTO
                                                             .get()
                                                             .getTeamId())
                                     : Optional.empty();
-
         String teamName = teamDTO.isPresent()
                           ? teamDTO
                                   .get()
@@ -64,7 +60,6 @@ public class MypageService {
                 sum += dto.getPoint();
             }
         }
-
         return MemberInfoRequest
                 .builder()
                 .name(memberDTO

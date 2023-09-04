@@ -30,7 +30,6 @@ public class MemberService {
     @Autowired
     private MailComponent mailComponent;
 
-
     public void insert(RegisterRequest request) {
         Timestamp bd = null;
         try {
@@ -40,7 +39,6 @@ public class MemberService {
         } catch (ParseException ex) {
             log.error("Parse Error ! {}", ex.getMessage());
         }
-
         MemberDTO dto = MemberDTO
                 .builder()
                 .account(request.getAccount())
@@ -51,7 +49,6 @@ public class MemberService {
                 .createdDate(new Timestamp(System.currentTimeMillis()))
                 .birthday(bd)
                 .build();
-
         repository.save(dto);
     }
 
@@ -95,8 +92,6 @@ public class MemberService {
                     } else {
                         ref.generatedPassword = StringConstant.NO_MATCH_EMAIL;
                     }
-
-
                 });
         return ref.generatedPassword;
     }

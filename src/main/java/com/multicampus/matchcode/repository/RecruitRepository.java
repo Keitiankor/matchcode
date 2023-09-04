@@ -12,6 +12,6 @@ public interface RecruitRepository extends JpaRepository<RecruitDTO, Long> {
     Optional<RecruitDTO> findByTeamId(long teamId);
 
     @Modifying
-    @Query("SELECT r From Recruit r where r.teamId = :teamId")
-    Optional<RecruitDTO> deleteRecruitsByTeamId(@Param("teamId") long id);
+    @Query("delete Recruit r where r.teamId = :teamId")
+    void deleteRecruitsByTeamId(@Param("teamId") long id);
 }

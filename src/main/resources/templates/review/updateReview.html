@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
     <head>
         <meta charset="UTF-8">
         <title>Update Review</title>
@@ -63,7 +66,8 @@
         </style>
     </head>
     <body>
-        <div class="container">
+        <div th:replace="~{commons :: topper}"></div>
+        <div style="margin-top: 70px" class="container">
             <h1>Update Review</h1>
             <form method="post" th:action="@{/review/updateReview}">
                 <input name="dto" th:value="${review}" type="hidden">

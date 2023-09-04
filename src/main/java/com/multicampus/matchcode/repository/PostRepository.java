@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-
 public interface PostRepository extends JpaRepository<PostDTO, Long> {
 
     //페이징 처리
@@ -50,7 +49,6 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
 
     List<PostDTO> findAllByMemberId(long memberId);
 
-
     @Modifying
     @Query("update post p set p.declation = p.declation + 1 where p.id = :id")
     int declarationup(long id);
@@ -58,4 +56,6 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     @Modifying
     @Query("update post p set p.declation = p.declation - 1 where p.id = :id")
     int declationdown(long id);
+
+    List<PostDTO> findTop5ByOrderByIdDesc();
 }

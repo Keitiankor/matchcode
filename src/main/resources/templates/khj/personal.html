@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-
 <script defer src="/js/khj/menubutton.js"></script>
-
 <h2 style="display:inline">개인정보</h2>
-
 <p>이름: <span th:text="${member.name}"></span></p>
 <p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
 <p>핸드폰: <span th:text="${member.phone}"></span></p>

@@ -37,16 +37,11 @@ public class ReviewController {
     public String createReview2(
             ReviewRequest reviewRequest, @SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO memberDTO
     ) {
-
         //클라이언트(로그인X) -> 로그인페이지로 리다이렉트
         if (memberDTO == null) {
             return "redirect:/login";
         }
-        System.out.println("rate : " + reviewRequest.getRate());
-        System.out.println("comment : " + reviewRequest.getComment());
-
         reviewService.save(reviewRequest, memberDTO.getId());
-
         return "redirect:/review/listReview";
     }
 
