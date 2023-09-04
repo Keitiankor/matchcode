@@ -1,8 +1,12 @@
 package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
+import com.multicampus.matchcode.model.entity.MatchMemberDTO;
+import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.hyuk.Match;
+import com.multicampus.matchcode.service.hyuk.MatchMemberService;
 import com.multicampus.matchcode.service.hyuk.MatchService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +20,9 @@ public class MatchController {
 
     @Autowired
     MatchService matchService;
+
+    @Autowired
+    MatchMemberService matchMemberService;
 
     @GetMapping("/list")
     public String listByRegionAndSports(Model model,
@@ -68,16 +75,24 @@ public class MatchController {
         return "match/write";
     }
 
+/*    @GetMapping("/test")
+    public String test() {
+        return "match/test";
+    }*/
+
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
     @PostMapping("/post2")
-    public String write(@RequestParam(value = "status", defaultValue = "1") Long status, Match match) {
-        match.setStatus(status);
-        System.out.println(match);
-        matchService.savePost(match);
+    public String write(Match match, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = true) MemberDTO memberDTO, Model model) {
+        long matchId = matchService.savePost(match); // 매치를 저장하고 ID를 받아옴
+
+        long memberId = memberDTO.getId(); // 세션에서 로그인한 사용자의 ID를 가져옴
+
+        matchMemberService.addMatchLeader(matchId, memberId);
         return "redirect:/match/list";
     }
+
 
     // 게시물 상세 페이지이며, {no}로 페이지 넘버를 받는다.
     // PathVariable 애노테이션을 통해 no를 받음
