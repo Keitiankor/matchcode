@@ -1,15 +1,13 @@
 package com.multicampus.matchcode.controller.hyuk;
 
-import com.multicampus.matchcode.model.entity.ApplicationDTO;
-import com.multicampus.matchcode.model.entity.MatchMemberDTO;
-import com.multicampus.matchcode.model.entity.RecruitDTO;
-import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.repository.MatchMemberRepository;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.service.hyuk.MatchMemberService;
 import com.multicampus.matchcode.service.hyuk.MatchService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +27,7 @@ public class MatchMemberController {
     private MatchMemberService matchMemberService;
 
     // 모집글 작성 매핑
-    @GetMapping("/addmatchmember6")
+    @GetMapping("/addmatchmember")
     public String writeMatch(@PathVariable("matchid") Long matchId, Model model) {
         if (matchMemberService.isMatchExist(matchId)) {
             model.addAttribute("message", "참여중인 매치입니다.");
@@ -43,11 +41,13 @@ public class MatchMemberController {
     }
 
     // 매치원 추가
-    @PostMapping("/addmatchmember3")
-    public String addMatchMember(@RequestParam("id") Long id, Model model) throws Exception {
-        MatchMemberDTO matchMemberDTO = matchMemberService.matchMemberFind(id);
-        long matchId = matchMemberDTO.getMatchId();
-        long memberId = matchMemberDTO.getMemberId();
+    @GetMapping("/post/addmatchmember2")
+    public String addMatchMember(long matchId,
+                                 @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = true) MemberDTO memberDTO, Model model) throws Exception {
+       /* MatchMemberDTO matchMemberDTO = matchMemberService.matchMemberFind(id);
+        long matchId = matchMemberDTO.getMatchId();*/
+        /*long memberId = matchMemberDTO.getMemberId();*/
+        long memberId = memberDTO.getId();
         matchMemberService.addMatchMember(matchId, memberId);
         model.addAttribute("message", "매치신청에 완료했습니다.");
         model.addAttribute("searchUrl", "/match/list");

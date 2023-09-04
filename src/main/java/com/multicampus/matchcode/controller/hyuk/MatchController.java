@@ -7,6 +7,7 @@ import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.service.hyuk.MatchMemberService;
 import com.multicampus.matchcode.service.hyuk.MatchService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,7 +86,15 @@ public class MatchController {
 
     @PostMapping("/post2")
     public String write(Match match, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = true) MemberDTO memberDTO, Model model) {
+
         long matchId = matchService.savePost(match); // 매치를 저장하고 ID를 받아옴
+
+        ///////////////////////
+       // memberDTO = new MemberDTO();
+      //  memberDTO.setId(1);
+      //  session.setAttribute("memberDTO", memberDTO);
+     //   memberDTO = (MemberDTO)session.getAttribute("memberDTO");
+        //////////////////////
 
         long memberId = memberDTO.getId(); // 세션에서 로그인한 사용자의 ID를 가져옴
 
