@@ -25,7 +25,7 @@ $(document).ready(function() {
             region = "3";
         }
 
-        if (sports === "축구") {
+        if (sports === "풋살") {
             sports = "1";
         } else if (sports === "농구") {
             sports = "2";

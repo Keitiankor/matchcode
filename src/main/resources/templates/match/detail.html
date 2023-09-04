@@ -69,7 +69,9 @@
                             </div>-->
                 <div style="width: 100%; margin-bottom: 20px;"></div> <!-- 간격을 두는 엘리먼트 추가 -->
                 <div class="box">
-                    <th>경기 정보</th>
+                    <th>
+                        <button class="btn btn-primary">경기 정보</button>
+                    </th>
                 </div>
                 <div class="box sticky-box">
                     <div class="box sticky-box">
@@ -81,15 +83,15 @@
                                 </tr>
                                 <tr>
                                     <th>장소</th>
-                                    <td th:text="${matchDto.mapId}"></td>
+                                    <td th:text="${matchDto.mapId == 1 ? '서울' : (matchDto.mapId == 2 ? '경기' : (matchDto.mapId == 3 ? '인천' : 'error'))}"></td>
+                                </tr>
+                                <tr>
+                                    <th>종목</th>
+                                    <td th:text="${matchDto.sportsId == 1 ? '풋살' : (matchDto.sportsId == 2 ? '농구' : (matchDto.sportsId == 3 ? '배드민턴' : 'error'))}"></td>
                                 </tr>
                                 <tr>
                                     <th>작성일</th>
                                     <td th:text="${matchDto.createdDate}"></td>
-                                </tr>
-                                <tr>
-                                    <th>매치일</th>
-                                    <td th:text="${matchDto.matchDate}"></td>
                                 </tr>
                                 <tr>
                                     <th>내용</th>
@@ -110,7 +112,9 @@
                     </div>
                 </div>
                 <div class="box">
-                    <th>장소 정보</th>
+                    <th>
+                        <button class="btn btn-primary">장소 정보</button>
+                    </th>
                 </div>
             </div>
         </div>

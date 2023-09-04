@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
-import com.multicampus.matchcode.model.entity.MatchMemberDTO;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.request.hyuk.Match;
 import com.multicampus.matchcode.service.hyuk.MatchMemberService;
@@ -168,10 +167,5 @@ public class MatchController {
         List<MatchDTO> matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
         return matchList;
     }
-/*    @GetMapping("/loadsportsdata")
-    public String loadmapdata(long mapId, Model model) {
-        List<MatchResult> matchResults = MatchService.getMatchlistByRegion(mapId);
-        model.addAttribute("matchResults", matchResults);
-        return "khj/history";
-    }*/
+
 }
