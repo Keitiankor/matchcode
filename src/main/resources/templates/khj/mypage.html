@@ -20,17 +20,19 @@
             포인트 :
             <p style="display: inline" th:text="${memberInfo.point}">p</p>
             <br>
-            나의 팀 :
+            팀 :
             <p style="display: inline" th:text="${memberInfo.teamName}">p</p>
             <br>
-            <button id="matchHistoryButton">매치 히스토리</button>
+            <button class="btn btn-outline-primary" id="matchHistoryButton">매치 히스토리</button>
             <br>
-            <button id="personalButton">개인 정보</button>
+            <button class="btn btn-outline-primary" id="personalButton">개인 정보</button>
             <br>
-            <button id="myPostButton">내 게시물</button>
+            <button class="btn btn-outline-primary" id="myPostButton">내 게시물</button>
             <br>
             <br>
-            <a th:href="@{changepassword}"><input type="button" value="비밀번호 변경"></a>
+            <a th:href="@{changepassword}">
+                <input type="button" class="btn btn-secondary" value="비밀번호 변경"></a>
+
         </div>
         <!-- 컨텐츠가 들어갈 부분 -->
         <div class="updown"></div>

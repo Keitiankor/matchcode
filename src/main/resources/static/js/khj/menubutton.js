@@ -1,59 +1,42 @@
 $(document).ready(function() {
-    $("#matchHistoryButton").click(function() {
-        $.ajax({
-            url: "matchhistory", // 매치 히스토리를 가져오는 URL
-            dataType: "html",
-            success: function(data) {
-                $("#contents").html(data);
-            },
-            error: function() {
+    // 변수를 사용하여 현재 활성화된 버튼을 추적합니다.
+    var activeButton = null;
 
-                console.error("Error loading match history.");
-            }
-        });
-    }); // 매치 히스토리 버튼 클릭시
+    $("#matchHistoryButton").click(function() {
+        loadContent("matchhistory", $(this));
+    });
 
     $("#personalButton").click(function() {
-        $.ajax({
-            url: "personal", // 매치 히스토리를 가져오는 URL
-            dataType: "html",
-            success: function(data) {
-                $("#contents").html(data);
-            },
-            error: function() {
-
-                console.error("Error loading match history.");
-            }
-        });
-    }); // 개인정보 버튼 클릭시
+        loadContent("personal", $(this));
+    });
 
     $("#myPostButton").click(function() {
-        $.ajax({
-            url: "mypost", // 매치 히스토리를 가져오는 URL
-            dataType: "html",
-            success: function(data) {
-                $("#contents").html(data);
-            },
-            error: function() {
-
-                console.error("Error loading match history.");
-            }
-        });
-    }); // 내 게시물 버튼 클릭시
+        loadContent("mypost", $(this));
+    });
 
     $("#update").click(function() {
+        loadContent("personalupdate", $(this));
+    });
+
+    // 함수로 AJAX 호출과 버튼 스타일 관리를 분리합니다.
+    function loadContent(url, button) {
         $.ajax({
-            url: "personalupdate", // 매치 히스토리를 가져오는 URL
+            url: url,
             dataType: "html",
             success: function(data) {
                 $("#contents").html(data);
+                // 현재 활성화된 버튼의 클래스 제거
+                if (activeButton) {
+                    activeButton.removeClass("active");
+                }
+                // 클릭한 버튼에 클래스 추가
+                button.addClass("active");
+                // 클릭한 버튼을 활성화된 버튼으로 설정
+                activeButton = button;
             },
             error: function() {
-
-                console.error("Error loading match history.");
+                console.error("Error loading content.");
             }
         });
-    }); //개인정보 탭에서 '수정하기' 버튼 누를 시
-
-
+    }
 });
