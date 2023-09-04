@@ -1,12 +1,16 @@
 package com.multicampus.matchcode.service.hyem;
 
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.model.request.hyem.TeamMemberInfo;
 import com.multicampus.matchcode.repository.ApplicationRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TeamMemberService {
@@ -80,6 +84,20 @@ public class TeamMemberService {
     // 팀별 팀원 리스트
     public Page<TeamMemberDTO> teamMemberList2(Pageable pageable, long teamId) {
         return teamMemberRepository.findAllByTeamId(pageable, teamId);
+    }
+
+    // 멤버 리스트 정보 가져오기
+    public Page<Object[]> teamMemberList3(Pageable pageable, long teamId) {
+        return teamMemberRepository.getMemberNameWithTeamId(pageable, teamId);
+    }
+
+    // 멤버 상세 정보 가져오기
+    public Objects getMemberInfo(long teamId, long teamMemberId) {
+        return (Objects) teamMemberRepository.getTeamMemberInfo(teamId, teamMemberId);
+    }
+
+    public long getTeamMemberName(long teamId, String name) {
+        return teamMemberRepository.getIdByName(teamId, name);
     }
 
      /*

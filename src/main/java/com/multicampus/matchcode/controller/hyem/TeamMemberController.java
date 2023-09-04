@@ -59,7 +59,9 @@ public class TeamMemberController {
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        Page<TeamMemberDTO> list = teamMemberService.teamMemberList2(pageable, teamMemberService.getTeamId(memberDTO.getId()));
+        long teamId = teamMemberService.getTeamId(memberDTO.getId());
+        model.addAttribute("teamId", teamId);
+        Page<Object[]> list = teamMemberService.teamMemberList3(pageable, teamId);
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;

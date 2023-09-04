@@ -19,11 +19,13 @@
                 </thead>
                 <tbody>
                     <tr th:each="teammember : ${list}">
-                        <td th:text="${teammember.id}">1</td>
-                        <td th:text="${teammember.memberId}"></td>
+                        <td th:text="${teammember[0]}">1</td>
                         <td>
-                            <span th:if="${teammember.privilege == 1}">팀장</span>
-                            <span th:if="${teammember.privilege == 2}">팀원</span>
+                            <a th:href="@{team/page/{uri}/{name}(uri=${uri}, name=${teammember[1]})}" th:text="${teammember[1]}"></a>
+                        </td>
+                        <td>
+                            <span th:if="${teammember[2] == 1}">팀장</span>
+                            <span th:if="${teammember[2] == 2}">팀원</span>
                         </td>
                     </tr>
                 </tbody>
