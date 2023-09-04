@@ -118,26 +118,4 @@ public class MyHistoryService {
         }
         return memberNames;
     }
-    // 매너 점수증감 서비스는 지금은 무리인 것 같다.
-    //    public boolean increaseManner(long memberId) {
-    //        Optional<MemberDTO> memberOptional = member.findById(memberId);
-    //        if (memberOptional.isPresent()) {
-    //            MemberDTO member = memberOptional.get();
-    //            member.setMannerTemperture(member.getMannerTemperture() + 1); // 매너점수 증가
-    //            member.save(member); // 변경 내용 저장
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-    //
-    //    public boolean decreaseManner(long memberId) {
-    //        Optional<MemberDTO> memberOptional = member.findById(memberId);
-    //        if (memberOptional.isPresent()) {
-    //            MemberDTO member = memberOptional.get();
-    //            member.setMannerTemperture(member.getMannerTemperture() - 1); // 매너점수 감소
-    //            member.save(member); // 변경 내용 저장
-    //            return true;
-    //        }
-    //        return false;
-    //    }
 }
