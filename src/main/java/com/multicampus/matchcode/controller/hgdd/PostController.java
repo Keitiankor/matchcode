@@ -63,8 +63,7 @@ public class PostController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         postService.insert(request, memberDTO); //db저장
 
-        System.out.println("제목: " + request.getTitle());
-        System.out.println("내용: " + request.getContent());
+
 
         model.addAttribute("message", "글 작성이 완료되었습니다."); //출력되는 메시지
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
