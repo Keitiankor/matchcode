@@ -1,44 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>모집글 리스트</title>
-    </head>
+<div class="frame">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>팀명</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="recruit : ${list}">
+                <td th:text="${recruit.recruitId}">1</td>
+                <td>
+                    <a th:href="@{/recruit/view/{id}(id=${recruit.recruitId})}" th:text="${recruit.teamName}"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-    <style>
-        .layout {
-            width: 500px;
-            margin: 0 auto;
-            margin-top: 40px;
-        }
-    </style>
-    <body>
-        <div class="layout">
-            <h2>모집글 리스트</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>팀명</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="recruit : ${list}">
-                        <td th:text="${recruit.recruitId}">1</td>
-                        <td>
-                            <a th:href="@{/recruit/view/{id}(id=${recruit.recruitId})}" th:text="${recruit.teamName}"></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                <a th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
-                <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
-            </th:block>
-            <div class="layout">
-                <button><a th:href="@{/team/create}">팀 생성하기</a></button>
-            </div>
-        </div>
-    </body>
-</html>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
+        <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
+    </th:block>
+    <div class="addbutton">
+        <button><a th:href="@{/team/create}">팀 생성하기</a></button>
+    </div>
+</div>

@@ -17,7 +17,6 @@ public class DeclationService {
     @Transactional
     public int toggleDeclaration(long postId, long memberId) {
         DeclationDTO declaration = declationRepository.findByPostIdAndMemberId(postId, memberId);
-
         if (declaration == null) {
             DeclationDTO declarations = DeclationDTO
                     .builder()

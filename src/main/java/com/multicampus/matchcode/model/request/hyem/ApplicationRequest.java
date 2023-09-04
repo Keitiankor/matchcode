@@ -11,4 +11,5 @@ public class ApplicationRequest {
     private long memberId;
     private long teamId;
     private String introduction;
+    //private int status;
 }

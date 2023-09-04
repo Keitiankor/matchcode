@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>가입신청 리스트</title>
     </head>
-
-    <style>
-        .layout {
-            width: 500px;
-            margin: 0 auto;
-            margin-top: 40px;
-        }
-    </style>
     <body>
-        <div class="layout">
+        <header th:replace="~{commons :: topper}"></header>
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <div class="frame">
             <h2>가입신청 리스트</h2>
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>신청번호</th>

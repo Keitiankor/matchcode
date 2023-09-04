@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-    <head>
-        <meta charset="UTF-8">
-        <title>메시지 창</title>
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
     </head>
     <body>
-
         <script th:inline="javascript">
-
             var message = [[${message}]];//컨트롤러에 입력된 메시지
             alert(message);
             location.replace([[${searchUrl}]]);//컨트롤러에 입력된 경로로 이동
-
         </script>
     </body>
 </html>

@@ -4,12 +4,14 @@ import com.multicampus.matchcode.model.entity.ReviewDTO;
 import com.multicampus.matchcode.model.request.jun.ReviewRequest;
 import com.multicampus.matchcode.model.request.jun.UpdateReviewRequest;
 import com.multicampus.matchcode.repository.ReviewRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class ReviewService {
 
     @Autowired
@@ -23,12 +25,12 @@ public class ReviewService {
                 .rate(request.getRate())
                 .comment(request.getComment())
                 .build();
-        System.out.println("Review.insert : " + reviewdto);
+        log.info("Review.insert : {}", reviewdto.toString());
         reviewRepository.save(reviewdto);
     }
 
     public void delete(Long id) {
-        System.out.println("Review.delete : " + id);
+        log.info("Review.delete : {}", id);
         reviewRepository.deleteById(id);
     }
 
@@ -50,9 +52,7 @@ public class ReviewService {
     }
 
     public List<ReviewDTO> select(ReviewDTO reviewDTO) {
-        System.out.println("Review.select : " + reviewDTO);
-        List<ReviewDTO> reviewList = reviewRepository.findAll();
-        return reviewList;
+        return reviewRepository.findAll();
     }
 
     // 해당 id에 해당하는 리뷰 정보를 가져오는 메서드

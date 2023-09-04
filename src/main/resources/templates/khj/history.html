@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <link rel="stylesheet" th:href="@{/css/khj/historyTable.css}" />
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
@@ -8,7 +7,9 @@
     <p>경기 기록이 없습니다.</p>
 </div>
 <div th:if="${rating != null}">
-    <p><img alt="Emblem Image" th:src="${rating.uri}" /></p>
+    <img alt="Emblem Image" th:src="@{'/img/khj/' + ${rating.emblemId} + '.png'}" />
+<!--    1:브론즈 부터 5:마스터까지-->
+    </p>
     <p>MMR: <span th:text="${rating.mmr}"></span></p>
 </div>
 <table>

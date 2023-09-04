@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+    <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
         <title>가입신청폼 수정하기</title>
     </head>
     <body>
-        <h2>가입신청 수정하기</h2>
-        <form method="post" th:action="@{/application/modify/complete/{id}(id = ${join.id})}">
-            <p>자기소개</p>
-            <!--    <input type="hidden" name="_method" value="put">-->
-            <input name="teamId" th:value="${join.teamId}" type="hidden">
-            <input name="id" th:value="${join.id}" type="hidden">
-            <input name="memberId" th:value="${memberId}" type="hidden">
-            <textarea cols="60" name="introduction" rows="5" th:text="${join.introduction}"></textarea>
-            <button type="submit">수정</button>
-            <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
-        </form>
+        <header th:replace="~{commons :: topper}"></header>
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <div class="frame">
+            <h2>가입신청 수정하기</h2>
+            <form class="table" method="post" th:action="@{/application/modify/complete/{id}(id = ${join.id})}">
+                <p>자기소개</p>
+                <!--    <input type="hidden" name="_method" value="put">-->
+                <input name="teamId" th:value="${join.teamId}" type="hidden">
+                <input name="id" th:value="${join.id}" type="hidden">
+                <input name="memberId" th:value="${memberId}" type="hidden">
+                <textarea cols="60" name="introduction" rows="5" th:text="${join.introduction}"></textarea>
+                <button type="submit">수정</button>
+                <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
+            </form>
+        </div>
     </body>
 </html>

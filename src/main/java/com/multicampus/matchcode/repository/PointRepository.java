@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-
 public interface PointRepository extends JpaRepository<PointDTO, Long> {
-
 
     public Optional<List<PointDTO>> findAllByMemberId(Long memberId);
 }

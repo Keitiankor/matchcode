@@ -40,7 +40,20 @@ public class PointService {
             return odto.get();
         }
         return null;
+        //return (List<PointDTO>) pointRepository.findAllByUserId(memberId).get();
+
     }
+
+    //    @PostMapping("/refundPoint")
+    //    public PointDTO pointRefund(@RequestParam("memberId") Long memberId,
+    //                                @RequestParam("refundAmount") int refundAmount){
+    //        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+    //        PointDTO pointDTO = PointDTO
+    //                .builder()
+    //                .point(-refundAmount) // 환불 금액을 음수로 저장
+    //                .build();
+    //        return pointRepository.save(pointDTO); // 변경: dto 대신 pointDTO 저장
+    //    }
 
     public int calculateTotalPoints(List<PointDTO> pointDTOs) {
         return pointDTOs.stream()
@@ -76,3 +89,11 @@ public class PointService {
         return mapRepository.findById(id).orElse(null);
     }
 }
+//취소요청보내기
+//MatchDTO에서 mapId,matchDate, MapId에서 price가져오기
+//포인트환불
+//    public PointDTO pointRefund(PointDTO dto) {
+//        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+//        dto.setDate(date);
+//        return pointRepository.save(dto);
+//    }

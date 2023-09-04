@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <head th:replace="~{commons :: head(~{::title})}">
-        <link rel="stylesheet" href="path/to/datepicker.css">
         <title>Match Code</title>
     </head>
     <body>
@@ -37,9 +36,6 @@
         <div style="margin-top: 70px">
             <div class="container mt-4">
                 <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
-<!--                <input type="text" id="mapId" th:value="${id}" hidden="hidden">-->
-
-<!--                <input type="text" id="sportCenterName" th:value="${sportCenterName}" hidden="hidden">-->
 
                 <div class="card-body bg-white mt-0 shadow">
                     <h1 class="mb-4"><small class="small-text"><b>결제 페이지</b></small></h1>
@@ -104,6 +100,7 @@
                     payPointsValueElement.textContent = price;
                     performPayment(price);
                 }
+            }
 
 
                 function performPayment(price) {
@@ -141,7 +138,7 @@
                         //     alert("An error occurred while communicating with the server.");
                         // }
                     })
-                    }
+
                 }
         </script>
     </body>
