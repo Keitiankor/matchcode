@@ -75,34 +75,10 @@ public class MypageController {
     @GetMapping("/loadmatchdata")
     @ResponseBody
     public List<String> loadMatchData(@RequestParam String matchId) {
-        System.out.println(matchId);
         return myHistoryService.getMembersByMatchId(Long.parseLong(matchId));
     }
-    //매너온도 증감은 지금은 잘 몰라서 보류.
-    //    //매치 멤버 id로 매치 멤버의 매너온도 조작
-    //    //매너온도 증가시
-    //    @PostMapping
-    //    public ResponseEntity<String> increaseManner(@RequestParam long memberId){
-    //        boolean success = myHistoryService.increaseManner(memberId);
-    //        if (success) {
-    //            return ResponseEntity.ok("매너 온도 증가!");
-    //        } else {
-    //            return ResponseEntity.badRequest().body("Failed to increase manner");
-    //        }
-    //    }
-    //
-    //    //매너온도 감소시
-    //    @PostMapping("/decreaseManner")
-    //    public ResponseEntity<String> decreaseManner(@RequestParam long memberId) {
-    //        boolean success = myHistoryService.decreaseManner(memberId);
-    //        if (success) {
-    //            return ResponseEntity.ok("매너 온도 감소!");
-    //        } else {
-    //            return ResponseEntity.badRequest().body("Failed to decrease manner");
-    //        }
-    //    }
-    //개인정보
 
+    //개인정보
     @GetMapping("personal")
     public String personal(Model model, @ModelAttribute("memberId") long memberId) {
         MemberDTO member = service.getMemberById(memberId);
