@@ -56,4 +56,6 @@ public interface PostRepository extends JpaRepository<PostDTO, Long> {
     @Modifying
     @Query("update post p set p.declation = p.declation - 1 where p.id = :id")
     int declationdown(long id);
+
+    List<PostDTO> findTop5ByOrderByIdDesc();
 }
