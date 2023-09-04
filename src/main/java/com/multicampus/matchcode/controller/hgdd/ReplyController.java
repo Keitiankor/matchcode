@@ -54,8 +54,7 @@ public class ReplyController {
             @PathVariable Long postId,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
     ) {
-        System.out.println("id: " + id);
-        System.out.println("postid: " + postId);
+
         ReplyDTO reply = service.view(id);
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
             if (reply.getMemberId() == memberDTO.getId()) {

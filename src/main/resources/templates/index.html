@@ -1,23 +1,61 @@
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{commons :: head(~{::title})}">
-        <title>Match Code</title>
-    </head>
-    <body>
-        <div style="margin: 0 auto; align-content: center; min-width: 640px; max-width: 1280px">
-            <div th:replace="~{commons :: topper}"></div>
-            <section style="padding-top: 70px; width: 90%; height: 80%; margin: auto">
-                <div style="background-color: #eeeeee; float: left; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
-                    <th:block th:each="post : ${posts}">
-                        <a th:href="@{post/view(id=${post.id})}"><p style="margin-left: 15px; margin-top: 15px" th:text="${post.title}"></p></a>
-                    </th:block>
-                </div>
-                <div style="background-color: #eeeeee; float: right; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
-                    <th:block th:each="match : ${matches}">
-                        <p style="margin-left: 15px; margin-top: 15px" th:text="|${match.createdDate} : ${match.sportsId}|"></p>
-                    </th:block>
-                </div>
-            </section>
+<head th:replace="~{commons :: head(~{::title})}">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Match Code</title>
+</head>
+<body>
+<div style="margin: 0 auto; align-content: center; min-width: 640px; max-width: 1280px">
+    <div th:replace="~{commons :: topper}"></div>
+
+    <link href="/css/hgdd/slide.css" rel="stylesheet">
+
+        <div class="section">
+            <input type="radio" name="slide" id="slide01" checked>
+            <input type="radio" name="slide" id="slide02">
+            <input type="radio" name="slide" id="slide03">
+
+            <div class="slidewrap">
+                <ul class="slidelist">
+                    <li>
+                        <a>
+                            <label for="slide03" class="left"></label>
+                            <img src="/img/hgdd/spotrs01.jpg">
+                            <label for="slide02" class="right"></label>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <label for="slide01" class="left"></label>
+                            <img src="/img/hgdd/spotrs02.jpg">
+                            <label for="slide03" class="right"></label>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <label for="slide02" class="left"></label>
+                            <img src="/img/hgdd/spotrs03.jpg">
+                            <label for="slide01" class="right"></label>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </body>
+
+
+    <section style="padding-top: 70px; width: 90%; height: 80%; margin: auto">
+        <div style="background-color: #eeeeee; float: left; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
+            <th:block th:each="post : ${posts}">
+                <a th:href="@{post/view(id=${post.id})}"><p th:text="${post.title}"></p></a>
+            </th:block>
+        </div>
+        <div style="background-color: #eeeeee; float: right; border: 1px solid black; column-count: auto; width: 45%; height: 240px">
+            <th:block th:each="match : ${matches}">
+                <p th:text="|${match.createdDate} : ${match.sportsId}|"></p>
+            </th:block>
+        </div>
+    </section>
+</div>
+</body>
 </html>
