@@ -36,6 +36,13 @@ public class MatchMemberService {
                 .findByMatchId(matchId)
                 .isPresent();
     }
+    public boolean isMatchExistWithMemberId(long matchId, long memberId) {
+        return matchMemberRepository.findByMatchIdAndMemberId(matchId, memberId).isPresent();
+    }
+
+
+
+
     // 가입신청 정보
     public MatchMemberDTO matchMemberFind(long id) {
         return matchMemberRepository

@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface MatchMemberRepository extends JpaRepository<MatchMemberDTO, Long> {
     List<MatchMemberDTO> findAllByMatchId(long matchId);
     Optional<MatchMemberDTO> findByMatchId(long matchId);
+
+    Optional<MatchMemberDTO> findByMatchIdAndMemberId(long matchId, long memberId);
     Optional<MatchMemberDTO> findByMemberId(long memberId);
 
     boolean existsByMemberId(long memberId);
