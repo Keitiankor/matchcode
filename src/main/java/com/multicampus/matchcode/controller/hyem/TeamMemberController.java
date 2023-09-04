@@ -6,6 +6,7 @@ import com.multicampus.matchcode.model.entity.TeamDTO;
 import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
+import com.multicampus.matchcode.model.request.hyem.TeamMemberInfo;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
@@ -19,6 +20,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 @Controller
 public class TeamMemberController {
@@ -76,14 +79,19 @@ public class TeamMemberController {
         return "hyem/teammember/teammemberlist";
     }
 
-    /*
-    // 팀 상세 정보 열람
-    @GetMapping("/view/{uri}/{id}")
-    public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
+    // 팀원 상세 정보 열람
+    @GetMapping("/team/page/{uri}/{name}")
+    public String teamView(@PathVariable("uri") String uri, @PathVariable("name") String name,
+                           long teamId, Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
-            model.addAttribute("team", teamService.teamView(id));
-            return  "hyem/team/teaminformation";
+        if(teamMemberService.isTeamMember(memberDTO.getId())) {
+            long teamMemberId = teamMemberService.getTeamMemberName(teamId, name);
+            Object teamMemberInfo = teamMemberService.getMemberInfo(teamId, teamMemberId);
+            System.out.println("info : " + teamMemberInfo);
+            model.addAttribute("teamMemberId", teamMemberId);
+            model.addAttribute("teamMemberInfo", teamMemberInfo);
+            //model.addAttribute("memberId", teamService.getTeamMemberName(teamId, ));
+            return  "hyem/teammember/memberinfo";
         }
         else {
             model.addAttribute("message", "접근 권한이 없습니다.");
@@ -92,21 +100,7 @@ public class TeamMemberController {
         }
     }
 
-    // 팀 정보 수정 페이지
-    @GetMapping("/modify/{id}")
-    public String teamModify(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("team", teamService.teamView(id));
-        return "hyem/team/teammodify";
-    }
-
-    // 팀 정보 수정
-    @PostMapping("/modify/complete/{id}")
-    public String teamUpdate(@PathVariable("id") Long id, TeamCreateRequest request, Model model) throws Exception {
-        teamService.teamUpdate(id, request);
-        model.addAttribute("message", "팀 정보 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/team/list");
-        return "hyem/message";
-    }
+    /*
 
     // 팀 정보 삭제
     @DeleteMapping("/delete/{id}")
