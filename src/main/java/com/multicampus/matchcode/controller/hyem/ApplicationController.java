@@ -37,6 +37,10 @@ public class ApplicationController {
             model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
             model.addAttribute("searchUrl", "/recruit/list");
             return "hyem/message";
+        } else if (applicationService.memberApplicated(memberDTO.getId())) {
+            model.addAttribute("message", "이미 가입신청한 팀이 있습니다.");
+            model.addAttribute("searchUrl", "/recruit/list");
+            return "hyem/message";
         } else {
             model.addAttribute("memberid", memberDTO.getId());
             return "hyem/application/joinapplication";

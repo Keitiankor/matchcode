@@ -1,14 +1,13 @@
 package com.multicampus.matchcode.controller.hyem;
 
-import com.multicampus.matchcode.model.entity.ApplicationDTO;
-import com.multicampus.matchcode.model.entity.MemberDTO;
-import com.multicampus.matchcode.model.entity.TeamDTO;
-import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.repository.ApplicationRepository;
+import com.multicampus.matchcode.repository.RecruitRepository;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
+import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
 import com.multicampus.matchcode.service.hyem.TeamService;
 import com.multicampus.matchcode.util.constants.SessionConstant;
@@ -38,7 +37,10 @@ public class TeamController {
     @Autowired
     private ApplicationService applicationService;
 
-    // 팀 페이지
+    @Autowired
+    private RecruitService recruitService;
+
+    // 팀 페이지(리더/멤버/None)
     @GetMapping("/page")
     public String teamPage(Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
@@ -50,12 +52,16 @@ public class TeamController {
                 model.addAttribute("team", teamService.teamView(teamId));
                 String mapping = null;
                 if (teamMemberService.isTeamLeader(teamId, memberId) == 1) {
+                    RecruitDTO recruitDTO = recruitService.recruitViewByTeamId(teamId);
+                    model.addAttribute("recruit", recruitDTO);
                     mapping = "hyem/team/teaminformation";
                 } else if (teamMemberService.isTeamLeader(teamId, memberId) == 2) {
                     mapping = "hyem/team/teamview";
                 }
                 return mapping;
             } catch (NullPointerException e) {
+                long applicationId = applicationService.findApplicatedId(memberDTO.getId());
+                model.addAttribute("applicationId", applicationId);
                 return "hyem/team/nullteam";
             }
         } else {
@@ -63,6 +69,15 @@ public class TeamController {
             model.addAttribute("searchUrl", "/login");
             return "hyem/message";
         }
+    }
+
+    // 메인탭 매핑
+    @GetMapping("/")
+    public String mainTeamTap(@ModelAttribute("team") TeamDTO teamDTO,
+                              @ModelAttribute("recruit") RecruitDTO recruitDTO,
+                              @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
+
+        return "hyem/teammain";
     }
 
     // 팀 생성하기
@@ -73,7 +88,16 @@ public class TeamController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
             Model model
     ) {
-        if (memberDTO != null) {
+        if ((memberDTO != null)) {
+            if (applicationService.memberApplicated(memberDTO.getId())) {
+                model.addAttribute("message", "이미 가입 신청한 팀이 있습니다.");
+                model.addAttribute("searchUrl", "/recruit/list");
+                return "hyem/message";
+            } else if (teamMemberService.getPrivilege(memberDTO.getId()) == 1) {
+                model.addAttribute("message", "이미 생성한 팀이 있습니다.");
+                model.addAttribute("searchUrl", "/recruit/list");
+                return "hyem/message";
+            }
             model.addAttribute("memberId", memberDTO.getId());
             return "hyem/team/createteam";
         } else {

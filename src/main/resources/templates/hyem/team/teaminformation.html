@@ -70,7 +70,10 @@
                 <a style="color: white; text-decoration: none;" th:href="@{/application/list/{id}(id = ${team.id})}">가입신청내역</a>
             </button>
             <button class="btn btn-info">
-                <a style="color: white; text-decoration: none;" th:href="@{/application/list/{id}(id = ${team.id})}">모집글 </a>
+                <a style="color: white; text-decoration: none;" th:href="@{/recruit/view/{id}(id = ${recruit.id})}">작성한 모집글</a>
+            </button>
+            <button class="btn btn-info">
+                <a style="color: white; text-decoration: none;" th:href="@{/team/page/{uri}/memberlist(uri = ${team.uri})}">멤버 리스트</a>
             </button>
             <button class="btn btn-warning">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/list}">이전 화면으로</a>

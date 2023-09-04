@@ -2,35 +2,30 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
-        <title>가입신청 리스트</title>
+        <title>팀멤버 리스트</title>
     </head>
     <body>
         <header th:replace="~{commons :: topper}"></header>
         <link rel="stylesheet" href="/css/hyem/basic.css">
         <div class="frame">
-            <h2>가입신청 리스트</h2>
+            <h2>멤버 리스트</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>신청번호</th>
-                        <th>팀명</th>
-                        <!--        <th>신청자</th>-->
-                        <th>모집글 내용</th>
-                        <th>신청현황</th>
+                        <th>멤버 번호</th>
+                        <th>멤버 이름</th>
+                        <th>권한</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="joinapplication : ${list}">
-                        <td th:text="${joinapplication.id}">1</td>
-                        <td th:text="${joinapplication.teamId}"></td>
-                        <!--        <td th:text="${joinapplication.memberId.userName}"></td>-->
+                    <tr th:each="teammember : ${list}">
+                        <td th:text="${teammember[0]}">1</td>
                         <td>
-                            <a th:href="@{/application/view/{id}(id=${joinapplication.id})}" th:text="${joinapplication.introduction}"></a>
+                            <a th:href="@{team/page/{uri}/{name}(uri=${uri}, name=${teammember[1]})}" th:text="${teammember[1]}"></a>
                         </td>
                         <td>
-                            <span th:if="${joinapplication.status == 1}">가입 대기</span>
-                            <span th:if="${joinapplication.status == 2}">가입 승인</span>
-                            <span th:if="${joinapplication.status == 3}">가입 반려</span>
+                            <span th:if="${teammember[2] == 1}">팀장</span>
+                            <span th:if="${teammember[2] == 2}">팀원</span>
                         </td>
                     </tr>
                 </tbody>
