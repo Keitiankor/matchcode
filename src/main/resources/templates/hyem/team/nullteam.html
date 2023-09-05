@@ -15,11 +15,11 @@
             <p>가입된 팀 정보가 없습니다.</p>
             <span>팀에 가입하시겠습니까?</span>
             <button class="btn btn-primary">
-                <a style="color: white; text-decoration: none;" th:href="@{/recruit/list}">팀 가입하기</a>
+                <a style="color: white; text-decoration: none;" th:href="@{/team/}">팀 가입하기</a>
             </button>
             <br>
             <span>가입신청을 하셨나요?</span>
-            <button class="btn btn-info">
+            <button class="btn btn-info" th:if="${isApplicated}">
                 <a style="color: white; text-decoration: none;" th:href="@{/application/view/{id}(id = ${applicationId})}">가입신청 상세 정보 열람</a>
             </button>
             <br>
