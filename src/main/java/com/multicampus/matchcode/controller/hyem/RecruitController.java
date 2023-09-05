@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/recruit")
 public class RecruitController {
@@ -57,7 +59,7 @@ public class RecruitController {
     }
 
     // 모집글 리스트
-    @GetMapping("/list")
+/*    @GetMapping("/list")
     public String recruitList(
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
@@ -73,6 +75,25 @@ public class RecruitController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         return "hyem/recruit/recruitlist";
+    }*/
+
+    // 모집글 리스트 2
+    @GetMapping("/list")
+    public String recruitList(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model
+    ) {
+        Page<Objects[]> list = recruitService.recruitListInfo(pageable);
+        model.addAttribute("list", list);
+        int nowPage = list
+                .getPageable()
+                .getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        return "hyem/recruit/recruitlist2";
     }
 
     // 모집글 상세 페이지

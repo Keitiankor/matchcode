@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -127,7 +128,8 @@ public class TeamController {
             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        Page<TeamDTO> list = teamService.teamList(pageable);
+        //Page<TeamDTO> list = teamService.teamList(pageable);
+        Page<Objects[]> list = recruitService.teamListInfo(pageable);
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
@@ -139,7 +141,7 @@ public class TeamController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "hyem/team/teamlist";
+        return "hyem/team/teamlist2";
     }
 
     // 팀 상세 정보 열람
@@ -147,15 +149,11 @@ public class TeamController {
     public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         model.addAttribute("team", teamService.teamView(id));
-        if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
-            return  "hyem/team/teaminformation";
-        } else if (teamMemberService.isTeamLeader(id, memberDTO.getId()) == 2) {
-            return  "hyem/team/teamview";
-        } else if (teamMemberService.isTeamMember(memberDTO.getId())) {
-            return "hyem/team/";
+        if ((memberDTO != null)) {
+            return "hyem/team/teamview";
         } else {
-            model.addAttribute("message", "접근 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/recruit/list"); // 임시 경로이므로 추후에 수정
+            model.addAttribute("message", "로그인 후 열람이 가능합니다.");
+            model.addAttribute("searchUrl", "/login");
             return "hyem/message";
         }
     }
