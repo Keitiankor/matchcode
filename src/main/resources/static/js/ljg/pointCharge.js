@@ -1,6 +1,5 @@
 $(function() {
     $("#charge_kakao").on("click", function() {
-        alert("???");
         // getter
         var IMP = window.IMP;
         IMP.init("imp22284462");

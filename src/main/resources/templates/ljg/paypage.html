@@ -14,7 +14,7 @@
 
             .card-body {
                 max-width: 800px;
-                min-height: 550px;
+                min-height: 800px;
                 margin: 0 auto;
                 padding: 20px;
                 background-color: #fff;
@@ -38,12 +38,12 @@
                 <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
 
                 <div class="card-body bg-white mt-0 shadow">
-                    <h1 class="mb-4"><small class="small-text"><b>결제 페이지</b></small></h1>
-                    <form>
+                    <img alt="Image" src="/img/hyuk/futsal01.jpg"  style="max-width: 90%; height: auto; display: block; margin: 0 auto;">
+                                       <form>
                         <div class="mb-3">
 <!--                            <p><b>날짜: <span id="matchDate" th:text="${matchDate}" class="float-end"></span></b></p>-->
-                            <label for="calendar">날짜:</label>
-                            <input type="datetime-local" id="calendar" name="calendar">
+                            <label for="calendar"><b>날짜</b></label>
+                            <input type="datetime-local" id="calendar" name="calendar" class="float-end">
                         </div>
                         <div class="mb-3">
                             <p><b>장소 <span id="mapId" th:text="${id}" class="float-end" hidden="hidden"></span><span th:text="${sportCenterName}" class="float-end"></span></b></p>                            </select>
@@ -51,19 +51,18 @@
                         </div>
                         <h2 class="mb-4"><small class="small-text"><b>포인트</b></small></h2>
                         <div class="mb-3">
-                            <p><b>보유 포인트 <span id="totalPointsValue" th:text="${totalPoints}" class="float-end"></span></b></p>
+                            <p><b>보유 포인트 <span id="totalPointsValue" th:text="${totalPoints + 'P'}" class="float-end"></span></b></p>
                         </div>
                         <div class="separator"></div>
 
                         <h3 class="mb-4"><small class="small-text"><b>결제</b></small></h3>
                         <div class="mb-3">
 
-                            <p><b>가격 <span id="price" th:text="${price}" class="float-end"></span></b></p>
+                            <p><b>가격 <span id="price" th:text="${price+ 'P'}" class="float-end"></span></b></p>
                             <p><b>결제 포인트 <span id="payPointsValue" class="float-end"></span> <a href="#" class="btn btn-primary" onclick="location.href='test3'">추가충전</a></b></p>
                         </div>
                         <button type="button" class="btn btn-success float-end" onclick="handlePayment()">결제</button>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -74,10 +73,10 @@
                 var payPointsValueElement = document.getElementById("payPointsValue");
 
                 if (totalPointsValue < price) {
-                    payPointsValueElement.textContent = totalPointsValue;
+                    payPointsValueElement.textContent = totalPointsValue+ 'P';
                     payPointsValueElement.style.color = "red";
                 } else {
-                    payPointsValueElement.textContent = price;
+                    payPointsValueElement.textContent = price+ 'P';
                 }
             };
 
@@ -87,10 +86,14 @@
                 var payPointsValueElement = document.getElementById("payPointsValue");
                 var mapIdElement = document.getElementById("mapId");
                 var mapIdValue = mapIdElement.textContent;
-                 // var matchDateElement = document.getElementById("calendar").value;
-                 // var matchDate = new Date(matchDateElement);
-                 // var matchTimestamp = matchDate.toISOString();
+                var calendarElement = document.getElementById("calendar");
+                var selectedDate = calendarElement.value;
 
+                // 선택한 날짜와 시간을 JavaScript Date 객체로 변환
+                var selectedTimestamp = new Date(selectedDate);
+
+                // SQL TIMESTAMP 형식으로 변환
+                var timestamp = selectedTimestamp.toISOString().slice(0, 19).replace('T', ' ');
 
 
                 if (totalPointsValue < price) {
@@ -98,12 +101,13 @@
                     alert("보유 포인트가 부족합니다.");
                 } else {
                     payPointsValueElement.textContent = price;
-                    performPayment(price);
+                    performPayment(price,mapIdValue,timestamp);
                 }
+
             }
 
 
-                function performPayment(price) {
+                function performPayment(price,mapIdValue,timestamp) {
                     var memberId = $("#memberId").val();
                     //var mapId = $("#id").text();
                     //var price = $("#price").val();
@@ -119,7 +123,7 @@
                         data: {
                             memberId: memberId,
                             price: price,
-                            //matchDate: matchTimestamp,
+                            matchDate: timestamp,
                             mapId: mapIdValue
                         },
                         success: function(response) {

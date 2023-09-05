@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class PointService {
@@ -74,7 +75,7 @@ public class PointService {
 
         MatchDTO matchDTO = MatchDTO.builder()
                                     .mapId(request.getMapId())
-                                    //.matchDate(request.getMatchDate())
+                                    .matchDate(request.getMatchDate())
                                     .build();
 
         matchRepository.save(matchDTO).getId();
