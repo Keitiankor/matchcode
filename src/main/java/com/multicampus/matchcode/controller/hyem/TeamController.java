@@ -1,11 +1,10 @@
 package com.multicampus.matchcode.controller.hyem;
 
-import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.RecruitDTO;
+import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
-import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
-import com.multicampus.matchcode.repository.ApplicationRepository;
-import com.multicampus.matchcode.repository.RecruitRepository;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
@@ -17,15 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/team")

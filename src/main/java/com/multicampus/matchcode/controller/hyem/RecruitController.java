@@ -3,7 +3,6 @@ package com.multicampus.matchcode.controller.hyem;
 import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.RecruitDTO;
 import com.multicampus.matchcode.model.entity.TeamDTO;
-import com.multicampus.matchcode.model.request.hyem.RecruitListRequest;
 import com.multicampus.matchcode.model.request.hyem.RecruitPostRequest;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
