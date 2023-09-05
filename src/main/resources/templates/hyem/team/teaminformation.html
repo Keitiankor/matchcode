@@ -21,21 +21,21 @@
                 <tr>
                     <th>선호 스포츠</th>
                     <td>
-                <span th:each="num : ${#numbers.sequence(0, team.sportsId.size() - 1)}">
-                    <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(team.sportsId[num])}">
-                    </span>
-                </span>
+                        <span th:each="num : ${#numbers.sequence(0, team.sportsId.size() - 1)}">
+                            <span class="text"
+                                  th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(team.sportsId[num])}">
+                            </span>
+                        </span>
                     </td>
                 </tr>
                 <tr>
                     <th>이용 요일</th>
                     <td>
-                <span th:each="num : ${#numbers.sequence(0, team.useWeek.size() - 1)}">
-                    <span class="text"
-                          th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(team.useWeek[num])}">
-                    </span>
-                </span>
+                        <span th:each="num : ${#numbers.sequence(0, team.useWeek.size() - 1)}">
+                            <span class="text"
+                                  th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(team.useWeek[num])}">
+                            </span>
+                        </span>
                     </td>
                 </tr>
                 <tr>
