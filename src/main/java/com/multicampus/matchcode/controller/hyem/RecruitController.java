@@ -103,7 +103,7 @@ public class RecruitController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
     ) {
         if (memberDTO != null) {
-            if(id==0) {
+            if(id == 0) {
                 model.addAttribute("message", "작성한 모집글이 없습니다.");
                 model.addAttribute("searchUrl", "/team/page");
                 return "hyem/message";
@@ -112,8 +112,13 @@ public class RecruitController {
             TeamDTO teamDTO = teamService.teamView(recruitDTO.getTeamId());
             model.addAttribute("recruit", recruitDTO);
             model.addAttribute("team", teamDTO);
-            model.addAttribute("privilege", teamMemberService.getPrivilege(memberDTO.getId()));
-            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+
+            if(teamMemberService.isTeamMember(memberDTO.getId())) {
+                model.addAttribute("privilege", teamMemberService.getPrivilege(memberDTO.getId()));
+                model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+            } else {
+                model.addAttribute("privilege", 0);
+            }
             return "hyem/recruit/recruitview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");

@@ -63,8 +63,12 @@ public class TeamController {
                 }
                 return mapping;
             } catch (NullPointerException e) {
-                long applicationId = applicationService.findApplicatedId(memberDTO.getId());
-                model.addAttribute("applicationId", applicationId);
+                boolean isApplicated = applicationService.memberApplicated(memberDTO.getId());
+                if(isApplicated) {
+                    long applicationId = applicationService.findApplicatedId(memberDTO.getId());
+                    model.addAttribute("applicationId", applicationId);
+                    model.addAttribute("isApplicated", isApplicated);
+                }
                 return "hyem/team/nullteam";
             }
         } else {
@@ -151,7 +155,7 @@ public class TeamController {
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         if ((memberDTO != null)) {
             model.addAttribute("team", teamService.teamView(id));
-            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+            //model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
             return "hyem/team/teamview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");

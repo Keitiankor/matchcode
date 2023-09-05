@@ -113,6 +113,7 @@ public class ApplicationController {
                                                                           memberDTO.getId()
         );
         Integer isTeamLeader = teamMemberService.isTeamLeader(applicationDTO.getTeamId(), memberDTO.getId());
+        model.addAttribute("isTeamLeader", isTeamLeader);
         if (isApplicatedMember | (isTeamLeader == 1)) {
             return "hyem/application/applicationview";
         } else {

@@ -45,7 +45,7 @@ public class TeamMemberController {
         applicationService.applicationCancel(id);
 
         model.addAttribute("message", "가입을 수락하였습니다.");
-        model.addAttribute("searchUrl", "/application/" + teamId);
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 
