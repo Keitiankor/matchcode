@@ -197,8 +197,8 @@ public class PostController {
     }
 
     //게시글 삭제
-    @GetMapping("/delete")
-    public String delete(Long id, Model model) {
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id, Model model) {
         postService.delete(id);
         model.addAttribute("message", "글 삭제가 완료."); //출력되는 메시지
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
