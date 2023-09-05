@@ -154,8 +154,9 @@ public class TeamController {
     @GetMapping("/view/{uri}/{id}")
     public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        model.addAttribute("team", teamService.teamView(id));
         if ((memberDTO != null)) {
+            model.addAttribute("team", teamService.teamView(id));
+            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
             return "hyem/team/teamview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");

@@ -57,7 +57,7 @@
                     <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-            <button class="btn btn-info">
+            <button class="btn btn-info" th:if="${team.id == teamId}">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/page/{uri}/memberlist(uri = ${team.uri})}">멤버 리스트</a>
             </button>
             <button class="btn btn-warning">

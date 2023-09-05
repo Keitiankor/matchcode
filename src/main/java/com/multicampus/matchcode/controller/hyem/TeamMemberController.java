@@ -63,6 +63,7 @@ public class TeamMemberController {
             Model model
     ) {
         long teamId = teamMemberService.getTeamId(memberDTO.getId());
+        model.addAttribute("team",teamService.teamView(teamId));
         model.addAttribute("teamId", teamId);
         Page<Object[]> list = teamMemberService.teamMemberList3(pageable, teamId);
         int nowPage = list
@@ -90,6 +91,7 @@ public class TeamMemberController {
             System.out.println("info : " + teamMemberInfo);
             model.addAttribute("teamMemberId", teamMemberId);
             model.addAttribute("teamMemberInfo", teamMemberInfo);
+            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
             //model.addAttribute("memberId", teamService.getTeamMemberName(teamId, ));
             return  "hyem/teammember/memberinfo";
         }

@@ -36,8 +36,11 @@
                 <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>
             </th:block>
             <br>
-            <button class="btn btn-warning">
+            <button class="btn btn-warning" th:if="${team.id == teamId}">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/page}">이전 화면으로</a>
+            </button>
+            <button class="btn btn-warning" th:if="${team.id != teamId}">
+                <a style="color: white; text-decoration: none;" th:href="@{/team/}">이전 화면으로</a>
             </button>
         </div>
     </body>
