@@ -58,7 +58,7 @@
                     <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-            <div class="btn-group">
+            <div class="btn-group2">
                 <button class="btn btn-primary">
                     <a style="color: white; text-decoration: none;" th:href="@{/team/modify/{uri}/{id}(uri = ${team.uri}, id = ${team.id})}">팀 정보 수정</a>
                 </button>
@@ -66,7 +66,7 @@
                     <button class="btn btn-danger" onclick="teamDelete();">팀 삭제</button>
                 </form>
             </div>
-            <div class="btn-group">
+            <div class="btn-group2">
                 <button class="btn btn-success">
                     <a style="color: white; text-decoration: none;" th:href="@{/recruit/write/{id}(id = ${team.id})}">멤버 모집하기</a>
                 </button>
@@ -74,7 +74,7 @@
                     <a style="color: #009900; text-decoration: none;" th:href="@{/recruit/view/{id}(id = ${recruit})}">작성한 모집글</a>
                 </button>
             </div>
-            <div class="btn-group">
+            <div class="btn-group2">
                 <button class="btn btn-warning">
                     <a style="color: white; text-decoration: none;" th:href="@{/application/list/{id}(id = ${team.id})}">가입신청내역</a>
                 </button>

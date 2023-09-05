@@ -10,11 +10,10 @@
         <div class="frame">
         <h2>가입신청</h2>
             <form class="table" method="post" th:action="@{/application/join/{teamid}/{id}(teamid=${teamid}, id=${join.id})}">
-                <p>자기소개</p>
                 <input name="teamId" th:value="${teamid}" type="hidden">
                 <input name="memberId" th:value="${memberid}" type="hidden">
                 <input name="status" th:value="2" type="hidden">
-                <label for="introduction">모집글 내용 : </label>
+                <label for="introduction">자기소개 : </label>
                 <textarea class="form-control" rows="5" id="introduction" name="introduction" placeholder="팀 가입 신청합니다."></textarea>
                 <button class="btn btn-success" type="submit">등록</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />

@@ -10,14 +10,14 @@
         <div class="frame">
             <h2>가입신청 수정하기</h2>
             <form class="table" method="post" th:action="@{/application/modify/complete/{id}(id = ${join.id})}">
-                <p>자기소개</p>
                 <!--    <input type="hidden" name="_method" value="put">-->
                 <input name="teamId" th:value="${join.teamId}" type="hidden">
                 <input name="id" th:value="${join.id}" type="hidden">
                 <input name="memberId" th:value="${memberId}" type="hidden">
-                <label for="introduction">모집글 내용 : </label>
+
+                <label for="introduction">자기소개 : </label>
                 <textarea class="form-control" rows="5" id="introduction" name="introduction" th:text="${join.introduction}"></textarea>
-                <button type="submit">수정</button>
+                <button class="btn btn-success" type="submit">수정</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
             </form>
         </div>

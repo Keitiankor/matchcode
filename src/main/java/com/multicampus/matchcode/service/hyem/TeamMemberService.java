@@ -102,6 +102,12 @@ public class TeamMemberService {
     public long getTeamMemberCount(long teamId) {
         return teamMemberRepository.countByTeamId(teamId);
     }
+
+    // 팀 탈퇴
+    public void widhDrawTeam(long memberId) {
+        long teamMemberId = teamMemberRepository.findByMemberId(memberId).get().getId();
+        teamMemberRepository.deleteById(teamMemberId);
+    }
      /*
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {

@@ -13,10 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TeamMemberController {
@@ -97,25 +94,26 @@ public class TeamMemberController {
         }
     }
 
-    /*
-
-    // 팀 정보 삭제
-    @DeleteMapping("/delete/{id}")
-    public String teamDelete(@PathVariable("id") long id, Model model) throws Exception {
-        model.addAttribute("message", "정말로 팀을 삭제하시겠습니까?");
-        model.addAttribute("confirmUrl", "/team/deleteconfirmed/" + id);
-        model.addAttribute("cancelUrl", "/team/list");
+    // 탈퇴하기
+    @DeleteMapping("/withdraw/{id}")
+    public String withDrawTeam(@ModelAttribute("id") long teamMemberId, Model model,
+                               @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) throws Exception {
+        model.addAttribute("message", "정말로 팀을 탈퇴하시겠습니까?");
+        model.addAttribute("confirmUrl", "/deleteconfirmed/" + teamMemberId);
+        model.addAttribute("cancelUrl", "/team/page");
         return "hyem/confirmmessage";
     }
 
-    // 팀 정보 삭제 처리
+    // 탈퇴 처리
     @PostMapping("/deleteconfirmed/{id}")
-    public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
-        teamService.teamDelete(id);
+    public String deleteConfirmed(@ModelAttribute("id") long teamMemberId,
+                                  @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO,
+                                  Model model) {
+        long memberId = memberDTO.getId();
+        teamMemberService.widhDrawTeam(memberId);
 
-        model.addAttribute("message", "팀 삭제가 완료되었습니다.");
-        model.addAttribute("searchUrl", "/team/list");
+        model.addAttribute("message", "팀 탈퇴가 완료되었습니다.");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
-    }*/
 }
