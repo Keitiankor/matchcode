@@ -53,7 +53,7 @@ public class MypageService {
                           ? teamDTO
                                   .get()
                                   .getTeamName()
-                          : "현재 소속된 팀이 없습니다";
+                          : "소속된 팀이 없습니다";
         int sum = 0; // 이건 pointDTO가 point사용 로그를 남기는 DTO라서, 이전 기록들 전부 증감
         if (pointDTO.isPresent()) {
             for (PointDTO dto : pointDTO.get()) {

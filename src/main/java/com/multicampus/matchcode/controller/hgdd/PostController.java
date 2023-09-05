@@ -41,15 +41,16 @@ public class PostController {
     public String insert(
             Model model,
             PostDTO postDTO,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
-    ) {
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         model.addAttribute("postDTO", postDTO);
+
         if (memberDTO != null) {
             System.out.println(memberDTO.getId());
             return "hgdd/insert"; // 로그인한 사용자인 경우 작성 페이지로 이동
         } else {
             model.addAttribute("message", "로그인을 해야 글 작성이 가능합니다."); //출력되는 메시지
             model.addAttribute("searchUrl", "/login"); //이동하는 경로
+
             return "hgdd/message";
         }
     }
@@ -59,13 +60,14 @@ public class PostController {
     public String insert2(
             @ModelAttribute("postDTO") PostInsertRequest request,
             Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
-    ) {
+            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         postService.insert(request, memberDTO); //db저장
-        System.out.println("제목: " + request.getTitle());
-        System.out.println("내용: " + request.getContent());
+
+
+
         model.addAttribute("message", "글 작성이 완료되었습니다."); //출력되는 메시지
         model.addAttribute("searchUrl", "/post/list"); //이동하는 경로
+
         return "hgdd/message";
     }
 
@@ -80,10 +82,12 @@ public class PostController {
             @RequestParam(name = "sports", required = false) Integer selectedSports
     ) {
         Page<PostDTO> list = null;
-        Map<Integer, String> sports = new HashMap<>();
+
+        Map<Integer,String> sports=new HashMap<>();
         sports.put(1, "농구");
         sports.put(2, "풋살");
         sports.put(3, "배드민턴");
+
         if ("likes".equals(sortBy)) {
             if (searchKeyword == null) { //최신순
                 list = postService.listByLikes(pageable);
@@ -103,6 +107,7 @@ public class PostController {
                 list = postService.postlist(searchKeyword, pageable);
             }
         }
+
         // 선택한 스포츠에 따라 게시글 필터링
         if (selectedSports != null) {
             List<PostDTO> filteredPosts = new ArrayList<>();
@@ -113,15 +118,17 @@ public class PostController {
             }
             list = new PageImpl<>(filteredPosts, pageable, filteredPosts.size());
         }
+
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
         List<PostDTO> top3ByLikes = postService.listTop3ByLikes(); //좋아요 많은 3개
-        model.addAttribute("sport", selectedSports);
+        model.addAttribute("sport",selectedSports);
         model.addAttribute("sort", sortBy);
-        model.addAttribute("sports", sports);
+        model.addAttribute("sports",sports);
         model.addAttribute("top3ByLikes", top3ByLikes);
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
@@ -132,18 +139,13 @@ public class PostController {
 
     //게시글 열람
     @GetMapping("/view")
-    public String view(
-            Model model,
-            Long id,
-            PostLikeDTO likeDTO,
-            DeclationDTO declationDTO,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
-    ) {
+    public String view(Model model, Long id, PostLikeDTO likeDTO, DeclationDTO declationDTO, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
+
         model.addAttribute("post", postService.view(id));
         model.addAttribute("likeDTO", likeDTO);
         model.addAttribute("list", replyService.list(id));
-        model.addAttribute("declation", declationDTO);
+        model.addAttribute("declation",declationDTO);
         if (memberDTO != null) {
             if (post.isPrivates()) { //비공개 여부 확인
                 if (post.getMemberId() == memberDTO.getId()) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
@@ -153,12 +155,14 @@ public class PostController {
                 } else {
                     model.addAttribute("message", "비 공개 글입니다.");
                     model.addAttribute("searchUrl", "/post/list");
+
                     return "hgdd/message";
                 }
             }
         } else if (post.isPrivates()) {
             model.addAttribute("message", "비 공개 글입니다.");
             model.addAttribute("searchUrl", "/post/list");
+
             return "hgdd/message";
         }
         postService.views(id); //조회수 증가
@@ -167,18 +171,16 @@ public class PostController {
 
     //게시글 수정 페이지 이동
     @GetMapping("/correction/{id}")
-    public String correction(
-            @PathVariable("id") Long id,
-            Model model,
-            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
-    ) {
+    public String correction(@PathVariable("id") Long id, Model model, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         PostDTO post = postService.view(id);
+
         if (memberDTO != null) { //로그인 확인, 로그인된 id와 게시글 작성자 id 동일한지 확인
             if (post.getMemberId() == memberDTO.getId()) {
                 model.addAttribute("post", postService.view(id));
                 return "hgdd/correction";
             }
         }
+
         model.addAttribute("message", "작성자가 아닙니다.");
         model.addAttribute("searchUrl", "/post/view?id=" + id);
         return "hgdd/message";
@@ -190,6 +192,7 @@ public class PostController {
         postService.update(id, request);
         model.addAttribute("message", "글 수정 완료.");
         model.addAttribute("searchUrl", "/post/list");
+
         return "hgdd/message";
     }
 

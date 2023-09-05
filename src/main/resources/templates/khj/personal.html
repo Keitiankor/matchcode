@@ -1,14 +1,39 @@
 <!DOCTYPE html>
+<link rel="stylesheet" th:href="@{/css/khj/personal.css}" />
 <script defer src="/js/khj/menubutton.js"></script>
 <h2 style="display:inline">개인정보</h2>
-<p>이름: <span th:text="${member.name}"></span></p>
-<p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
-<p>핸드폰: <span th:text="${member.phone}"></span></p>
-<p>이메일: <span th:text="${member.mailAddress}"></span></p>
-<p>활동레벨: <span th:text="${member.communityLevel}"></span></p>
-<p>활동경험치: <span th:text="${member.communityExp + '%'}"></span></p>
-<p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
-<br />
-<br />
-<p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
-<button id="update">수정하기</button>
+<table class="table">
+    <tr>
+        <td class="label">이름</td>
+        <td><span th:text="${member.name}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">생년월일</td>
+        <td><span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">핸드폰</td>
+        <td><span th:text="${member.phone}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">이메일</td>
+        <td><span th:text="${member.mailAddress}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">활동레벨</td>
+        <td><span th:text="${member.communityLevel}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">활동경험치</td>
+        <td><span th:text="${member.communityExp + '%'}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">나의 매너온도</td>
+        <td><span th:text="${member.mannerTemperture}"></span></td>
+    </tr>
+    <tr>
+        <td class="label">생성일</td>
+        <td><span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></td>
+    </tr>
+</table>
+<button id="update" class="btn btn-secondary">수정하기</button>

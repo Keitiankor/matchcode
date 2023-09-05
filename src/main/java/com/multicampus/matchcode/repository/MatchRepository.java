@@ -23,5 +23,5 @@ public interface MatchRepository extends JpaRepository<MatchDTO, Long> {
 
     double countByMapIdAndSportsId(long region, long sports);
 
-    List<MatchDTO> findTop5ByOrderByIdDesc();
+    List<MatchDTO> findTop8ByOrderByIdDesc();
 }
