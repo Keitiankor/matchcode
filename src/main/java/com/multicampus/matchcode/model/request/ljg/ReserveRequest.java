@@ -9,6 +9,5 @@ public class ReserveRequest {
     private long mapId;
     private long memberId;
     private int price;
-    //private Timestamp matchDate; // matchDate를 Timestamp로 변경
-
+    private Timestamp matchDate;
 }
