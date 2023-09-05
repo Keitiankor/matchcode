@@ -6,18 +6,67 @@
     position: relative;
 }
 
+.innerframe {
+    width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
 .table {
     width: 100%;
     height: 70%;
+}
+
+.recruitview {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
 }
 
 .buttonlist {
     margin: 30px;
 }
 
-.addbutton {
-    margin: 20px;
-    position: absolute;
+#addbutton {
+    position: fixed;
+    bottom: 30px;
+    right: 25%;
+}
 
-    left: 80%;
+#recruitnum {
+    float: left;
+    width: 50px;
+    height: 50px;
+}
+
+#infotray {
+    margin-top: 20px;
+    padding: 5px;
+    left: 60px;
+    width: 100%;
+    height: 90%;
+}
+
+#teamName {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+#tray1 {
+    float: left;
+    width: 80%;
+    height: 100px;
+}
+
+#tray2 {
+    display:inline-block;
+    float: right;
+    margin-top: 20px;
+}
+
+.info {
+    font-size: 12px;
+    text-align: left;
 }
