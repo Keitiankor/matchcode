@@ -100,6 +100,10 @@ public class TeamMemberService {
         return teamMemberRepository.getIdByName(teamId, name);
     }
 
+    // 팀원 수
+    public long getTeamMemberCount(long teamId) {
+        return teamMemberRepository.countByTeamId(teamId);
+    }
      /*
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {
