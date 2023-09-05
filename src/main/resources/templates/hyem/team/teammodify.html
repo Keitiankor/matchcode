@@ -2,66 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="~{commons :: head(~{::title})}">
         <meta charset="UTF-8">
-        <title>게시물 작성폼</title>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <title>팀 정보 수정하기</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </head>
     <body>
         <link href="/css/hyem/basic.css" rel="stylesheet">
         <header th:replace="~{commons :: topper}"></header>
         <div class="frame">
+            <div class="table">
             <form method="post" th:action="@{/team/modify/complete/{id}(id = ${team.id})}" th:object="${team}">
-                <fieldset>
-                    팀명 <input name="teamName" th:field="*{teamName}" type="text">
-                    팀 코드 <input name="uri" th:field="*{uri}" type="text">
-
-                    <p>선호 스포츠(중복 선택 가능)</p>
-                    <div class="input-group mb-3">
-                        <div class="form-check" th:each="sport : ${sports}">
-                            <input class="form-check-input" id="sport"
-                                   name="sportsId" th:field="*{sportsId}" th:value="${sport.count}" type="checkbox">
-                            <label class="form-check-label" th:text="${sport.description}"></label>
-                        </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">팀명 : </label>
+                    <input class="form-control" name="teamName" th:field="*{teamName}" placeholder="팀명을 입력해주세요" type="text">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label class="form-label">팀 코드 : </label>
+                    <input class="form-control" name="uri" th:field="*{uri}" placeholder="팀명을 입력해주세요" type="text">
+                </div>
+                <p id="uridescription">팀 url은 매치코드 팀페이지 주소로 사용됩니다.</p>
+                <p class="form-label">선호 스포츠(중복 선택 가능)</p>
+                <div>
+                    <div class="btn btn-outline-primary" id="sportsbtn" th:each="sport, iterStat : ${sports}">
+                        <input type="checkbox" class="form-check-input" th:id="'sportsCheckbox_' + ${iterStat.index}"
+                               th:field="*{sportsId}" th:value="${sport.count}">
+                        <label class="form-check-label" id="sportslabel" th:text="${sport.description}" th:for="'sportsCheckbox_' + ${iterStat.index}"></label>
                     </div>
-                    <p>성별</p>
-                    <div class="input-group mb-3">
-                        <div class="form-check" th:each="gender : ${genders}">
-                            <input class="form-check-input" id="gender"
-                                   name="averageGender" th:field="*{averageGender}" th:value="${gender.count}" type="radio">
-                            <label class="form-check-label" th:text="${gender.description}"></label>
-                        </div>
+                </div>
+                <p class="form-label">성별</p>
+                <div class="input-group mb-3">
+                    <div class="form-check" th:each="gender, iterStat : ${genders}">
+                        <input type="radio" class="btn-check" id="success-outlined" th:id="'genderCheckbox_' + ${iterStat.index}"
+                               name="options-outline" th:field="*{averageGender}" th:value="${gender.count}">
+                        <label class="btn btn-outline-primary" id="genderbtn" for="success-outlined" th:text="${gender.description}" th:for="'genderCheckbox_' + ${iterStat.index}"></label>
                     </div>
-
-                    <p>주요 나이대(중복 선택 가능)</p>
-                    <div class="input-group mb-3">
-                        <div class="form-check" th:each="age : ${ages}">
-                            <input class="form-check-input" id="age"
-                                   name="averageAge" th:field="*{averageAge}" th:value="${age.count}" type="checkbox">
-                            <label class="form-check-label" th:text="${age.description}"></label>
-                        </div>
+                </div>
+                <p class="form-label">주요 나이대(중복 선택 가능)</p>
+                <div>
+                    <div class="btn btn-outline-primary" id="agesbtn" th:each="age, iterStat : ${ages}">
+                        <input type="checkbox" class="form-check-input" th:id="'agesCheckbox_' + ${iterStat.index}"
+                               th:field="*{averageAge}" th:value="${age.count}">
+                        <label class="form-check-label" id="ageslabel" th:text="${age.description}" th:for="'agesCheckbox_' + ${iterStat.index}"></label>
                     </div>
-
-                    <p>활동 요일(중복 선택 가능)</p>
-                    <div class="input-group mb-3">
-                        <div class="form-check" th:each="week : ${weeks}">
-                            <input class="form-check-input" id="week"
-                                   name="useWeek" th:field="*{useWeek}" th:value="${week.count}" type="checkbox">
-                            <label class="form-check-label" th:text="${week.description}"></label>
-                        </div>
+                </div>
+                <p class="form-label">활동 요일(중복 선택 가능)</p>
+                <div>
+                    <div class="btn btn-outline-primary" id="weeksbtn" th:each="week, iterStat : ${weeks}">
+                        <input type="checkbox" class="form-check-input" th:id="'weeksCheckbox_' + ${iterStat.index}"
+                               th:field="*{useWeek}" th:value="${week.count}">
+                        <label class="form-check-label" id="weekslabel" th:text="${week.description}" th:for="'weeksCheckbox_' + ${iterStat.index}"></label>
                     </div>
-
-                    <p>활동 시간</p>
-                    <div class="input-group mb-3">
-                        <div class="form-check" th:each="time : ${times}">
-                            <input class="form-check-input" id="time"
-                                   name="useTime" th:field="*{useTime}" th:value="${time.count}" type="radio">
-                            <label class="form-check-label" th:text="${time.description}"></label>
-                        </div>
+                </div>
+                <p class="form-label">활동 시간</p>
+                <div class="input-group mb-3">
+                    <div class="form-check" th:each="time, iterStat : ${times}">
+                        <input class="btn-check" th:id="'timeCheckbox_' + ${iterStat.index}"
+                               th:field="*{useTime}" th:value="${time.count}" type="radio">
+                        <label class="btn btn-outline-primary" id="timebtn" th:text="${time.description}" th:for="'timeCheckbox_' + ${iterStat.index}">
+                        </label>
                     </div>
-
-                    <button type="submit">수정</button>
+                </div>
+                    <button class="btn btn-success" type="submit">수정</button>
                     <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
                 </fieldset>
             </form>
+        </div>
         </div>
     </body>
 </html>

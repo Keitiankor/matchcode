@@ -58,23 +58,29 @@
                     <td th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(team.averageGender)}"></td>
                 </tr>
             </table>
-            <div class="container mt-3">
+            <div>
                 <div>
                     <textarea cols="60" readonly rows="5" th:text="${recruit.content}"></textarea>
                 </div>
-
-                <button class="btn btn-primary">
-                    <a style="color: white; text-decoration: none;" th:href="@{/application/join/{id}(id = ${recruit.teamId})}">가입신청하기</a>
-                </button>
-                <button class="btn btn-info">
-                    <a style="color: white; text-decoration: none;" th:href="@{/recruit/modify/{id}(id = ${recruit.id})}">모집글 내용 수정</a>
-                </button>
-                <form th:action="@{/recruit/delete/{id}(id = ${recruit.id})}" th:method="delete">
-                    <button class="btn btn-danger" onclick="recruitDelete();">모집글 삭제</button>
-                </form>
-                <button class="btn btn-warning">
-                    <a style="color: white; text-decoration: none;" th:href="@{/recruit/list}">이전 화면으로</a>
-                </button>
+                <div id="notleader" th:if="${privilege != 1 or team.id != teamId}">
+                    <button class="btn btn-primary">
+                        <a style="color: white; text-decoration: none;" th:href="@{/application/join/{id}(id = ${recruit.teamId})}">가입신청하기</a>
+                    </button>
+                    <button class="btn btn-warning">
+                        <a style="color: white; text-decoration: none;" th:href="@{/team/}">이전 화면으로</a>
+                    </button>
+                </div>
+                <div id="leader" th:if="${privilege == 1 and team.id == teamId}">
+                    <button class="btn btn-info">
+                        <a style="color: white; text-decoration: none;" th:href="@{/recruit/modify/{id}(id = ${recruit.id})}">모집글 내용 수정</a>
+                    </button>
+                    <form th:action="@{/recruit/delete/{id}(id = ${recruit.id})}" th:method="delete">
+                        <button class="btn btn-danger" onclick="recruitDelete();">모집글 삭제</button>
+                    </form>
+                    <button class="btn btn-warning">
+                        <a style="color: white; text-decoration: none;" th:href="@{/team/page}">이전 화면으로</a>
+                    </button>
+                </div>
             </div>
         </div>
     </body>

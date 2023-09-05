@@ -1,11 +1,10 @@
 package com.multicampus.matchcode.controller.hyem;
 
-import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.hyem.ApplicationRequest;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.entity.RecruitDTO;
+import com.multicampus.matchcode.model.entity.TeamDTO;
+import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.model.request.hyem.TeamCreateRequest;
-import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
-import com.multicampus.matchcode.repository.ApplicationRepository;
-import com.multicampus.matchcode.repository.RecruitRepository;
 import com.multicampus.matchcode.service.hyem.ApplicationService;
 import com.multicampus.matchcode.service.hyem.RecruitService;
 import com.multicampus.matchcode.service.hyem.TeamMemberService;
@@ -17,12 +16,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/team")
@@ -52,8 +50,13 @@ public class TeamController {
                 model.addAttribute("team", teamService.teamView(teamId));
                 String mapping = null;
                 if (teamMemberService.isTeamLeader(teamId, memberId) == 1) {
-                    RecruitDTO recruitDTO = recruitService.recruitViewByTeamId(teamId);
-                    model.addAttribute("recruit", recruitDTO);
+                    if(recruitService.isRecruitExist(teamId)) {
+                        RecruitDTO recruitDTO = recruitService.recruitViewByTeamId(teamId);
+                        model.addAttribute("recruit", recruitDTO.getId());
+                    } else {
+                        model.addAttribute("recruit", 0);
+                    }
+                    model.addAttribute("team", teamService.teamView(teamId));
                     mapping = "hyem/team/teaminformation";
                 } else if (teamMemberService.isTeamLeader(teamId, memberId) == 2) {
                     mapping = "hyem/team/teamview";
@@ -91,11 +94,11 @@ public class TeamController {
         if ((memberDTO != null)) {
             if (applicationService.memberApplicated(memberDTO.getId())) {
                 model.addAttribute("message", "이미 가입 신청한 팀이 있습니다.");
-                model.addAttribute("searchUrl", "/recruit/list");
+                model.addAttribute("searchUrl", "/team/");
                 return "hyem/message";
-            } else if (teamMemberService.getPrivilege(memberDTO.getId()) == 1) {
+            } else if (teamMemberService.isTeamMember(memberDTO.getId())) {
                 model.addAttribute("message", "이미 생성한 팀이 있습니다.");
-                model.addAttribute("searchUrl", "/recruit/list");
+                model.addAttribute("searchUrl", "/team/");
                 return "hyem/message";
             }
             model.addAttribute("memberId", memberDTO.getId());
@@ -124,10 +127,10 @@ public class TeamController {
     // 팀 리스트
     @GetMapping("/list")
     public String teamList(
-            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page = 0, size = 30, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
-        Page<TeamDTO> list = teamService.teamList(pageable);
+        Page<Objects[]> list = recruitService.teamListInfo(pageable);
         int nowPage = list
                 .getPageable()
                 .getPageNumber() + 1;
@@ -139,23 +142,20 @@ public class TeamController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "hyem/team/teamlist";
+        return "hyem/team/teamlist2";
     }
 
     // 팀 상세 정보 열람
     @GetMapping("/view/{uri}/{id}")
     public String teamView(@PathVariable("uri") String uri, @PathVariable("id") Long id, Model model,
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
-        model.addAttribute("team", teamService.teamView(id));
-        if(teamMemberService.isTeamLeader(id, memberDTO.getId()) == 1) {
-            return  "hyem/team/teaminformation";
-        } else if (teamMemberService.isTeamLeader(id, memberDTO.getId()) == 2) {
-            return  "hyem/team/teamview";
-        } else if (teamMemberService.isTeamMember(memberDTO.getId())) {
-            return "hyem/team/";
+        if ((memberDTO != null)) {
+            model.addAttribute("team", teamService.teamView(id));
+            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+            return "hyem/team/teamview";
         } else {
-            model.addAttribute("message", "접근 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/recruit/list"); // 임시 경로이므로 추후에 수정
+            model.addAttribute("message", "로그인 후 열람이 가능합니다.");
+            model.addAttribute("searchUrl", "/login");
             return "hyem/message";
         }
     }
@@ -172,7 +172,7 @@ public class TeamController {
     public String teamUpdate(@PathVariable("id") Long id, String uri, TeamCreateRequest request, Model model) throws Exception {
         teamService.teamUpdate(id, request);
         model.addAttribute("message", "팀 정보 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/team/view/"+ uri + "/" + Long.toString(id));
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 

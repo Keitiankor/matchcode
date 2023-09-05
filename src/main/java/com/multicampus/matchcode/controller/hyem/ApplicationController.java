@@ -35,11 +35,11 @@ public class ApplicationController {
     ) {
         if (teamMemberService.isTeamMember(memberDTO.getId())) {
             model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
-            model.addAttribute("searchUrl", "/recruit/list");
+            model.addAttribute("searchUrl", "/team/");
             return "hyem/message";
         } else if (applicationService.memberApplicated(memberDTO.getId())) {
             model.addAttribute("message", "이미 가입신청한 팀이 있습니다.");
-            model.addAttribute("searchUrl", "/recruit/list");
+            model.addAttribute("searchUrl", "/team/");
             return "hyem/message";
         } else {
             model.addAttribute("memberid", memberDTO.getId());
@@ -56,7 +56,7 @@ public class ApplicationController {
     ) throws Exception {
         applicationService.save(request, memberDTO.getId());
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/recruit/list");
+        model.addAttribute("searchUrl", "/team/");
         return "hyem/message";
     }
 
@@ -117,7 +117,7 @@ public class ApplicationController {
             return "hyem/application/applicationview";
         } else {
             model.addAttribute("message", "열람 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            model.addAttribute("searchUrl", "/team/page"); // 임시 주소
             return "hyem/message";
         }
     }
@@ -136,7 +136,7 @@ public class ApplicationController {
             return "hyem/application/modifyintroduction";
         } else {
             model.addAttribute("message", "수정 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            model.addAttribute("searchUrl", "/team/page"); // 임시 주소
             return "hyem/message";
         }
     }
@@ -147,7 +147,7 @@ public class ApplicationController {
     ) throws Exception {
         applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입 신청 내용 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/application/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 
@@ -163,11 +163,11 @@ public class ApplicationController {
                 .getMemberId() == memberDTO.getId()) {
             model.addAttribute("message", "정말로 가입을 취소하시겠습니까?");
             model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
-            model.addAttribute("cancelUrl", "/application/list");
+            model.addAttribute("cancelUrl", "/team/page");
             return "hyem/confirmmessage";
         } else {
             model.addAttribute("message", "삭제 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list");
+            model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         }
     }
@@ -177,7 +177,7 @@ public class ApplicationController {
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         applicationService.applicationCancel(id);
         model.addAttribute("message", "가입 취소가 완료되었습니다.");
-        model.addAttribute("searchUrl", "/application/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 }

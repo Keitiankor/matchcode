@@ -10,10 +10,11 @@
         <div class="frame">
             <h2>모집글 작성하기</h2>
             <form class="table" method="post" th:action="@{/recruit/write/{id}(id = ${recruit.id})}">
-                <p>글 내용</p>
                 <input hidden name="teamId" th:value="${teamid}" type="text">
-                <textarea cols="60" name="content" placeholder="모집글 내용을 입력하세요." rows="5"></textarea>
-                <button type="submit">등록</button>
+<!--                <textarea cols="60" name="content" placeholder="모집글 내용을 입력하세요." rows="5"></textarea>-->
+                <label for="comment">모집글 내용 : </label>
+                <textarea class="form-control" rows="5" id="comment" name="content" placeholder="모집글 내용을 입력하세요."></textarea>
+                <button class="btn btn-success" type="submit">등록</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
             </form>
         </div>
