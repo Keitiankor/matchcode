@@ -5,23 +5,28 @@
     margin-top: 100px;
     position: relative;
 }
+.main {
+    width: 100%;
+    margin-top: 130px;
+}
 
 .innerframe {
     width: 800px;
     height: 100%;
-    margin: 0 auto;
-    position: relative;
+    margin: 50px auto;
+    position: absolute;
+}
+
+.recruitview {
+    margin-top: 15px;
+    width: 100%;
+    height: 120px;
+    padding: 10px;
 }
 
 .table {
     width: 100%;
     height: 70%;
-}
-
-.recruitview {
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
 }
 
 .buttonlist {
@@ -34,18 +39,13 @@
     right: 25%;
 }
 
-#recruitnum {
-    float: left;
-    width: 50px;
-    height: 50px;
-}
-
 #infotray {
-    margin-top: 20px;
+    display: inline-block;
+    margin-top: 10px;
     padding: 5px;
     left: 60px;
     width: 100%;
-    height: 90%;
+    height: 100%;
 }
 
 #teamName {
@@ -54,14 +54,16 @@
     text-align: left;
 }
 
-#tray1 {
+.tray1 {
+    display: inline-block;
     float: left;
     width: 80%;
     height: 100px;
 }
 
-#tray2 {
+.tray2 {
     display:inline-block;
+    position: absolute;
     float: right;
     margin-top: 20px;
 }
@@ -69,4 +71,76 @@
 .info {
     font-size: 12px;
     text-align: left;
+}
+
+#uridescription {
+    font-size: 7px;
+    color: #616161;
+}
+
+.class-control {
+    margin-left: 10px;
+}
+
+#sportsbtn {
+    width: 200px;
+    height: 50px;
+    margin: 5px 5px 10px 5px;
+    padding-top: 12px;
+}
+
+#genderbtn {
+    width: 200px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding-top: 12px;
+}
+
+#agesbtn {
+    width: 100px;
+    height: 50px;
+    margin: 5px 5px 10px 5px;
+    padding-top: 12px;
+}
+
+#weeksbtn {
+    width: 88px;
+    height: 50px;
+    margin: 5px 5px 10px 5px;
+    padding-top: 12px;
+}
+
+#timebtn {
+    width: 150px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding-top: 12px;
+}
+
+.form-check-input {
+    float: left;
+}
+
+#sportslabel {
+    width: 80%;
+    float: left;
+}
+
+#ageslabel {
+    width: 80%;
+    float: left;
+}
+
+#weekslabel {
+    width: 70%;
+    float: left;
+}
+
+.btn-group {
+    margin: 5px 5px 5px 5px;
+    float: left;
+}
+
+.btn-group > button {
+    height: 52px;
 }

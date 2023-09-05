@@ -3,7 +3,7 @@
 <div class="innerframe">
     <div class="recruitview" th:each="recruit : ${list}">
         <div id="infotray" style="cursor: pointer;" th:onclick="|location.href='@{/recruit/view/} + ${recruit[0]}'|">
-            <div id="tray1">
+            <div class="tray1">
                 <h3 id="teamName" th:text="${recruit[1]}"></h3>
                 <span>
         <span th:each="num : ${#numbers.sequence(0, recruit[2].size() - 1)}">
@@ -41,7 +41,7 @@
         </span>
         </span>
             </div>
-            <div id="tray2">
+            <div class="tray2">
                 <h4>
                     <span class="badge bg-info" th:if="${recruit[7] == 1}">모집중</span>
                     <span class="badge bg-info" th:if="${recruit[7] == 2}"></span>

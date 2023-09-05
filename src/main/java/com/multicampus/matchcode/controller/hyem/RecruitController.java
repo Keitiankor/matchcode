@@ -38,7 +38,7 @@ public class RecruitController {
     public String writeRecruit(@PathVariable("teamid") Long teamId, Model model) {
         if (recruitService.isRecruitExist(teamId)) {
             model.addAttribute("message", "이미 모집중입니다.");
-            model.addAttribute("searchUrl", "/team/list"); // 임시 mapping 주소
+            model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         } else {
             RecruitDTO recruitDTO = new RecruitDTO();
@@ -55,7 +55,7 @@ public class RecruitController {
         model.addAttribute("teamid", teamId);
         recruitService.save(request);
         System.out.println("content : " + request.getContent());
-        return "redirect:/recruit/list";
+        return "redirect:/team/page";
     }
 
     // 모집글 리스트
@@ -104,10 +104,17 @@ public class RecruitController {
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
     ) {
         if (memberDTO != null) {
+            if(id==0) {
+                model.addAttribute("message", "작성한 모집글이 없습니다.");
+                model.addAttribute("searchUrl", "/team/page");
+                return "hyem/message";
+            }
             RecruitDTO recruitDTO = recruitService.recruitView(id);
             TeamDTO teamDTO = teamService.teamView(recruitDTO.getTeamId());
             model.addAttribute("recruit", recruitDTO);
             model.addAttribute("team", teamDTO);
+            model.addAttribute("privilege", teamMemberService.getPrivilege(memberDTO.getId()));
+            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
             return "hyem/recruit/recruitview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");
@@ -129,7 +136,7 @@ public class RecruitController {
             return "hyem/recruit/modifyrecruit";
         } else {
             model.addAttribute("message", "수정 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/recruit/list");
+            model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         }
     }
@@ -141,7 +148,7 @@ public class RecruitController {
     ) throws Exception {
         recruitService.recruitUpdate(id, request);
         model.addAttribute("message", "모집글 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/recruit/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 
@@ -156,11 +163,11 @@ public class RecruitController {
         if (teamMemberService.isTeamLeader(recruitDTO.getTeamId(), memberDTO.getId()) != 0) {
             model.addAttribute("message", "정말로 모집글을 삭제하시겠습니까?");
             model.addAttribute("confirmUrl", "/recruit/deleteconfirmed/" + id);
-            model.addAttribute("cancelUrl", "/recruit/list");
+            model.addAttribute("cancelUrl", "/team/page");
             return "hyem/confirmmessage";
         } else {
             model.addAttribute("message", "권한이 없습니다.");
-            model.addAttribute("searchUrl", "/recruit/list");
+            model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         }
     }
@@ -170,7 +177,7 @@ public class RecruitController {
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         recruitService.recruitDelete(id);
         model.addAttribute("message", "모집글 삭제가 완료되었습니다.");
-        model.addAttribute("searchUrl", "/recruit/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 }
