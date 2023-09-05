@@ -108,8 +108,9 @@ public class MatchController {
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         MatchDTO matchDTO = matchService.getPost(no);
-
+/*        List<String> list = matchService.getMatchMemberList(no);*/
         model.addAttribute("matchDto", matchDTO);
+/*        model.addAttribute("list", list);*/
         return "match/detail";
     }
 

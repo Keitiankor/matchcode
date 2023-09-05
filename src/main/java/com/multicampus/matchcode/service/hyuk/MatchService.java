@@ -153,4 +153,23 @@ public class MatchService {
 
         return pageList;
     }
+
+/*    public MatchService(MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
+
+    // 다른 메서드들...
+
+    @Transactional
+    public List<MatchDTO> getMatchMemberList(Long matchId) {
+        List<MatchDTO> matchMembers = MatchRepository.findByMatchId(matchId);
+        List<String> memberNames = new ArrayList<>();
+
+        for (MatchDTO matchMember : matchMembers) {
+            memberNames.add(matchMember.getMemberName());
+        }
+
+        return memberNames;
+    }*/
+
 }

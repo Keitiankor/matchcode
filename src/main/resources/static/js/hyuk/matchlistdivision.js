@@ -45,8 +45,8 @@ $(document).ready(function() {
                     for (var i = 0; i < matches.length; i++) {
                         tableHtml += "<tr>";
                         tableHtml += "<td>" + matches[i].id + "</td>";
-                        tableHtml += "<td><a href=\"/match/post/" + matches[i].id + "\">" + matches[i].mapId + "</a></td>";
-                        tableHtml += "<td>" + matches[i].sportsId + "</td>";
+                        tableHtml += '<td><a href="/match/post/' + matches[i].id + '">' + (matches[i].mapId == 1 ? '서울' : (matches[i].mapId == 2 ? '경기' : (matches[i].mapId == 3 ? '인천' : 'error'))) + '</a></td>';
+                        tableHtml += "<td>" + (matches[i].sportsId == 1 ? '풋살' : (matches[i].sportsId == 2 ? '농구' : (matches[i].sportsId == 3 ? '배드민턴' : 'error'))) + "</td>";
                         tableHtml += "<td>" + matches[i].createdDate + "</td>";
                         tableHtml += "</tr>";
                     }
