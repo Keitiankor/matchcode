@@ -45,10 +45,12 @@
                 <th>
                     <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/list}'|" type="button">목록으로</button>
                     <button class="btn btn-outline-secondary" id="button.correction" type="submit">수정</button>
-                    <button class="btn btn-outline-secondary" th:onclick="|location.href='@{/post/delete?(id=${post.id})}'|">삭제</button>
+            </form>
+            <form method="post" th:action="@{/post/delete/{id}(id = ${post.id})}" >
+                    <button class="btn btn-outline-secondary" type="submit">삭제</button>
+            </form>
                     <input th:name="_csrf" th:value="${_csrf.token}" type="hidden" />
                 </th>
-            </form>
         </div>
     </body>
 </html>
