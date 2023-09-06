@@ -17,7 +17,7 @@
                 <input name="teamId" th:value="${recruit.teamId}" type="hidden">
                 <input name="id" th:value="${recruit.id}" type="hidden">
                 <label for="content">모집글 내용 : </label>
-                <textarea class="form-control" rows="5" id="content" name="introduction" th:text="${recruit.content}"></textarea>
+                <textarea class="form-control" rows="5" id="content" name="content" th:text="${recruit.content}"></textarea>
                 <button class="btn btn-success" type="submit">수정</button>
                 <input th:name="_csrf" th:value="${_csrf.token}" type="hidden">
             </form>
