@@ -60,7 +60,7 @@ public class SportCenterController {
     public String updateSportCenter(@RequestParam long id, SportCenterRequest sportCenterRequest, Model model) {
         MapDTO mapDTO = sportCenterService.findById(id);
         model.addAttribute("mapDTO", mapDTO);
-        //sportCenterService.save(sportCenterRequest);
+        sportCenterService.save(sportCenterRequest);
         return "sportCenter/updateSportCenter";
     }
 
