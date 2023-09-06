@@ -4,7 +4,11 @@ import com.multicampus.matchcode.model.entity.TeamMemberDTO;
 import com.multicampus.matchcode.repository.ApplicationRepository;
 import com.multicampus.matchcode.repository.TeamMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class TeamMemberService {
@@ -51,16 +55,60 @@ public class TeamMemberService {
         return privilege;
     }
 
+    // 권한 확인
+    public Integer getPrivilege(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).get().getPrivilege();
+    }
+
+    // 가입된 팀 id 확인
+    public long getTeamId(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).get().getTeamId();
+    }
+
     // 신청자 확인
     public boolean isApplicatedMember(long teamId, long memberId) {
         return applicationRepository.findByMemberIdAndTeamId(teamId, memberId);
     }
 
-    /*// 팀 리스트 처리
-    public Page<TeamDTO> teamList(Pageable pageable) {
-        return teamRepository.findAll(pageable);
+    public TeamMemberDTO teamMemberInfo(long memberId) {
+        return teamMemberRepository.findByMemberId(memberId).orElse(null);
     }
 
+    // 팀원 리스트
+    public Page<TeamMemberDTO> teamMemberList(Pageable pageable) {
+        return teamMemberRepository.findAll(pageable);
+    }
+
+    // 팀별 팀원 리스트
+    public Page<TeamMemberDTO> teamMemberList2(Pageable pageable, long teamId) {
+        return teamMemberRepository.findAllByTeamId(pageable, teamId);
+    }
+
+    // 멤버 리스트 정보 가져오기
+    public Page<Object[]> teamMemberList3(Pageable pageable, long teamId) {
+        return teamMemberRepository.getMemberNameWithTeamId(pageable, teamId);
+    }
+
+    // 멤버 상세 정보 가져오기
+    public Objects getMemberInfo(long teamId, long teamMemberId) {
+        return (Objects) teamMemberRepository.getTeamMemberInfo(teamId, teamMemberId);
+    }
+
+    public long getTeamMemberName(long teamId, String name) {
+        return teamMemberRepository.getIdByName(teamId, name);
+    }
+
+    // 팀원 수
+    public long getTeamMemberCount(long teamId) {
+        return teamMemberRepository.countByTeamId(teamId);
+    }
+
+    // 팀 탈퇴
+    public void widhDrawTeam(long memberId) {
+        long teamMemberId = teamMemberRepository.findByMemberId(memberId).get().getId();
+        teamMemberRepository.deleteById(teamMemberId);
+    }
+     /*
     // 팀 정보 불러오기
     public TeamDTO teamView(long id) {
         return teamRepository.findById(id).get();

@@ -14,7 +14,7 @@
         <a class="navbar-brand" style="margin-left: 20px" th:href="@{/}">Match Code</a>
         <div class="ms-3 navbar-nav">
             <div class="nav-item"><a class="nav-link" th:href="@{/post/list}">게시판</a></div>
-            <div class="nav-item"><a class="nav-link" th:href="@{/recruit/list}">팀 목록</a></div>
+            <div class="nav-item"><a class="nav-link" th:href="@{/team/}">팀 목록</a></div>
             <div class="nav-item"><a class="nav-link" th:href="@{/match/list}">매칭 목록</a></div>
             <div class="nav-item"><a class="nav-link" th:href="@{/sportCenter/listSportCenter}">경기장 목록</a></div>
             <div class="nav-item"><a class="nav-link" th:href="@{/review/listReview}">리뷰</a></div>
@@ -22,6 +22,7 @@
         </div>
         <div class="me-lg-3 position-absolute end-0 navbar-nav">
             <div class="nav-item" th:if="${session.get('memberId') == null}"><a class="nav-link" th:href="@{/login}">로그인</a></div>
+            <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/team/page}">팀 정보</a></div>
             <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/mypage}">마이페이지</a></div>
             <div class="nav-item" th:if="${session.get('memberId') != null}"><a class="nav-link" th:href="@{/logout}">로그아웃</a></div>
         </div>

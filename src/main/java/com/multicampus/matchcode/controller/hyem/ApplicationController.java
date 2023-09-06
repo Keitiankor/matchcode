@@ -35,7 +35,11 @@ public class ApplicationController {
     ) {
         if (teamMemberService.isTeamMember(memberDTO.getId())) {
             model.addAttribute("message", "이미 팀에 가입되어 있습니다.");
-            model.addAttribute("searchUrl", "/recruit/list");
+            model.addAttribute("searchUrl", "/team/");
+            return "hyem/message";
+        } else if (applicationService.memberApplicated(memberDTO.getId())) {
+            model.addAttribute("message", "이미 가입신청한 팀이 있습니다.");
+            model.addAttribute("searchUrl", "/team/");
             return "hyem/message";
         } else {
             model.addAttribute("memberid", memberDTO.getId());
@@ -52,7 +56,7 @@ public class ApplicationController {
     ) throws Exception {
         applicationService.save(request, memberDTO.getId());
         model.addAttribute("message", "가입 신청이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/recruit/list");
+        model.addAttribute("searchUrl", "/team/");
         return "hyem/message";
     }
 
@@ -109,11 +113,12 @@ public class ApplicationController {
                                                                           memberDTO.getId()
         );
         Integer isTeamLeader = teamMemberService.isTeamLeader(applicationDTO.getTeamId(), memberDTO.getId());
+        model.addAttribute("isTeamLeader", isTeamLeader);
         if (isApplicatedMember | (isTeamLeader == 1)) {
             return "hyem/application/applicationview";
         } else {
             model.addAttribute("message", "열람 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            model.addAttribute("searchUrl", "/team/page"); // 임시 주소
             return "hyem/message";
         }
     }
@@ -132,7 +137,7 @@ public class ApplicationController {
             return "hyem/application/modifyintroduction";
         } else {
             model.addAttribute("message", "수정 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list"); // 임시 주소
+            model.addAttribute("searchUrl", "/team/page"); // 임시 주소
             return "hyem/message";
         }
     }
@@ -143,37 +148,44 @@ public class ApplicationController {
     ) throws Exception {
         applicationService.applicationUpdate(id, request);
         model.addAttribute("message", "가입 신청 내용 수정이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/application/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 
-    // 가입신청 취소
+    // 가입신청 취소 및 거절
     @DeleteMapping("/cancel/{id}")
     public String applicationCancel(
             @PathVariable("id") long id,
             Model model,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
     ) throws Exception {
+        long memberId = memberDTO.getId();
+        long teamId = teamMemberService.getTeamId(memberId);
         if (applicationService
                 .applicationView(id)
                 .getMemberId() == memberDTO.getId()) {
             model.addAttribute("message", "정말로 가입을 취소하시겠습니까?");
             model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
-            model.addAttribute("cancelUrl", "/application/list");
+            model.addAttribute("cancelUrl", "/team/page");
             return "hyem/confirmmessage";
+        } else if(teamMemberService.isTeamLeader(teamId, memberId) == 1) {
+            applicationService.applicationCancel(id);
+            model.addAttribute("message", "가입신청을 거절하였습니다.");
+            model.addAttribute("searchUrl", "/application/list/" + teamId);
+            return "hyem/message";
         } else {
-            model.addAttribute("message", "삭제 권한이 없습니다.");
-            model.addAttribute("searchUrl", "/application/list");
+            model.addAttribute("message", "취소 권한이 없습니다.");
+            model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         }
     }
 
-    // 팀 정보 삭제 처리
+    // 가입 취소처리
     @PostMapping("/deleteconfirmed/{id}")
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         applicationService.applicationCancel(id);
         model.addAttribute("message", "가입 취소가 완료되었습니다.");
-        model.addAttribute("searchUrl", "/application/list");
+        model.addAttribute("searchUrl", "/team/page");
         return "hyem/message";
     }
 }

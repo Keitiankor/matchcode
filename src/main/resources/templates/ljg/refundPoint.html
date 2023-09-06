@@ -3,9 +3,46 @@
     <head th:replace="~{commons :: head(~{::title})}">
         <title>Match Code</title>
     </head>
-    <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <body> <style>
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .card-body {
+            max-width: 500px;
+            min-height: 250px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .small-text {
+            font-size: 25px; /* Adjust the font size as needed */
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .separator {
+            width: 100%;
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
         <div th:replace="~{commons :: topper}"></div>
-        <input hidden="hidden" id="memberId" th:value="${memberId}" type="text">
+        <div class="card-body bg-white mt-0 shadow">
+        <input type="text" id="memberId" th:value="${memberId}" hidden="hidden">
         <div style="margin-top: 70px">
             <table>
                 <thead>
@@ -13,10 +50,11 @@
                         <p>보유 포인트: <span id="totalPointsValue" th:text="${totalPoints}"></span></p>
                         <p>얼마를 환불하시겠습니까?
                             <input id="refundAmount" min="0" type="number">
-                            <button onclick="check2()">환불</button>
+                            <button class="btn btn-lg btn-block  btn-custom" onclick="check2()">환불</button>
                     </tr>
                 </thead>
             </table>
+            </div>
         </div>
         <script>
             window.onload = function() {
@@ -34,14 +72,13 @@
                     performRefund(refundAmount);
                 }
             }
-
-            function performRefund(refundAmount) {
+            function performRefund(refundAmount){
                 $.ajax({
                     url: "/refundPoint",
                     type: "GET",
                     data: {
                         memberId: $("#memberId").val(),
-                        point: refundAmount
+                        point: refundAmount,
                     },
                     success: function(response) {
                         if (response === "success") {

@@ -40,12 +40,18 @@
                 margin-top: 20px;
             }
 
+            .button-container {
+                margin-top: 50px; /* 원하는 간격 크기로 조정하세요 */
+            }
+            .button-container button {
+                margin-right: 10px; /* 버튼 간격을 조절합니다 */
+            }
             .btn-custom:hover {
                 background-color: #0056b3;
             }
 
             .small-text {
-                font-size: 30px; /* Adjust the font size as needed */
+                font-size: 30px;
             }
         </style>
     </head>
@@ -58,10 +64,14 @@
                 <thead>
                     <tr>
                         <div class="mb-2">
-                            <p>보유 포인트: <span th:text="${totalPoints}"></span></p>
+                            <p>보유 포인트: <span th:text="${totalPoints+ 'P'}"></span></p>
+                        </div>
+
+                        <div class="button-container">
                             <button onclick="location.href='test'" type="button">충전하기</button>
                             <button onclick="location.href='refund'" type="button">환불하기</button>
                         </div>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -104,7 +114,7 @@
                         <td>
                             <span th:text="${history.details}"></span>
                         </td>
-                        <td th:text="${history.point}"></td>
+                        <td th:text="${history.point+ 'P'}"></td>
                     </tr>
                 </tbody>
             </table>

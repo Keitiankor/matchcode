@@ -107,9 +107,11 @@
                 </div>
             </div>
             <!-- 검색 기능 -->
-            <form method="get" th:action="@{/post/list}">
-                <input class="form-control" name="searchKeyword" type="text">
-                <button type="submit">검색</button>
+            <form class="d-flex" method="get" th:action="@{/post/list}">
+
+                <input class="form-control me-2" name="searchKeyword" type="text" placeholder="제목 검색">
+                <button class="btn btn-outline-success" type="submit">검색</button>
+
             </form>
         </div>
     </body>

@@ -24,4 +24,6 @@ public interface MatchRepository extends JpaRepository<MatchDTO, Long> {
     Page<MatchDTO> findByMapIdAndSportsId(long region, long sports, PageRequest createdDate);
 
     double countByMapIdAndSportsId(long region, long sports);
+
+    List<MatchDTO> findTop8ByOrderByIdDesc();
 }

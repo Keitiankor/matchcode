@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 
 @Data
 public class ReserveRequest {
-    private Timestamp matchDate;
     private long mapId;
     private long memberId;
     private int price;
+    private Timestamp matchDate;
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{commons :: head(~{::title})}">
+        <meta charset="UTF-8">
+        <title>팀 리스트</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" href="/css/hyem/basic.css">
+        <header th:replace="~{commons :: topper}"></header>
+        <script src="/js/hyem/isrecruit.js"></script>
+        <div class="frame">
+            <div>
+                <button style="color: white" class="btn btn-info" id="isnotrecruit">전체 팀</button>
+                <button class="btn btn-primary" id="isrecruit">모집중 팀</button>
+            </div>
+            <div id="main">
+
+            </div>
+        </div>
+    </body>
+</html>

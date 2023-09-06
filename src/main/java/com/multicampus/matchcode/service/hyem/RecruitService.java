@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -64,6 +66,16 @@ public class RecruitService {
                                                               recruitList.size()
         );
         return recruitPage;
+    }
+
+    // 모집글 여부와 상관 없는 팀 정보
+    public Page<Objects[]> teamListInfo(Pageable pageable) {
+        return recruitRepository.findByIsRecruitWithTeamInfo(pageable);
+    }
+
+    // 모집글 있는 팀 정보
+    public Page<Objects[]> recruitListInfo(Pageable pageable) {
+        return recruitRepository.findByAllWithTeamInfo(pageable);
     }
 
     public RecruitDTO recruitView(long id) {

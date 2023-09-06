@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<script src="/js/hyem/infouriselect.js"></script>
+<div class="innerframe">
+    <div class="recruitview" th:each="recruit : ${list}">
+        <div id="infotray" style="cursor: pointer;" th:onclick="|location.href='@{/recruit/view/} + ${recruit[0]}'|">
+            <div class="tray1">
+                <h3 id="teamName" th:text="${recruit[1]}"></h3>
+                <span>
+        <span th:each="num : ${#numbers.sequence(0, recruit[2].size() - 1)}">
+            <span class="info"
+                  th:text="${T(com.multicampus.matchcode.util.enums.hyem.Sport).getDescriptionFromCount(recruit[2][num])}">
+            </span>
+        </span>
+        </span>
+                <span class="info">·</span>
+                <span>
+        <span class="info"
+              th:text="${T(com.multicampus.matchcode.util.enums.hyem.Gender).getDescriptionFromCount(recruit[3])}">
+        </span>
+    </span>
+                <span class="info">·</span>
+                <span>
+        <span th:each="num : ${#numbers.sequence(0, recruit[4].size() - 1)}">
+            <span class="info"
+                  th:text="${T(com.multicampus.matchcode.util.enums.hyem.Age).getDescriptionFromCount(recruit[4][num])}">
+            </span>
+        </span>
+    </span>
+                <br>
+                <span>
+        <span th:each="num : ${#numbers.sequence(0, recruit[5].size() - 1)}">
+            <span class="info"
+                  th:text="${T(com.multicampus.matchcode.util.enums.hyem.Week).getDescriptionFromCount(recruit[5][num])}">
+            </span>
+        </span>
+        </span>
+                <span class="info">·</span>
+                <span>
+        <span class="info"
+              th:text="${T(com.multicampus.matchcode.util.enums.hyem.Time).getDescriptionFromCount(recruit[6])}">
+        </span>
+        </span>
+            </div>
+            <div class="tray2">
+                <h4>
+                    <span class="badge bg-info" th:if="${recruit[7] == 1}">모집중</span>
+                    <span class="badge bg-info" th:if="${recruit[7] == 2}"></span>
+                </h4>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <button id="addbutton" class="btn btn-primary">
+        <a style="color: white; text-decoration: none;" th:href="@{/team/create}">팀 생성하기</a>
+    </button>
+</div>
+
+<ul class="pagination" th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+    <li class="page-item">
+        <a class="page-link" th:href="@{/recruit/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:if="${page != nowPage}" th:text="${page}"></a>
+        <!--        <strong style="color : red" th:if="${page == nowPage}" th:text="${page}"></strong>-->
+    </li>
+</ul>

@@ -65,4 +65,15 @@ public class ApplicationService {
     public void applicationCancel(long id) {
         applicationRepository.deleteById(id);
     }
+
+    // 가입신청 여부
+    public boolean memberApplicated(long memberId) {
+        long isExist = applicationRepository.findIdByMemberIdExist(memberId);
+        return isExist == 1;
+    }
+
+    // 가입 신청 정보 찾기
+    public long findApplicatedId(long memberId) {
+        return applicationRepository.findIdByMemberId(memberId);
+    }
 }

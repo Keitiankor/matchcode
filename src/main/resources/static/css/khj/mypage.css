@@ -13,11 +13,12 @@
 }
 
 #nav {
-    width: 300px;
+    width: 220px;
     height: 600px;
     line-height: 50px;
     float: left;
     padding-top: 60px;
+    text-align: center;
 }
 
 #section {
@@ -42,9 +43,10 @@
     margin: 5px 0px;
 }
 
-/*.updown {*/
-/*    border: 0.1px solid black;*/
-/*    width: 0.1px;*/
-/*    height: 900px;*/
-/*    margin-left: 280px;*/
-/*}*/
+#menubutton {
+    border-radius: 10px;
+    background: #fe96cb;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
+}

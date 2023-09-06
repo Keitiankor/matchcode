@@ -12,4 +12,10 @@ public interface ApplicationRepository extends JpaRepository<ApplicationDTO, Lon
 
     @Query("select count(a.id) > 0 from Application a where a.teamId =:teamId and a.memberId =:memberId")
     public abstract boolean findByMemberIdAndTeamId(@Param("teamId") long teamId, @Param("memberId") long memberId);
+
+    @Query("select count(a.id) from Application a where a.memberId =:memberId")
+    Long findIdByMemberIdExist(@Param("memberId") long memberId);
+
+    @Query("select a.id from Application a where a.memberId =:memberId")
+    Long findIdByMemberId(@Param("memberId") long memberId);
 }

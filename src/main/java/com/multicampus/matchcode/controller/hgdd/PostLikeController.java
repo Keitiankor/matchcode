@@ -29,8 +29,6 @@ public class PostLikeController {
     ) {
         PostDTO post = postService.view(postId);
         if (memberDTO != null) {
-            System.out.println(memberDTO.getId());
-            System.out.println(postId);
             likeService.toggleLike(postId, memberDTO.getId()); // 게시글 좋아요 토글 서비스 호출
             return "redirect:/post/view?id=" + postId; // 게시글 상세 페이지로 이동
         } else {
