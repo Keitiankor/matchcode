@@ -16,7 +16,7 @@
                 </select>
                 <select id="sportsSelect">
                     <option value="0">전체</option>
-                    <option value="1">풋살</option>
+                    <option value="1">축구</option>
                     <option value="2">농구</option>
                     <option value="3">배드민턴</option>
                 </select>
@@ -41,8 +41,8 @@
                             <!-- Existing data -->
                             <tr th:each="match : ${matchList}">
                                 <td th:text="${match.id}"></td>
-                                <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId == 1 ? '서울' : (match.mapId == 2 ? '경기' : (match.mapId == 3 ? '인천' : 'error'))}"></a></td>
-                                <td th:text="${match.sportsId == 1 ? '풋살' : (match.sportsId == 2 ? '농구' : (match.sportsId == 3 ? '배드민턴' : 'error'))}"></td>
+                                <td><a th:href="'/match/post/'+${match.id}" th:text="${match.mapId}"></a></td>
+                                <td th:text="${match.sportsId}"></td>
                                 <td th:text="${match.createdDate}"></td>
                                 <!-- ... -->
                             </tr>
@@ -58,7 +58,7 @@
                 </div>
                 <!-- Pagination -->
                 <div style="margin: 10px">
-                    <!--.<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                    <!--<th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                       <a th:if="${page != nowPage}" th:href="@{/team/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
                       <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
                     </th:block>-->
@@ -67,7 +67,7 @@
                 <a th:href="@{'/match/list?page=' + ${pageNum}}">[[${pageNum}]]</a>
             </span>
                         <!-- 글쓰기 버튼 -->
-                        <a class="btn btn-primary" style="float: right" th:href="@{/match/post}">매치 생성</a>
+                        <a class="btn btn-primary" style="float: right" th:href="@{/match/post}">글쓰기</a>
                     </div>
                     <!-- 검색 form -->
                     <form action="/board/search" method="GET">
@@ -79,7 +79,7 @@
                 </div>
             </div>
         </main>
-        <script src="/js/hyuk/matchlistdivision.js"></script>
+        <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     </body>
 </html>
