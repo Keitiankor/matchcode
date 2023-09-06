@@ -126,7 +126,7 @@ public class TeamController {
         String teamUri = request_team.getUri();
         teamMemberService.addTeamLeader(teamId, memberDTO.getId());
         model.addAttribute("message", "팀 생성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/team/view/" + teamUri + "/"+ teamId);
+        model.addAttribute("searchUrl", "/team/page/");
         return "hyem/message";
     }
 

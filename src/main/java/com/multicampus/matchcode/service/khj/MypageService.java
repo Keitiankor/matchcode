@@ -1,13 +1,14 @@
 package com.multicampus.matchcode.service.khj;
 
-import com.multicampus.matchcode.model.entity.MemberDTO;
-import com.multicampus.matchcode.model.entity.PointDTO;
-import com.multicampus.matchcode.model.entity.TeamDTO;
-import com.multicampus.matchcode.model.entity.TeamMemberDTO;
+import com.multicampus.matchcode.model.entity.*;
+import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
+import com.multicampus.matchcode.model.request.khj.MemberUpdateRequest;
 import com.multicampus.matchcode.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,5 +79,27 @@ public class MypageService {
             return odto.get();
         }
         return null;
+    }
+
+    //'개인정보' 탭에서 개인정보를 수정하기 위한 메서드
+    public MemberDTO update(long Id, MemberUpdateRequest request) {
+        MemberDTO members = member
+                .findById(Id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "개인정보를 찾을 수 없습니다"));
+        MemberDTO update = MemberDTO
+                .builder()
+                .id(members.getId())
+                .account(members.getAccount())
+                .password(members.getPassword())
+                .mannerTemperture(members.getMannerTemperture())
+                .communityLevel(members.getCommunityLevel())
+                .communityExp(members.getCommunityExp())
+                .name(request.getName())
+                .phone(request.getPhone())
+                .mailAddress(request.getMailAddress())
+                .birthday(members.getBirthday())
+                .createdDate(members.getCreatedDate())
+                .build();
+        return member.save(update);
     }
 }
