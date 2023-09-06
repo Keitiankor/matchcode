@@ -117,7 +117,8 @@ public class TeamService {
             recruitRepository.deleteRecruitsByTeamId(id);
         }
         teamRepository.deleteById(id);
-        // 팀원에서도 삭제하는 쿼리 추가
+        recruitRepository.deleteRecruitsByTeamId(id);
+        teamMemberRepository.deleteByTeamId(id);
     }
 
     // 모집글이 있는 팀 정보

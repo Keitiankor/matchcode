@@ -43,4 +43,8 @@ public interface TeamMemberRepository extends JpaRepository<TeamMemberDTO, Long>
     long getIdByName(@Param("teamId") long teamId, @Param("name") String name);
 
     long countByTeamId(long teamId);
+
+    void deleteById(long teamMemberId);
+
+    void deleteByTeamId(long teamId);
 }

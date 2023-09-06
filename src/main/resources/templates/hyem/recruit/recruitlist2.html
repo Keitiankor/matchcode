@@ -50,9 +50,9 @@
         </div>
         <hr>
     </div>
-    <div>
-        <button id="addbutton" class="btn btn-outline-primary"><a th:href="@{/team/create}">팀 생성하기</a></button>
-    </div>
+    <button id="addbutton" class="btn btn-primary">
+        <a style="color: white; text-decoration: none;" th:href="@{/team/create}">팀 생성하기</a>
+    </button>
 </div>
 
 <ul class="pagination" th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">

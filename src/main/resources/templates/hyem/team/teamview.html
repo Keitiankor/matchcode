@@ -60,6 +60,9 @@
             <button class="btn btn-info" th:if="${team.id == teamId}">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/page/{uri}/memberlist(uri = ${team.uri})}">멤버 리스트</a>
             </button>
+            <form th:if="${team.id == teamId}" th:action="@{/withdraw/{id}(id = ${teamMemberId})}" th:method="delete">
+                <button class="btn btn-danger" onclick="teamDelete();">팀 탈퇴하기</button>
+            </form>
             <button class="btn btn-warning">
                 <a style="color: white; text-decoration: none;" th:href="@{/team/}">이전 화면으로</a>
             </button>

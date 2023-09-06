@@ -59,6 +59,8 @@ public class TeamController {
                     model.addAttribute("team", teamService.teamView(teamId));
                     mapping = "hyem/team/teaminformation";
                 } else if (teamMemberService.isTeamLeader(teamId, memberId) == 2) {
+                    model.addAttribute("teamId", teamId);
+                    model.addAttribute("teamMemberId",teamMemberDTO.getId());
                     mapping = "hyem/team/teamview";
                 }
                 return mapping;
@@ -155,7 +157,7 @@ public class TeamController {
                            @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO) {
         if ((memberDTO != null)) {
             model.addAttribute("team", teamService.teamView(id));
-            //model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+            model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
             return "hyem/team/teamview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");

@@ -136,11 +136,11 @@
     float: left;
 }
 
-.btn-group {
+.btn-group2 {
     margin: 5px 5px 5px 5px;
     float: left;
 }
 
-.btn-group > button {
+.btn-group2 > button {
     height: 52px;
 }

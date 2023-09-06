@@ -152,13 +152,15 @@ public class ApplicationController {
         return "hyem/message";
     }
 
-    // 가입신청 취소
+    // 가입신청 취소 및 거절
     @DeleteMapping("/cancel/{id}")
     public String applicationCancel(
             @PathVariable("id") long id,
             Model model,
             @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = false) MemberDTO memberDTO
     ) throws Exception {
+        long memberId = memberDTO.getId();
+        long teamId = teamMemberService.getTeamId(memberId);
         if (applicationService
                 .applicationView(id)
                 .getMemberId() == memberDTO.getId()) {
@@ -166,14 +168,19 @@ public class ApplicationController {
             model.addAttribute("confirmUrl", "/application/deleteconfirmed/" + id);
             model.addAttribute("cancelUrl", "/team/page");
             return "hyem/confirmmessage";
+        } else if(teamMemberService.isTeamLeader(teamId, memberId) == 1) {
+            applicationService.applicationCancel(id);
+            model.addAttribute("message", "가입신청을 거절하였습니다.");
+            model.addAttribute("searchUrl", "/application/list/" + teamId);
+            return "hyem/message";
         } else {
-            model.addAttribute("message", "삭제 권한이 없습니다.");
+            model.addAttribute("message", "취소 권한이 없습니다.");
             model.addAttribute("searchUrl", "/team/page");
             return "hyem/message";
         }
     }
 
-    // 팀 정보 삭제 처리
+    // 가입 취소처리
     @PostMapping("/deleteconfirmed/{id}")
     public String deleteConfirmed(@PathVariable("id") Long id, Model model) {
         applicationService.applicationCancel(id);
