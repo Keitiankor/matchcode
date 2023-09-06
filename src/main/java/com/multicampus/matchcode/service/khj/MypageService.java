@@ -1,7 +1,6 @@
 package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
-import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
 import com.multicampus.matchcode.model.request.khj.MemberUpdateRequest;
 import com.multicampus.matchcode.repository.*;
@@ -21,18 +20,6 @@ public class MypageService {
 
     @Autowired
     PointRepository point;
-
-    @Autowired
-    MatchRepository matches;
-
-    @Autowired
-    MapRepository map;
-
-    @Autowired
-    ResultRepository result;
-
-    @Autowired
-    MatchMemberRepository matchmember;
 
     @Autowired
     TeamMemberRepository teammember;
@@ -60,15 +47,16 @@ public class MypageService {
             for (PointDTO dto : pointDTO.get()) {
                 sum += dto.getPoint();
             }
+            return MemberInfoRequest
+                    .builder()
+                    .name(memberDTO
+                            .get()
+                            .getName())
+                    .point(sum)
+                    .teamName(teamName)
+                    .build();
         }
-        return MemberInfoRequest
-                .builder()
-                .name(memberDTO
-                              .get()
-                              .getName())
-                .point(sum)
-                .teamName(teamName)
-                .build();
+        return null;
     }
 
     //'개인정보' 탭에서 쓰기 위해 현재 로그인한 사람의 MemberDTO 객체를 가져오는 메서드

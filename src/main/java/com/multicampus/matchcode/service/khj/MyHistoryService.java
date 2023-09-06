@@ -2,7 +2,6 @@ package com.multicampus.matchcode.service.khj;
 
 import com.multicampus.matchcode.model.entity.*;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
-import com.multicampus.matchcode.model.request.khj.RatingRequest;
 import com.multicampus.matchcode.repository.*;
 import com.multicampus.matchcode.util.constants.SessionConstant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ public class MyHistoryService {
     MemberRepository member;
 
     @Autowired
-    PointRepository point;
-
-    @Autowired
     MatchRepository matches;
 
     @Autowired
@@ -37,9 +33,6 @@ public class MyHistoryService {
 
     @Autowired
     MatchMemberRepository matchmember;
-
-    @Autowired
-    EmblemRepository emblem;
 
     @ModelAttribute("memberId")
     public long getMemberId(@SessionAttribute(name = SessionConstant.MEMBER_DTO) MemberDTO loggedInMember) {
@@ -73,14 +66,6 @@ public class MyHistoryService {
         Optional<RatingDTO> ratingDTO = rating.findBySportsIdAndMemberId(sportsId, memberId);
         if (ratingDTO.isPresent()) {
             return ratingDTO.get();
-        }
-        return null;
-    }
-
-    public EmblemDTO getEmblemById(long emblemId) {
-        Optional<EmblemDTO> odto = emblem.findById(emblemId);
-        if (odto.isPresent()) {
-            return odto.get();
         }
         return null;
     }
