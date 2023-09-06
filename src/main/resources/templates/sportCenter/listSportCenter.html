@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <head th:replace="~{commons :: head(~{::title})}">
+        <title>Match Code</title>
+    </head>
     <head>
         <meta charset="UTF-8">
         <title>Review SportCenter</title>
@@ -58,7 +60,8 @@
         </style>
     </head>
     <body>
-        <div class="container">
+        <div th:replace="~{commons :: topper}"></div>
+        <div style="margin-top: 70px" class="container">
             <h1>체육 시설 목록</h1>
             <table>
                 <tr>
@@ -72,8 +75,7 @@
                     <th class="actions">동작</th>
                 </tr>
                 <tr th:each="map : ${sportCenterList}">
-
-                    <td th:text="${map.id}" hidden = "hidden"></td>
+                    <td th:text="${map.id}" hidden="hidden"></td>
                     <td th:text="${map.managerName}"></td>
                     <td th:text="${map.phone}"></td>
                     <td th:text="${map.sportCenterName}"></td>
@@ -93,17 +95,17 @@
                 </tr>
             </table>
             <a class="new-review-link" href="/sportCenter/createSportCenter">체육 시설 작성</a>
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $(".reserve-button").click(function(e) {
-                            e.preventDefault();
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $(".reserve-button").click(function(e) {
+                        e.preventDefault();
                         var sportCenterName = $(this).data("sportcentername");
                         var id = $(this).data("id");
                         var price = $(this).data("price");
-                            var payPageUrl = "/payPage?id=" + id + "&price=" + price + "&sportCenterName=" + sportCenterName;
-                            window.location.href = payPageUrl;
+                        var payPageUrl = "/payPage?id=" + id + "&price=" + price + "&sportCenterName=" + sportCenterName;
+                        window.location.href = payPageUrl;
 
-                            // AJAX 요청 보내기
+                        // AJAX 요청 보내기
                         $.ajax({
                             type: "GET", // 또는 GET
                             url: "/payPage", // 요청을 보낼 URL
@@ -112,15 +114,15 @@
                                 SportCenterName: sportCenterName, // 스포츠 이름 전송
                                 price: price // 스포츠 이름 전송
                             },
-                            success: function (response) {
+                            success: function(response) {
                                 if (response === "success") {
                                     // AJAX 요청이 성공하면 처리할 코드
                                     // response에 서버에서 받은 응답이 들어옵니다.
                                     // 예약 페이지로 리디렉션하거나 다른 처리를 수행할 수 있습니다.
                                     window.location.href = "/payPage?id=" + id + "&price=" + price + "&sportCenterName=" + sportCenterName;
                                 }
-                                },
-                            error: function (error) {
+                            },
+                            error: function(error) {
                                 // AJAX 요청이 실패하면 처리할 코드
                                 console.error("AJAX 요청 실패:", error);
                             }
