@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <h2 style="display:inline">개인정보 수정 페이지입니다.</h2>
-<p>이름: <span th:text="${member.name}"></span></p>
-<p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
-<p>핸드폰: <input th:text="${member.phone}" /></p>
-<p>이메일: <input th:text="${member.mailAddress}" /></p>
-<p>활동레벨: <span th:text="${member.communityLevel}"></span></p>
-<p>활동경험치: <span th:text="${member.communityExp + '%'}"></span></p>
-<p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
-<br />
-<br />
-<p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
+
+<form method="post" th:action="@{/updatePersonalInfo}" th:object="${post}">
+    <p>이름: <input type="text" name="name" th:value="${member.name}" /></p>
+    <p>생년월일: <span th:utext="${#dates.format(member.birthday, 'yyyy-MM-dd')}"></span></p>
+    <p>핸드폰: <input type="text" name="phone" th:value="${member.phone}" /></p>
+    <p>이메일: <input type="text" name="mailAddress" th:value="${member.mailAddress}" /></p>
+    <p>활동레벨: <span th:text="${member.communityLevel}"></span></p>
+    <p>활동경험치: <span th:text="${member.communityExp + '%'}"></span></p>
+    <p>나의 매너온도: <span th:text="${member.mannerTemperture}"></span></p>
+    <br />
+    <br />
+    <p>생성일: <span th:utext="${#dates.format(member.createdDate, 'yyyy-MM-dd')}"></span></p>
+    <button type="submit" class="btn btn-primary">수정완료</button>
+</form>

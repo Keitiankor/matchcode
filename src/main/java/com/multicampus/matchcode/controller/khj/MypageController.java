@@ -4,8 +4,10 @@ import com.multicampus.matchcode.model.entity.MemberDTO;
 import com.multicampus.matchcode.model.entity.PostDTO;
 import com.multicampus.matchcode.model.entity.RatingDTO;
 import com.multicampus.matchcode.model.entity.ReplyDTO;
+import com.multicampus.matchcode.model.request.hgdd.PostUpdateRequest;
 import com.multicampus.matchcode.model.request.khj.MatchResultRequest;
 import com.multicampus.matchcode.model.request.khj.MemberInfoRequest;
+import com.multicampus.matchcode.model.request.khj.MemberUpdateRequest;
 import com.multicampus.matchcode.model.request.khj.RatingRequest;
 import com.multicampus.matchcode.service.khj.MyHistoryService;
 import com.multicampus.matchcode.service.khj.MyPostService;
@@ -110,5 +112,15 @@ public class MypageController {
         MemberDTO member = service.getMemberById(memberId);
         model.addAttribute("member", member);
         return "khj/personalupdate";
+    }
+
+
+    @PostMapping("/updatePersonalInfo")
+    public String memberlupdate(@ModelAttribute("memberId") long memberId, MemberUpdateRequest request, Model model) {
+        service.update(memberId, request);
+        model.addAttribute("message", "수정 완료.");
+        model.addAttribute("searchUrl", "/mypage");
+
+        return "khj/message2";
     }
 }
