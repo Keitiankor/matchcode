@@ -77,14 +77,6 @@ public class MyHistoryService {
         return null;
     }
 
-    public EmblemDTO getEmblemById(long emblemId) {
-        Optional<EmblemDTO> odto = emblem.findById(emblemId);
-        if (odto.isPresent()) {
-            return odto.get();
-        }
-        return null;
-    }
-
     public List<MatchDTO> getMatchesBySportsId(long sportsId) {
         return matches.findBySportsId(sportsId);
     }
