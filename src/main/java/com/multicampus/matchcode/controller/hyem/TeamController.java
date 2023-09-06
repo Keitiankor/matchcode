@@ -158,6 +158,7 @@ public class TeamController {
         if ((memberDTO != null)) {
             model.addAttribute("team", teamService.teamView(id));
             model.addAttribute("teamId", teamMemberService.getTeamId(memberDTO.getId()));
+            model.addAttribute("privilege", teamMemberService.getPrivilege(memberDTO.getId()));
             return "hyem/team/teamview";
         } else {
             model.addAttribute("message", "로그인 후 열람이 가능합니다.");
