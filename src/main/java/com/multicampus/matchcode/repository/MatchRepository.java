@@ -14,6 +14,8 @@ public interface MatchRepository extends JpaRepository<MatchDTO, Long> {
 
     List<MatchDTO> findBySportsId(long sportsId);
 
+    /*List<MatchDTO> findByMatchId(Long matchId);*/
+
     Page<MatchDTO> findByMapId(long mapId, Pageable pageable);
 
     // mapId를 기준으로 지역별 데이터 개수 세기

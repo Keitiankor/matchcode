@@ -17,12 +17,13 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK의 생성 규칙
     private long id;*/
 
-    private long mapId;
-    private long sportsId;
+    private Long mapId;
+    private Long sportsId;
+    private String content;
     private Timestamp matchDate;
     private Timestamp createdDate;
     private Timestamp expireDate;
+    private Long status;
 /*    private int restrictionMinRate;
-    private int restrictionMaxRate;
-    private int status;*/
+    private int restrictionMaxRate;*/
 }

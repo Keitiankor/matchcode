@@ -22,4 +22,5 @@ public class MatchMemberDTO {
 
     private long matchId;
     private long memberId;
+    private int privilege;
 }

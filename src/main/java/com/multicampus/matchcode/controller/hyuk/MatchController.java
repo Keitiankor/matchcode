@@ -1,8 +1,12 @@
 package com.multicampus.matchcode.controller.hyuk;
 
 import com.multicampus.matchcode.model.entity.MatchDTO;
-import com.multicampus.matchcode.model.request.hyuk.MatchData;
+import com.multicampus.matchcode.model.entity.MemberDTO;
+import com.multicampus.matchcode.model.request.hyuk.Match;
+import com.multicampus.matchcode.service.hyuk.MatchMemberService;
 import com.multicampus.matchcode.service.hyuk.MatchService;
+import com.multicampus.matchcode.util.constants.SessionConstant;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +21,17 @@ public class MatchController {
     @Autowired
     MatchService matchService;
 
+    @Autowired
+    MatchMemberService matchMemberService;
+
     @GetMapping("/list")
-    public String listByRegion(
-            Model model,
-            @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
-            @RequestParam(value = "region", defaultValue = "0") long regionId,
-            @RequestParam(value = "sports", defaultValue = "0") long sportsId
-    ) {
+    public String listByRegionAndSports(Model model,
+                                        @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
+                                        @RequestParam(value = "region", defaultValue = "0") long regionId,
+                                        @RequestParam(value = "sports", defaultValue = "0") long sportsId) {
         List<MatchDTO> matchList;
         Integer[] pageList;
+
         if (regionId != 0 && sportsId != 0) {
             // regionId와 sportsId가 0이 아닌 경우, 해당 지역과 종목 데이터만 조회
             matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
@@ -35,10 +41,12 @@ public class MatchController {
             matchList = matchService.getMatchlist(pageNum);
             pageList = matchService.getPageList(pageNum);
         }
+
         model.addAttribute("matchList", matchList);
         model.addAttribute("pageList", pageList);
         model.addAttribute("selectedRegion", regionId); // 선택된 지역을 뷰로 전달
         model.addAttribute("selectedSports", sportsId); // 선택된 종목을 뷰로 전달
+
         return "match/list";
     }
 
@@ -59,6 +67,7 @@ public class MatchController {
 
         return "match/list";
     }*/
+
     // 글쓰는 페이지
 
     @GetMapping("/post")
@@ -70,24 +79,42 @@ public class MatchController {
     public String test() {
         return "match/test";
     }*/
+
     // 글을 쓴 뒤 POST 메서드로 글 쓴 내용을 DB에 저장
     // 그 후에는 /list 경로로 리디렉션해준다.
 
     @PostMapping("/post2")
-    public String write(MatchData match) {
-        System.out.println(match);
-        matchService.savePost(match);
+    public String write(Match match, @SessionAttribute(name = SessionConstant.MEMBER_DTO, required = true) MemberDTO memberDTO, Model model) {
+
+        long matchId = matchService.savePost(match); // 매치를 저장하고 ID를 받아옴
+
+        ///////////////////////
+       // memberDTO = new MemberDTO();
+      //  memberDTO.setId(1);
+      //  session.setAttribute("memberDTO", memberDTO);
+     //   memberDTO = (MemberDTO)session.getAttribute("memberDTO");
+        //////////////////////
+
+        long memberId = memberDTO.getId(); // 세션에서 로그인한 사용자의 ID를 가져옴
+
+        matchMemberService.addMatchLeader(matchId, memberId);
         return "redirect:/match/list";
     }
+
+
     // 게시물 상세 페이지이며, {no}로 페이지 넘버를 받는다.
     // PathVariable 애노테이션을 통해 no를 받음
 
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         MatchDTO matchDTO = matchService.getPost(no);
+/*        List<String> list = matchService.getMatchMemberList(no);*/
         model.addAttribute("matchDto", matchDTO);
+/*        model.addAttribute("list", list);*/
         return "match/detail";
     }
+
+
     // 게시물 수정 페이지이며, {no}로 페이지 넘버를 받는다.
 
     /*    @GetMapping("/post/edit/{no}")
@@ -106,13 +133,16 @@ public class MatchController {
 
         return "redirect:/match/list";
     }*/
+
     // 게시물 삭제는 deletePost 메서드를 사용하여 간단하게 삭제할 수 있다.
 
     @PostMapping("/post/{no}")
     public String delete(@PathVariable("no") Long no) {
         matchService.deletePost(no);
+
         return "redirect:/match/list";
     }
+
     // 검색
     // keyword를 view로부터 전달 받고
     // Service로부터 받은 matchDtoList를 model의 attribute로 전달해준다.
@@ -133,16 +163,10 @@ public class MatchController {
     public List<MatchDTO> getMatchesByRegionAndSports(
             @RequestParam(value = "page", defaultValue = "1") Integer pageNum,
             @RequestParam(value = "region", defaultValue = "0") long regionId,
-            @RequestParam(value = "sports", defaultValue = "0") long sportsId
-    ) {
+            @RequestParam(value = "sports", defaultValue = "0") long sportsId) {
         // 이 부분에서 필요한 데이터를 조회하여 List<MatchDTO> 형태로 반환
         List<MatchDTO> matchList = matchService.getMatchlistByRegionAndSports(pageNum, regionId, sportsId);
         return matchList;
     }
-/*    @GetMapping("/loadsportsdata")
-    public String loadmapdata(long mapId, Model model) {
-        List<MatchResult> matchResults = MatchService.getMatchlistByRegion(mapId);
-        model.addAttribute("matchResults", matchResults);
-        return "khj/history";
-    }*/
+
 }
