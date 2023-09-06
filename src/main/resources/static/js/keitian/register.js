@@ -61,7 +61,6 @@ $(function() {
                     $("#verifyingcheck").attr("disabled", "disabled");
                     $("input[name='isVerifyied']").attr("checked", "checked");
                     $("input[name='verifycode']").attr("disabled", "disabled");
-                    $("input[name='mailAddress']").attr("disabled", "disabled");
                 } else {
                     alert("인증번호가 일치하지 않습니다\n다시 확인 부탁드립니다");
                 }
